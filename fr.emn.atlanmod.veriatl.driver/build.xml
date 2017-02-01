@@ -4,7 +4,7 @@ Need to change:
 - ECLIPSE_HOME
 - fr.emn.atlanmod.atl2boogie.location
  -->
-<project basedir="." default="decompose" name="ie.nuim.cs.veriatl.compiler">
+<project basedir="." default="decompose" name="fr.emn.atlanmod.veriatl.driver">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="../../../Desktop/Eclipse/Mars/eclipse/"/>
     <property name="fr.emn.atlanmod.atl2boogie.location" value="../../veriatl_plus_plus"/>
