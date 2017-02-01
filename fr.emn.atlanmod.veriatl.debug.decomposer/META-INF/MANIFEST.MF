@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Ocldecomposer
-Bundle-SymbolicName: fr.emn.atlanmod.ocldecomposer
+Bundle-SymbolicName: fr.emn.atlanmod.veriatl.debug.decomposer
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: ocldecomposer.jar,
  zcheng/Desktop/Eclipse/Mars/eclipse/plugins/org.eclipse.emf.ecore.xmi_2.11.1.v20160208-0816.jar,

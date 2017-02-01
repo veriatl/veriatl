@@ -4,6 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="lib" path="externalDependencies/commons-io-2.4.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/fr.emn.atlanmod.atl2boogie"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/fr.emn.atlanmod.veriatl.complier.boogie"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

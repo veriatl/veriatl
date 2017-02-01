@@ -21,6 +21,6 @@ Require-Bundle:
  org.eclipse.xtend.middleend.xtend;bundle-version="1.0.0";resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.core.resources,
- fr.emn.atlanmod.atl2boogie;bundle-version="1.0.0"
+ fr.emn.atlanmod.veriatl.complier.boogie;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: cs.nuim.ie.worflowHelper
