@@ -1,0 +1,87 @@
+«IMPORT ecore»
+
+/* 
+
+If you wang to print axiom, add
+EXPAND printAxioms(name) FOREACH eClassifiers- 
+
+*/
+«DEFINE main FOR EPackage-»
+«FILE name+".bpl"-»
+«EXPAND printClassifiers(name) FOREACH eClassifiers-»
+
+«ENDFILE-»
+
+
+
+«ENDDEFINE»
+
+
+
+
+
+
+
+«DEFINE printClassifiers(String mmName) FOR EClass»
+const unique «mmName»$«this.name»: ClassName extends «EXPAND printSuperTypes(mmName) FOREACH eSuperTypes-» complete;
+	«IF this.abstract»axiom (forall r: ref :: dtype(r)!=«mmName»$«this.name»);«ENDIF»
+«EXPAND printStructuralFeatures(mmName,this.name) FOREACH eStructuralFeatures-»
+«ENDDEFINE»
+
+«DEFINE printSuperTypes(String mmName) FOR EClass-»
+«mmName»$«this.name»«ENDDEFINE»
+
+/*Eint, Estring, get rid of E*/
+«DEFINE printStructuralFeatures (String mmName, String clName) FOR EAttribute-»
+const unique «mmName»$«clName».«name»: Field «
+IF this.eType.name == 'EString'»String«
+ELSEIF this.eType.name == 'EInt'»int«
+ELSEIF this.eType.name == 'EBoolean'»bool«
+ELSE»«eType.name»«ENDIF»;
+«ENDDEFINE»
+
+/* 
+ low .. up ==>
+ 0 .. * ==> null..-1
+ 1 .. * ==> 
+ 1 .. 1 ==> 1..1
+ 0 .. 1 ==> 
+*/
+«DEFINE printStructuralFeatures (String mmName, String clName) FOR EReference-»
+const unique «mmName»$«clName».«name»: Field ref;
+«ENDDEFINE»
+
+
+
+
+/**********************************************************/
+/*        print Axioms                                          
+/**********************************************************/
+«DEFINE printAxioms(String mmName) FOR EClass»
+ axiom classifierTable[_«mmName», _«this.name»] == «mmName»$«this.name»;
+«EXPAND printAxiomsField(mmName, name) FOREACH eStructuralFeatures-»
+«ENDDEFINE»
+
+«DEFINE printAxiomsField (String mmName, String clName) FOR EStructuralFeature-»
+ axiom (FieldOfDecl(«mmName»$«clName», _Field$«name») == «clName».«name»);
+«ENDDEFINE»
+
+
+
+
+
+«DEFINE printAxioms(String mmName) FOR EClassifier-»
+«ENDDEFINE»
+
+
+/**********************************************************/
+/*        Aux                                        
+/**********************************************************/
+«DEFINE printSuperTypes(String n) FOR EClassifier-»
+«ENDDEFINE»
+
+«DEFINE printClassifiers(String mmName) FOR EClassifier»«
+ENDDEFINE»
+
+«DEFINE printStructuralFeatures (String mmName, String clName) FOR EStructuralFeature-»
+«ENDDEFINE»

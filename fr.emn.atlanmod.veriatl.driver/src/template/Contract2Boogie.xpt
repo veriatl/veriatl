@@ -1,0 +1,54 @@
+
+
+«IMPORT ATL»
+«IMPORT OCL»
+
+
+
+
+
+«DEFINE main FOR Module-»
+«FOREACH elements AS e»
+«IF e.metaType == Helper && e.commentsBefore.toString().contains("--@post")»
+«FILE  (((Operation)((Helper)e).definition.feature).name.toString())+".bpl"-»
+procedure driver();
+modifies $tarHeap, $linkHeap;
+requires valid_src_model($srcHeap);
+«EXPAND printPrecondition FOREACH elements»
+«EXPAND printPostcondition FOR e»
+«ENDFILE-»
+«ENDIF»
+«ENDFOREACH»
+«ENDDEFINE»
+
+
+
+«DEFINE printPrecondition FOR Helper»
+«IF this.commentsBefore.toString().contains("--@pre")»requires «
+  EXPAND printOCLFeature("$srcHeap") FOR this.definition.feature»;«
+ENDIF»
+«ENDDEFINE»
+
+«DEFINE printPostcondition FOR Helper»
+ensures «EXPAND printOCLFeature("$tarHeap") FOR this.definition.feature»;
+«ENDDEFINE»
+
+«DEFINE printOCLFeature(String heap) FOR Operation» «
+EXPAND OCL2Boogie::printOCLExpression(heap) FOR this.body»«
+ENDDEFINE»
+
+
+
+
+
+«DEFINE printPrecondition FOR ModuleElement»
+// This is a module element that we do not know what it is.
+«ENDDEFINE»
+
+«DEFINE printPostcondition FOR ModuleElement»
+// This is a module element that we do not know what it is.
+«ENDDEFINE»
+
+«DEFINE printOCLFeature(String heap) FOR OclFeature»
+// This is a OclFeature that we do not know what it is.
+«ENDDEFINE»
