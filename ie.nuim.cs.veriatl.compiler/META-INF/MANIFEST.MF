@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: atl2boogie.cs.nuim.ie
-Bundle-SymbolicName: ie.nuim.cs.veriatl.compiler;singleton:=true
+Bundle-SymbolicName: fr.emn.atlanmod.veriatl.driver;singleton:=true
 Bundle-Version: 1.0.0
 Require-Bundle: 
  org.eclipse.jdt.core;bundle-version="3.5.0",
