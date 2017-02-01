@@ -1,0 +1,33 @@
+module BibTeX2DocBookContract;
+create OUT : DocBook from IN : BibTeX;
+
+
+
+--PRECONDITION BibTeX
+
+--@pre	 
+
+
+--POSTCONDITION DocBook 
+
+--@post
+helper context BibTeX!Author def: post1: Boolean =
+BibTeX!Author.allInstances->forAll(au | 
+ DocBook!Article.allInstances()->exists(a | 
+  a.sections->at(2).paras->exists(p | 
+   p.content = au.author )))
+
+--@post
+helper context BibTeX!Author def: post2: Boolean =
+BibTeX!Author.allInstances->forAll(a | 
+ DocBook!Para.allInstances->exists(p | 
+  p.content = a.author and p.section.title = 'Authors List'))
+
+--@post
+helper context BibTeX!Booklet def: post3: Boolean =
+Booklet.allInstances->forAll(b | 
+ trg_Para.allInstances->exists(p | 
+  p.content = '['.concat(b.id).concat('] Booklet ').concat(b.year) and p.section.title = 'References List'))
+
+
+

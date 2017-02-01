@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="externalDependencies/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="externalDependencies/ASMReader.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/fr.emn.atlanmod.atl2boogie"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

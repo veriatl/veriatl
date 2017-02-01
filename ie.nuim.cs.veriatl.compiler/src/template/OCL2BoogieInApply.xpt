@@ -1,0 +1,230 @@
+«IMPORT OCL»
+«EXTENSION extension::JavaExtension»
+
+
+# print OCL starts #
+«REM»
+Interface for printOCLExpression 
+«ENDREM»
+«DEFINE printOCLExpression(String heap) FOR OclExpression»
+«( "no (specific) DEFINE operation' defined for type " + this.metaType.name )»
+«ENDDEFINE»
+
+
+«REM»
+PRINT OCL OperatorCallExp 
+«ENDREM»
+«DEFINE printOCLExpression(String heap) FOR OperatorCallExp
+»«REM»UNINARY«ENDREM»«
+IF operationName=='not'»!(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='abs'»Math#Abs(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF source.metaType == "VariableExp" && ((OclModelElement)((VariableExp)source).referredVariable.type) != null && ((OclModelElement)((VariableExp)source).referredVariable.type).name == "StringType"»«REM»String«ENDREM»«EXPAND printStringOperation(heap) FOR this» «
+ELSEIF source.metaType == "VariableExp" && ((OclModelElement)((VariableExp)source).referredVariable.type) != null && ((OclModelElement)((VariableExp)source).referredVariable.type).name == "SetType"»«REM»String«ENDREM»«EXPAND printSetOperation(heap) FOR this» «
+ELSEIF source.metaType == "VariableExp" && ((OclModelElement)((VariableExp)source).referredVariable.type) != null && ((OclModelElement)((VariableExp)source).referredVariable.type).name == "BagType"»«REM»String«ENDREM»«EXPAND printBagOperation(heap) FOR this» «
+ELSEIF source.metaType == "VariableExp" && ((OclModelElement)((VariableExp)source).referredVariable.type) != null && ((OclModelElement)((VariableExp)source).referredVariable.type).name == "OrderedSetTypeType"»«REM»String«ENDREM»«EXPAND printOrderedSetOperation(heap) FOR this» «
+ELSEIF source.metaType == "VariableExp" && ((OclModelElement)((VariableExp)source).referredVariable.type) != null && ((OclModelElement)((VariableExp)source).referredVariable.type).name == "SequenceType"»«REM»String«ENDREM»«EXPAND printSequenceOperation(heap) FOR this» «
+ELSE»«REM»BINARY«ENDREM»«
+  EXPAND printOCLExpression(heap) FOR source»«
+    IF operationName == 'and'» && «
+    ELSEIF operationName == 'or'» || «
+    ELSEIF operationName == 'implies'» ==> «
+    ELSEIF operationName == '<>'» != «
+    ELSEIF operationName == '='» == «
+    ELSEIF operationName == '>'» > «
+    ELSEIF operationName == '<'» < «
+    ELSEIF operationName == '>='» >= «
+    ELSEIF operationName == '<='» <= «
+    ELSEIF operationName == '<='» <= «
+    ELSEIF operationName == '+'» + «
+    ELSEIF operationName == '-'» - «
+    ELSEIF operationName == '*'» * «
+    ELSEIF operationName == 'div'» div «
+    ELSEIF operationName == 'mod'» mod «
+    ELSE» «( "no (specific) operation' defined for ocl type " + this.metaType.name+operationName )»«
+    ENDIF»«FOREACH arguments AS arg»«EXPAND printOCLExpression(heap) FOR arg»«ENDFOREACH»«
+ENDIF»«
+ENDDEFINE»
+
+«DEFINE printOCLExpression(String heap) FOR OperationCallExp
+»«IF operationName == 'oclIsUndefined'»«EXPAND printOCLExpression(heap) FOR source»==null«ELSEIF operationName == 'allInstances'»Fun#LIB#AllInstanceFrom(«heap», «EXPAND printOCLExpression(heap) FOR source»)«ELSEIF operationName == 'oclIsTypeOf'»dtype(«EXPAND printOCLExpression(heap) FOR source») == «FOREACH arguments AS arg»«EXPAND printOCLExpression(heap) FOR arg»«ENDFOREACH»«ENDIF»«
+ENDDEFINE»
+
+
+«DEFINE printOCLExpression(String heap) FOR NavigationOrAttributeCallExp
+»read(«heap», «EXPAND printOCLExpression(heap) FOR source», «
+IF ((OclModelElement)((VariableExp)source).referredVariable.type) != null»«
+getFeature(source, 
+((OclModelElement)((VariableExp)source).referredVariable.type).model.name, 
+((VariableExp)source).referredVariable.type.name, name)»«
+ELSE»__?__.«name»«
+ENDIF»)«
+ENDDEFINE»
+
+«DEFINE printOCLExpression(String heap) FOR VariableExp
+»«IF heap=="$srcHeap"»Map#Elements($linkHeap[in, TransientLink#source])[_«referredVariable.varName»]«
+ELSEIF heap=="tarHeap"»Map#Elements($linkHeap[in, TransientLink#target])[_«referredVariable.varName»]«ENDIF»«
+ENDDEFINE»
+
+«DEFINE printOCLExpression(String heap) FOR BooleanExp»«
+booleanSymbol.toString()»«
+ENDDEFINE»
+
+
+«DEFINE printOCLExpression(String heap) FOR OclModelElement»«
+model.name»$«name»«
+ENDDEFINE»
+
+«DEFINE printOCLExpression(String heap) FOR IteratorExp»«
+IF this.name == "forAll"»«EXPAND printForAllOCLExpression(this, heap) FOR this»«
+ELSEIF this.name == "exists"»«EXPAND printExistsOCLExpression(this, heap) FOR this»«
+ELSEIF this.name == "select"»«EXPAND printSelectOCLExpression(this, heap) FOR this»«
+ELSEIF this.name == "reject"»«EXPAND printRejectOCLExpression(this, heap) FOR this»«
+ENDIF»«
+ENDDEFINE»
+
+«DEFINE printForAllOCLExpression(IteratorExp expr, String heap) FOR IteratorExp»
+(forall «EXPAND printIterator FOREACH this.iterators SEPARATOR ','»:ref :: 
+  «FOREACH this.iterators AS it SEPARATOR ' && '»Seq#Contains(«EXPAND printOCLExpression(heap) FOR this.source», «it.varName»)«ENDFOREACH»
+    ==> «EXPAND printOCLExpression(heap) FOR this.body»)
+«ENDDEFINE»
+
+«DEFINE printExistsOCLExpression(IteratorExp expr, String heap) FOR IteratorExp»
+(exists «EXPAND printIterator FOREACH this.iterators SEPARATOR ','»:ref :: 
+  «FOREACH this.iterators AS it SEPARATOR ' && '»Seq#Contains(«EXPAND printOCLExpression(heap) FOR this.source», «it.varName»)«ENDFOREACH»
+    ==> «EXPAND printOCLExpression(heap) FOR this.body»)
+«ENDDEFINE»
+
+«DEFINE printSelectOCLExpression(IteratorExp expr, String heap) FOR IteratorExp»
+Iterator#Select(0,Seq#Length(«EXPAND printOCLExpression(heap) FOR this.source»)-1,«EXPAND printOCLExpression(heap) FOR this.source»,«heap»,
+  (lambda «EXPAND printIterator FOREACH this.iterators SEPARATOR ','»:ref, hp: HeapType ::
+    «FOREACH this.iterators AS it SEPARATOR ' && '»«it.varName»!=null && read(hp,«it.varName»,alloc) && dtype(«it.varName»)<:T«ENDFOREACH»
+      ==> «EXPAND printOCLExpression("hp") FOR this.body»))
+«ENDDEFINE»
+
+«DEFINE printRejectOCLExpression(IteratorExp expr, String heap) FOR IteratorExp»
+Iterator#Reject(0,Seq#Length(«EXPAND printOCLExpression(heap) FOR this.source»)-1,«EXPAND printOCLExpression(heap) FOR this.source»,«heap»,
+  (lambda «EXPAND printIterator FOREACH this.iterators SEPARATOR ','»:ref, hp: HeapType ::
+    «FOREACH this.iterators AS it SEPARATOR ' && '»«it.varName»!=null && read(hp,«it.varName»,alloc) && dtype(«it.varName»)<:T«ENDFOREACH»
+      ==> «EXPAND printOCLExpression("hp") FOR this.body»))
+«ENDDEFINE»
+
+# print OCL ends #
+
+# print OCL helpers
+«DEFINE printIterator FOR Iterator»«this.varName»«ENDDEFINE»	
+	
+# print OCL Collections
+«REM»
+PRINT OCL String operations 
+«ENDREM»
+«DEFINE printStringOperation(String heap) FOR OperatorCallExp»«
+IF operationName=='size'»Seq#Length(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='toUpper'»String#ToUpper(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='toLower'»String#ToLower(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSE»«REM»NARY«ENDREM»«
+    IF operationName == 'concat'»Seq#Append«
+    ELSEIF operationName == 'startsWith'»String#StartsWith«
+	ELSEIF operationName == 'endsWith'»String#EndsWith«
+	ELSEIF operationName == 'substring'»String#Substring«
+	ELSE»This string operation is not recognized«
+	ENDIF»(«EXPAND printOCLExpression(heap) FOR source», «FOREACH arguments AS arg SEPARATOR ', '»«EXPAND printOCLExpression(heap) FOR arg»«ENDFOREACH»)
+«ENDIF»«ENDDEFINE»
+
+«REM»
+PRINT OCL Set operations 
+«ENDREM»
+«DEFINE printSetOperation(String heap) FOR OperatorCallExp»«
+IF operationName=='isEmpty'»Set#IsEmpty(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='notEmpty'»Set#NotEmpty(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSE»«REM»NARY«ENDREM»«
+    IF operationName == 'union'»Set#Union«
+    ELSEIF operationName == 'intersection'»Set#Intersection«
+	ELSEIF operationName == '-'»Set#Difference«
+	ELSEIF operationName == 'including'»Set#UnionOne«
+	ELSEIF operationName == 'excluding'»Set#DifferenceOne«
+	ELSEIF operationName == 'includes'»Set#Includes«
+	ELSEIF operationName == 'excludes'»Set#Excludes«
+	ELSE»This set operation is not recognized«
+	ENDIF»(«EXPAND printOCLExpression(heap) FOR source», «FOREACH arguments AS arg SEPARATOR ', '»«EXPAND printOCLExpression(heap) FOR arg»«ENDFOREACH»)
+«ENDIF»«ENDDEFINE»
+
+«REM»
+PRINT OCL Bag operations 
+«ENDREM»
+«DEFINE printBagOperation(String heap) FOR OperatorCallExp»«
+IF operationName=='isEmpty'»MultiSet#IsEmpty(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='notEmpty'»MultiSet#NotEmpty(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSE»«REM»NARY«ENDREM»«
+	IF operationName == 'including'»MultiSet#UnionOne«
+	ELSEIF operationName == 'excluding'»MultiSet#DifferenceOne«
+	ELSEIF operationName == 'includes'»MultiSet#Includes«
+	ELSEIF operationName == 'excludes'»MultiSet#Excludes«
+	ELSE»This bag operation is not recognized«
+	ENDIF»(«EXPAND printOCLExpression(heap) FOR source», «FOREACH arguments AS arg SEPARATOR ', '»«EXPAND printOCLExpression(heap) FOR arg»«ENDFOREACH»)
+«ENDIF»«ENDDEFINE»
+
+«REM»
+PRINT OCL OrderedSet operations 
+«ENDREM»
+«DEFINE printOrderedSetOperation(String heap) FOR OperatorCallExp»«
+IF operationName=='size'»Seq#Length(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='isEmpty'»Seq#IsEmpty(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='notEmpty'»Seq#NotEmpty(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='first'»Seq#First(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='last'»Seq#Last(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSE»«REM»NARY«ENDREM»«
+    IF operationName == 'append'»OrderedSet#Append«
+    ELSEIF operationName == 'prepend'»OrderedSet#Prepend«
+	ELSEIF operationName == 'includes'»Seq#Contains«
+	ELSEIF operationName == 'excludes'»Seq#NotContains«
+	ELSEIF operationName == 'at'»Seq#Index«
+	ELSEIF operationName == 'insertAt'»OrderedSet#InsertAt«
+	ELSEIF operationName == 'subOrderedSet'»Seq#Subsequence«
+	ELSE»This orderedset operation is not recognized«
+	ENDIF»(«EXPAND printOCLExpression(heap) FOR source», «FOREACH arguments AS arg SEPARATOR ', '»«EXPAND printOCLExpression(heap) FOR arg»«ENDFOREACH»)
+«ENDIF»«ENDDEFINE»
+
+«REM»
+PRINT OCL Sequence operations 
+«ENDREM»
+«DEFINE printSequenceOperation(String heap) FOR OperatorCallExp»«
+IF operationName=='size'»Seq#Length(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='isEmpty'»Seq#IsEmpty(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='notEmpty'»Seq#NotEmpty(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='first'»Seq#First(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSEIF operationName=='last'»Seq#Last(«EXPAND printOCLExpression(heap) FOR source»)«
+ELSE»«REM»NARY«ENDREM»«
+    IF operationName == 'append'»Seq#Build«
+    ELSEIF operationName == 'prepend'»Seq#Prepend«
+	ELSEIF operationName == 'includes'»Seq#Contains«
+	ELSEIF operationName == 'excludes'»Seq#NotContains«
+	ELSEIF operationName == 'at'»Seq#Index«
+	ELSEIF operationName == 'insertAt'»Seq#InsertAt«
+	ELSEIF operationName == 'subSequence'»Seq#SubSequence«
+	ELSEIF operationName == 'union'»Seq#Append«
+	ELSE»This sequence operation is not recognized«
+	ENDIF»(«EXPAND printOCLExpression(heap) FOR source», «FOREACH arguments AS arg SEPARATOR ', '»«EXPAND printOCLExpression(heap) FOR arg»«ENDFOREACH»)
+«ENDIF»«ENDDEFINE»
+	
+	
+# print OCL specific to Trace starts #
+«DEFINE printOCLExpressionWithTransientLink(OclExpression expr) FOR OclExpression»
+«( "no (specific) DEFINE operation' defined for type " + this.metaType.name )»
+«ENDDEFINE»
+
+«DEFINE printOCLExpressionWithTransientLink(OperatorCallExp expr) FOR OclExpression
+»«EXPAND printOCLExpressionWithTransientLink(expr.source) FOR expr.source»«IF expr.operationName == 'and'» && «ELSEIF expr.operationName == '='» == «ELSE» «( "no (specific) DEFINE operation' defined for type " + this.metaType.name )»«ENDIF»«FOREACH expr.arguments AS arg»«EXPAND printOCLExpressionWithTransientLink(arg) FOR arg»«ENDFOREACH»«
+ENDDEFINE»
+
+«DEFINE printOCLExpressionWithTransientLink(NavigationOrAttributeCallExp expr) FOR OclExpression
+»read($srcHeap, «EXPAND printOCLExpressionWithTransientLink(expr.source) FOR expr.source», «((OclModelElement)((VariableExp)expr.source).referredVariable.type).model.name»$«((VariableExp)expr.source).referredVariable.type.name».«expr.name»)«
+ENDDEFINE»
+
+«DEFINE printOCLExpressionWithTransientLink(VariableExp expr) FOR OclExpression
+»Map#Elements($linkHeap[in, TransientLink#source])[_«expr.referredVariable.varName»]«
+ENDDEFINE»
+
+«DEFINE printOCLExpressionWithTransientLink(BooleanExp expr) FOR OclExpression»«
+expr.booleanSymbol.toString()»«
+ENDDEFINE»
+# print OCL specific to Trace ends #

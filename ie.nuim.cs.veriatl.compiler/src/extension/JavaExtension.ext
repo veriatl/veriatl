@@ -1,0 +1,25 @@
+import OCL;
+
+String getFeature(Object o, String mmName, String clName, String fName) : JAVA
+cs.nuim.ie.JavaExtension.getFeature(java.lang.Object, java.lang.String, java.lang.String, java.lang.String);
+
+
+Boolean isPrimitive(Object o, String propertyName) : JAVA
+cs.nuim.ie.JavaExtension.isPrimitive(java.lang.Object, java.lang.String);
+
+Boolean isReference(Object o, String propertyName) : JAVA
+cs.nuim.ie.JavaExtension.isReference(java.lang.Object, java.lang.String);
+
+
+
+Void store(Object o, Object key, Object val) : JAVA
+cs.nuim.ie.JavaExtension.store(java.lang.Object, java.lang.String, java.lang.Object);
+
+Object query(Object o, Object key) : JAVA
+cs.nuim.ie.JavaExtension.query(java.lang.Object, java.lang.String);
+
+Boolean contains(Object o, Object key) : JAVA
+cs.nuim.ie.JavaExtension.contains(java.lang.Object, java.lang.String);
+
+String getRefType(Object o, String mmName, String clName, String fName) : JAVA
+cs.nuim.ie.JavaExtension.getRefType(java.lang.Object, java.lang.String, java.lang.String, java.lang.String);

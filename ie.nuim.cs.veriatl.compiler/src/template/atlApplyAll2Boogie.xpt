@@ -1,0 +1,107 @@
+«IMPORT ATL»
+«IMPORT OCL»
+«EXTENSION extension::JavaExtension»
+
+
+«DEFINE main FOR Module-»
+«FILE "ATL_apply.bpl"-»
+
+«EXPAND printApplyerForMatchRule FOREACH elements-»
+
+
+«ENDFILE-»
+«ENDDEFINE»
+
+
+
+«DEFINE printApplyerForMatchRule FOR MatchedRule-»
+«IF this.metaType == MatchedRule-»
+procedure «name»_applyAll() returns();
+  requires surj_tar_model($srcHeap, $tarHeap);
+  requires (forall «EXPAND Library::printInPattern FOREACH this.inPattern.elements SEPARATOR ','»: ref :: «EXPAND Library::printInPatternAllocation FOREACH this.inPattern.elements SEPARATOR ' && '» ==>
+«IF this.inPattern.filter == null» true «ELSE» «EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR this.inPattern.filter» «ENDIF» ==>
+«EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern» !=null 
+&& read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», alloc)
+&& dtype(«EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern») <: «EXPAND Library::printOutPatternType(this.outPattern.elements.first()) FOR this.outPattern.elements.first()»);
+  modifies $tarHeap;
+// Rule outcome
+«REM» ==> getTarsBySrcs(Seq#Singleton(read($srcHeap, rs1, HSM$AbstractState.stateMachine)))«ENDREM»
+«FOREACH this.outPattern.elements AS toBind»
+«FOREACH toBind.bindings AS bind ITERATOR it
+»  ensures (forall «EXPAND Library::printInPattern FOREACH this.inPattern.elements SEPARATOR ','»: ref :: «EXPAND Library::printInPatternAllocation FOREACH this.inPattern.elements SEPARATOR ' && '» ==>
+«IF this.inPattern.filter == null» true «ELSE» «EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR this.inPattern.filter» «ENDIF» ==>
+«IF isPrimitive(toBind, getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName))
+»read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)») == «EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR bind.value»);«
+ELSEIF isReference(toBind, getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName))
+»read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)») == getTarsBySrcs(Seq#Singleton(«EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR bind.value»)));«
+ELSE 
+»«IF toBind.bindings.exists(b2 | bind != b2 && bind.propertyName == b2.propertyName)  
+  »«IF it.counter0 < toBind.bindings.indexOf(toBind.bindings.selectFirst(b2 | bind != b2 && bind.propertyName == b2.propertyName))
+      »«LET toBind.bindings.selectFirst(b2 | bind != b2 && bind.propertyName == b2.propertyName) AS freebind
+        »dtype(read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)»)) == class._System.array
+&&       read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)») != null
+&&       read($tarHeap, read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)»), alloc)
+&&       (_System.array.Length(read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)»)) == _System.array.Length(«EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR bind.value») + _System.array.Length(«EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR freebind.value»))
+&&       ( forall __j: int :: 0<=__j && __j<_System.array.Length(«EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR bind.value») ==> $Unbox(read($tarHeap, read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)»), IndexField(__j))): ref == getTarsBySrcs(Seq#Singleton( $Unbox(read($srcHeap, «EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR bind.value», IndexField(__j))): ref) ))
+&&       ( forall __j: int :: 0<=__j && __j<_System.array.Length(«EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR freebind.value») ==> $Unbox(read($tarHeap, read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)»), IndexField(__j+_System.array.Length(«EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR bind.value»)))): ref == getTarsBySrcs(Seq#Singleton( $Unbox(read($srcHeap, «EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR freebind.value», IndexField(__j))): ref) ))«
+       ENDLET»«
+    ELSE» true «
+    ENDIF»«
+  ELSE»dtype(read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)»)) == class._System.array
+&&       read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)») != null
+&&       read($tarHeap, read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)»), alloc)
+&&       (_System.array.Length(read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)»)) == _System.array.Length(«EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR bind.value»))
+&&       ( forall __j: int :: 0<=__j && __j<_System.array.Length(«EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR bind.value») ==> $Unbox(read($tarHeap, read($tarHeap, «EXPAND Library::printOutPattern(this.inPattern.elements) FOR this.inPattern», «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)»), IndexField(__j))): ref == getTarsBySrcs(Seq#Singleton( $Unbox(read($srcHeap, «EXPAND OCL2Boogie::printOCLExpression("$srcHeap") FOR bind.value», IndexField(__j))): ref) ))«
+  ENDIF»);
+«ENDIF»
+«ENDFOREACH»
+«ENDFOREACH»
+// Frame property
+  ensures (forall<alpha> $o: ref, $f: Field alpha :: 
+	!read(old($tarHeap), $o, alloc) ==>
+		 ( read($tarHeap, $o, $f) == read(old($tarHeap), $o, $f))
+	  || (dtype($o) == class._System.array));
+  ensures (forall<alpha> $o: ref, $f: Field alpha :: 
+	$o != null && read(old($tarHeap), $o, alloc) ==>
+		(Seq#Length(getTarsBySrcs_inverse($o)) == «this.inPattern.elements.size» && «FOREACH this.inPattern.elements AS e ITERATOR it SEPARATOR ' && '»dtype(Seq#Index(getTarsBySrcs_inverse($o), «it.counter1-1»)) <: «EXPAND Library::printInPatternType(e) FOR e»«ENDFOREACH» && «FOREACH this.outPattern.elements AS toBind
+		»( dtype($o) <: «((OclModelElement)toBind.type).model.name»$«toBind.type.name» «IF toBind.bindings.size>0»&& («FOREACH toBind.bindings AS bind SEPARATOR ' || '»$f == «getFeature(toBind, ((OclModelElement)toBind.type).model.name, toBind.type.name, bind.propertyName)»«ENDFOREACH»)«ENDIF»))«
+		ENDFOREACH» 
+		|| (read($tarHeap, $o, $f) == read(old($tarHeap), $o, $f)));
+  free ensures $HeapSucc(old($tarHeap), $tarHeap);
+  free ensures surj_tar_model($srcHeap, $tarHeap);
+«ENDIF»
+«ENDDEFINE»
+
+
+
+
+
+«DEFINE printApplyerForMatchRule FOR ModuleElement»
+«ENDDEFINE»
+
+
+
+# Sub Call Specific to Applier Start #
+«DEFINE printOutPatternWithTransientLink(Collection[SimpleInPatternElement] elements) FOR InPattern
+»getTarsBySrcs(«FOREACH elements AS e ITERATOR it»«IF it.lastIteration»Seq#Singleton(«ELSE»Seq#Build(«ENDIF»«ENDFOREACH»«EXPAND printInPatternWithTransientLink FOREACH elements SEPARATOR '),'»))«
+ENDDEFINE»
+
+«DEFINE printInPatternWithTransientLink FOR SimpleInPatternElement-
+»Map#Elements($linkHeap[in, TransientLink#source])[_«this.varName-»]«
+ENDDEFINE»
+# Sub Call Specific to Applier End #
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

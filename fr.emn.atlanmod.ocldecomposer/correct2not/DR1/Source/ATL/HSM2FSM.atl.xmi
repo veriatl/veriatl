@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:atl="http://www.eclipse.org/gmt/2005/ATL" xmlns:ocl="http://www.eclipse.org/gmt/2005/OCL" xsi:schemaLocation="http://www.eclipse.org/gmt/2005/OCL ../../../src/metamodel/ATL.ecore#/1 http://www.eclipse.org/gmt/2005/ATL ../../../src/metamodel/ATL.ecore#/0">
+  <atl:Module location="3:1-56:2" name="HSM2FSM">
+    <commentsBefore>-- @atlcompiler emftvm</commentsBefore>
+    <inModels location="5:23-5:31" name="IN" metamodel="/2"/>
+    <outModels location="5:8-5:17" name="OUT" metamodel="/1"/>
+    <elements xsi:type="atl:MatchedRule" location="9:1-12:2" name="RS2RS">
+      <commentsAfter>-- Initial states of composite states become regular states in the flattened SM</commentsAfter>
+      <outPattern location="11:5-11:84">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="11:8-11:84" varName="rs2">
+          <type xsi:type="ocl:OclModelElement" location="11:14-11:30" name="RegularState" model="/1"/>
+          <bindings location="11:33-11:49" propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="11:41-11:49" name="name">
+              <source xsi:type="ocl:VariableExp" location="11:41-11:44" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="11:50-11:82" propertyName="stateMachine">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="11:66-11:82" name="stateMachine">
+              <source xsi:type="ocl:VariableExp" location="11:66-11:69" referredVariable="/0/@elements.0/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="10:5-10:32">
+        <elements xsi:type="atl:SimpleInPatternElement" location="10:10-10:32" varName="rs1" variableExp="/0/@elements.0/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.0/@outPattern/@elements.0/@bindings.1/@value/@source">
+          <type xsi:type="ocl:OclModelElement" location="10:16-10:32" name="RegularState" model="/2"/>
+        </elements>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="15:1-18:2" name="IS2IS">
+      <commentsBefore>-- Initial states of composite states become regular states in the flattened SM</commentsBefore>
+      <commentsAfter>-- Initial states of composite states become regular states in the flattened SM</commentsAfter>
+      <outPattern location="17:5-17:88">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="17:10-17:88" varName="is2">
+          <type xsi:type="ocl:OclModelElement" location="17:16-17:32" name="InitialState" model="/1"/>
+          <bindings location="17:36-17:68" propertyName="stateMachine">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="17:52-17:68" name="stateMachine">
+              <source xsi:type="ocl:VariableExp" location="17:52-17:55" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="17:70-17:86" propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="17:78-17:86" name="name">
+              <source xsi:type="ocl:VariableExp" location="17:78-17:81" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="16:5-16:70">
+        <elements xsi:type="atl:SimpleInPatternElement" location="16:10-16:32" varName="is1" variableExp="/0/@elements.1/@inPattern/@filter/@source/@source /0/@elements.1/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.1/@outPattern/@elements.0/@bindings.1/@value/@source">
+          <type xsi:type="ocl:OclModelElement" location="16:16-16:32" name="InitialState" model="/2"/>
+        </elements>
+        <filter xsi:type="ocl:OperationCallExp" location="16:34-16:69" operationName="oclIsUndefined">
+          <source xsi:type="ocl:NavigationOrAttributeCallExp" location="16:34-16:52" name="compositeState">
+            <source xsi:type="ocl:VariableExp" location="16:34-16:37" referredVariable="/0/@elements.1/@inPattern/@elements.0"/>
+          </source>
+        </filter>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="21:1-24:2" name="IS2RS">
+      <commentsBefore>-- Initial states of composite states become regular states in the flattened SM</commentsBefore>
+      <commentsAfter>-- Transitions between two non-composite states are mapped one-to-one</commentsAfter>
+      <outPattern location="23:5-23:88">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="23:10-23:88" varName="is2">
+          <type xsi:type="ocl:OclModelElement" location="23:16-23:32" name="RegularState" model="/1"/>
+          <bindings location="23:36-23:68" propertyName="stateMachine">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="23:52-23:68" name="stateMachine">
+              <source xsi:type="ocl:VariableExp" location="23:52-23:55" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="23:70-23:86" propertyName="name">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="23:78-23:86" name="name">
+              <source xsi:type="ocl:VariableExp" location="23:78-23:81" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="22:5-22:74">
+        <elements xsi:type="atl:SimpleInPatternElement" location="22:10-22:32" varName="is1" variableExp="/0/@elements.2/@inPattern/@filter/@source/@source/@source /0/@elements.2/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.2/@outPattern/@elements.0/@bindings.1/@value/@source">
+          <type xsi:type="ocl:OclModelElement" location="22:16-22:32" name="InitialState" model="/2"/>
+        </elements>
+        <filter xsi:type="ocl:OperatorCallExp" location="22:34-22:73" operationName="not">
+          <source xsi:type="ocl:OperationCallExp" location="22:38-22:73" operationName="oclIsUndefined">
+            <source xsi:type="ocl:NavigationOrAttributeCallExp" location="22:38-22:56" name="compositeState">
+              <source xsi:type="ocl:VariableExp" location="22:38-22:41" referredVariable="/0/@elements.2/@inPattern/@elements.0"/>
+            </source>
+          </source>
+        </filter>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="34:1-37:2" name="T2TA">
+      <commentsBefore>-- Transitions between two non-composite states are mapped one-to-one</commentsBefore>
+      <commentsAfter>-- This rule resolves a transition originating from a composite state </commentsAfter>
+      <commentsAfter>-- The guard [not (c = src)] is the missing piece to verify fsm_transition_src_multi_lower.</commentsAfter>
+      <outPattern location="36:5-36:126">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="36:10-36:126" varName="t2">
+          <type xsi:type="ocl:OclModelElement" location="36:15-36:29" name="Transition" model="/1"/>
+          <bindings location="36:32-36:49" propertyName="label">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="36:41-36:49" name="label">
+              <source xsi:type="ocl:VariableExp" location="36:41-36:43" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="36:51-36:82" propertyName="stateMachine">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="36:67-36:82" name="stateMachine">
+              <source xsi:type="ocl:VariableExp" location="36:67-36:69" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="36:84-36:103" propertyName="source">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="36:94-36:103" name="source">
+              <source xsi:type="ocl:VariableExp" location="36:94-36:96" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="36:105-36:124" propertyName="target">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="36:115-36:124" name="target">
+              <source xsi:type="ocl:VariableExp" location="36:115-36:117" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="35:5-35:128">
+        <elements xsi:type="atl:SimpleInPatternElement" location="35:10-35:29" varName="t1" variableExp="/0/@elements.3/@inPattern/@filter/@source/@source/@source/@source /0/@elements.3/@inPattern/@filter/@arguments.0/@source/@source/@source /0/@elements.3/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.3/@outPattern/@elements.0/@bindings.1/@value/@source /0/@elements.3/@outPattern/@elements.0/@bindings.2/@value/@source /0/@elements.3/@outPattern/@elements.0/@bindings.3/@value/@source">
+          <type xsi:type="ocl:OclModelElement" location="35:15-35:29" name="Transition" model="/2"/>
+        </elements>
+        <filter xsi:type="ocl:OperatorCallExp" location="35:32-35:127" operationName="and">
+          <source xsi:type="ocl:OperatorCallExp" location="35:32-35:77" operationName="not">
+            <source xsi:type="ocl:OperationCallExp" location="35:36-35:77" operationName="oclIsTypeOf">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="35:36-35:45" name="source">
+                <source xsi:type="ocl:VariableExp" location="35:36-35:38" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+              </source>
+              <arguments xsi:type="ocl:OclModelElement" location="35:58-35:76" name="CompositeState" model="/2"/>
+            </source>
+          </source>
+          <arguments xsi:type="ocl:OperatorCallExp" location="35:82-35:127" operationName="not">
+            <source xsi:type="ocl:OperationCallExp" location="35:86-35:127" operationName="oclIsTypeOf">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="35:86-35:95" name="target">
+                <source xsi:type="ocl:VariableExp" location="35:86-35:88" referredVariable="/0/@elements.3/@inPattern/@elements.0"/>
+              </source>
+              <arguments xsi:type="ocl:OclModelElement" location="35:108-35:126" name="CompositeState" model="/2"/>
+            </source>
+          </arguments>
+        </filter>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="41:1-47:2" name="T2TB">
+      <commentsBefore>-- This rule resolves a transition originating from a composite state </commentsBefore>
+      <commentsBefore>-- The guard [not (c = src)] is the missing piece to verify fsm_transition_src_multi_lower.</commentsBefore>
+      <commentsAfter>-- This rule resolves a transition ending in a composite state </commentsAfter>
+      <outPattern location="46:5-46:112">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="46:10-46:112" varName="t2">
+          <type xsi:type="ocl:OclModelElement" location="46:15-46:29" name="Transition" model="/1"/>
+          <bindings location="46:32-46:49" propertyName="label">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="46:41-46:49" name="label">
+              <source xsi:type="ocl:VariableExp" location="46:41-46:43" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="46:51-46:82" propertyName="stateMachine">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="46:67-46:82" name="stateMachine">
+              <source xsi:type="ocl:VariableExp" location="46:67-46:69" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="46:84-46:95" propertyName="source">
+            <value xsi:type="ocl:VariableExp" location="46:94-46:95" referredVariable="/0/@elements.4/@inPattern/@elements.3"/>
+          </bindings>
+          <bindings location="46:97-46:110" propertyName="target">
+            <value xsi:type="ocl:VariableExp" location="46:107-46:110" referredVariable="/0/@elements.4/@inPattern/@elements.2"/>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="42:5-45:141">
+        <elements xsi:type="atl:SimpleInPatternElement" location="42:10-42:29" varName="t1" variableExp="/0/@elements.4/@inPattern/@filter/@source/@source/@source/@source/@source /0/@elements.4/@inPattern/@filter/@source/@source/@arguments.0/@source/@source /0/@elements.4/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.4/@outPattern/@elements.0/@bindings.1/@value/@source">
+          <type xsi:type="ocl:OclModelElement" location="42:15-42:29" name="Transition" model="/2"/>
+        </elements>
+        <elements xsi:type="atl:SimpleInPatternElement" location="43:10-43:34" varName="src" variableExp="/0/@elements.4/@inPattern/@filter/@source/@source/@source/@arguments.0 /0/@elements.4/@inPattern/@filter/@source/@arguments.0/@arguments.0">
+          <type xsi:type="ocl:OclModelElement" location="43:16-43:34" name="CompositeState" model="/2"/>
+        </elements>
+        <elements xsi:type="atl:SimpleInPatternElement" location="44:10-44:33" varName="trg" variableExp="/0/@elements.4/@inPattern/@filter/@source/@source/@arguments.0/@arguments.0 /0/@elements.4/@inPattern/@filter/@arguments.0/@source/@source /0/@elements.4/@outPattern/@elements.0/@bindings.3/@value">
+          <type xsi:type="ocl:OclModelElement" location="44:16-44:33" name="AbstractState" model="/2"/>
+        </elements>
+        <elements xsi:type="atl:SimpleInPatternElement" location="45:10-45:31" varName="c" variableExp="/0/@elements.4/@inPattern/@filter/@source/@arguments.0/@source/@source /0/@elements.4/@outPattern/@elements.0/@bindings.2/@value">
+          <type xsi:type="ocl:OclModelElement" location="45:14-45:31" name="AbstractState" model="/2"/>
+        </elements>
+        <filter xsi:type="ocl:OperatorCallExp" location="45:34-45:140" operationName="and">
+          <source xsi:type="ocl:OperatorCallExp" location="45:34-45:96" operationName="and">
+            <source xsi:type="ocl:OperatorCallExp" location="45:34-45:69" operationName="and">
+              <source xsi:type="ocl:OperatorCallExp" location="45:34-45:49" operationName="=">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="45:34-45:43" name="source">
+                  <source xsi:type="ocl:VariableExp" location="45:34-45:36" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+                </source>
+                <arguments xsi:type="ocl:VariableExp" location="45:46-45:49" referredVariable="/0/@elements.4/@inPattern/@elements.1"/>
+              </source>
+              <arguments xsi:type="ocl:OperatorCallExp" location="45:54-45:69" operationName="=">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="45:54-45:63" name="target">
+                  <source xsi:type="ocl:VariableExp" location="45:54-45:56" referredVariable="/0/@elements.4/@inPattern/@elements.0"/>
+                </source>
+                <arguments xsi:type="ocl:VariableExp" location="45:66-45:69" referredVariable="/0/@elements.4/@inPattern/@elements.2"/>
+              </arguments>
+            </source>
+            <arguments xsi:type="ocl:OperatorCallExp" location="45:74-45:96" operationName="=">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="45:74-45:90" name="compositeState">
+                <source xsi:type="ocl:VariableExp" location="45:74-45:75" referredVariable="/0/@elements.4/@inPattern/@elements.3"/>
+              </source>
+              <arguments xsi:type="ocl:VariableExp" location="45:93-45:96" referredVariable="/0/@elements.4/@inPattern/@elements.1"/>
+            </arguments>
+          </source>
+          <arguments xsi:type="ocl:OperatorCallExp" location="45:101-45:140" operationName="not">
+            <source xsi:type="ocl:OperationCallExp" location="45:105-45:140" operationName="oclIsTypeOf">
+              <source xsi:type="ocl:VariableExp" location="45:105-45:108" referredVariable="/0/@elements.4/@inPattern/@elements.2"/>
+              <arguments xsi:type="ocl:OclModelElement" location="45:121-45:139" name="CompositeState" model="/2"/>
+            </source>
+          </arguments>
+        </filter>
+      </inPattern>
+    </elements>
+    <elements xsi:type="atl:MatchedRule" location="50:1-56:2" name="T2TC">
+      <commentsBefore>-- This rule resolves a transition ending in a composite state </commentsBefore>
+      <outPattern location="55:5-55:112">
+        <elements xsi:type="atl:SimpleOutPatternElement" location="55:10-55:112" varName="t2">
+          <type xsi:type="ocl:OclModelElement" location="55:15-55:29" name="Transition" model="/1"/>
+          <bindings location="55:32-55:49" propertyName="label">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="55:41-55:49" name="label">
+              <source xsi:type="ocl:VariableExp" location="55:41-55:43" referredVariable="/0/@elements.5/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="55:51-55:82" propertyName="stateMachine">
+            <value xsi:type="ocl:NavigationOrAttributeCallExp" location="55:67-55:82" name="stateMachine">
+              <source xsi:type="ocl:VariableExp" location="55:67-55:69" referredVariable="/0/@elements.5/@inPattern/@elements.0"/>
+            </value>
+          </bindings>
+          <bindings location="55:84-55:97" propertyName="source">
+            <value xsi:type="ocl:VariableExp" location="55:94-55:97" referredVariable="/0/@elements.5/@inPattern/@elements.1"/>
+          </bindings>
+          <bindings location="55:99-55:110" propertyName="target">
+            <value xsi:type="ocl:VariableExp" location="55:109-55:110" referredVariable="/0/@elements.5/@inPattern/@elements.3"/>
+          </bindings>
+        </elements>
+      </outPattern>
+      <inPattern location="51:5-54:142">
+        <elements xsi:type="atl:SimpleInPatternElement" location="51:10-51:29" varName="t1" variableExp="/0/@elements.5/@inPattern/@filter/@source/@source/@source/@source/@source /0/@elements.5/@inPattern/@filter/@source/@source/@arguments.0/@source/@source /0/@elements.5/@outPattern/@elements.0/@bindings.0/@value/@source /0/@elements.5/@outPattern/@elements.0/@bindings.1/@value/@source">
+          <type xsi:type="ocl:OclModelElement" location="51:15-51:29" name="Transition" model="/2"/>
+        </elements>
+        <elements xsi:type="atl:SimpleInPatternElement" location="52:10-52:33" varName="src" variableExp="/0/@elements.5/@inPattern/@filter/@source/@source/@source/@arguments.0 /0/@elements.5/@inPattern/@filter/@arguments.0/@source/@source /0/@elements.5/@outPattern/@elements.0/@bindings.2/@value">
+          <type xsi:type="ocl:OclModelElement" location="52:16-52:33" name="AbstractState" model="/2"/>
+        </elements>
+        <elements xsi:type="atl:SimpleInPatternElement" location="53:10-53:34" varName="trg" variableExp="/0/@elements.5/@inPattern/@filter/@source/@source/@arguments.0/@arguments.0 /0/@elements.5/@inPattern/@filter/@source/@arguments.0/@arguments.0">
+          <type xsi:type="ocl:OclModelElement" location="53:16-53:34" name="CompositeState" model="/2"/>
+        </elements>
+        <elements xsi:type="atl:SimpleInPatternElement" location="54:10-54:30" varName="c" variableExp="/0/@elements.5/@inPattern/@filter/@source/@arguments.0/@source/@source /0/@elements.5/@outPattern/@elements.0/@bindings.3/@value">
+          <type xsi:type="ocl:OclModelElement" location="54:14-54:30" name="InitialState" model="/2"/>
+        </elements>
+        <filter xsi:type="ocl:OperatorCallExp" location="54:33-54:140" operationName="and">
+          <source xsi:type="ocl:OperatorCallExp" location="54:33-54:95" operationName="and">
+            <source xsi:type="ocl:OperatorCallExp" location="54:33-54:68" operationName="and">
+              <source xsi:type="ocl:OperatorCallExp" location="54:33-54:48" operationName="=">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="54:33-54:42" name="source">
+                  <source xsi:type="ocl:VariableExp" location="54:33-54:35" referredVariable="/0/@elements.5/@inPattern/@elements.0"/>
+                </source>
+                <arguments xsi:type="ocl:VariableExp" location="54:45-54:48" referredVariable="/0/@elements.5/@inPattern/@elements.1"/>
+              </source>
+              <arguments xsi:type="ocl:OperatorCallExp" location="54:53-54:68" operationName="=">
+                <source xsi:type="ocl:NavigationOrAttributeCallExp" location="54:53-54:62" name="target">
+                  <source xsi:type="ocl:VariableExp" location="54:53-54:55" referredVariable="/0/@elements.5/@inPattern/@elements.0"/>
+                </source>
+                <arguments xsi:type="ocl:VariableExp" location="54:65-54:68" referredVariable="/0/@elements.5/@inPattern/@elements.2"/>
+              </arguments>
+            </source>
+            <arguments xsi:type="ocl:OperatorCallExp" location="54:73-54:95" operationName="=">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="54:73-54:89" name="compositeState">
+                <source xsi:type="ocl:VariableExp" location="54:73-54:74" referredVariable="/0/@elements.5/@inPattern/@elements.3"/>
+              </source>
+              <arguments xsi:type="ocl:VariableExp" location="54:92-54:95" referredVariable="/0/@elements.5/@inPattern/@elements.2"/>
+            </arguments>
+          </source>
+          <arguments xsi:type="ocl:OperatorCallExp" location="54:101-54:140" operationName="not">
+            <source xsi:type="ocl:OperationCallExp" location="54:105-54:140" operationName="oclIsTypeOf">
+              <source xsi:type="ocl:VariableExp" location="54:105-54:108" referredVariable="/0/@elements.5/@inPattern/@elements.1"/>
+              <arguments xsi:type="ocl:OclModelElement" location="54:121-54:139" name="CompositeState" model="/2"/>
+            </source>
+          </arguments>
+        </filter>
+      </inPattern>
+    </elements>
+  </atl:Module>
+  <ocl:OclModel location="5:14-5:17" name="FSM" elements="/0/@elements.0/@outPattern/@elements.0/@type /0/@elements.1/@outPattern/@elements.0/@type /0/@elements.2/@outPattern/@elements.0/@type /0/@elements.3/@outPattern/@elements.0/@type /0/@elements.4/@outPattern/@elements.0/@type /0/@elements.5/@outPattern/@elements.0/@type" model="/0/@outModels.0"/>
+  <ocl:OclModel location="5:28-5:31" name="HSM" elements="/0/@elements.0/@inPattern/@elements.0/@type /0/@elements.1/@inPattern/@elements.0/@type /0/@elements.2/@inPattern/@elements.0/@type /0/@elements.3/@inPattern/@elements.0/@type /0/@elements.3/@inPattern/@filter/@source/@source/@arguments.0 /0/@elements.3/@inPattern/@filter/@arguments.0/@source/@arguments.0 /0/@elements.4/@inPattern/@elements.0/@type /0/@elements.4/@inPattern/@elements.1/@type /0/@elements.4/@inPattern/@elements.2/@type /0/@elements.4/@inPattern/@elements.3/@type /0/@elements.4/@inPattern/@filter/@arguments.0/@source/@arguments.0 /0/@elements.5/@inPattern/@elements.0/@type /0/@elements.5/@inPattern/@elements.1/@type /0/@elements.5/@inPattern/@elements.2/@type /0/@elements.5/@inPattern/@elements.3/@type /0/@elements.5/@inPattern/@filter/@arguments.0/@source/@arguments.0" model="/0/@inModels.0"/>
+</xmi:XMI>

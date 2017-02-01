@@ -1,0 +1,23 @@
+module Families2Persons;
+create OUT : Persons from IN : Families;
+
+
+
+--PRECONDITION HSM
+
+--@pre
+helper context Families!Parent def: unique_families_parent_names(): Boolean = -- different state machines have different names
+  Families!Parent.allInstances()->forAll(p1 | 
+  	Families!Parent.allInstances()->forAll(p2 | 
+  	  p1<>p2 implies p1.firstName<>p2.firstName));
+
+
+--POSTCONDITION FSM 
+--@post
+helper context Persons!Man def: post_unique_persons_man_names(): Boolean = --unique_persons_man_names
+  Persons!Man.allInstances()->forAll(m1 |
+  	Persons!Man.allInstances()->forAll(m2 |
+  	  m1<>m2 implies m1.fullName<>m2.fullName));
+
+
+
