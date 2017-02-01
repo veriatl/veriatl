@@ -7,8 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
-import ie.nuim.cs.atl.core.printClassifierTable;
-import ie.nuim.cs.atl.core.printStringConstant;
+
 import fr.emn.atlanmod.atl2boogie.xtend.core.*;
 
 public class VeriATLPlusPlusExec extends Exec {
