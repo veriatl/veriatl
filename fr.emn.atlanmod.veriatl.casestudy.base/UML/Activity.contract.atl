@@ -1,0 +1,305 @@
+helper context uml::Activities!ActivityEdge def: source_and_target(): Boolean = 
+  uml::Activities!ActivityEdge.allInstances()->forAll(edge | 
+    edge.activity <> null implies
+	  edge.source.containingActivity() = edge.activity and edge.target.containingActivity() = edge.activity
+);
+	
+helper context uml::Activities!ActivityParameterNode def: no_outgoing_edges(): Boolean = 
+  uml::Activities!ActivityParameterNode.allInstances()->forAll(node | node.incoming->notEmpty() and 
+	(node.outgoing->isEmpty() implies parameter.direction = UML::Classification::ParameterDirectionKind::out 
+										or parameter.direction = UML::Classification::ParameterDirectionKind::inout 
+										or parameter.direction = UML::Classification::ParameterDirectionKind::return)
+);
+
+helper context uml::Activities!ActivityParameterNode def: no_incoming_edges(): Boolean = 
+  uml::Activities!ActivityParameterNode.allInstances()->forAll(node | node.outgoing->notEmpty() and 
+	(node.incoming->isEmpty() implies parameter.direction = UML::Classification::ParameterDirectionKind::_'in' 
+										or parameter.direction = UML::Classification::ParameterDirectionKind::inout)
+);
+
+helper context uml::Activities!ActivityParameterNode def: no_edges(): Boolean = 
+  uml::Activities!ActivityParameterNode.allInstances()->forAll(node | node.incoming->isEmpty() or node.outgoing->isEmpty() );
+   
+helper context uml::Activities!ActivityParameterNode def: has_parameters(): Boolean = 
+  uml::Activities!ActivityParameterNode.allInstances()->forAll(node | 
+    node.activity.ownedParameter->includes(node.parameter)
+);
+
+helper context uml::Activities!ActivityParameterNode def: has_parameters(): Boolean = 
+  uml::Activities!ActivityParameterNode.allInstances()->forAll(node | 
+    node.type = node.parameter.type
+);
+
+
+helper context uml::Activities!ActivityPartition def: dimension_not_contained(): Boolean = 
+  uml::Activities!ActivityPartition.allInstances()->forAll(part | 
+    part.isDimension implies part.superPartition->isEmpty()
+);
+
+
+helper context uml::Activities!DecisionNode def: decision_input_flow_incoming(): Boolean = 
+  uml::Activities!DecisionNode.allInstances()->forAll(node | 
+    node.incoming->includes(node.decisionInputFlow)
+);
+
+helper context uml::Activities!DecisionNode def: incoming_outgoing_edges(): Boolean = 
+  uml::Activities!DecisionNode.allInstances()->forAll(node | 
+    (node.incoming->size() = 1 or node.incoming->size() = 2) 
+	and node.outgoing->size() > 0
+);
+
+
+helper context uml::Activities!DecisionNode def: zero_input_parameters(): Boolean = 
+  uml::Activities!DecisionNode.allInstances()->forAll(node | 
+    node.decisionInput <> null and 
+	node.decisionInputFlow = null and
+	node.incoming->exists(edge | edge.oclIsKindOf(uml::Activities!ControlFlow)) implies node.decisionInput.inputParameters()->isEmpty()
+);
+
+helper context uml::Activities!DecisionNode def: incoming_object_one_input_parameter(): Boolean = 
+  uml::Activities!DecisionNode.allInstances()->forAll(node | 
+    node.decisionInput <> null and 
+	node.decisionInputFlow = null and
+	node.incoming->forAll(edge | edge.oclIsKindOf(uml::Activities!ObjectFlow)) implies node.decisionInput.inputParameters()->size() = 1
+);
+		
+helper context uml::Activities!DecisionNode def: two_input_parameters(): Boolean = 
+  uml::Activities!DecisionNode.allInstances()->forAll(node | 
+    node.decisionInput <> null and 
+	node.decisionInputFlow <> null and
+	node.incoming->forAll(edge | edge.oclIsKindOf(uml::Activities!ObjectFlow)) implies node.decisionInput.inputParameters()->size() = 2
+);
+
+helper context uml::Activities!DecisionNode def: incoming_control_one_input_parameter(): Boolean = 
+  uml::Activities!DecisionNode.allInstances()->forAll(node | 
+    node.decisionInput <> null and 
+	node.decisionInputFlow <> null and
+	node.incoming->exists(oclIsKindOf(uml::Activities!ObjectFlow)) implies node.decisionInput.inputParameters()->size() = 1
+);		
+
+
+		
+
+
+		
+
+	context uml::Activities::ExceptionHandler
+
+	inv handler_body_edges:
+		handlerBody.incoming->isEmpty() and
+		handlerBody.outgoing->isEmpty() and
+		exceptionInput.incoming->isEmpty()
+
+	inv output_pins:
+		protectedNode.oclIsKindOf(actions::Action) and
+		protectedNode.oclAsType(actions::Action)
+		.output->notEmpty() implies
+		handlerBody.oclIsKindOf(actions::Action) and
+		let
+		  protectedNodeOutput : OrderedSet(actions::OutputPin) = protectedNode.oclAsType(actions::Action).output
+		in
+		  let
+		    handlerBodyOutput : OrderedSet(actions::OutputPin) = handlerBody.oclAsType(actions::Action).output
+		  in
+		    protectedNodeOutput->size() =
+		    handlerBodyOutput->size() and
+		    Sequence{1..protectedNodeOutput->size()
+		    }
+		    ->forAll(i |
+		      handlerBodyOutput->at(i)
+		      .type.conformsTo(protectedNodeOutput->at(i).type) and
+		      handlerBodyOutput->at(i).isOrdered =
+		      protectedNodeOutput->at(i).isOrdered and
+		      handlerBodyOutput->at(i)
+		      .compatibleWith(protectedNodeOutput->at(i)))
+
+	inv one_input:
+		handlerBody.oclIsKindOf(actions::Action) and
+		let
+		  inputs : OrderedSet(actions::InputPin) = handlerBody.oclAsType(actions::Action).input
+		in inputs->size() = 1 and inputs->first() = exceptionInput
+
+	inv edge_source_target:
+		let
+		  nodes : Set(activities::ActivityNode) = handlerBody.oclAsType(actions::Action)
+		  .allOwnedNodes()
+		in
+		  nodes.outgoing->forAll(nodes->includes(target)) and
+		  nodes.incoming->forAll(nodes->includes(source))
+
+	inv handler_body_owner:
+		handlerBody.owner = protectedNode.owner
+
+	inv exception_input_type:
+		exceptionInput.type = null or
+		exceptionType->forAll(
+		  conformsTo(
+		    exceptionInput.type.oclAsType(classification::Classifier)))
+
+	context uml::Activities::FinalNode
+
+	inv no_outgoing_edges:
+		outgoing->isEmpty()
+
+	context uml::Activities::ForkNode
+
+	inv edges:
+		let
+		  allEdges : Set(activities::ActivityEdge) = incoming->union(outgoing)
+		in
+		  allEdges->forAll(oclIsKindOf(activities::ControlFlow)) or
+		  allEdges->forAll(oclIsKindOf(activities::ObjectFlow))
+
+	inv one_incoming_edge:
+		incoming->size() = 1
+
+	context uml::Activities::InitialNode
+
+	inv no_incoming_edges:
+		incoming->isEmpty()
+
+	inv control_edges:
+		outgoing->forAll(oclIsKindOf(activities::ControlFlow))
+
+	context uml::Activities::InterruptibleActivityRegion
+
+	inv interrupting_edges:
+		interruptingEdge->forAll(edge |
+		  node->includes(edge.source) and
+		  node->excludes(edge.target) and
+		  edge.target.containingActivity() = inActivity)
+
+	context uml::Activities::JoinNode
+
+	inv one_outgoing_edge:
+		outgoing->size() = 1
+
+	inv incoming_object_flow:
+		if
+		  incoming->exists(oclIsKindOf(activities::ObjectFlow))
+		then
+		  outgoing->forAll(oclIsKindOf(activities::ObjectFlow))
+		else
+		  outgoing->forAll(oclIsKindOf(activities::ControlFlow))
+		endif
+
+	context uml::Activities::JoinNode::isCombineDuplicate : Boolean
+
+	init:
+	true
+
+	context uml::Activities::MergeNode
+
+	inv one_outgoing_edge:
+		outgoing->size() = 1
+
+	inv edges:
+		let
+		  allEdges : Set(activities::ActivityEdge) = incoming->union(outgoing)
+		in
+		  allEdges->forAll(oclIsKindOf(activities::ControlFlow)) or
+		  allEdges->forAll(oclIsKindOf(activities::ObjectFlow))
+
+	context uml::Activities::ObjectFlow
+
+	inv input_and_output_parameter:
+		selection <> null implies
+		selection.inputParameters()
+		->size() = 1 and
+		selection.inputParameters()
+		->forAll(not isUnique and is(0, *)) and
+		selection.outputParameters()
+		->size() = 1
+
+	inv no_executable_nodes:
+		not (
+		  source.oclIsKindOf(activities::ExecutableNode) or
+		  target.oclIsKindOf(activities::ExecutableNode)
+		)
+
+	inv transformation_behavior:
+		transformation <> null implies
+		transformation.inputParameters()
+		->size() = 1 and
+		transformation.outputParameters()
+		->size() = 1
+
+	inv selection_behavior:
+		selection <> null implies
+		source.oclIsKindOf(activities::ObjectNode)
+
+	inv compatible_types:
+		null
+
+	inv same_upper_bounds:
+		null
+
+	inv target:
+		null
+
+	inv is_multicast_or_is_multireceive:
+		not (isMulticast and isMultireceive)
+
+	context uml::Activities::ObjectFlow::isMulticast : Boolean
+
+	init:
+	false
+
+	context uml::Activities::ObjectFlow::isMultireceive : Boolean
+
+	init:
+	false
+
+	context uml::Activities::ObjectNode
+
+	inv input_output_parameter:
+		selection <> null implies
+		selection.inputParameters()
+		->size() = 1 and
+		selection.inputParameters()
+		->forAll(p | not p.isUnique and
+		  p.is(0, *) and
+		  self.type.conformsTo(p.type)) and
+		selection.outputParameters()
+		->size() = 1 and
+		selection.inputParameters()
+		->forAll(p | self.type.conformsTo(p.type))
+
+	inv selection_behavior:
+		selection <> null = ordering = UML::Activities::ObjectNodeOrderingKind::ordered
+
+	inv object_flow_edges:
+		not isControlType implies
+		incoming->union(outgoing)
+		->forAll(oclIsKindOf(activities::ObjectFlow))
+
+	context uml::Activities::ObjectNode::isControlType : Boolean
+
+	init:
+	false
+
+	context uml::Activities::ObjectNode::ordering : uml::Activities::ObjectNodeOrderingKind
+
+	init:
+	UML::Activities::ObjectNodeOrderingKind::FIFO
+
+	context ActivityNode::containingActivity() : uml::Activities::Activity
+
+	body:
+	(if inStructuredNode<>null then inStructuredNode.containingActivity()
+else activity
+endif)
+
+	context ActivityNode::isConsistentWith(redefiningElement : uml::Classification::RedefinableElement) : Boolean
+
+	body:
+	(redefiningElement.oclIsKindOf(ActivityNode))
+
+	context Variable::isAccessibleBy(a : uml::Actions::Action) : Boolean
+
+	body:
+	(if scope<>null then scope.allOwnedNodes()->includes(a)
+else a.containingActivity()=activityScope
+endif)
+
+endpackage
