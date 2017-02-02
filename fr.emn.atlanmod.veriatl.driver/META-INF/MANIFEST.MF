@@ -23,4 +23,4 @@ Require-Bundle:
  org.eclipse.core.resources,
  fr.emn.atlanmod.veriatl.complier.boogie;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: cs.nuim.ie.worflowHelper
+Export-Package: fr.emn.atlanmod.veriatl.driver.helper
