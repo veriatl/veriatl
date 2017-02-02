@@ -8493,4 +8493,1546 @@
         <details key="body" value="state"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="An optional Behavior that is executed whenever this State is exited regardless of which Transition was taken out of the State. If defined, exit Behaviors are always executed to completion only after all internal and transition Behaviors have completed 
+        <details key="documentation" value="An optional Behavior that is executed whenever this State is exited regardless of which Transition was taken out of the State. If defined, exit Behaviors are always executed to completion only after all internal and transition Behaviors have completed execution.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isComposite" ordered="false"
+        lowerBound="1" eType="#//Boolean" changeable="false" volatile="true" transient="true"
+        derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A state with isComposite=true is said to be a composite State. A composite State is a State that contains at least one Region.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOrthogonal" ordered="false"
+        lowerBound="1" eType="#//Boolean" changeable="false" volatile="true" transient="true"
+        derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A State with isOrthogonal=true is said to be an orthogonal composite State An orthogonal composite State contains two or more Regions.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSimple" ordered="false"
+        lowerBound="1" eType="#//Boolean" changeable="false" volatile="true" transient="true"
+        derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A State with isSimple=true is said to be a simple State A simple State does not have any Regions and it does not refer to any submachine StateMachine.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSubmachineState" ordered="false"
+        lowerBound="1" eType="#//Boolean" changeable="false" volatile="true" transient="true"
+        derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A State with isSubmachineState=true is said to be a submachine State Such a State refers to another StateMachine(submachine).&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="redefinedState" ordered="false"
+        eType="#//State">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="state"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The State of which this State is a redefinition.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//RedefinableElement/redefinedElement"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="region" ordered="false"
+        upperBound="-1" eType="#//Region" containment="true" eOpposite="#//Region/state">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Regions owned directly by the State.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Namespace/ownedMember"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stateInvariant" ordered="false"
+        eType="#//Constraint">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="owningState"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specifies conditions that are always true when this State is the current State. In ProtocolStateMachines state invariants are additional conditions to the preconditions of the outgoing Transitions, and to the postcondition of the incoming Transitions.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Namespace/ownedRule"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="submachine" ordered="false"
+        eType="#//StateMachine" eOpposite="#//StateMachine/submachineState">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The StateMachine that is to be inserted in place of the (submachine) State.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StateInvariant" eSuperTypes="#//InteractionFragment">
+    <eAnnotations source="duplicates">
+      <eAnnotations source="covered">
+        <details key="lowerBound" value="1"/>
+        <details key="upperBound" value="1"/>
+      </eAnnotations>
+      <contents xsi:type="ecore:EReference" name="covered" ordered="false" upperBound="-1"
+          eType="#//Lifeline">
+        <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+          <details key="body" value="stateInvariant"/>
+          <details key="upper" value="-1"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="References the Lifeline on which the StateInvariant appears.&#xA;&lt;p>From package UML::Interactions.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//InteractionFragment/covered"/>
+      </contents>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A StateInvariant is a runtime constraint on the participants of the Interaction. It may be used to specify a variety of different kinds of Constraints, such as values of Attributes or Variables, internal or external States, and so on. A StateInvariant is an InteractionFragment and it is placed on a Lifeline.&#xA;&lt;p>From package UML::Interactions.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="invariant" ordered="false"
+        lowerBound="1" eType="#//Constraint" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="stateInvariant"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A Constraint that should hold at runtime for this StateInvariant.&#xA;&lt;p>From package UML::Interactions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StateMachine" eSuperTypes="#//Behavior">
+    <eAnnotations source="duplicates">
+      <contents xsi:type="ecore:EOperation" name="isConsistentWith" ordered="false"
+          lowerBound="1" eType="#//Boolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+          <details key="body" value="result = (-- the following is merely a default body; it is expected that the specific form of this constraint will be specified by profiles&#xD;&#xA;true)"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The query isConsistentWith() specifies that a redefining StateMachine is consistent with a redefined StateMachine provided that the redefining StateMachine is an extension of the redefined StateMachine : Regions are inherited and Regions can be added, inherited Regions can be redefined. In case of multiple redefining StateMachine, extension implies that the redefining StateMachine gets orthogonal Regions for each of the redefined StateMachine.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//RedefinableElement/isConsistentWith"/>
+        <eParameters name="redefiningElement" ordered="false" lowerBound="1" eType="#//RedefinableElement"/>
+      </contents>
+      <contents xsi:type="ecore:EOperation" name="isRedefinitionContextValid" ordered="false"
+          lowerBound="1" eType="#//Boolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+          <details key="body" value="result = (if redefinedElement.oclIsKindOf(StateMachine) then&#xD;&#xA;  let redefinedStateMachine : StateMachine = redefinedElement.oclAsType(StateMachine) in&#xD;&#xA;    self._'context'().oclAsType(BehavioredClassifier).redefinedClassifier->&#xD;&#xA;      includes(redefinedStateMachine._'context'())&#xD;&#xA;else&#xD;&#xA;  false&#xD;&#xA;endif)"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The query isRedefinitionContextValid() specifies whether the redefinition context of a StateMachine is properly related to the redefinition contexts of the specified StateMachine to allow this element to redefine the other. The context Classifier of a redefining StateMachine must redefine the context Classifier of the redefined StateMachine.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//RedefinableElement/isRedefinitionContextValid"/>
+        <eParameters name="redefinedElement" ordered="false" lowerBound="1" eType="#//RedefinableElement"/>
+      </contents>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="connection_points classifier_context method context_classifier"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="connection_points" value="connectionPoint->forAll (kind = PseudostateKind::entryPoint or kind = PseudostateKind::exitPoint)"/>
+      <details key="classifier_context" value="_'context' &lt;> null implies not _'context'.oclIsKindOf(Interface)"/>
+      <details key="method" value="specification &lt;> null implies connectionPoint->isEmpty()"/>
+      <details key="context_classifier" value="specification &lt;> null implies ( _'context' &lt;> null and specification.featuringClassifier->exists(c | c = _'context'))"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="StateMachines can be used to express event-driven behaviors of parts of a system. Behavior is modeled as a traversal of a graph of Vertices interconnected by one or more joined Transition arcs that are triggered by the dispatching of successive Event occurrences. During this traversal, the StateMachine may execute a sequence of Behaviors associated with various elements of the StateMachine.&#xA;connectionPoint->forAll (kind = PseudostateKind::entryPoint or kind = PseudostateKind::exitPoint)&#xA;_'context' &lt;> null implies not _'context'.oclIsKindOf(Interface)&#xA;specification &lt;> null implies connectionPoint->isEmpty()&#xA;specification &lt;> null implies ( _'context' &lt;> null and specification.featuringClassifier->exists(c | c = _'context'))&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+    </eAnnotations>
+    <eOperations name="LCA" ordered="false" lowerBound="1" eType="#//Region">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (if ancestor(s1, s2) then &#xD;&#xA;    s2.container&#xD;&#xA;else&#xD;&#xA;&#x9;if ancestor(s2, s1) then&#xD;&#xA;&#x9;    s1.container &#xD;&#xA;&#x9;else &#xD;&#xA;&#x9;    LCA(s1.container.state, s2.container.state)&#xD;&#xA;&#x9;endif&#xD;&#xA;endif)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The operation LCA(s1,s2) returns the Region that is the least common ancestor of Vertices s1 and s2, based on the StateMachine containment hierarchy.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eParameters name="s1" ordered="false" lowerBound="1" eType="#//Vertex"/>
+      <eParameters name="s2" ordered="false" lowerBound="1" eType="#//Vertex"/>
+    </eOperations>
+    <eOperations name="LCAState" ordered="false" lowerBound="1" eType="#//State">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (if v2.oclIsTypeOf(State) and ancestor(v1, v2) then&#xD;&#xA;&#x9;v2.oclAsType(State)&#xD;&#xA;else if v1.oclIsTypeOf(State) and ancestor(v2, v1) then&#xD;&#xA;&#x9;v1.oclAsType(State)&#xD;&#xA;else if (v1.container.state->isEmpty() or v2.container.state->isEmpty()) then &#xD;&#xA;&#x9;null.oclAsType(State)&#xD;&#xA;else LCAState(v1.container.state, v2.container.state)&#xD;&#xA;endif endif endif)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="This utility funciton is like the LCA, except that it returns the nearest composite State that contains both input Vertices.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eParameters name="v1" ordered="false" lowerBound="1" eType="#//Vertex"/>
+      <eParameters name="v2" ordered="false" lowerBound="1" eType="#//Vertex"/>
+    </eOperations>
+    <eOperations name="ancestor" ordered="false" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (if (s2 = s1) then &#xD;&#xA;&#x9;true &#xD;&#xA;else &#xD;&#xA;&#x9;if s1.container.stateMachine->notEmpty() then &#xD;&#xA;&#x9;    true&#xD;&#xA;&#x9;else &#xD;&#xA;&#x9;    if s2.container.stateMachine->notEmpty() then &#xD;&#xA;&#x9;        false&#xD;&#xA;&#x9;    else&#xD;&#xA;&#x9;        ancestor(s1, s2.container.state)&#xD;&#xA;&#x9;     endif&#xD;&#xA;&#x9; endif&#xD;&#xA;endif  )"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query ancestor(s1, s2) checks whether Vertex s2 is an ancestor of Vertex s1.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eParameters name="s1" ordered="false" lowerBound="1" eType="#//Vertex"/>
+      <eParameters name="s2" ordered="false" lowerBound="1" eType="#//Vertex"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionPoint" ordered="false"
+        upperBound="-1" eType="#//Pseudostate" containment="true" eOpposite="#//Pseudostate/stateMachine">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The connection points defined for this StateMachine. They represent the interface of the StateMachine when used as part of submachine State&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Namespace/ownedMember"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extendedStateMachine" ordered="false"
+        upperBound="-1" eType="#//StateMachine">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="stateMachine"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The StateMachines of which this is an extension.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="redefines" references="#//Behavior/redefinedBehavior"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="region" ordered="false"
+        lowerBound="1" upperBound="-1" eType="#//Region" containment="true" eOpposite="#//Region/stateMachine">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Regions owned directly by the StateMachine.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Namespace/ownedMember"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="submachineState" ordered="false"
+        upperBound="-1" eType="#//State" eOpposite="#//State/submachine">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="References the submachine(s) in case of a submachine State. Multiple machines are referenced in case of a concurrent State.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Stereotype" eSuperTypes="#//Class">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="binaryAssociationsOnly generalize name_not_clash associationEndOwnership base_property_upper_bound base_property_multiplicity_single_extension base_property_multiplicity_multiple_extension"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="binaryAssociationsOnly" value="ownedAttribute.association->forAll(memberEnd->size()=2)"/>
+      <details key="generalize" value="allParents()->forAll(oclIsKindOf(Stereotype)) &#xD;&#xA;and Classifier.allInstances()->forAll(c | c.allParents()->exists(oclIsKindOf(Stereotype)) implies c.oclIsKindOf(Stereotype))&#xD;&#xA;"/>
+      <details key="associationEndOwnership" value="ownedAttribute&#xD;&#xA;->select(association->notEmpty() and not association.oclIsKindOf(Extension) and not type.oclIsKindOf(Stereotype))&#xD;&#xA;->forAll(opposite.owner = association)"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A stereotype defines how an existing metaclass may be extended, and enables the use of platform or domain specific terminology or notation in place of, or in addition to, the ones used for the extended metaclass.&#xA;ownedAttribute.association->forAll(memberEnd->size()=2)&#xA;allParents()->forAll(oclIsKindOf(Stereotype)) &#xA;and Classifier.allInstances()->forAll(c | c.allParents()->exists(oclIsKindOf(Stereotype)) implies c.oclIsKindOf(Stereotype))&#xA;&#xA;ownedAttribute&#xA;->select(association->notEmpty() and not association.oclIsKindOf(Extension) and not type.oclIsKindOf(Stereotype))&#xA;->forAll(opposite.owner = association)&#xA;&lt;p>From package UML::Packages.&lt;/p>"/>
+    </eAnnotations>
+    <eOperations name="containingProfile" ordered="false" lowerBound="1" eType="#//Profile">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (self.namespace.oclAsType(Package).containingProfile())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query containingProfile returns the closest profile directly or indirectly containing this stereotype.&#xA;&lt;p>From package UML::Packages.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="profile" ordered="false" lowerBound="1" eType="#//Profile">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (self.containingProfile())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A stereotype must be contained, directly or indirectly, in a profile.&#xA;&lt;p>From package UML::Packages.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="icon" ordered="false" upperBound="-1"
+        eType="#//Image" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="stereotype"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Stereotype can change the graphical appearance of the extended model element by using attached icons. When this association is not null, it references the location of the icon content to be displayed within diagrams presenting the extended model elements.&#xA;&lt;p>From package UML::Packages.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profile" ordered="false"
+        lowerBound="1" eType="#//Profile" changeable="false" volatile="true" transient="true"
+        derived="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="stereotype"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The profile that directly or indirectly contains this stereotype.&#xA;&lt;p>From package UML::Packages.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringExpression" eSuperTypes="#//Expression #//TemplateableElement">
+    <eAnnotations source="duplicates">
+      <contents xsi:type="ecore:EOperation" name="stringValue" ordered="false" eType="#//String">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+          <details key="body" value="result = (if subExpression->notEmpty()&#xA;then subExpression->iterate(se; stringValue: String = '' | stringValue.concat(se.stringValue()))&#xA;else operand->iterate(op; stringValue: String = '' | stringValue.concat(op.stringValue()))&#xA;endif)"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The query stringValue() returns the String resulting from concatenating, in order, all the component String values of all the operands or subExpressions that are part of the StringExpression.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//ValueSpecification/stringValue"/>
+      </contents>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="operands subexpressions"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="operands" value="operand->forAll (oclIsKindOf (LiteralString))"/>
+      <details key="subexpressions" value="if subExpression->notEmpty() then operand->isEmpty() else operand->notEmpty() endif"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A StringExpression is an Expression that specifies a String value that is derived by concatenating a sequence of operands with String values or a sequence of subExpressions, some of which might be template parameters.&#xA;operand->forAll (oclIsKindOf (LiteralString))&#xA;if subExpression->notEmpty() then operand->isEmpty() else operand->notEmpty() endif&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owningExpression" ordered="false"
+        eType="#//StringExpression" eOpposite="#//StringExpression/subExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The StringExpression of which this StringExpression is a subExpression.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/owner"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subExpression" upperBound="-1"
+        eType="#//StringExpression" containment="true" eOpposite="#//StringExpression/owningExpression">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The StringExpressions that constitute this StringExpression.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StructuralFeature" abstract="true" eSuperTypes="#//Feature #//TypedElement #//MultiplicityElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A StructuralFeature is a typed feature of a Classifier that specifies the structure of instances of the Classifier.&#xA;&lt;p>From package UML::Classification.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isReadOnly" ordered="false"
+        lowerBound="1" eType="#//Boolean" defaultValueLiteral="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="If isReadOnly is true, the StructuralFeature may not be written to after initialization.&#xA;&lt;p>From package UML::Classification.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StructuralFeatureAction" abstract="true"
+      eSuperTypes="#//Action">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="multiplicity object_type visibility not_static one_featuring_classifier"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="multiplicity" value="object.is(1,1)"/>
+      <details key="object_type" value="object.type.oclAsType(Classifier).allFeatures()->includes(structuralFeature) or&#xD;&#xA;&#x9;object.type.conformsTo(structuralFeature.oclAsType(Property).opposite.type)"/>
+      <details key="visibility" value="structuralFeature.visibility = VisibilityKind::public or&#xA;_'context'.allFeatures()->includes(structuralFeature) or&#xA;structuralFeature.visibility=VisibilityKind::protected and&#xA;_'context'.conformsTo(structuralFeature.oclAsType(Property).opposite.type.oclAsType(Classifier))&#xA;"/>
+      <details key="not_static" value="not structuralFeature.isStatic"/>
+      <details key="one_featuring_classifier" value="structuralFeature.featuringClassifier->size() = 1"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="StructuralFeatureAction is an abstract class for all Actions that operate on StructuralFeatures.&#xA;object.is(1,1)&#xA;object.type.oclAsType(Classifier).allFeatures()->includes(structuralFeature) or&#xA;&#x9;object.type.conformsTo(structuralFeature.oclAsType(Property).opposite.type)&#xA;structuralFeature.visibility = VisibilityKind::public or&#xA;_'context'.allFeatures()->includes(structuralFeature) or&#xA;structuralFeature.visibility=VisibilityKind::protected and&#xA;_'context'.conformsTo(structuralFeature.oclAsType(Property).opposite.type.oclAsType(Classifier))&#xA;&#xA;not structuralFeature.isStatic&#xA;structuralFeature.featuringClassifier->size() = 1&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="object" ordered="false"
+        lowerBound="1" eType="#//InputPin" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="structuralFeatureAction"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The InputPin from which the object whose StructuralFeature is to be read or written is obtained.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Action/input"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="structuralFeature" ordered="false"
+        lowerBound="1" eType="#//StructuralFeature">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="structuralFeatureAction"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The StructuralFeature to be read or written.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StructuredActivityNode" eSuperTypes="#//Action #//Namespace #//ActivityGroup">
+    <eAnnotations source="duplicates">
+      <contents xsi:type="ecore:EOperation" name="allActions" ordered="false" upperBound="-1"
+          eType="#//Action">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+          <details key="body" value="result = (node->select(oclIsKindOf(Action)).oclAsType(Action).allActions()->including(self)->asSet())"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="Returns this StructuredActivityNode and all Actions contained in it.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//Action/allActions"/>
+      </contents>
+      <contents xsi:type="ecore:EOperation" name="allOwnedNodes" ordered="false" upperBound="-1"
+          eType="#//ActivityNode">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+          <details key="body" value="result = (self.Action::allOwnedNodes()->union(node)->union(node->select(oclIsKindOf(Action)).oclAsType(Action).allOwnedNodes())->asSet())"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="Returns all the ActivityNodes contained directly or indirectly within this StructuredActivityNode, in addition to the Pins of the StructuredActivityNode.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//Action/allOwnedNodes"/>
+      </contents>
+      <contents xsi:type="ecore:EOperation" name="containingActivity" ordered="false"
+          eType="#//Activity">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+          <details key="body" value="result = (self.Action::containingActivity())"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The Activity that directly or indirectly contains this StructuredActivityNode (considered as an Action).&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//ActivityGroup/containingActivity #//ActivityNode/ActivityNode_containingActivity"/>
+      </contents>
+      <contents xsi:type="ecore:EReference" name="activity" ordered="false" eType="#//Activity"
+          eOpposite="#//Activity/structuredNode">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The Activity immediately containing the StructuredActivityNode, if it is not contained in another StructuredActivityNode.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//ActivityGroup/inActivity #//ActivityNode/activity"/>
+      </contents>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="output_pin_edges edges input_pin_edges"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="output_pin_edges" value="output.outgoing.target->excludesAll(allOwnedNodes()-input)"/>
+      <details key="edges" value="edge=self.sourceNodes().outgoing->intersection(self.allOwnedNodes().incoming)->&#xD;&#xA;&#x9;union(self.targetNodes().incoming->intersection(self.allOwnedNodes().outgoing))->asSet()"/>
+      <details key="input_pin_edges" value="input.incoming.source->excludesAll(allOwnedNodes()-output)"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A StructuredActivityNode is an Action that is also an ActivityGroup and whose behavior is specified by the ActivityNodes and ActivityEdges it so contains. Unlike other kinds of ActivityGroup, a StructuredActivityNode owns the ActivityNodes and ActivityEdges it contains, and so a node or edge can only be directly contained in one StructuredActivityNode, though StructuredActivityNodes may be nested.&#xA;output.outgoing.target->excludesAll(allOwnedNodes()-input)&#xA;edge=self.sourceNodes().outgoing->intersection(self.allOwnedNodes().incoming)->&#xA;&#x9;union(self.targetNodes().incoming->intersection(self.allOwnedNodes().outgoing))->asSet()&#xA;input.incoming.source->excludesAll(allOwnedNodes()-output)&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+    </eAnnotations>
+    <eOperations name="sourceNodes" ordered="false" upperBound="-1" eType="#//ActivityNode">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (node->union(input.oclAsType(ActivityNode)->asSet())->&#xD;&#xA;  union(node->select(oclIsKindOf(Action)).oclAsType(Action).output)->asSet())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Return those ActivityNodes contained immediately within the StructuredActivityNode that may act as sources of edges owned by the StructuredActivityNode.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="targetNodes" ordered="false" upperBound="-1" eType="#//ActivityNode">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (node->union(output.oclAsType(ActivityNode)->asSet())->&#xD;&#xA;  union(node->select(oclIsKindOf(Action)).oclAsType(Action).input)->asSet())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Return those ActivityNodes contained immediately within the StructuredActivityNode that may act as targets of edges owned by the StructuredActivityNode.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="edge" ordered="false" upperBound="-1"
+        eType="#//ActivityEdge" containment="true" eOpposite="#//ActivityEdge/inStructuredNode">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ActivityEdges immediately contained in the StructuredActivityNode.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//ActivityGroup/containedEdge #//Element/ownedElement"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mustIsolate" ordered="false"
+        lowerBound="1" eType="#//Boolean" defaultValueLiteral="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="If true, then any object used by an Action within the StructuredActivityNode cannot be accessed by any Action outside the node until the StructuredActivityNode as a whole completes. Any concurrent Actions that would result in accessing such objects are required to have their execution deferred until the completion of the StructuredActivityNode.&#xA;&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="node" ordered="false" upperBound="-1"
+        eType="#//ActivityNode" containment="true" eOpposite="#//ActivityNode/inStructuredNode">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ActivityNodes immediately contained in the StructuredActivityNode.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//ActivityGroup/containedNode #//Element/ownedElement"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="structuredNodeInput" ordered="false"
+        upperBound="-1" eType="#//InputPin" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="structuredActivityNode"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The InputPins owned by the StructuredActivityNode.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Action/input"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="structuredNodeOutput" ordered="false"
+        upperBound="-1" eType="#//OutputPin" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="structuredActivityNode"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The OutputPins owned by the StructuredActivityNode.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Action/output"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" ordered="false"
+        upperBound="-1" eType="#//Variable" containment="true" eOpposite="#//Variable/scope">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Variables defined in the scope of the StructuredActivityNode.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Namespace/ownedMember"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StructuredClassifier" abstract="true"
+      eSuperTypes="#//Classifier">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="StructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier.&#xA;&lt;p>From package UML::StructuredClassifiers.&lt;/p>"/>
+    </eAnnotations>
+    <eOperations name="allRoles" ordered="false" upperBound="-1" eType="#//ConnectableElement">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (allFeatures()->select(oclIsKindOf(ConnectableElement))->collect(oclAsType(ConnectableElement))->asSet())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All features of type ConnectableElement, equivalent to all direct and inherited roles.&#xA;&lt;p>From package UML::StructuredClassifiers.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="part" ordered="false" upperBound="-1" eType="#//Property">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (ownedAttribute->select(isComposite))"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Derivation for StructuredClassifier::/part&#xA;&lt;p>From package UML::StructuredClassifiers.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedAttribute" upperBound="-1"
+        eType="#//Property" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="structuredClassifier"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Properties owned by the StructuredClassifier.&#xA;&lt;p>From package UML::StructuredClassifiers.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Classifier/attribute #//Namespace/ownedMember #//StructuredClassifier/role"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedConnector" ordered="false"
+        upperBound="-1" eType="#//Connector" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="structuredClassifier"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The connectors owned by the StructuredClassifier.&#xA;&lt;p>From package UML::StructuredClassifiers.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Classifier/feature #//Namespace/ownedMember"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="part" ordered="false" upperBound="-1"
+        eType="#//Property" changeable="false" volatile="true" transient="true" derived="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="structuredClassifier"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Properties specifying instances that the StructuredClassifier owns by composition. This collection is derived, selecting those owned Properties where isComposite is true.&#xA;&lt;p>From package UML::StructuredClassifiers.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="role" ordered="false" upperBound="-1"
+        eType="#//ConnectableElement" changeable="false" volatile="true" transient="true"
+        derived="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="structuredClassifier"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The roles that instances may play in this StructuredClassifier.&#xA;&lt;p>From package UML::StructuredClassifiers.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Namespace/member"/>
+      <eAnnotations source="union"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Substitution" eSuperTypes="#//Realization">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A substitution is a relationship between two classifiers signifying that the substituting classifier complies with the contract specified by the contract classifier. This implies that instances of the substituting classifier are runtime substitutable where instances of the contract classifier are expected.&#xA;&lt;p>From package UML::Classification.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contract" ordered="false"
+        lowerBound="1" eType="#//Classifier">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="substitution"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The contract with which the substituting classifier complies.&#xA;&lt;p>From package UML::Classification.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Dependency/supplier"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="substitutingClassifier"
+        ordered="false" lowerBound="1" eType="#//Classifier" eOpposite="#//Classifier/substitution">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Instances of the substituting classifier are runtime substitutable where instances of the contract classifier are expected.&#xA;&lt;p>From package UML::Classification.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Dependency/client #//Element/owner"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TemplateBinding" eSuperTypes="#//DirectedRelationship">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="parameter_substitution_formal one_parameter_substitution"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="parameter_substitution_formal" value="parameterSubstitution->forAll(b | signature.parameter->includes(b.formal))"/>
+      <details key="one_parameter_substitution" value="signature.parameter->forAll(p | parameterSubstitution->select(b | b.formal = p)->size() &lt;= 1)"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TemplateBinding is a DirectedRelationship between a TemplateableElement and a template. A TemplateBinding specifies the TemplateParameterSubstitutions of actual parameters for the formal parameters of the template.&#xA;parameterSubstitution->forAll(b | signature.parameter->includes(b.formal))&#xA;signature.parameter->forAll(p | parameterSubstitution->select(b | b.formal = p)->size() &lt;= 1)&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="boundElement" ordered="false"
+        lowerBound="1" eType="#//TemplateableElement" eOpposite="#//TemplateableElement/templateBinding">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The TemplateableElement that is bound by this TemplateBinding.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//DirectedRelationship/source #//Element/owner"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterSubstitution"
+        ordered="false" upperBound="-1" eType="#//TemplateParameterSubstitution" containment="true"
+        eOpposite="#//TemplateParameterSubstitution/templateBinding">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The TemplateParameterSubstitutions owned by this TemplateBinding.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signature" ordered="false"
+        lowerBound="1" eType="#//TemplateSignature">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="templateBinding"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The TemplateSignature for the template that is the target of this TemplateBinding.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//DirectedRelationship/target"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TemplateParameter" eSuperTypes="#//Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="must_be_compatible"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="must_be_compatible" value="default &lt;> null implies default.isCompatibleWith(parameteredElement)"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TemplateParameter exposes a ParameterableElement as a formal parameter of a template.&#xA;default &lt;> null implies default.isCompatibleWith(parameteredElement)&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="default" ordered="false"
+        eType="#//ParameterableElement">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="templateParameter"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ParameterableElement that is the default for this formal TemplateParameter.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedDefault" ordered="false"
+        eType="#//ParameterableElement" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="templateParameter"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ParameterableElement that is owned by this TemplateParameter for the purpose of providing a default.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement #//TemplateParameter/default"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParameteredElement"
+        ordered="false" eType="#//ParameterableElement" containment="true" eOpposite="#//ParameterableElement/owningTemplateParameter">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ParameterableElement that is owned by this TemplateParameter for the purpose of exposing it as the parameteredElement.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement #//TemplateParameter/parameteredElement"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameteredElement" ordered="false"
+        lowerBound="1" eType="#//ParameterableElement" eOpposite="#//ParameterableElement/templateParameter">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ParameterableElement exposed by this TemplateParameter.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signature" ordered="false"
+        lowerBound="1" eType="#//TemplateSignature" eOpposite="#//TemplateSignature/ownedParameter">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The TemplateSignature that owns this TemplateParameter.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/owner"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TemplateParameterSubstitution" eSuperTypes="#//Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="must_be_compatible"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="must_be_compatible" value="actual->forAll(a | a.isCompatibleWith(formal.parameteredElement))"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TemplateParameterSubstitution relates the actual parameter to a formal TemplateParameter as part of a template binding.&#xA;actual->forAll(a | a.isCompatibleWith(formal.parameteredElement))&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actual" ordered="false"
+        lowerBound="1" eType="#//ParameterableElement">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="templateParameterSubstitution"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ParameterableElement that is the actual parameter for this TemplateParameterSubstitution.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="formal" ordered="false"
+        lowerBound="1" eType="#//TemplateParameter">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="templateParameterSubstitution"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The formal TemplateParameter that is associated with this TemplateParameterSubstitution.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedActual" ordered="false"
+        eType="#//ParameterableElement" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="owningTemplateParameterSubstitution"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ParameterableElement that is owned by this TemplateParameterSubstitution as its actual parameter.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement #//TemplateParameterSubstitution/actual"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="templateBinding" ordered="false"
+        lowerBound="1" eType="#//TemplateBinding" eOpposite="#//TemplateBinding/parameterSubstitution">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The TemplateBinding that owns this TemplateParameterSubstitution.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/owner"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TemplateSignature" eSuperTypes="#//Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="own_elements unique_parameters"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="own_elements" value="template.ownedElement->includesAll(parameter.parameteredElement->asSet() - parameter.ownedParameteredElement->asSet())"/>
+      <details key="unique_parameters" value="parameter->forAll( p1, p2 | (p1 &lt;> p2 and p1.parameteredElement.oclIsKindOf(NamedElement) and p2.parameteredElement.oclIsKindOf(NamedElement) ) implies&#xD;&#xA;   p1.parameteredElement.oclAsType(NamedElement).name &lt;> p2.parameteredElement.oclAsType(NamedElement).name)"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Template Signature bundles the set of formal TemplateParameters for a template.&#xA;template.ownedElement->includesAll(parameter.parameteredElement->asSet() - parameter.ownedParameteredElement->asSet())&#xA;parameter->forAll( p1, p2 | (p1 &lt;> p2 and p1.parameteredElement.oclIsKindOf(NamedElement) and p2.parameteredElement.oclIsKindOf(NamedElement) ) implies&#xA;   p1.parameteredElement.oclAsType(NamedElement).name &lt;> p2.parameteredElement.oclAsType(NamedElement).name)&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParameter" upperBound="-1"
+        eType="#//TemplateParameter" containment="true" eOpposite="#//TemplateParameter/signature">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The formal parameters that are owned by this TemplateSignature.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement #//TemplateSignature/parameter"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameter" lowerBound="1"
+        upperBound="-1" eType="#//TemplateParameter">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="templateSignature"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ordered set of all formal TemplateParameters for this TemplateSignature.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="template" ordered="false"
+        lowerBound="1" eType="#//TemplateableElement" eOpposite="#//TemplateableElement/ownedTemplateSignature">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The TemplateableElement that owns this TemplateSignature.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/owner"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TemplateableElement" abstract="true"
+      eSuperTypes="#//Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TemplateableElement is an Element that can optionally be defined as a template and bound to other templates.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+    </eAnnotations>
+    <eOperations name="isTemplate" ordered="false" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (ownedTemplateSignature &lt;> null)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query isTemplate() returns whether this TemplateableElement is actually a template.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="parameterableElements" ordered="false" upperBound="-1" eType="#//ParameterableElement">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (self.allOwnedElements()->select(oclIsKindOf(ParameterableElement)).oclAsType(ParameterableElement)->asSet())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query parameterableElements() returns the set of ParameterableElements that may be used as the parameteredElements for a TemplateParameter of this TemplateableElement. By default, this set includes all the ownedElements. Subclasses may override this operation if they choose to restrict the set of ParameterableElements.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedTemplateSignature"
+        ordered="false" eType="#//TemplateSignature" containment="true" eOpposite="#//TemplateSignature/template">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The optional TemplateSignature specifying the formal TemplateParameters for this TemplateableElement. If a TemplateableElement has a TemplateSignature, then it is a template.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="templateBinding" ordered="false"
+        upperBound="-1" eType="#//TemplateBinding" containment="true" eOpposite="#//TemplateBinding/boundElement">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The optional TemplateBindings from this TemplateableElement to one or more templates.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TestIdentityAction" eSuperTypes="#//Action">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="multiplicity no_type result_is_boolean"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="multiplicity" value="first.is(1,1) and second.is(1,1)&#xA;"/>
+      <details key="no_type" value="first.type= null and second.type = null&#xA;"/>
+      <details key="result_is_boolean" value="result.type=Boolean"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TestIdentityAction is an Action that tests if two values are identical objects.&#xA;first.is(1,1) and second.is(1,1)&#xA;&#xA;first.type= null and second.type = null&#xA;&#xA;result.type=Boolean&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="first" ordered="false"
+        lowerBound="1" eType="#//InputPin" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="testIdentityAction"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The InputPin on which the first input object is placed.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Action/input"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="result" ordered="false"
+        lowerBound="1" eType="#//OutputPin" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="testIdentityAction"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The OutputPin whose Boolean value indicates whether the two input objects are identical.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Action/output"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="second" ordered="false"
+        lowerBound="1" eType="#//InputPin" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="testIdentityAction"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The OutputPin on which the second input object is placed.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Action/input"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TimeConstraint" eSuperTypes="#//IntervalConstraint">
+    <eAnnotations source="duplicates">
+      <eAnnotations source="specification">
+        <details key="eType" value="UML::TimeInterval"/>
+      </eAnnotations>
+      <contents xsi:type="ecore:EReference" name="specification" ordered="false" lowerBound="1"
+          eType="#//ValueSpecification" containment="true">
+        <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+          <details key="body" value="timeConstraint"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="TheTimeInterval constraining the duration.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//IntervalConstraint/%duplicates%/specification #//Constraint/specification"/>
+      </contents>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="has_one_constrainedElement"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="has_one_constrainedElement" value="constrainedElement->size() = 1"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TimeConstraint is a Constraint that refers to a TimeInterval.&#xA;constrainedElement->size() = 1&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstEvent" ordered="false"
+        eType="#//BooleanObject" defaultValueLiteral="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The value of firstEvent is related to the constrainedElement. If firstEvent is true, then the corresponding observation event is the first time instant the execution enters the constrainedElement. If firstEvent is false, then the corresponding observation event is the last time instant the execution is within the constrainedElement.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TimeEvent" eSuperTypes="#//Event">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="when_non_negative"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="when_non_negative" value="when.integerValue() >= 0"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TimeEvent is an Event that occurs at a specific point in time.&#xA;when.integerValue() >= 0&#xA;&lt;p>From package UML::CommonBehavior.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRelative" ordered="false"
+        lowerBound="1" eType="#//Boolean" defaultValueLiteral="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specifies whether the TimeEvent is specified as an absolute or relative time.&#xA;&lt;p>From package UML::CommonBehavior.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="when" ordered="false" lowerBound="1"
+        eType="#//TimeExpression" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="timeEvent"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specifies the time of the TimeEvent.&#xA;&lt;p>From package UML::CommonBehavior.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TimeExpression" eSuperTypes="#//ValueSpecification">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="no_expr_requires_observation"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="no_expr_requires_observation" value="expr = null implies (observation->size() = 1 and observation->forAll(oclIsKindOf(TimeObservation)))"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TimeExpression is a ValueSpecification that represents a time value.&#xA;expr = null implies (observation->size() = 1 and observation->forAll(oclIsKindOf(TimeObservation)))&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" ordered="false" eType="#//ValueSpecification"
+        containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="timeExpression"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A ValueSpecification that evaluates to the value of the TimeExpression.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="observation" ordered="false"
+        upperBound="-1" eType="#//Observation">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="timeExpression"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Refers to the Observations that are involved in the computation of the TimeExpression value.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TimeInterval" eSuperTypes="#//Interval">
+    <eAnnotations source="duplicates">
+      <eAnnotations source="max">
+        <details key="eType" value="UML::TimeExpression"/>
+      </eAnnotations>
+      <eAnnotations source="min">
+        <details key="eType" value="UML::TimeExpression"/>
+      </eAnnotations>
+      <contents xsi:type="ecore:EReference" name="max" ordered="false" lowerBound="1"
+          eType="#//ValueSpecification">
+        <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+          <details key="body" value="timeInterval"/>
+          <details key="upper" value="-1"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="Refers to the TimeExpression denoting the maximum value of the range.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//Interval/max"/>
+      </contents>
+      <contents xsi:type="ecore:EReference" name="min" ordered="false" lowerBound="1"
+          eType="#//ValueSpecification">
+        <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+          <details key="body" value="timeInterval"/>
+          <details key="upper" value="-1"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="Refers to the TimeExpression denoting the minimum value of the range.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//Interval/min"/>
+      </contents>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TimeInterval defines the range between two TimeExpressions.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TimeObservation" eSuperTypes="#//Observation">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TimeObservation is a reference to a time instant during an execution. It points out the NamedElement in the model to observe and whether the observation is when this NamedElement is entered or when it is exited.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" ordered="false"
+        lowerBound="1" eType="#//NamedElement">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="timeObservation"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The TimeObservation is determined by the entering or exiting of the event Element during execution.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstEvent" ordered="false"
+        lowerBound="1" eType="#//Boolean" defaultValueLiteral="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The value of firstEvent is related to the event. If firstEvent is true, then the corresponding observation event is the first time instant the execution enters the event Element. If firstEvent is false, then the corresponding observation event is the time instant the execution exits the event Element.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Namespace #//RedefinableElement">
+    <eAnnotations source="duplicates">
+      <eAnnotations source="redefinitionContext">
+        <details key="lowerBound" value="1"/>
+        <details key="upperBound" value="1"/>
+      </eAnnotations>
+      <contents xsi:type="ecore:EOperation" name="isConsistentWith" ordered="false"
+          lowerBound="1" eType="#//Boolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+          <details key="body" value="result = (-- the following is merely a default body; it is expected that the specific form of this constraint will be specified by profiles&#xD;&#xA;true)"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The query isConsistentWith() specifies that a redefining Transition is consistent with a redefined Transition provided that the redefining Transition has the following relation to the redefined Transition: A redefining Transition redefines all properties of the corresponding redefined Transition except the source State and the Trigger.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//RedefinableElement/isConsistentWith"/>
+        <eParameters name="redefiningElement" ordered="false" lowerBound="1" eType="#//RedefinableElement"/>
+      </contents>
+      <contents xsi:type="ecore:EReference" name="redefinitionContext" ordered="false"
+          upperBound="-1" eType="#//Classifier" changeable="false" volatile="true"
+          transient="true" derived="true">
+        <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+          <details key="body" value="transition"/>
+          <details key="upper" value="-1"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="References the Classifier in which context this element may be redefined.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//RedefinableElement/redefinitionContext"/>
+      </contents>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="state_is_external join_segment_guards state_is_internal outgoing_pseudostates join_segment_state fork_segment_state state_is_local initial_transition fork_segment_guards"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="state_is_external" value="(kind = TransitionKind::external) implies&#xD;&#xA;&#x9;not (source.oclIsKindOf(Pseudostate) and source.oclAsType(Pseudostate).kind = PseudostateKind::entryPoint)"/>
+      <details key="join_segment_guards" value="(target.oclIsKindOf(Pseudostate) and target.oclAsType(Pseudostate).kind = PseudostateKind::join) implies (guard = null and trigger->isEmpty())"/>
+      <details key="state_is_internal" value="(kind = TransitionKind::internal) implies&#xD;&#xA;&#x9;&#x9;(source.oclIsKindOf (State) and source = target)"/>
+      <details key="outgoing_pseudostates" value="source.oclIsKindOf(Pseudostate) and (source.oclAsType(Pseudostate).kind &lt;> PseudostateKind::initial) implies trigger->isEmpty()"/>
+      <details key="join_segment_state" value="(target.oclIsKindOf(Pseudostate) and target.oclAsType(Pseudostate).kind = PseudostateKind::join) implies (source.oclIsKindOf(State))"/>
+      <details key="fork_segment_state" value="(source.oclIsKindOf(Pseudostate) and  source.oclAsType(Pseudostate).kind = PseudostateKind::fork) implies (target.oclIsKindOf(State))"/>
+      <details key="state_is_local" value="(kind = TransitionKind::local) implies&#xD;&#xA;&#x9;&#x9;((source.oclIsKindOf (State) and source.oclAsType(State).isComposite) or&#xD;&#xA;&#x9;&#x9;(source.oclIsKindOf (Pseudostate) and source.oclAsType(Pseudostate).kind = PseudostateKind::entryPoint))"/>
+      <details key="initial_transition" value="(source.oclIsKindOf(Pseudostate) and container.stateMachine->notEmpty()) implies&#xA;&#x9;trigger->isEmpty()&#xA;"/>
+      <details key="fork_segment_guards" value="(source.oclIsKindOf(Pseudostate) and source.oclAsType(Pseudostate).kind = PseudostateKind::fork) implies (guard = null and trigger->isEmpty())"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Transition represents an arc between exactly one source Vertex and exactly one Target vertex (the source and targets may be the same Vertex). It may form part of a compound transition, which takes the StateMachine from one steady State configuration to another, representing the full response of the StateMachine to an occurrence of an Event that triggered it.&#xA;(kind = TransitionKind::external) implies&#xA;&#x9;not (source.oclIsKindOf(Pseudostate) and source.oclAsType(Pseudostate).kind = PseudostateKind::entryPoint)&#xA;(target.oclIsKindOf(Pseudostate) and target.oclAsType(Pseudostate).kind = PseudostateKind::join) implies (guard = null and trigger->isEmpty())&#xA;(kind = TransitionKind::internal) implies&#xA;&#x9;&#x9;(source.oclIsKindOf (State) and source = target)&#xA;source.oclIsKindOf(Pseudostate) and (source.oclAsType(Pseudostate).kind &lt;> PseudostateKind::initial) implies trigger->isEmpty()&#xA;(target.oclIsKindOf(Pseudostate) and target.oclAsType(Pseudostate).kind = PseudostateKind::join) implies (source.oclIsKindOf(State))&#xA;(source.oclIsKindOf(Pseudostate) and  source.oclAsType(Pseudostate).kind = PseudostateKind::fork) implies (target.oclIsKindOf(State))&#xA;(kind = TransitionKind::local) implies&#xA;&#x9;&#x9;((source.oclIsKindOf (State) and source.oclAsType(State).isComposite) or&#xA;&#x9;&#x9;(source.oclIsKindOf (Pseudostate) and source.oclAsType(Pseudostate).kind = PseudostateKind::entryPoint))&#xA;(source.oclIsKindOf(Pseudostate) and container.stateMachine->notEmpty()) implies&#xA;&#x9;trigger->isEmpty()&#xA;&#xA;(source.oclIsKindOf(Pseudostate) and source.oclAsType(Pseudostate).kind = PseudostateKind::fork) implies (guard = null and trigger->isEmpty())&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+    </eAnnotations>
+    <eOperations name="containingStateMachine" ordered="false" lowerBound="1" eType="#//StateMachine">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (container.containingStateMachine())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query containingStateMachine() returns the StateMachine that contains the Transition either directly or transitively.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="redefinitionContext" ordered="false" lowerBound="1" eType="#//Classifier">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (let sm : StateMachine = containingStateMachine() in&#xA;if sm._'context' = null or sm.general->notEmpty() then&#xA;  sm&#xA;else&#xA;  sm._'context'&#xA;endif)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The redefinition context of a Transition is the nearest containing StateMachine.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="container" ordered="false"
+        lowerBound="1" eType="#//Region" eOpposite="#//Region/transition">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Designates the Region that owns this Transition.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//NamedElement/namespace"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="effect" ordered="false"
+        eType="#//Behavior" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="transition"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specifies an optional behavior to be performed when the Transition fires.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guard" ordered="false"
+        eType="#//Constraint">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="transition"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A guard is a Constraint that provides a fine-grained control over the firing of the Transition. The guard is evaluated when an Event occurrence is dispatched by the StateMachine. If the guard is true at that time, the Transition may be enabled, otherwise, it is disabled. Guards should be pure expressions without side effects. Guard expressions with side effects are ill formed.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Namespace/ownedRule"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" ordered="false" lowerBound="1"
+        eType="#//TransitionKind" defaultValueLiteral="external">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Indicates the precise type of the Transition.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="redefinedTransition" ordered="false"
+        eType="#//Transition">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="transition"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Transition that is redefined by this Transition.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//RedefinableElement/redefinedElement"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" ordered="false"
+        lowerBound="1" eType="#//Vertex" volatile="true" transient="true" derived="true"
+        eOpposite="#//Vertex/outgoing.1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Designates the originating Vertex (State or Pseudostate) of the Transition.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" ordered="false"
+        lowerBound="1" eType="#//Vertex" volatile="true" transient="true" derived="true"
+        eOpposite="#//Vertex/incoming.1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Designates the target Vertex that is reached when the Transition is taken.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" ordered="false"
+        upperBound="-1" eType="#//Trigger" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="transition"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specifies the Triggers that may fire the transition.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Trigger" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="trigger_with_ports"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="trigger_with_ports" value="port->notEmpty() implies event.oclIsKindOf(MessageEvent)"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Trigger specifies a specific point  at which an Event occurrence may trigger an effect in a Behavior. A Trigger may be qualified by the Port on which the Event occurred.&#xA;port->notEmpty() implies event.oclIsKindOf(MessageEvent)&#xA;&lt;p>From package UML::CommonBehavior.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" ordered="false"
+        lowerBound="1" eType="#//Event">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="trigger"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Event that detected by the Trigger.&#xA;&lt;p>From package UML::CommonBehavior.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="port" ordered="false" upperBound="-1"
+        eType="#//Port">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="trigger"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A optional Port of through which the given effect is detected.&#xA;&lt;p>From package UML::CommonBehavior.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Type" abstract="true" eSuperTypes="#//PackageableElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Type constrains the values represented by a TypedElement.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+    </eAnnotations>
+    <eOperations name="conformsTo" ordered="false" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (false)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query conformsTo() gives true for a Type that conforms to another. By default, two Types do not conform to each other. This query is intended to be redefined for specific conformance situations.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+      <eParameters name="other" ordered="false" lowerBound="1" eType="#//Type"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="package" ordered="false"
+        eType="#//Package" volatile="true" transient="true" derived="true" eOpposite="#//Package/ownedType.1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specifies the owning Package of this Type, if any.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TypedElement" abstract="true" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TypedElement is a NamedElement that may have a Type specified for it.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" ordered="false" eType="#//Type">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="typedElement"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of the TypedElement.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnmarshallAction" eSuperTypes="#//Action">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="structural_feature number_of_result type_ordering_and_multiplicity multiplicity_of_object object_type"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="structural_feature" value="unmarshallType.allAttributes()->size() >= 1"/>
+      <details key="number_of_result" value="unmarshallType.allAttributes()->size() = result->size()"/>
+      <details key="type_ordering_and_multiplicity" value="let attribute:OrderedSet(Property) = unmarshallType.allAttributes() in&#xD;&#xA;Sequence{1..result->size()}->forAll(i | &#xD;&#xA;&#x9;attribute->at(i).type.conformsTo(result->at(i).type) and&#xD;&#xA;&#x9;attribute->at(i).isOrdered=result->at(i).isOrdered and&#xD;&#xA;&#x9;attribute->at(i).compatibleWith(result->at(i)))"/>
+      <details key="multiplicity_of_object" value="object.is(1,1)"/>
+      <details key="object_type" value="object.type.conformsTo(unmarshallType)"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An UnmarshallAction is an Action that retrieves the values of the StructuralFeatures of an object and places them on OutputPins. &#xA;unmarshallType.allAttributes()->size() >= 1&#xA;unmarshallType.allAttributes()->size() = result->size()&#xA;let attribute:OrderedSet(Property) = unmarshallType.allAttributes() in&#xA;Sequence{1..result->size()}->forAll(i | &#xA;&#x9;attribute->at(i).type.conformsTo(result->at(i).type) and&#xA;&#x9;attribute->at(i).isOrdered=result->at(i).isOrdered and&#xA;&#x9;attribute->at(i).compatibleWith(result->at(i)))&#xA;object.is(1,1)&#xA;object.type.conformsTo(unmarshallType)&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="object" ordered="false"
+        lowerBound="1" eType="#//InputPin" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="unmarshallAction"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The InputPin that gives the object to be unmarshalled.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Action/input"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="result" lowerBound="1"
+        upperBound="-1" eType="#//OutputPin" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="unmarshallAction"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The OutputPins on which are placed the values of the StructuralFeatures of the input object.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Action/output"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="unmarshallType" ordered="false"
+        lowerBound="1" eType="#//Classifier">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="unmarshallAction"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The type of the object to be unmarshalled.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Usage" eSuperTypes="#//Dependency">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Usage is a Dependency in which the client Element requires the supplier Element (or set of Elements) for its full implementation or operation.&#xA;&lt;p>From package UML::CommonStructure.&lt;/p>"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UseCase" eSuperTypes="#//BehavioredClassifier">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="binary_associations no_association_to_use_case cannot_include_self must_have_name"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="binary_associations" value="Association.allInstances()->forAll(a | a.memberEnd.type->includes(self) implies a.memberEnd->size() = 2)"/>
+      <details key="no_association_to_use_case" value="Association.allInstances()->forAll(a | a.memberEnd.type->includes(self) implies &#xD;&#xA;   (&#xD;&#xA;   let usecases: Set(UseCase) = a.memberEnd.type->select(oclIsKindOf(UseCase))->collect(oclAsType(UseCase))->asSet() in&#xD;&#xA;   usecases->size() > 1 implies usecases->collect(subject)->size() > 1&#xD;&#xA;   )&#xD;&#xA;)"/>
+      <details key="cannot_include_self" value="not allIncludedUseCases()->includes(self)"/>
+      <details key="must_have_name" value="name -> notEmpty ()"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A UseCase specifies a set of actions performed by its subjects, which yields an observable result that is of value for one or more Actors or other stakeholders of each subject.&#xA;Association.allInstances()->forAll(a | a.memberEnd.type->includes(self) implies a.memberEnd->size() = 2)&#xA;Association.allInstances()->forAll(a | a.memberEnd.type->includes(self) implies &#xA;   (&#xA;   let usecases: Set(UseCase) = a.memberEnd.type->select(oclIsKindOf(UseCase))->collect(oclAsType(UseCase))->asSet() in&#xA;   usecases->size() > 1 implies usecases->collect(subject)->size() > 1&#xA;   )&#xA;)&#xA;not allIncludedUseCases()->includes(self)&#xA;name -> notEmpty ()&#xA;&lt;p>From package UML::UseCases.&lt;/p>"/>
+    </eAnnotations>
+    <eOperations name="allIncludedUseCases" ordered="false" upperBound="-1" eType="#//UseCase">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (self.include.addition->union(self.include.addition->collect(uc | uc.allIncludedUseCases()))->asSet())"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query allIncludedUseCases() returns the transitive closure of all UseCases (directly or indirectly) included by this UseCase.&#xA;&lt;p>From package UML::UseCases.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extend" ordered="false"
+        upperBound="-1" eType="#//Extend" containment="true" eOpposite="#//Extend/extension">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Extend relationships owned by this UseCase.&#xA;&lt;p>From package UML::UseCases.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Namespace/ownedMember"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extensionPoint" ordered="false"
+        upperBound="-1" eType="#//ExtensionPoint" containment="true" eOpposite="#//ExtensionPoint/useCase">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ExtensionPoints owned by this UseCase.&#xA;&lt;p>From package UML::UseCases.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Namespace/ownedMember"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="include" ordered="false"
+        upperBound="-1" eType="#//Include" containment="true" eOpposite="#//Include/includingCase">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Include relationships owned by this UseCase.&#xA;&lt;p>From package UML::UseCases.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Namespace/ownedMember"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subject" ordered="false"
+        upperBound="-1" eType="#//Classifier" eOpposite="#//Classifier/useCase">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The subjects to which this UseCase applies. Each subject or its parts realize all the UseCases that apply to it.&#xA;&lt;p>From package UML::UseCases.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValuePin" eSuperTypes="#//InputPin">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="no_incoming_edges compatible_type"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="no_incoming_edges" value="incoming->isEmpty()"/>
+      <details key="compatible_type" value="value.type.conformsTo(type)"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A ValuePin is an InputPin that provides a value by evaluating a ValueSpecification.&#xA;incoming->isEmpty()&#xA;value.type.conformsTo(type)&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" ordered="false"
+        lowerBound="1" eType="#//ValueSpecification" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="valuePin"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ValueSpecification that is evaluated to obtain the value that the ValuePin will provide.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueSpecification" abstract="true"
+      eSuperTypes="#//PackageableElement #//TypedElement">
+    <eAnnotations source="duplicates">
+      <contents xsi:type="ecore:EOperation" name="isCompatibleWith" ordered="false"
+          lowerBound="1" eType="#//Boolean">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+          <details key="body" value="result = (self.oclIsKindOf(p.oclType()) and (p.oclIsKindOf(TypedElement) implies &#xD;&#xA;self.type.conformsTo(p.oclAsType(TypedElement).type)))"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+          <details key="documentation" value="The query isCompatibleWith() determines if this ValueSpecification is compatible with the specified ParameterableElement. This ValueSpecification is compatible with ParameterableElement p if the kind of this ValueSpecification is the same as or a subtype of the kind of p. Further, if p is a TypedElement, then the type of this ValueSpecification must be conformant with the type of p.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+        </eAnnotations>
+        <eAnnotations source="redefines" references="#//ParameterableElement/isCompatibleWith"/>
+        <eParameters name="p" ordered="false" lowerBound="1" eType="#//ParameterableElement"/>
+      </contents>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A ValueSpecification is the specification of a (possibly empty) set of values. A ValueSpecification is a ParameterableElement that may be exposed as a formal TemplateParameter and provided as the actual parameter in the binding of a template.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+    </eAnnotations>
+    <eOperations name="booleanValue" ordered="false" eType="#//BooleanObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (null)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query booleanValue() gives a single Boolean value when one can be computed.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="integerValue" ordered="false" eType="#//IntegerObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (null)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query integerValue() gives a single Integer value when one can be computed.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="isComputable" ordered="false" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (false)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query isComputable() determines whether a value specification can be computed in a model. This operation cannot be fully defined in OCL. A conforming implementation is expected to deliver true for this operation for all ValueSpecifications that it can compute, and to compute all of those for which the operation is true. A conforming implementation is expected to be able to compute at least the value of all LiteralSpecifications.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="isNull" ordered="false" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (false)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query isNull() returns true when it can be computed that the value is null.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="realValue" ordered="false" eType="#//RealObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (null)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query realValue() gives a single Real value when one can be computed.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="stringValue" ordered="false" eType="#//String">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (null)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query stringValue() gives a single String value when one can be computed.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="unlimitedValue" ordered="false" eType="#//UnlimitedNaturalObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (null)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The query unlimitedValue() gives a single UnlimitedNatural value when one can be computed.&#xA;&lt;p>From package UML::Values.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueSpecificationAction" eSuperTypes="#//Action">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="multiplicity compatible_type"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="multiplicity" value="result.is(1,1)"/>
+      <details key="compatible_type" value="value.type.conformsTo(result.type)"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A ValueSpecificationAction is an Action that evaluates a ValueSpecification and provides a result.&#xA;result.is(1,1)&#xA;value.type.conformsTo(result.type)&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="result" ordered="false"
+        lowerBound="1" eType="#//OutputPin" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="valueSpecificationAction"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The OutputPin on which the result value is placed.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Action/output"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" ordered="false"
+        lowerBound="1" eType="#//ValueSpecification" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="valueSpecificationAction"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The ValueSpecification to be evaluated.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Element/ownedElement"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//ConnectableElement #//MultiplicityElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Variable is a ConnectableElement that may store values during the execution of an Activity. Reading and writing the values of a Variable provides an alternative means for passing data than the use of ObjectFlows. A Variable may be owned directly by an Activity, in which case it is accessible from anywhere within that activity, or it may be owned by a StructuredActivityNode, in which case it is only accessible within that node.&#xA;&lt;p>From package UML::Activities.&lt;/p>"/>
+    </eAnnotations>
+    <eOperations name="isAccessibleBy" ordered="false" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (if scope&lt;>null then scope.allOwnedNodes()->includes(a)&#xD;&#xA;else a.containingActivity()=activityScope&#xD;&#xA;endif)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A Variable is accessible by Actions within its scope (the Activity or StructuredActivityNode that owns it).&#xA;&lt;p>From package UML::Activities.&lt;/p>"/>
+      </eAnnotations>
+      <eParameters name="a" ordered="false" lowerBound="1" eType="#//Action"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="activityScope" ordered="false"
+        eType="#//Activity" eOpposite="#//Activity/variable">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="An Activity that owns the Variable.&#xA;&lt;p>From package UML::Activities.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//NamedElement/namespace"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="scope" ordered="false"
+        eType="#//StructuredActivityNode" eOpposite="#//StructuredActivityNode/variable">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="A StructuredActivityNode that owns the Variable.&#xA;&lt;p>From package UML::Activities.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//NamedElement/namespace"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableAction" abstract="true" eSuperTypes="#//Action">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="scope_of_variable"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="scope_of_variable" value="variable.isAccessibleBy(self)"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="VariableAction is an abstract class for Actions that operate on a specified Variable.&#xA;variable.isAccessibleBy(self)&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" ordered="false"
+        lowerBound="1" eType="#//Variable">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="variableAction"/>
+        <details key="upper" value="-1"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Variable to be read or written.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Vertex" abstract="true" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Vertex is an abstraction of a node in a StateMachine graph. It can be the source or destination of any number of Transitions.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+    </eAnnotations>
+    <eOperations name="containingStateMachine" ordered="false" lowerBound="1" eType="#//StateMachine">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (if container &lt;> null&#xA;then&#xA;-- the container is a region&#xA;   container.containingStateMachine()&#xA;else &#xA;   if (self.oclIsKindOf(Pseudostate)) and ((self.oclAsType(Pseudostate).kind = PseudostateKind::entryPoint) or (self.oclAsType(Pseudostate).kind = PseudostateKind::exitPoint)) then&#xA;      self.oclAsType(Pseudostate).stateMachine&#xA;   else &#xA;      if (self.oclIsKindOf(ConnectionPointReference)) then&#xA;          self.oclAsType(ConnectionPointReference).state.containingStateMachine() -- no other valid cases possible&#xA;      else &#xA;          null&#xA;      endif&#xA;   endif&#xA;endif&#xA;&#xA;)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The operation containingStateMachine() returns the StateMachine in which this Vertex is defined.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="incoming" ordered="false" upperBound="-1" eType="#//Transition">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (Transition.allInstances()->select(target=self))"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Derivation for Vertex::/incoming.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="isContainedInRegion" ordered="false" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (if (container = r) then&#xD;&#xA;&#x9;true&#xD;&#xA;else&#xD;&#xA;&#x9;if (r.state->isEmpty()) then&#xD;&#xA;&#x9;&#x9;false&#xD;&#xA;&#x9;else&#xD;&#xA;&#x9;&#x9;container.state.isContainedInRegion(r)&#xD;&#xA;&#x9;endif&#xD;&#xA;endif)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="This utility query returns true if the Vertex is contained in the Region r (input argument).&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eParameters name="r" ordered="false" lowerBound="1" eType="#//Region"/>
+    </eOperations>
+    <eOperations name="isContainedInState" ordered="false" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (if not s.isComposite() or container->isEmpty() then&#xD;&#xA;&#x9;false&#xD;&#xA;else&#xD;&#xA;&#x9;if container.state = s then &#xD;&#xA;&#x9;&#x9;true&#xD;&#xA;&#x9;else&#xD;&#xA;&#x9;&#x9;container.state.isContainedInState(s)&#xD;&#xA;&#x9;endif&#xD;&#xA;endif)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="This utility operation returns true if the Vertex is contained in the State s (input argument).&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eParameters name="s" ordered="false" lowerBound="1" eType="#//State"/>
+    </eOperations>
+    <eOperations name="outgoing" ordered="false" upperBound="-1" eType="#//Transition">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="body" value="result = (Transition.allInstances()->select(source=self))"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Derivation for Vertex::/outgoing&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="container" ordered="false"
+        eType="#//Region" eOpposite="#//Region/subvertex">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The Region that contains this Vertex.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//NamedElement/namespace"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incoming" ordered="false"
+        upperBound="-1" eType="#//Transition" changeable="false" volatile="true" transient="true"
+        derived="true" eOpposite="#//Transition/target">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specifies the Transitions entering this Vertex.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoing" ordered="false"
+        upperBound="-1" eType="#//Transition" changeable="false" volatile="true" transient="true"
+        derived="true" eOpposite="#//Transition/source">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Specifies the Transitions departing from this Vertex.&#xA;&lt;p>From package UML::StateMachines.&lt;/p>"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WriteLinkAction" abstract="true" eSuperTypes="#//LinkAction">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="allow_access"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="allow_access" value="endData.end->exists(end |&#xD;&#xA;  end.type=_'context' or&#xD;&#xA;  end.visibility=VisibilityKind::public or &#xD;&#xA;  end.visibility=VisibilityKind::protected and&#xD;&#xA;  endData.end->exists(other | &#xD;&#xA;    other&lt;>end and _'context'.conformsTo(other.type.oclAsType(Classifier))))&#xD;&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="WriteLinkAction is an abstract class for LinkActions that create and destroy links.&#xA;endData.end->exists(end |&#xA;  end.type=_'context' or&#xA;  end.visibility=VisibilityKind::public or &#xA;  end.visibility=VisibilityKind::protected and&#xA;  endData.end->exists(other | &#xA;    other&lt;>end and _'context'.conformsTo(other.type.oclAsType(Classifier))))&#xA;&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WriteStructuralFeatureAction" abstract="true"
+      eSuperTypes="#//StructuralFeatureAction">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="multiplicity_of_result type_of_value multiplicity_of_value type_of_result"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="multiplicity_of_result" value="result &lt;> null implies result.is(1,1)"/>
+      <details key="type_of_value" value="value &lt;> null implies value.type.conformsTo(structuralFeature.type)"/>
+      <details key="multiplicity_of_value" value="value&lt;>null implies value.is(1,1)"/>
+      <details key="type_of_result" value="result &lt;> null implies result.type = object.type"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="WriteStructuralFeatureAction is an abstract class for StructuralFeatureActions that change StructuralFeature values.&#xA;result &lt;> null implies result.is(1,1)&#xA;value &lt;> null implies value.type.conformsTo(structuralFeature.type)&#xA;value&lt;>null implies value.is(1,1)&#xA;result &lt;> null implies result.type = object.type&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="result" ordered="false"
+        eType="#//OutputPin" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="writeStructuralFeatureAction"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The OutputPin on which is put the input object as modified by the WriteStructuralFeatureAction.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Action/output"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" ordered="false"
+        eType="#//InputPin" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="writeStructuralFeatureAction"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The InputPin that provides the value to be added or removed from the StructuralFeature.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Action/input"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WriteVariableAction" abstract="true"
+      eSuperTypes="#//VariableAction">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="value_type multiplicity"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="value_type" value="value &lt;> null implies value.type.conformsTo(variable.type)"/>
+      <details key="multiplicity" value="value&lt;>null implies value.is(1,1)"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="WriteVariableAction is an abstract class for VariableActions that change Variable values.&#xA;value &lt;> null implies value.type.conformsTo(variable.type)&#xA;value&lt;>null implies value.is(1,1)&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" ordered="false"
+        eType="#//InputPin" containment="true">
+      <eAnnotations source="http://schema.omg.org/spec/MOF/2.0/emof.xml#Property.oppositeRoleName">
+        <details key="body" value="writeVariableAction"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The InputPin that gives the value to be added or removed from the Variable.&#xA;&lt;p>From package UML::Actions.&lt;/p>"/>
+      </eAnnotations>
+      <eAnnotations source="subsets" references="#//Action/input"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>
