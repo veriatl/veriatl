@@ -1,4 +1,6 @@
-module Copy;
+-- @atlcompiler emftvm
+
+module UMLCopier;
 create OUT : UMLs from IN : UML;
 
 rule CopyComment {
