@@ -1,14 +1,14 @@
 module Copy;
-create OUT : MM from IN : MM;
+create OUT : UMLs from IN : UML;
 
 rule CopyComment {
  from
-  s : MM!Comment
+  s : UML!Comment
   (
-   s.oclIsTypeOf(MM!Comment)
+   s.oclIsTypeOf(UML!Comment)
   )
  to
-  t : MM!Comment (
+  t : UMLs!Comment (
    body <- s.body,
    annotatedElement <- s.annotatedElement,
    ownedElement <- s.ownedElement,
@@ -19,12 +19,12 @@ rule CopyComment {
 
 rule CopyPackage {
  from
-  s : MM!Package
+  s : UML!Package
   (
-   s.oclIsTypeOf(MM!Package)
+   s.oclIsTypeOf(UML!Package)
   )
  to
-  t : MM!Package (
+  t : UMLs!Package (
    ownedType <- s.ownedType,
    packageMerge <- s.packageMerge,
    packagedElement <- s.packagedElement,
@@ -70,12 +70,12 @@ rule CopyPackage {
 
 rule CopyDependency {
  from
-  s : MM!Dependency
+  s : UML!Dependency
   (
-   s.oclIsTypeOf(MM!Dependency)
+   s.oclIsTypeOf(UML!Dependency)
   )
  to
-  t : MM!Dependency (
+  t : UMLs!Dependency (
    supplier <- s.supplier,
    client <- s.client,
    name <- s.name,
@@ -103,12 +103,12 @@ rule CopyDependency {
 
 rule CopyElementImport {
  from
-  s : MM!ElementImport
+  s : UML!ElementImport
   (
-   s.oclIsTypeOf(MM!ElementImport)
+   s.oclIsTypeOf(UML!ElementImport)
   )
  to
-  t : MM!ElementImport (
+  t : UMLs!ElementImport (
    visibility <- s.visibility,
    alias <- s.alias,
    importedElement <- s.importedElement,
@@ -124,12 +124,12 @@ rule CopyElementImport {
 
 rule CopyPackageImport {
  from
-  s : MM!PackageImport
+  s : UML!PackageImport
   (
-   s.oclIsTypeOf(MM!PackageImport)
+   s.oclIsTypeOf(UML!PackageImport)
   )
  to
-  t : MM!PackageImport (
+  t : UMLs!PackageImport (
    visibility <- s.visibility,
    importedPackage <- s.importedPackage,
    importingNamespace <- s.importingNamespace,
@@ -144,12 +144,12 @@ rule CopyPackageImport {
 
 rule CopyConstraint {
  from
-  s : MM!Constraint
+  s : UML!Constraint
   (
-   s.oclIsTypeOf(MM!Constraint)
+   s.oclIsTypeOf(UML!Constraint)
   )
  to
-  t : MM!Constraint (
+  t : UMLs!Constraint (
    constrainedElement <- s.constrainedElement,
    specification <- s.specification,
    context <- s.context,
@@ -172,12 +172,12 @@ rule CopyConstraint {
 
 rule CopyAssociation {
  from
-  s : MM!Association
+  s : UML!Association
   (
-   s.oclIsTypeOf(MM!Association)
+   s.oclIsTypeOf(UML!Association)
   )
  to
-  t : MM!Association (
+  t : UMLs!Association (
    ownedEnd <- s.ownedEnd,
    memberEnd <- s.memberEnd,
    isDerived <- s.isDerived,
@@ -252,12 +252,12 @@ rule CopyAssociation {
 
 rule CopyTemplateBinding {
  from
-  s : MM!TemplateBinding
+  s : UML!TemplateBinding
   (
-   s.oclIsTypeOf(MM!TemplateBinding)
+   s.oclIsTypeOf(UML!TemplateBinding)
   )
  to
-  t : MM!TemplateBinding (
+  t : UMLs!TemplateBinding (
    signature <- s.signature,
    parameterSubstitution <- s.parameterSubstitution,
    boundElement <- s.boundElement,
@@ -272,12 +272,12 @@ rule CopyTemplateBinding {
 
 rule CopyTemplateSignature {
  from
-  s : MM!TemplateSignature
+  s : UML!TemplateSignature
   (
-   s.oclIsTypeOf(MM!TemplateSignature)
+   s.oclIsTypeOf(UML!TemplateSignature)
   )
  to
-  t : MM!TemplateSignature (
+  t : UMLs!TemplateSignature (
    parameter <- s.parameter,
    ownedParameter <- s.ownedParameter,
    template <- s.template,
@@ -289,12 +289,12 @@ rule CopyTemplateSignature {
 
 rule CopyTemplateParameter {
  from
-  s : MM!TemplateParameter
+  s : UML!TemplateParameter
   (
-   s.oclIsTypeOf(MM!TemplateParameter)
+   s.oclIsTypeOf(UML!TemplateParameter)
   )
  to
-  t : MM!TemplateParameter (
+  t : UMLs!TemplateParameter (
    parameteredElement <- s.parameteredElement,
    ownedParameteredElement <- s.ownedParameteredElement,
    default <- s.default,
@@ -307,12 +307,12 @@ rule CopyTemplateParameter {
 
 rule CopyTemplateParameterSubstitution {
  from
-  s : MM!TemplateParameterSubstitution
+  s : UML!TemplateParameterSubstitution
   (
-   s.oclIsTypeOf(MM!TemplateParameterSubstitution)
+   s.oclIsTypeOf(UML!TemplateParameterSubstitution)
   )
  to
-  t : MM!TemplateParameterSubstitution (
+  t : UMLs!TemplateParameterSubstitution (
    formal <- s.formal,
    actual <- s.actual,
    ownedActual <- s.ownedActual,
@@ -325,12 +325,12 @@ rule CopyTemplateParameterSubstitution {
 
 rule CopyGeneralization {
  from
-  s : MM!Generalization
+  s : UML!Generalization
   (
-   s.oclIsTypeOf(MM!Generalization)
+   s.oclIsTypeOf(UML!Generalization)
   )
  to
-  t : MM!Generalization (
+  t : UMLs!Generalization (
    isSubstitutable <- s.isSubstitutable,
    general <- s.general,
    generalizationSet <- s.generalizationSet,
@@ -346,12 +346,12 @@ rule CopyGeneralization {
 
 rule CopyGeneralizationSet {
  from
-  s : MM!GeneralizationSet
+  s : UML!GeneralizationSet
   (
-   s.oclIsTypeOf(MM!GeneralizationSet)
+   s.oclIsTypeOf(UML!GeneralizationSet)
   )
  to
-  t : MM!GeneralizationSet (
+  t : UMLs!GeneralizationSet (
    isCovering <- s.isCovering,
    isDisjoint <- s.isDisjoint,
    powertype <- s.powertype,
@@ -375,12 +375,12 @@ rule CopyGeneralizationSet {
 
 rule CopySubstitution {
  from
-  s : MM!Substitution
+  s : UML!Substitution
   (
-   s.oclIsTypeOf(MM!Substitution)
+   s.oclIsTypeOf(UML!Substitution)
   )
  to
-  t : MM!Substitution (
+  t : UMLs!Substitution (
    contract <- s.contract,
    substitutingClassifier <- s.substitutingClassifier,
    mapping <- s.mapping,
@@ -411,12 +411,12 @@ rule CopySubstitution {
 
 rule CopyRealization {
  from
-  s : MM!Realization
+  s : UML!Realization
   (
-   s.oclIsTypeOf(MM!Realization)
+   s.oclIsTypeOf(UML!Realization)
   )
  to
-  t : MM!Realization (
+  t : UMLs!Realization (
    mapping <- s.mapping,
    supplier <- s.supplier,
    client <- s.client,
@@ -445,12 +445,12 @@ rule CopyRealization {
 
 rule CopyAbstraction {
  from
-  s : MM!Abstraction
+  s : UML!Abstraction
   (
-   s.oclIsTypeOf(MM!Abstraction)
+   s.oclIsTypeOf(UML!Abstraction)
   )
  to
-  t : MM!Abstraction (
+  t : UMLs!Abstraction (
    mapping <- s.mapping,
    supplier <- s.supplier,
    client <- s.client,
@@ -479,12 +479,12 @@ rule CopyAbstraction {
 
 rule CopyOpaqueExpression {
  from
-  s : MM!OpaqueExpression
+  s : UML!OpaqueExpression
   (
-   s.oclIsTypeOf(MM!OpaqueExpression)
+   s.oclIsTypeOf(UML!OpaqueExpression)
   )
  to
-  t : MM!OpaqueExpression (
+  t : UMLs!OpaqueExpression (
    body <- s.body,
    language <- s.language,
    result <- s.result,
@@ -518,12 +518,12 @@ rule CopyOpaqueExpression {
 
 rule CopyParameter {
  from
-  s : MM!Parameter
+  s : UML!Parameter
   (
-   s.oclIsTypeOf(MM!Parameter)
+   s.oclIsTypeOf(UML!Parameter)
   )
  to
-  t : MM!Parameter (
+  t : UMLs!Parameter (
    parameterSet <- s.parameterSet,
    operation <- s.operation,
    direction <- s.direction,
@@ -562,12 +562,12 @@ rule CopyParameter {
 
 rule CopyConnectorEnd {
  from
-  s : MM!ConnectorEnd
+  s : UML!ConnectorEnd
   (
-   s.oclIsTypeOf(MM!ConnectorEnd)
+   s.oclIsTypeOf(UML!ConnectorEnd)
   )
  to
-  t : MM!ConnectorEnd (
+  t : UMLs!ConnectorEnd (
    definingEnd <- s.definingEnd,
    role <- s.role,
    partWithPort <- s.partWithPort,
@@ -585,12 +585,12 @@ rule CopyConnectorEnd {
 
 rule CopyProperty {
  from
-  s : MM!Property
+  s : UML!Property
   (
-   s.oclIsTypeOf(MM!Property)
+   s.oclIsTypeOf(UML!Property)
   )
  to
-  t : MM!Property (
+  t : UMLs!Property (
    class <- s.class,
    isDerived <- s.isDerived,
    isDerivedUnion <- s.isDerivedUnion,
@@ -668,12 +668,12 @@ rule CopyProperty {
 
 rule CopyDeployment {
  from
-  s : MM!Deployment
+  s : UML!Deployment
   (
-   s.oclIsTypeOf(MM!Deployment)
+   s.oclIsTypeOf(UML!Deployment)
   )
  to
-  t : MM!Deployment (
+  t : UMLs!Deployment (
    deployedArtifact <- s.deployedArtifact,
    configuration <- s.configuration,
    location <- s.location,
@@ -704,12 +704,12 @@ rule CopyDeployment {
 
 rule CopyDeploymentSpecification {
  from
-  s : MM!DeploymentSpecification
+  s : UML!DeploymentSpecification
   (
-   s.oclIsTypeOf(MM!DeploymentSpecification)
+   s.oclIsTypeOf(UML!DeploymentSpecification)
   )
  to
-  t : MM!DeploymentSpecification (
+  t : UMLs!DeploymentSpecification (
    deploymentLocation <- s.deploymentLocation,
    executionLocation <- s.executionLocation,
    deployment <- s.deployment,
@@ -792,12 +792,12 @@ rule CopyDeploymentSpecification {
 
 rule CopyArtifact {
  from
-  s : MM!Artifact
+  s : UML!Artifact
   (
-   s.oclIsTypeOf(MM!Artifact)
+   s.oclIsTypeOf(UML!Artifact)
   )
  to
-  t : MM!Artifact (
+  t : UMLs!Artifact (
    fileName <- s.fileName,
    nestedArtifact <- s.nestedArtifact,
    manifestation <- s.manifestation,
@@ -877,12 +877,12 @@ rule CopyArtifact {
 
 rule CopyManifestation {
  from
-  s : MM!Manifestation
+  s : UML!Manifestation
   (
-   s.oclIsTypeOf(MM!Manifestation)
+   s.oclIsTypeOf(UML!Manifestation)
   )
  to
-  t : MM!Manifestation (
+  t : UMLs!Manifestation (
    utilizedElement <- s.utilizedElement,
    mapping <- s.mapping,
    supplier <- s.supplier,
@@ -912,12 +912,12 @@ rule CopyManifestation {
 
 rule CopyOperation {
  from
-  s : MM!Operation
+  s : UML!Operation
   (
-   s.oclIsTypeOf(MM!Operation)
+   s.oclIsTypeOf(UML!Operation)
   )
  to
-  t : MM!Operation (
+  t : UMLs!Operation (
    isQuery <- s.isQuery,
    isOrdered <- s.isOrdered,
    isUnique <- s.isUnique,
@@ -978,12 +978,12 @@ rule CopyOperation {
 
 rule CopyClass {
  from
-  s : MM!Class
+  s : UML!Class
   (
-   s.oclIsTypeOf(MM!Class)
+   s.oclIsTypeOf(UML!Class)
   )
  to
-  t : MM!Class (
+  t : UMLs!Class (
    nestedClassifier <- s.nestedClassifier,
    ownedOperation <- s.ownedOperation,
    superClass <- s.superClass,
@@ -1124,12 +1124,12 @@ rule CopyClass {
 
 rule CopyInterfaceRealization {
  from
-  s : MM!InterfaceRealization
+  s : UML!InterfaceRealization
   (
-   s.oclIsTypeOf(MM!InterfaceRealization)
+   s.oclIsTypeOf(UML!InterfaceRealization)
   )
  to
-  t : MM!InterfaceRealization (
+  t : UMLs!InterfaceRealization (
    contract <- s.contract,
    implementingClassifier <- s.implementingClassifier,
    mapping <- s.mapping,
@@ -1160,12 +1160,12 @@ rule CopyInterfaceRealization {
 
 rule CopyInterface {
  from
-  s : MM!Interface
+  s : UML!Interface
   (
-   s.oclIsTypeOf(MM!Interface)
+   s.oclIsTypeOf(UML!Interface)
   )
  to
-  t : MM!Interface (
+  t : UMLs!Interface (
    ownedAttribute <- s.ownedAttribute,
    ownedOperation <- s.ownedOperation,
    nestedClassifier <- s.nestedClassifier,
@@ -1237,12 +1237,12 @@ rule CopyInterface {
 
 rule CopyReception {
  from
-  s : MM!Reception
+  s : UML!Reception
   (
-   s.oclIsTypeOf(MM!Reception)
+   s.oclIsTypeOf(UML!Reception)
   )
  to
-  t : MM!Reception (
+  t : UMLs!Reception (
    signal <- s.signal,
    ownedParameter <- s.ownedParameter,
    isAbstract <- s.isAbstract,
@@ -1284,12 +1284,12 @@ rule CopyReception {
 
 rule CopySignal {
  from
-  s : MM!Signal
+  s : UML!Signal
   (
-   s.oclIsTypeOf(MM!Signal)
+   s.oclIsTypeOf(UML!Signal)
   )
  to
-  t : MM!Signal (
+  t : UMLs!Signal (
    ownedAttribute <- s.ownedAttribute,
    isAbstract <- s.isAbstract,
    generalization <- s.generalization,
@@ -1356,12 +1356,12 @@ rule CopySignal {
 
 rule CopyProtocolStateMachine {
  from
-  s : MM!ProtocolStateMachine
+  s : UML!ProtocolStateMachine
   (
-   s.oclIsTypeOf(MM!ProtocolStateMachine)
+   s.oclIsTypeOf(UML!ProtocolStateMachine)
   )
  to
-  t : MM!ProtocolStateMachine (
+  t : UMLs!ProtocolStateMachine (
    conformance <- s.conformance,
    region <- s.region,
    submachineState <- s.submachineState,
@@ -1515,12 +1515,12 @@ rule CopyProtocolStateMachine {
 
 rule CopyStateMachine {
  from
-  s : MM!StateMachine
+  s : UML!StateMachine
   (
-   s.oclIsTypeOf(MM!StateMachine)
+   s.oclIsTypeOf(UML!StateMachine)
   )
  to
-  t : MM!StateMachine (
+  t : UMLs!StateMachine (
    region <- s.region,
    submachineState <- s.submachineState,
    connectionPoint <- s.connectionPoint,
@@ -1673,12 +1673,12 @@ rule CopyStateMachine {
 
 rule CopyRegion {
  from
-  s : MM!Region
+  s : UML!Region
   (
-   s.oclIsTypeOf(MM!Region)
+   s.oclIsTypeOf(UML!Region)
   )
  to
-  t : MM!Region (
+  t : UMLs!Region (
    subvertex <- s.subvertex,
    transition <- s.transition,
    state <- s.state,
@@ -1716,12 +1716,12 @@ rule CopyRegion {
 
 rule CopyTransition {
  from
-  s : MM!Transition
+  s : UML!Transition
   (
-   s.oclIsTypeOf(MM!Transition)
+   s.oclIsTypeOf(UML!Transition)
   )
  to
-  t : MM!Transition (
+  t : UMLs!Transition (
    kind <- s.kind,
    container <- s.container,
    source <- s.source,
@@ -1762,12 +1762,12 @@ rule CopyTransition {
 
 rule CopyTrigger {
  from
-  s : MM!Trigger
+  s : UML!Trigger
   (
-   s.oclIsTypeOf(MM!Trigger)
+   s.oclIsTypeOf(UML!Trigger)
   )
  to
-  t : MM!Trigger (
+  t : UMLs!Trigger (
    event <- s.event,
    port <- s.port,
    name <- s.name,
@@ -1784,12 +1784,12 @@ rule CopyTrigger {
 
 rule CopyPort {
  from
-  s : MM!Port
+  s : UML!Port
   (
-   s.oclIsTypeOf(MM!Port)
+   s.oclIsTypeOf(UML!Port)
   )
  to
-  t : MM!Port (
+  t : UMLs!Port (
    isBehavior <- s.isBehavior,
    isService <- s.isService,
    required <- s.required,
@@ -1873,12 +1873,12 @@ rule CopyPort {
 
 rule CopyState {
  from
-  s : MM!State
+  s : UML!State
   (
-   s.oclIsTypeOf(MM!State)
+   s.oclIsTypeOf(UML!State)
   )
  to
-  t : MM!State (
+  t : UMLs!State (
    isComposite <- s.isComposite,
    isOrthogonal <- s.isOrthogonal,
    isSimple <- s.isSimple,
@@ -1937,12 +1937,12 @@ rule CopyState {
 
 rule CopyConnectionPointReference {
  from
-  s : MM!ConnectionPointReference
+  s : UML!ConnectionPointReference
   (
-   s.oclIsTypeOf(MM!ConnectionPointReference)
+   s.oclIsTypeOf(UML!ConnectionPointReference)
   )
  to
-  t : MM!ConnectionPointReference (
+  t : UMLs!ConnectionPointReference (
    entry <- s.entry,
    exit <- s.exit,
    state <- s.state,
@@ -1963,12 +1963,12 @@ rule CopyConnectionPointReference {
 
 rule CopyPseudostate {
  from
-  s : MM!Pseudostate
+  s : UML!Pseudostate
   (
-   s.oclIsTypeOf(MM!Pseudostate)
+   s.oclIsTypeOf(UML!Pseudostate)
   )
  to
-  t : MM!Pseudostate (
+  t : UMLs!Pseudostate (
    kind <- s.kind,
    stateMachine <- s.stateMachine,
    state <- s.state,
@@ -1989,12 +1989,12 @@ rule CopyPseudostate {
 
 rule CopyProtocolConformance {
  from
-  s : MM!ProtocolConformance
+  s : UML!ProtocolConformance
   (
-   s.oclIsTypeOf(MM!ProtocolConformance)
+   s.oclIsTypeOf(UML!ProtocolConformance)
   )
  to
-  t : MM!ProtocolConformance (
+  t : UMLs!ProtocolConformance (
    generalMachine <- s.generalMachine,
    specificMachine <- s.specificMachine,
    source <- s.source,
@@ -2008,12 +2008,12 @@ rule CopyProtocolConformance {
 
 rule CopyConnector {
  from
-  s : MM!Connector
+  s : UML!Connector
   (
-   s.oclIsTypeOf(MM!Connector)
+   s.oclIsTypeOf(UML!Connector)
   )
  to
-  t : MM!Connector (
+  t : UMLs!Connector (
    type <- s.type,
    redefinedConnector <- s.redefinedConnector,
    end <- s.end,
@@ -2038,12 +2038,12 @@ rule CopyConnector {
 
 rule CopyExtension {
  from
-  s : MM!Extension
+  s : UML!Extension
   (
-   s.oclIsTypeOf(MM!Extension)
+   s.oclIsTypeOf(UML!Extension)
   )
  to
-  t : MM!Extension (
+  t : UMLs!Extension (
    isRequired <- s.isRequired,
    metaclass <- s.metaclass,
    ownedEnd <- s.ownedEnd,
@@ -2120,12 +2120,12 @@ rule CopyExtension {
 
 rule CopyExtensionEnd {
  from
-  s : MM!ExtensionEnd
+  s : UML!ExtensionEnd
   (
-   s.oclIsTypeOf(MM!ExtensionEnd)
+   s.oclIsTypeOf(UML!ExtensionEnd)
   )
  to
-  t : MM!ExtensionEnd (
+  t : UMLs!ExtensionEnd (
    class <- s.class,
    isDerived <- s.isDerived,
    isDerivedUnion <- s.isDerivedUnion,
@@ -2203,12 +2203,12 @@ rule CopyExtensionEnd {
 
 rule CopyStereotype {
  from
-  s : MM!Stereotype
+  s : UML!Stereotype
   (
-   s.oclIsTypeOf(MM!Stereotype)
+   s.oclIsTypeOf(UML!Stereotype)
   )
  to
-  t : MM!Stereotype (
+  t : UMLs!Stereotype (
    icon <- s.icon,
    nestedClassifier <- s.nestedClassifier,
    ownedOperation <- s.ownedOperation,
@@ -2350,12 +2350,12 @@ rule CopyStereotype {
 
 rule CopyImage {
  from
-  s : MM!Image
+  s : UML!Image
   (
-   s.oclIsTypeOf(MM!Image)
+   s.oclIsTypeOf(UML!Image)
   )
  to
-  t : MM!Image (
+  t : UMLs!Image (
    content <- s.content,
    location <- s.location,
    format <- s.format,
@@ -2367,12 +2367,12 @@ rule CopyImage {
 
 rule CopyProfile {
  from
-  s : MM!Profile
+  s : UML!Profile
   (
-   s.oclIsTypeOf(MM!Profile)
+   s.oclIsTypeOf(UML!Profile)
   )
  to
-  t : MM!Profile (
+  t : UMLs!Profile (
    ownedStereotype <- s.ownedStereotype,
    metaclassReference <- s.metaclassReference,
    metamodelReference <- s.metamodelReference,
@@ -2421,12 +2421,12 @@ rule CopyProfile {
 
 rule CopyModel {
  from
-  s : MM!Model
+  s : UML!Model
   (
-   s.oclIsTypeOf(MM!Model)
+   s.oclIsTypeOf(UML!Model)
   )
  to
-  t : MM!Model (
+  t : UMLs!Model (
    viewpoint <- s.viewpoint,
    ownedType <- s.ownedType,
    packageMerge <- s.packageMerge,
@@ -2473,12 +2473,12 @@ rule CopyModel {
 
 rule CopyParameterSet {
  from
-  s : MM!ParameterSet
+  s : UML!ParameterSet
   (
-   s.oclIsTypeOf(MM!ParameterSet)
+   s.oclIsTypeOf(UML!ParameterSet)
   )
  to
-  t : MM!ParameterSet (
+  t : UMLs!ParameterSet (
    parameter <- s.parameter,
    condition <- s.condition,
    name <- s.name,
@@ -2495,12 +2495,12 @@ rule CopyParameterSet {
 
 rule CopyDataType {
  from
-  s : MM!DataType
+  s : UML!DataType
   (
-   s.oclIsTypeOf(MM!DataType)
+   s.oclIsTypeOf(UML!DataType)
   )
  to
-  t : MM!DataType (
+  t : UMLs!DataType (
    ownedAttribute <- s.ownedAttribute,
    ownedOperation <- s.ownedOperation,
    isAbstract <- s.isAbstract,
@@ -2568,12 +2568,12 @@ rule CopyDataType {
 
 rule CopyOperationTemplateParameter {
  from
-  s : MM!OperationTemplateParameter
+  s : UML!OperationTemplateParameter
   (
-   s.oclIsTypeOf(MM!OperationTemplateParameter)
+   s.oclIsTypeOf(UML!OperationTemplateParameter)
   )
  to
-  t : MM!OperationTemplateParameter (
+  t : UMLs!OperationTemplateParameter (
    parameteredElement <- s.parameteredElement,
    ownedParameteredElement <- s.ownedParameteredElement,
    default <- s.default,
@@ -2586,12 +2586,12 @@ rule CopyOperationTemplateParameter {
 
 rule CopyConnectableElementTemplateParameter {
  from
-  s : MM!ConnectableElementTemplateParameter
+  s : UML!ConnectableElementTemplateParameter
   (
-   s.oclIsTypeOf(MM!ConnectableElementTemplateParameter)
+   s.oclIsTypeOf(UML!ConnectableElementTemplateParameter)
   )
  to
-  t : MM!ConnectableElementTemplateParameter (
+  t : UMLs!ConnectableElementTemplateParameter (
    parameteredElement <- s.parameteredElement,
    ownedParameteredElement <- s.ownedParameteredElement,
    default <- s.default,
@@ -2604,12 +2604,12 @@ rule CopyConnectableElementTemplateParameter {
 
 rule CopyCollaborationUse {
  from
-  s : MM!CollaborationUse
+  s : UML!CollaborationUse
   (
-   s.oclIsTypeOf(MM!CollaborationUse)
+   s.oclIsTypeOf(UML!CollaborationUse)
   )
  to
-  t : MM!CollaborationUse (
+  t : UMLs!CollaborationUse (
    type <- s.type,
    roleBinding <- s.roleBinding,
    name <- s.name,
@@ -2626,12 +2626,12 @@ rule CopyCollaborationUse {
 
 rule CopyCollaboration {
  from
-  s : MM!Collaboration
+  s : UML!Collaboration
   (
-   s.oclIsTypeOf(MM!Collaboration)
+   s.oclIsTypeOf(UML!Collaboration)
   )
  to
-  t : MM!Collaboration (
+  t : UMLs!Collaboration (
    collaborationRole <- s.collaborationRole,
    ownedBehavior <- s.ownedBehavior,
    classifierBehavior <- s.classifierBehavior,
@@ -2766,12 +2766,12 @@ rule CopyCollaboration {
 
 rule CopyUseCase {
  from
-  s : MM!UseCase
+  s : UML!UseCase
   (
-   s.oclIsTypeOf(MM!UseCase)
+   s.oclIsTypeOf(UML!UseCase)
   )
  to
-  t : MM!UseCase (
+  t : UMLs!UseCase (
    include <- s.include,
    extend <- s.extend,
    extensionPoint <- s.extensionPoint,
@@ -2845,12 +2845,12 @@ rule CopyUseCase {
 
 rule CopyInclude {
  from
-  s : MM!Include
+  s : UML!Include
   (
-   s.oclIsTypeOf(MM!Include)
+   s.oclIsTypeOf(UML!Include)
   )
  to
-  t : MM!Include (
+  t : UMLs!Include (
    addition <- s.addition,
    includingCase <- s.includingCase,
    name <- s.name,
@@ -2873,12 +2873,12 @@ rule CopyInclude {
 
 rule CopyExtend {
  from
-  s : MM!Extend
+  s : UML!Extend
   (
-   s.oclIsTypeOf(MM!Extend)
+   s.oclIsTypeOf(UML!Extend)
   )
  to
-  t : MM!Extend (
+  t : UMLs!Extend (
    extendedCase <- s.extendedCase,
    condition <- s.condition,
    extensionLocation <- s.extensionLocation,
@@ -2903,12 +2903,12 @@ rule CopyExtend {
 
 rule CopyExtensionPoint {
  from
-  s : MM!ExtensionPoint
+  s : UML!ExtensionPoint
   (
-   s.oclIsTypeOf(MM!ExtensionPoint)
+   s.oclIsTypeOf(UML!ExtensionPoint)
   )
  to
-  t : MM!ExtensionPoint (
+  t : UMLs!ExtensionPoint (
    useCase <- s.useCase,
    isLeaf <- s.isLeaf,
    redefinedElement <- s.redefinedElement,
@@ -2927,12 +2927,12 @@ rule CopyExtensionPoint {
 
 rule CopyRedefinableTemplateSignature {
  from
-  s : MM!RedefinableTemplateSignature
+  s : UML!RedefinableTemplateSignature
   (
-   s.oclIsTypeOf(MM!RedefinableTemplateSignature)
+   s.oclIsTypeOf(UML!RedefinableTemplateSignature)
   )
  to
-  t : MM!RedefinableTemplateSignature (
+  t : UMLs!RedefinableTemplateSignature (
    extendedSignature <- s.extendedSignature,
    inheritedParameter <- s.inheritedParameter,
    classifier <- s.classifier,
@@ -2959,12 +2959,12 @@ rule CopyRedefinableTemplateSignature {
 
 rule CopyClassifierTemplateParameter {
  from
-  s : MM!ClassifierTemplateParameter
+  s : UML!ClassifierTemplateParameter
   (
-   s.oclIsTypeOf(MM!ClassifierTemplateParameter)
+   s.oclIsTypeOf(UML!ClassifierTemplateParameter)
   )
  to
-  t : MM!ClassifierTemplateParameter (
+  t : UMLs!ClassifierTemplateParameter (
    allowSubstitutable <- s.allowSubstitutable,
    constrainingClassifier <- s.constrainingClassifier,
    parameteredElement <- s.parameteredElement,
@@ -2979,12 +2979,12 @@ rule CopyClassifierTemplateParameter {
 
 rule CopyStringExpression {
  from
-  s : MM!StringExpression
+  s : UML!StringExpression
   (
-   s.oclIsTypeOf(MM!StringExpression)
+   s.oclIsTypeOf(UML!StringExpression)
   )
  to
-  t : MM!StringExpression (
+  t : UMLs!StringExpression (
    subExpression <- s.subExpression,
    owningExpression <- s.owningExpression,
    symbol <- s.symbol,
@@ -3023,12 +3023,12 @@ rule CopyStringExpression {
 
 rule CopyExpression {
  from
-  s : MM!Expression
+  s : UML!Expression
   (
-   s.oclIsTypeOf(MM!Expression)
+   s.oclIsTypeOf(UML!Expression)
   )
  to
-  t : MM!Expression (
+  t : UMLs!Expression (
    symbol <- s.symbol,
    operand <- s.operand,
    name <- s.name,
@@ -3060,12 +3060,12 @@ rule CopyExpression {
 
 rule CopyUsage {
  from
-  s : MM!Usage
+  s : UML!Usage
   (
-   s.oclIsTypeOf(MM!Usage)
+   s.oclIsTypeOf(UML!Usage)
   )
  to
-  t : MM!Usage (
+  t : UMLs!Usage (
    supplier <- s.supplier,
    client <- s.client,
    name <- s.name,
@@ -3093,12 +3093,12 @@ rule CopyUsage {
 
 rule CopyPackageMerge {
  from
-  s : MM!PackageMerge
+  s : UML!PackageMerge
   (
-   s.oclIsTypeOf(MM!PackageMerge)
+   s.oclIsTypeOf(UML!PackageMerge)
   )
  to
-  t : MM!PackageMerge (
+  t : UMLs!PackageMerge (
    mergedPackage <- s.mergedPackage,
    receivingPackage <- s.receivingPackage,
    source <- s.source,
@@ -3112,12 +3112,12 @@ rule CopyPackageMerge {
 
 rule CopyProfileApplication {
  from
-  s : MM!ProfileApplication
+  s : UML!ProfileApplication
   (
-   s.oclIsTypeOf(MM!ProfileApplication)
+   s.oclIsTypeOf(UML!ProfileApplication)
   )
  to
-  t : MM!ProfileApplication (
+  t : UMLs!ProfileApplication (
    appliedProfile <- s.appliedProfile,
    isStrict <- s.isStrict,
    applyingPackage <- s.applyingPackage,
@@ -3132,12 +3132,12 @@ rule CopyProfileApplication {
 
 rule CopyEnumeration {
  from
-  s : MM!Enumeration
+  s : UML!Enumeration
   (
-   s.oclIsTypeOf(MM!Enumeration)
+   s.oclIsTypeOf(UML!Enumeration)
   )
  to
-  t : MM!Enumeration (
+  t : UMLs!Enumeration (
    ownedLiteral <- s.ownedLiteral,
    ownedAttribute <- s.ownedAttribute,
    ownedOperation <- s.ownedOperation,
@@ -3206,12 +3206,12 @@ rule CopyEnumeration {
 
 rule CopyEnumerationLiteral {
  from
-  s : MM!EnumerationLiteral
+  s : UML!EnumerationLiteral
   (
-   s.oclIsTypeOf(MM!EnumerationLiteral)
+   s.oclIsTypeOf(UML!EnumerationLiteral)
   )
  to
-  t : MM!EnumerationLiteral (
+  t : UMLs!EnumerationLiteral (
    classifier <- s.classifier,
    slot <- s.slot,
    specification <- s.specification,
@@ -3254,12 +3254,12 @@ rule CopyEnumerationLiteral {
 
 rule CopyInstanceSpecification {
  from
-  s : MM!InstanceSpecification
+  s : UML!InstanceSpecification
   (
-   s.oclIsTypeOf(MM!InstanceSpecification)
+   s.oclIsTypeOf(UML!InstanceSpecification)
   )
  to
-  t : MM!InstanceSpecification (
+  t : UMLs!InstanceSpecification (
    classifier <- s.classifier,
    slot <- s.slot,
    specification <- s.specification,
@@ -3302,12 +3302,12 @@ rule CopyInstanceSpecification {
 
 rule CopySlot {
  from
-  s : MM!Slot
+  s : UML!Slot
   (
-   s.oclIsTypeOf(MM!Slot)
+   s.oclIsTypeOf(UML!Slot)
   )
  to
-  t : MM!Slot (
+  t : UMLs!Slot (
    definingFeature <- s.definingFeature,
    value <- s.value,
    owningInstance <- s.owningInstance,
@@ -3319,12 +3319,12 @@ rule CopySlot {
 
 rule CopyPrimitiveType {
  from
-  s : MM!PrimitiveType
+  s : UML!PrimitiveType
   (
-   s.oclIsTypeOf(MM!PrimitiveType)
+   s.oclIsTypeOf(UML!PrimitiveType)
   )
  to
-  t : MM!PrimitiveType (
+  t : UMLs!PrimitiveType (
    ownedAttribute <- s.ownedAttribute,
    ownedOperation <- s.ownedOperation,
    isAbstract <- s.isAbstract,
@@ -3392,12 +3392,12 @@ rule CopyPrimitiveType {
 
 rule CopyLiteralInteger {
  from
-  s : MM!LiteralInteger
+  s : UML!LiteralInteger
   (
-   s.oclIsTypeOf(MM!LiteralInteger)
+   s.oclIsTypeOf(UML!LiteralInteger)
   )
  to
-  t : MM!LiteralInteger (
+  t : UMLs!LiteralInteger (
    value <- s.value,
    name <- s.name,
    visibility <- s.visibility,
@@ -3428,12 +3428,12 @@ rule CopyLiteralInteger {
 
 rule CopyLiteralString {
  from
-  s : MM!LiteralString
+  s : UML!LiteralString
   (
-   s.oclIsTypeOf(MM!LiteralString)
+   s.oclIsTypeOf(UML!LiteralString)
   )
  to
-  t : MM!LiteralString (
+  t : UMLs!LiteralString (
    value <- s.value,
    name <- s.name,
    visibility <- s.visibility,
@@ -3464,12 +3464,12 @@ rule CopyLiteralString {
 
 rule CopyLiteralBoolean {
  from
-  s : MM!LiteralBoolean
+  s : UML!LiteralBoolean
   (
-   s.oclIsTypeOf(MM!LiteralBoolean)
+   s.oclIsTypeOf(UML!LiteralBoolean)
   )
  to
-  t : MM!LiteralBoolean (
+  t : UMLs!LiteralBoolean (
    value <- s.value,
    name <- s.name,
    visibility <- s.visibility,
@@ -3500,12 +3500,12 @@ rule CopyLiteralBoolean {
 
 rule CopyLiteralNull {
  from
-  s : MM!LiteralNull
+  s : UML!LiteralNull
   (
-   s.oclIsTypeOf(MM!LiteralNull)
+   s.oclIsTypeOf(UML!LiteralNull)
   )
  to
-  t : MM!LiteralNull (
+  t : UMLs!LiteralNull (
    name <- s.name,
    visibility <- s.visibility,
    qualifiedName <- s.qualifiedName,
@@ -3535,12 +3535,12 @@ rule CopyLiteralNull {
 
 rule CopyInstanceValue {
  from
-  s : MM!InstanceValue
+  s : UML!InstanceValue
   (
-   s.oclIsTypeOf(MM!InstanceValue)
+   s.oclIsTypeOf(UML!InstanceValue)
   )
  to
-  t : MM!InstanceValue (
+  t : UMLs!InstanceValue (
    instance <- s.instance,
    name <- s.name,
    visibility <- s.visibility,
@@ -3571,12 +3571,12 @@ rule CopyInstanceValue {
 
 rule CopyLiteralUnlimitedNatural {
  from
-  s : MM!LiteralUnlimitedNatural
+  s : UML!LiteralUnlimitedNatural
   (
-   s.oclIsTypeOf(MM!LiteralUnlimitedNatural)
+   s.oclIsTypeOf(UML!LiteralUnlimitedNatural)
   )
  to
-  t : MM!LiteralUnlimitedNatural (
+  t : UMLs!LiteralUnlimitedNatural (
    value <- s.value,
    name <- s.name,
    visibility <- s.visibility,
@@ -3607,12 +3607,12 @@ rule CopyLiteralUnlimitedNatural {
 
 rule CopyOpaqueBehavior {
  from
-  s : MM!OpaqueBehavior
+  s : UML!OpaqueBehavior
   (
-   s.oclIsTypeOf(MM!OpaqueBehavior)
+   s.oclIsTypeOf(UML!OpaqueBehavior)
   )
  to
-  t : MM!OpaqueBehavior (
+  t : UMLs!OpaqueBehavior (
    body <- s.body,
    language <- s.language,
    isReentrant <- s.isReentrant,
@@ -3763,12 +3763,12 @@ rule CopyOpaqueBehavior {
 
 rule CopyFunctionBehavior {
  from
-  s : MM!FunctionBehavior
+  s : UML!FunctionBehavior
   (
-   s.oclIsTypeOf(MM!FunctionBehavior)
+   s.oclIsTypeOf(UML!FunctionBehavior)
   )
  to
-  t : MM!FunctionBehavior (
+  t : UMLs!FunctionBehavior (
    body <- s.body,
    language <- s.language,
    isReentrant <- s.isReentrant,
@@ -3919,12 +3919,12 @@ rule CopyFunctionBehavior {
 
 rule CopyOpaqueAction {
  from
-  s : MM!OpaqueAction
+  s : UML!OpaqueAction
   (
-   s.oclIsTypeOf(MM!OpaqueAction)
+   s.oclIsTypeOf(UML!OpaqueAction)
   )
  to
-  t : MM!OpaqueAction (
+  t : UMLs!OpaqueAction (
    body <- s.body,
    language <- s.language,
    inputValue <- s.inputValue,
@@ -3960,12 +3960,12 @@ rule CopyOpaqueAction {
 
 rule CopyStructuredActivityNode {
  from
-  s : MM!StructuredActivityNode
+  s : UML!StructuredActivityNode
   (
-   s.oclIsTypeOf(MM!StructuredActivityNode)
+   s.oclIsTypeOf(UML!StructuredActivityNode)
   )
  to
-  t : MM!StructuredActivityNode (
+  t : UMLs!StructuredActivityNode (
    variable <- s.variable,
    edge <- s.edge,
    mustIsolate <- s.mustIsolate,
@@ -4024,12 +4024,12 @@ rule CopyStructuredActivityNode {
 
 rule CopyActivity {
  from
-  s : MM!Activity
+  s : UML!Activity
   (
-   s.oclIsTypeOf(MM!Activity)
+   s.oclIsTypeOf(UML!Activity)
   )
  to
-  t : MM!Activity (
+  t : UMLs!Activity (
    structuredNode <- s.structuredNode,
    variable <- s.variable,
    node <- s.node,
@@ -4186,12 +4186,12 @@ rule CopyActivity {
 
 rule CopyVariable {
  from
-  s : MM!Variable
+  s : UML!Variable
   (
-   s.oclIsTypeOf(MM!Variable)
+   s.oclIsTypeOf(UML!Variable)
   )
  to
-  t : MM!Variable (
+  t : UMLs!Variable (
    scope <- s.scope,
    activityScope <- s.activityScope,
    end <- s.end,
@@ -4224,12 +4224,12 @@ rule CopyVariable {
 
 rule CopyActivityPartition {
  from
-  s : MM!ActivityPartition
+  s : UML!ActivityPartition
   (
-   s.oclIsTypeOf(MM!ActivityPartition)
+   s.oclIsTypeOf(UML!ActivityPartition)
   )
  to
-  t : MM!ActivityPartition (
+  t : UMLs!ActivityPartition (
    isDimension <- s.isDimension,
    isExternal <- s.isExternal,
    node <- s.node,
@@ -4259,12 +4259,12 @@ rule CopyActivityPartition {
 
 rule CopyInterruptibleActivityRegion {
  from
-  s : MM!InterruptibleActivityRegion
+  s : UML!InterruptibleActivityRegion
   (
-   s.oclIsTypeOf(MM!InterruptibleActivityRegion)
+   s.oclIsTypeOf(UML!InterruptibleActivityRegion)
   )
  to
-  t : MM!InterruptibleActivityRegion (
+  t : UMLs!InterruptibleActivityRegion (
    node <- s.node,
    interruptingEdge <- s.interruptingEdge,
    subgroup <- s.subgroup,
@@ -4280,12 +4280,12 @@ rule CopyInterruptibleActivityRegion {
 
 rule CopyExceptionHandler {
  from
-  s : MM!ExceptionHandler
+  s : UML!ExceptionHandler
   (
-   s.oclIsTypeOf(MM!ExceptionHandler)
+   s.oclIsTypeOf(UML!ExceptionHandler)
   )
  to
-  t : MM!ExceptionHandler (
+  t : UMLs!ExceptionHandler (
    handlerBody <- s.handlerBody,
    exceptionInput <- s.exceptionInput,
    exceptionType <- s.exceptionType,
@@ -4298,12 +4298,12 @@ rule CopyExceptionHandler {
 
 rule CopyOutputPin {
  from
-  s : MM!OutputPin
+  s : UML!OutputPin
   (
-   s.oclIsTypeOf(MM!OutputPin)
+   s.oclIsTypeOf(UML!OutputPin)
   )
  to
-  t : MM!OutputPin (
+  t : UMLs!OutputPin (
    isControl <- s.isControl,
    ordering <- s.ordering,
    isControlType <- s.isControlType,
@@ -4354,12 +4354,12 @@ rule CopyOutputPin {
 
 rule CopyPin {
  from
-  s : MM!Pin
+  s : UML!Pin
   (
-   s.oclIsTypeOf(MM!Pin)
+   s.oclIsTypeOf(UML!Pin)
   )
  to
-  t : MM!Pin (
+  t : UMLs!Pin (
    isControl <- s.isControl,
    ordering <- s.ordering,
    isControlType <- s.isControlType,
@@ -4410,12 +4410,12 @@ rule CopyPin {
 
 rule CopyInputPin {
  from
-  s : MM!InputPin
+  s : UML!InputPin
   (
-   s.oclIsTypeOf(MM!InputPin)
+   s.oclIsTypeOf(UML!InputPin)
   )
  to
-  t : MM!InputPin (
+  t : UMLs!InputPin (
    isControl <- s.isControl,
    ordering <- s.ordering,
    isControlType <- s.isControlType,
@@ -4466,12 +4466,12 @@ rule CopyInputPin {
 
 rule CopySendSignalAction {
  from
-  s : MM!SendSignalAction
+  s : UML!SendSignalAction
   (
-   s.oclIsTypeOf(MM!SendSignalAction)
+   s.oclIsTypeOf(UML!SendSignalAction)
   )
  to
-  t : MM!SendSignalAction (
+  t : UMLs!SendSignalAction (
    target <- s.target,
    signal <- s.signal,
    argument <- s.argument,
@@ -4507,12 +4507,12 @@ rule CopySendSignalAction {
 
 rule CopyCallOperationAction {
  from
-  s : MM!CallOperationAction
+  s : UML!CallOperationAction
   (
-   s.oclIsTypeOf(MM!CallOperationAction)
+   s.oclIsTypeOf(UML!CallOperationAction)
   )
  to
-  t : MM!CallOperationAction (
+  t : UMLs!CallOperationAction (
    operation <- s.operation,
    target <- s.target,
    isSynchronous <- s.isSynchronous,
@@ -4550,12 +4550,12 @@ rule CopyCallOperationAction {
 
 rule CopyCallBehaviorAction {
  from
-  s : MM!CallBehaviorAction
+  s : UML!CallBehaviorAction
   (
-   s.oclIsTypeOf(MM!CallBehaviorAction)
+   s.oclIsTypeOf(UML!CallBehaviorAction)
   )
  to
-  t : MM!CallBehaviorAction (
+  t : UMLs!CallBehaviorAction (
    behavior <- s.behavior,
    isSynchronous <- s.isSynchronous,
    result <- s.result,
@@ -4592,12 +4592,12 @@ rule CopyCallBehaviorAction {
 
 rule CopySequenceNode {
  from
-  s : MM!SequenceNode
+  s : UML!SequenceNode
   (
-   s.oclIsTypeOf(MM!SequenceNode)
+   s.oclIsTypeOf(UML!SequenceNode)
   )
  to
-  t : MM!SequenceNode (
+  t : UMLs!SequenceNode (
    executableNode <- s.executableNode,
    variable <- s.variable,
    edge <- s.edge,
@@ -4657,12 +4657,12 @@ rule CopySequenceNode {
 
 rule CopyControlFlow {
  from
-  s : MM!ControlFlow
+  s : UML!ControlFlow
   (
-   s.oclIsTypeOf(MM!ControlFlow)
+   s.oclIsTypeOf(UML!ControlFlow)
   )
  to
-  t : MM!ControlFlow (
+  t : UMLs!ControlFlow (
    source <- s.source,
    target <- s.target,
    redefinedEdge <- s.redefinedEdge,
@@ -4690,12 +4690,12 @@ rule CopyControlFlow {
 
 rule CopyInitialNode {
  from
-  s : MM!InitialNode
+  s : UML!InitialNode
   (
-   s.oclIsTypeOf(MM!InitialNode)
+   s.oclIsTypeOf(UML!InitialNode)
   )
  to
-  t : MM!InitialNode (
+  t : UMLs!InitialNode (
    inStructuredNode <- s.inStructuredNode,
    activity <- s.activity,
    outgoing <- s.outgoing,
@@ -4721,12 +4721,12 @@ rule CopyInitialNode {
 
 rule CopyActivityParameterNode {
  from
-  s : MM!ActivityParameterNode
+  s : UML!ActivityParameterNode
   (
-   s.oclIsTypeOf(MM!ActivityParameterNode)
+   s.oclIsTypeOf(UML!ActivityParameterNode)
   )
  to
-  t : MM!ActivityParameterNode (
+  t : UMLs!ActivityParameterNode (
    parameter <- s.parameter,
    ordering <- s.ordering,
    isControlType <- s.isControlType,
@@ -4768,12 +4768,12 @@ rule CopyActivityParameterNode {
 
 rule CopyValuePin {
  from
-  s : MM!ValuePin
+  s : UML!ValuePin
   (
-   s.oclIsTypeOf(MM!ValuePin)
+   s.oclIsTypeOf(UML!ValuePin)
   )
  to
-  t : MM!ValuePin (
+  t : UMLs!ValuePin (
    value <- s.value,
    isControl <- s.isControl,
    ordering <- s.ordering,
@@ -4825,12 +4825,12 @@ rule CopyValuePin {
 
 rule CopyMessage {
  from
-  s : MM!Message
+  s : UML!Message
   (
-   s.oclIsTypeOf(MM!Message)
+   s.oclIsTypeOf(UML!Message)
   )
  to
-  t : MM!Message (
+  t : UMLs!Message (
    messageKind <- s.messageKind,
    messageSort <- s.messageSort,
    receiveEvent <- s.receiveEvent,
@@ -4853,12 +4853,12 @@ rule CopyMessage {
 
 rule CopyInteraction {
  from
-  s : MM!Interaction
+  s : UML!Interaction
   (
-   s.oclIsTypeOf(MM!Interaction)
+   s.oclIsTypeOf(UML!Interaction)
   )
  to
-  t : MM!Interaction (
+  t : UMLs!Interaction (
    lifeline <- s.lifeline,
    fragment <- s.fragment,
    action <- s.action,
@@ -5023,12 +5023,12 @@ rule CopyInteraction {
 
 rule CopyLifeline {
  from
-  s : MM!Lifeline
+  s : UML!Lifeline
   (
-   s.oclIsTypeOf(MM!Lifeline)
+   s.oclIsTypeOf(UML!Lifeline)
   )
  to
-  t : MM!Lifeline (
+  t : UMLs!Lifeline (
    represents <- s.represents,
    interaction <- s.interaction,
    selector <- s.selector,
@@ -5048,12 +5048,12 @@ rule CopyLifeline {
 
 rule CopyPartDecomposition {
  from
-  s : MM!PartDecomposition
+  s : UML!PartDecomposition
   (
-   s.oclIsTypeOf(MM!PartDecomposition)
+   s.oclIsTypeOf(UML!PartDecomposition)
   )
  to
-  t : MM!PartDecomposition (
+  t : UMLs!PartDecomposition (
    refersTo <- s.refersTo,
    actualGate <- s.actualGate,
    argument <- s.argument,
@@ -5073,12 +5073,12 @@ rule CopyPartDecomposition {
 
 rule CopyInteractionUse {
  from
-  s : MM!InteractionUse
+  s : UML!InteractionUse
   (
-   s.oclIsTypeOf(MM!InteractionUse)
+   s.oclIsTypeOf(UML!InteractionUse)
   )
  to
-  t : MM!InteractionUse (
+  t : UMLs!InteractionUse (
    refersTo <- s.refersTo,
    actualGate <- s.actualGate,
    argument <- s.argument,
@@ -5098,12 +5098,12 @@ rule CopyInteractionUse {
 
 rule CopyGate {
  from
-  s : MM!Gate
+  s : UML!Gate
   (
-   s.oclIsTypeOf(MM!Gate)
+   s.oclIsTypeOf(UML!Gate)
   )
  to
-  t : MM!Gate (
+  t : UMLs!Gate (
    message <- s.message,
    name <- s.name,
    visibility <- s.visibility,
@@ -5119,12 +5119,12 @@ rule CopyGate {
 
 rule CopyGeneralOrdering {
  from
-  s : MM!GeneralOrdering
+  s : UML!GeneralOrdering
   (
-   s.oclIsTypeOf(MM!GeneralOrdering)
+   s.oclIsTypeOf(UML!GeneralOrdering)
   )
  to
-  t : MM!GeneralOrdering (
+  t : UMLs!GeneralOrdering (
    before <- s.before,
    after <- s.after,
    name <- s.name,
@@ -5141,12 +5141,12 @@ rule CopyGeneralOrdering {
 
 rule CopyOccurrenceSpecification {
  from
-  s : MM!OccurrenceSpecification
+  s : UML!OccurrenceSpecification
   (
-   s.oclIsTypeOf(MM!OccurrenceSpecification)
+   s.oclIsTypeOf(UML!OccurrenceSpecification)
   )
  to
-  t : MM!OccurrenceSpecification (
+  t : UMLs!OccurrenceSpecification (
    toBefore <- s.toBefore,
    event <- s.event,
    toAfter <- s.toAfter,
@@ -5166,12 +5166,12 @@ rule CopyOccurrenceSpecification {
 
 rule CopyInteractionOperand {
  from
-  s : MM!InteractionOperand
+  s : UML!InteractionOperand
   (
-   s.oclIsTypeOf(MM!InteractionOperand)
+   s.oclIsTypeOf(UML!InteractionOperand)
   )
  to
-  t : MM!InteractionOperand (
+  t : UMLs!InteractionOperand (
    guard <- s.guard,
    fragment <- s.fragment,
    elementImport <- s.elementImport,
@@ -5205,12 +5205,12 @@ rule CopyInteractionOperand {
 
 rule CopyInteractionConstraint {
  from
-  s : MM!InteractionConstraint
+  s : UML!InteractionConstraint
   (
-   s.oclIsTypeOf(MM!InteractionConstraint)
+   s.oclIsTypeOf(UML!InteractionConstraint)
   )
  to
-  t : MM!InteractionConstraint (
+  t : UMLs!InteractionConstraint (
    minint <- s.minint,
    maxint <- s.maxint,
    constrainedElement <- s.constrainedElement,
@@ -5235,12 +5235,12 @@ rule CopyInteractionConstraint {
 
 rule CopyStateInvariant {
  from
-  s : MM!StateInvariant
+  s : UML!StateInvariant
   (
-   s.oclIsTypeOf(MM!StateInvariant)
+   s.oclIsTypeOf(UML!StateInvariant)
   )
  to
-  t : MM!StateInvariant (
+  t : UMLs!StateInvariant (
    invariant <- s.invariant,
    covered <- s.covered,
    generalOrdering <- s.generalOrdering,
@@ -5258,12 +5258,12 @@ rule CopyStateInvariant {
 
 rule CopyActionExecutionSpecification {
  from
-  s : MM!ActionExecutionSpecification
+  s : UML!ActionExecutionSpecification
   (
-   s.oclIsTypeOf(MM!ActionExecutionSpecification)
+   s.oclIsTypeOf(UML!ActionExecutionSpecification)
   )
  to
-  t : MM!ActionExecutionSpecification (
+  t : UMLs!ActionExecutionSpecification (
    action <- s.action,
    start <- s.start,
    finish <- s.finish,
@@ -5283,12 +5283,12 @@ rule CopyActionExecutionSpecification {
 
 rule CopyBehaviorExecutionSpecification {
  from
-  s : MM!BehaviorExecutionSpecification
+  s : UML!BehaviorExecutionSpecification
   (
-   s.oclIsTypeOf(MM!BehaviorExecutionSpecification)
+   s.oclIsTypeOf(UML!BehaviorExecutionSpecification)
   )
  to
-  t : MM!BehaviorExecutionSpecification (
+  t : UMLs!BehaviorExecutionSpecification (
    behavior <- s.behavior,
    start <- s.start,
    finish <- s.finish,
@@ -5308,12 +5308,12 @@ rule CopyBehaviorExecutionSpecification {
 
 rule CopyExecutionEvent {
  from
-  s : MM!ExecutionEvent
+  s : UML!ExecutionEvent
   (
-   s.oclIsTypeOf(MM!ExecutionEvent)
+   s.oclIsTypeOf(UML!ExecutionEvent)
   )
  to
-  t : MM!ExecutionEvent (
+  t : UMLs!ExecutionEvent (
    name <- s.name,
    visibility <- s.visibility,
    qualifiedName <- s.qualifiedName,
@@ -5333,12 +5333,12 @@ rule CopyExecutionEvent {
 
 rule CopyCreationEvent {
  from
-  s : MM!CreationEvent
+  s : UML!CreationEvent
   (
-   s.oclIsTypeOf(MM!CreationEvent)
+   s.oclIsTypeOf(UML!CreationEvent)
   )
  to
-  t : MM!CreationEvent (
+  t : UMLs!CreationEvent (
    name <- s.name,
    visibility <- s.visibility,
    qualifiedName <- s.qualifiedName,
@@ -5358,12 +5358,12 @@ rule CopyCreationEvent {
 
 rule CopyDestructionEvent {
  from
-  s : MM!DestructionEvent
+  s : UML!DestructionEvent
   (
-   s.oclIsTypeOf(MM!DestructionEvent)
+   s.oclIsTypeOf(UML!DestructionEvent)
   )
  to
-  t : MM!DestructionEvent (
+  t : UMLs!DestructionEvent (
    name <- s.name,
    visibility <- s.visibility,
    qualifiedName <- s.qualifiedName,
@@ -5383,12 +5383,12 @@ rule CopyDestructionEvent {
 
 rule CopySendOperationEvent {
  from
-  s : MM!SendOperationEvent
+  s : UML!SendOperationEvent
   (
-   s.oclIsTypeOf(MM!SendOperationEvent)
+   s.oclIsTypeOf(UML!SendOperationEvent)
   )
  to
-  t : MM!SendOperationEvent (
+  t : UMLs!SendOperationEvent (
    operation <- s.operation,
    name <- s.name,
    visibility <- s.visibility,
@@ -5409,12 +5409,12 @@ rule CopySendOperationEvent {
 
 rule CopySendSignalEvent {
  from
-  s : MM!SendSignalEvent
+  s : UML!SendSignalEvent
   (
-   s.oclIsTypeOf(MM!SendSignalEvent)
+   s.oclIsTypeOf(UML!SendSignalEvent)
   )
  to
-  t : MM!SendSignalEvent (
+  t : UMLs!SendSignalEvent (
    signal <- s.signal,
    name <- s.name,
    visibility <- s.visibility,
@@ -5435,12 +5435,12 @@ rule CopySendSignalEvent {
 
 rule CopyMessageOccurrenceSpecification {
  from
-  s : MM!MessageOccurrenceSpecification
+  s : UML!MessageOccurrenceSpecification
   (
-   s.oclIsTypeOf(MM!MessageOccurrenceSpecification)
+   s.oclIsTypeOf(UML!MessageOccurrenceSpecification)
   )
  to
-  t : MM!MessageOccurrenceSpecification (
+  t : UMLs!MessageOccurrenceSpecification (
    toBefore <- s.toBefore,
    event <- s.event,
    toAfter <- s.toAfter,
@@ -5470,12 +5470,12 @@ rule CopyMessageOccurrenceSpecification {
 
 rule CopyExecutionOccurrenceSpecification {
  from
-  s : MM!ExecutionOccurrenceSpecification
+  s : UML!ExecutionOccurrenceSpecification
   (
-   s.oclIsTypeOf(MM!ExecutionOccurrenceSpecification)
+   s.oclIsTypeOf(UML!ExecutionOccurrenceSpecification)
   )
  to
-  t : MM!ExecutionOccurrenceSpecification (
+  t : UMLs!ExecutionOccurrenceSpecification (
    execution <- s.execution,
    toBefore <- s.toBefore,
    event <- s.event,
@@ -5496,12 +5496,12 @@ rule CopyExecutionOccurrenceSpecification {
 
 rule CopyReceiveOperationEvent {
  from
-  s : MM!ReceiveOperationEvent
+  s : UML!ReceiveOperationEvent
   (
-   s.oclIsTypeOf(MM!ReceiveOperationEvent)
+   s.oclIsTypeOf(UML!ReceiveOperationEvent)
   )
  to
-  t : MM!ReceiveOperationEvent (
+  t : UMLs!ReceiveOperationEvent (
    operation <- s.operation,
    name <- s.name,
    visibility <- s.visibility,
@@ -5522,12 +5522,12 @@ rule CopyReceiveOperationEvent {
 
 rule CopyReceiveSignalEvent {
  from
-  s : MM!ReceiveSignalEvent
+  s : UML!ReceiveSignalEvent
   (
-   s.oclIsTypeOf(MM!ReceiveSignalEvent)
+   s.oclIsTypeOf(UML!ReceiveSignalEvent)
   )
  to
-  t : MM!ReceiveSignalEvent (
+  t : UMLs!ReceiveSignalEvent (
    signal <- s.signal,
    name <- s.name,
    visibility <- s.visibility,
@@ -5548,12 +5548,12 @@ rule CopyReceiveSignalEvent {
 
 rule CopyActor {
  from
-  s : MM!Actor
+  s : UML!Actor
   (
-   s.oclIsTypeOf(MM!Actor)
+   s.oclIsTypeOf(UML!Actor)
   )
  to
-  t : MM!Actor (
+  t : UMLs!Actor (
    ownedBehavior <- s.ownedBehavior,
    classifierBehavior <- s.classifierBehavior,
    interfaceRealization <- s.interfaceRealization,
@@ -5623,12 +5623,12 @@ rule CopyActor {
 
 rule CopyCallEvent {
  from
-  s : MM!CallEvent
+  s : UML!CallEvent
   (
-   s.oclIsTypeOf(MM!CallEvent)
+   s.oclIsTypeOf(UML!CallEvent)
   )
  to
-  t : MM!CallEvent (
+  t : UMLs!CallEvent (
    operation <- s.operation,
    name <- s.name,
    visibility <- s.visibility,
@@ -5649,12 +5649,12 @@ rule CopyCallEvent {
 
 rule CopyChangeEvent {
  from
-  s : MM!ChangeEvent
+  s : UML!ChangeEvent
   (
-   s.oclIsTypeOf(MM!ChangeEvent)
+   s.oclIsTypeOf(UML!ChangeEvent)
   )
  to
-  t : MM!ChangeEvent (
+  t : UMLs!ChangeEvent (
    changeExpression <- s.changeExpression,
    name <- s.name,
    visibility <- s.visibility,
@@ -5675,12 +5675,12 @@ rule CopyChangeEvent {
 
 rule CopySignalEvent {
  from
-  s : MM!SignalEvent
+  s : UML!SignalEvent
   (
-   s.oclIsTypeOf(MM!SignalEvent)
+   s.oclIsTypeOf(UML!SignalEvent)
   )
  to
-  t : MM!SignalEvent (
+  t : UMLs!SignalEvent (
    signal <- s.signal,
    name <- s.name,
    visibility <- s.visibility,
@@ -5701,12 +5701,12 @@ rule CopySignalEvent {
 
 rule CopyAnyReceiveEvent {
  from
-  s : MM!AnyReceiveEvent
+  s : UML!AnyReceiveEvent
   (
-   s.oclIsTypeOf(MM!AnyReceiveEvent)
+   s.oclIsTypeOf(UML!AnyReceiveEvent)
   )
  to
-  t : MM!AnyReceiveEvent (
+  t : UMLs!AnyReceiveEvent (
    name <- s.name,
    visibility <- s.visibility,
    qualifiedName <- s.qualifiedName,
@@ -5726,12 +5726,12 @@ rule CopyAnyReceiveEvent {
 
 rule CopyForkNode {
  from
-  s : MM!ForkNode
+  s : UML!ForkNode
   (
-   s.oclIsTypeOf(MM!ForkNode)
+   s.oclIsTypeOf(UML!ForkNode)
   )
  to
-  t : MM!ForkNode (
+  t : UMLs!ForkNode (
    inStructuredNode <- s.inStructuredNode,
    activity <- s.activity,
    outgoing <- s.outgoing,
@@ -5757,12 +5757,12 @@ rule CopyForkNode {
 
 rule CopyFlowFinalNode {
  from
-  s : MM!FlowFinalNode
+  s : UML!FlowFinalNode
   (
-   s.oclIsTypeOf(MM!FlowFinalNode)
+   s.oclIsTypeOf(UML!FlowFinalNode)
   )
  to
-  t : MM!FlowFinalNode (
+  t : UMLs!FlowFinalNode (
    inStructuredNode <- s.inStructuredNode,
    activity <- s.activity,
    outgoing <- s.outgoing,
@@ -5788,12 +5788,12 @@ rule CopyFlowFinalNode {
 
 rule CopyCentralBufferNode {
  from
-  s : MM!CentralBufferNode
+  s : UML!CentralBufferNode
   (
-   s.oclIsTypeOf(MM!CentralBufferNode)
+   s.oclIsTypeOf(UML!CentralBufferNode)
   )
  to
-  t : MM!CentralBufferNode (
+  t : UMLs!CentralBufferNode (
    ordering <- s.ordering,
    isControlType <- s.isControlType,
    upperBound <- s.upperBound,
@@ -5834,12 +5834,12 @@ rule CopyCentralBufferNode {
 
 rule CopyMergeNode {
  from
-  s : MM!MergeNode
+  s : UML!MergeNode
   (
-   s.oclIsTypeOf(MM!MergeNode)
+   s.oclIsTypeOf(UML!MergeNode)
   )
  to
-  t : MM!MergeNode (
+  t : UMLs!MergeNode (
    inStructuredNode <- s.inStructuredNode,
    activity <- s.activity,
    outgoing <- s.outgoing,
@@ -5865,12 +5865,12 @@ rule CopyMergeNode {
 
 rule CopyDecisionNode {
  from
-  s : MM!DecisionNode
+  s : UML!DecisionNode
   (
-   s.oclIsTypeOf(MM!DecisionNode)
+   s.oclIsTypeOf(UML!DecisionNode)
   )
  to
-  t : MM!DecisionNode (
+  t : UMLs!DecisionNode (
    decisionInput <- s.decisionInput,
    decisionInputFlow <- s.decisionInputFlow,
    inStructuredNode <- s.inStructuredNode,
@@ -5898,12 +5898,12 @@ rule CopyDecisionNode {
 
 rule CopyObjectFlow {
  from
-  s : MM!ObjectFlow
+  s : UML!ObjectFlow
   (
-   s.oclIsTypeOf(MM!ObjectFlow)
+   s.oclIsTypeOf(UML!ObjectFlow)
   )
  to
-  t : MM!ObjectFlow (
+  t : UMLs!ObjectFlow (
    isMulticast <- s.isMulticast,
    isMultireceive <- s.isMultireceive,
    transformation <- s.transformation,
@@ -5935,12 +5935,12 @@ rule CopyObjectFlow {
 
 rule CopyActivityFinalNode {
  from
-  s : MM!ActivityFinalNode
+  s : UML!ActivityFinalNode
   (
-   s.oclIsTypeOf(MM!ActivityFinalNode)
+   s.oclIsTypeOf(UML!ActivityFinalNode)
   )
  to
-  t : MM!ActivityFinalNode (
+  t : UMLs!ActivityFinalNode (
    inStructuredNode <- s.inStructuredNode,
    activity <- s.activity,
    outgoing <- s.outgoing,
@@ -5966,12 +5966,12 @@ rule CopyActivityFinalNode {
 
 rule CopyComponentRealization {
  from
-  s : MM!ComponentRealization
+  s : UML!ComponentRealization
   (
-   s.oclIsTypeOf(MM!ComponentRealization)
+   s.oclIsTypeOf(UML!ComponentRealization)
   )
  to
-  t : MM!ComponentRealization (
+  t : UMLs!ComponentRealization (
    abstraction <- s.abstraction,
    realizingClassifier <- s.realizingClassifier,
    mapping <- s.mapping,
@@ -6002,12 +6002,12 @@ rule CopyComponentRealization {
 
 rule CopyComponent {
  from
-  s : MM!Component
+  s : UML!Component
   (
-   s.oclIsTypeOf(MM!Component)
+   s.oclIsTypeOf(UML!Component)
   )
  to
-  t : MM!Component (
+  t : UMLs!Component (
    isIndirectlyInstantiated <- s.isIndirectlyInstantiated,
    required <- s.required,
    provided <- s.provided,
@@ -6153,12 +6153,12 @@ rule CopyComponent {
 
 rule CopyNode {
  from
-  s : MM!Node
+  s : UML!Node
   (
-   s.oclIsTypeOf(MM!Node)
+   s.oclIsTypeOf(UML!Node)
   )
  to
-  t : MM!Node (
+  t : UMLs!Node (
    nestedNode <- s.nestedNode,
    nestedClassifier <- s.nestedClassifier,
    ownedOperation <- s.ownedOperation,
@@ -6311,12 +6311,12 @@ rule CopyNode {
 
 rule CopyCommunicationPath {
  from
-  s : MM!CommunicationPath
+  s : UML!CommunicationPath
   (
-   s.oclIsTypeOf(MM!CommunicationPath)
+   s.oclIsTypeOf(UML!CommunicationPath)
   )
  to
-  t : MM!CommunicationPath (
+  t : UMLs!CommunicationPath (
    ownedEnd <- s.ownedEnd,
    memberEnd <- s.memberEnd,
    isDerived <- s.isDerived,
@@ -6391,12 +6391,12 @@ rule CopyCommunicationPath {
 
 rule CopyDevice {
  from
-  s : MM!Device
+  s : UML!Device
   (
-   s.oclIsTypeOf(MM!Device)
+   s.oclIsTypeOf(UML!Device)
   )
  to
-  t : MM!Device (
+  t : UMLs!Device (
    nestedNode <- s.nestedNode,
    nestedClassifier <- s.nestedClassifier,
    ownedOperation <- s.ownedOperation,
@@ -6549,12 +6549,12 @@ rule CopyDevice {
 
 rule CopyExecutionEnvironment {
  from
-  s : MM!ExecutionEnvironment
+  s : UML!ExecutionEnvironment
   (
-   s.oclIsTypeOf(MM!ExecutionEnvironment)
+   s.oclIsTypeOf(UML!ExecutionEnvironment)
   )
  to
-  t : MM!ExecutionEnvironment (
+  t : UMLs!ExecutionEnvironment (
    nestedNode <- s.nestedNode,
    nestedClassifier <- s.nestedClassifier,
    ownedOperation <- s.ownedOperation,
@@ -6707,12 +6707,12 @@ rule CopyExecutionEnvironment {
 
 rule CopyCombinedFragment {
  from
-  s : MM!CombinedFragment
+  s : UML!CombinedFragment
   (
-   s.oclIsTypeOf(MM!CombinedFragment)
+   s.oclIsTypeOf(UML!CombinedFragment)
   )
  to
-  t : MM!CombinedFragment (
+  t : UMLs!CombinedFragment (
    interactionOperator <- s.interactionOperator,
    operand <- s.operand,
    cfragmentGate <- s.cfragmentGate,
@@ -6732,12 +6732,12 @@ rule CopyCombinedFragment {
 
 rule CopyContinuation {
  from
-  s : MM!Continuation
+  s : UML!Continuation
   (
-   s.oclIsTypeOf(MM!Continuation)
+   s.oclIsTypeOf(UML!Continuation)
   )
  to
-  t : MM!Continuation (
+  t : UMLs!Continuation (
    setting <- s.setting,
    covered <- s.covered,
    generalOrdering <- s.generalOrdering,
@@ -6755,12 +6755,12 @@ rule CopyContinuation {
 
 rule CopyConsiderIgnoreFragment {
  from
-  s : MM!ConsiderIgnoreFragment
+  s : UML!ConsiderIgnoreFragment
   (
-   s.oclIsTypeOf(MM!ConsiderIgnoreFragment)
+   s.oclIsTypeOf(UML!ConsiderIgnoreFragment)
   )
  to
-  t : MM!ConsiderIgnoreFragment (
+  t : UMLs!ConsiderIgnoreFragment (
    message <- s.message,
    interactionOperator <- s.interactionOperator,
    operand <- s.operand,
@@ -6781,12 +6781,12 @@ rule CopyConsiderIgnoreFragment {
 
 rule CopyCreateObjectAction {
  from
-  s : MM!CreateObjectAction
+  s : UML!CreateObjectAction
   (
-   s.oclIsTypeOf(MM!CreateObjectAction)
+   s.oclIsTypeOf(UML!CreateObjectAction)
   )
  to
-  t : MM!CreateObjectAction (
+  t : UMLs!CreateObjectAction (
    classifier <- s.classifier,
    result <- s.result,
    output <- s.output,
@@ -6820,12 +6820,12 @@ rule CopyCreateObjectAction {
 
 rule CopyDestroyObjectAction {
  from
-  s : MM!DestroyObjectAction
+  s : UML!DestroyObjectAction
   (
-   s.oclIsTypeOf(MM!DestroyObjectAction)
+   s.oclIsTypeOf(UML!DestroyObjectAction)
   )
  to
-  t : MM!DestroyObjectAction (
+  t : UMLs!DestroyObjectAction (
    isDestroyLinks <- s.isDestroyLinks,
    isDestroyOwnedObjects <- s.isDestroyOwnedObjects,
    target <- s.target,
@@ -6860,12 +6860,12 @@ rule CopyDestroyObjectAction {
 
 rule CopyTestIdentityAction {
  from
-  s : MM!TestIdentityAction
+  s : UML!TestIdentityAction
   (
-   s.oclIsTypeOf(MM!TestIdentityAction)
+   s.oclIsTypeOf(UML!TestIdentityAction)
   )
  to
-  t : MM!TestIdentityAction (
+  t : UMLs!TestIdentityAction (
    first <- s.first,
    second <- s.second,
    result <- s.result,
@@ -6900,12 +6900,12 @@ rule CopyTestIdentityAction {
 
 rule CopyReadSelfAction {
  from
-  s : MM!ReadSelfAction
+  s : UML!ReadSelfAction
   (
-   s.oclIsTypeOf(MM!ReadSelfAction)
+   s.oclIsTypeOf(UML!ReadSelfAction)
   )
  to
-  t : MM!ReadSelfAction (
+  t : UMLs!ReadSelfAction (
    result <- s.result,
    output <- s.output,
    input <- s.input,
@@ -6938,12 +6938,12 @@ rule CopyReadSelfAction {
 
 rule CopyReadStructuralFeatureAction {
  from
-  s : MM!ReadStructuralFeatureAction
+  s : UML!ReadStructuralFeatureAction
   (
-   s.oclIsTypeOf(MM!ReadStructuralFeatureAction)
+   s.oclIsTypeOf(UML!ReadStructuralFeatureAction)
   )
  to
-  t : MM!ReadStructuralFeatureAction (
+  t : UMLs!ReadStructuralFeatureAction (
    result <- s.result,
    structuralFeature <- s.structuralFeature,
    object <- s.object,
@@ -6978,12 +6978,12 @@ rule CopyReadStructuralFeatureAction {
 
 rule CopyClearStructuralFeatureAction {
  from
-  s : MM!ClearStructuralFeatureAction
+  s : UML!ClearStructuralFeatureAction
   (
-   s.oclIsTypeOf(MM!ClearStructuralFeatureAction)
+   s.oclIsTypeOf(UML!ClearStructuralFeatureAction)
   )
  to
-  t : MM!ClearStructuralFeatureAction (
+  t : UMLs!ClearStructuralFeatureAction (
    result <- s.result,
    structuralFeature <- s.structuralFeature,
    object <- s.object,
@@ -7018,12 +7018,12 @@ rule CopyClearStructuralFeatureAction {
 
 rule CopyRemoveStructuralFeatureValueAction {
  from
-  s : MM!RemoveStructuralFeatureValueAction
+  s : UML!RemoveStructuralFeatureValueAction
   (
-   s.oclIsTypeOf(MM!RemoveStructuralFeatureValueAction)
+   s.oclIsTypeOf(UML!RemoveStructuralFeatureValueAction)
   )
  to
-  t : MM!RemoveStructuralFeatureValueAction (
+  t : UMLs!RemoveStructuralFeatureValueAction (
    isRemoveDuplicates <- s.isRemoveDuplicates,
    removeAt <- s.removeAt,
    value <- s.value,
@@ -7061,12 +7061,12 @@ rule CopyRemoveStructuralFeatureValueAction {
 
 rule CopyAddStructuralFeatureValueAction {
  from
-  s : MM!AddStructuralFeatureValueAction
+  s : UML!AddStructuralFeatureValueAction
   (
-   s.oclIsTypeOf(MM!AddStructuralFeatureValueAction)
+   s.oclIsTypeOf(UML!AddStructuralFeatureValueAction)
   )
  to
-  t : MM!AddStructuralFeatureValueAction (
+  t : UMLs!AddStructuralFeatureValueAction (
    isReplaceAll <- s.isReplaceAll,
    insertAt <- s.insertAt,
    value <- s.value,
@@ -7104,12 +7104,12 @@ rule CopyAddStructuralFeatureValueAction {
 
 rule CopyLinkEndData {
  from
-  s : MM!LinkEndData
+  s : UML!LinkEndData
   (
-   s.oclIsTypeOf(MM!LinkEndData)
+   s.oclIsTypeOf(UML!LinkEndData)
   )
  to
-  t : MM!LinkEndData (
+  t : UMLs!LinkEndData (
    value <- s.value,
    end <- s.end,
    qualifier <- s.qualifier,
@@ -7121,12 +7121,12 @@ rule CopyLinkEndData {
 
 rule CopyQualifierValue {
  from
-  s : MM!QualifierValue
+  s : UML!QualifierValue
   (
-   s.oclIsTypeOf(MM!QualifierValue)
+   s.oclIsTypeOf(UML!QualifierValue)
   )
  to
-  t : MM!QualifierValue (
+  t : UMLs!QualifierValue (
    qualifier <- s.qualifier,
    value <- s.value,
    ownedElement <- s.ownedElement,
@@ -7137,12 +7137,12 @@ rule CopyQualifierValue {
 
 rule CopyReadLinkAction {
  from
-  s : MM!ReadLinkAction
+  s : UML!ReadLinkAction
   (
-   s.oclIsTypeOf(MM!ReadLinkAction)
+   s.oclIsTypeOf(UML!ReadLinkAction)
   )
  to
-  t : MM!ReadLinkAction (
+  t : UMLs!ReadLinkAction (
    result <- s.result,
    endData <- s.endData,
    inputValue <- s.inputValue,
@@ -7177,12 +7177,12 @@ rule CopyReadLinkAction {
 
 rule CopyLinkEndCreationData {
  from
-  s : MM!LinkEndCreationData
+  s : UML!LinkEndCreationData
   (
-   s.oclIsTypeOf(MM!LinkEndCreationData)
+   s.oclIsTypeOf(UML!LinkEndCreationData)
   )
  to
-  t : MM!LinkEndCreationData (
+  t : UMLs!LinkEndCreationData (
    isReplaceAll <- s.isReplaceAll,
    insertAt <- s.insertAt,
    value <- s.value,
@@ -7196,12 +7196,12 @@ rule CopyLinkEndCreationData {
 
 rule CopyCreateLinkAction {
  from
-  s : MM!CreateLinkAction
+  s : UML!CreateLinkAction
   (
-   s.oclIsTypeOf(MM!CreateLinkAction)
+   s.oclIsTypeOf(UML!CreateLinkAction)
   )
  to
-  t : MM!CreateLinkAction (
+  t : UMLs!CreateLinkAction (
    endData <- s.endData,
    inputValue <- s.inputValue,
    output <- s.output,
@@ -7235,12 +7235,12 @@ rule CopyCreateLinkAction {
 
 rule CopyDestroyLinkAction {
  from
-  s : MM!DestroyLinkAction
+  s : UML!DestroyLinkAction
   (
-   s.oclIsTypeOf(MM!DestroyLinkAction)
+   s.oclIsTypeOf(UML!DestroyLinkAction)
   )
  to
-  t : MM!DestroyLinkAction (
+  t : UMLs!DestroyLinkAction (
    endData <- s.endData,
    inputValue <- s.inputValue,
    output <- s.output,
@@ -7274,12 +7274,12 @@ rule CopyDestroyLinkAction {
 
 rule CopyLinkEndDestructionData {
  from
-  s : MM!LinkEndDestructionData
+  s : UML!LinkEndDestructionData
   (
-   s.oclIsTypeOf(MM!LinkEndDestructionData)
+   s.oclIsTypeOf(UML!LinkEndDestructionData)
   )
  to
-  t : MM!LinkEndDestructionData (
+  t : UMLs!LinkEndDestructionData (
    isDestroyDuplicates <- s.isDestroyDuplicates,
    destroyAt <- s.destroyAt,
    value <- s.value,
@@ -7293,12 +7293,12 @@ rule CopyLinkEndDestructionData {
 
 rule CopyClearAssociationAction {
  from
-  s : MM!ClearAssociationAction
+  s : UML!ClearAssociationAction
   (
-   s.oclIsTypeOf(MM!ClearAssociationAction)
+   s.oclIsTypeOf(UML!ClearAssociationAction)
   )
  to
-  t : MM!ClearAssociationAction (
+  t : UMLs!ClearAssociationAction (
    object <- s.object,
    association <- s.association,
    output <- s.output,
@@ -7332,12 +7332,12 @@ rule CopyClearAssociationAction {
 
 rule CopyBroadcastSignalAction {
  from
-  s : MM!BroadcastSignalAction
+  s : UML!BroadcastSignalAction
   (
-   s.oclIsTypeOf(MM!BroadcastSignalAction)
+   s.oclIsTypeOf(UML!BroadcastSignalAction)
   )
  to
-  t : MM!BroadcastSignalAction (
+  t : UMLs!BroadcastSignalAction (
    signal <- s.signal,
    argument <- s.argument,
    onPort <- s.onPort,
@@ -7372,12 +7372,12 @@ rule CopyBroadcastSignalAction {
 
 rule CopySendObjectAction {
  from
-  s : MM!SendObjectAction
+  s : UML!SendObjectAction
   (
-   s.oclIsTypeOf(MM!SendObjectAction)
+   s.oclIsTypeOf(UML!SendObjectAction)
   )
  to
-  t : MM!SendObjectAction (
+  t : UMLs!SendObjectAction (
    target <- s.target,
    request <- s.request,
    argument <- s.argument,
@@ -7413,12 +7413,12 @@ rule CopySendObjectAction {
 
 rule CopyValueSpecificationAction {
  from
-  s : MM!ValueSpecificationAction
+  s : UML!ValueSpecificationAction
   (
-   s.oclIsTypeOf(MM!ValueSpecificationAction)
+   s.oclIsTypeOf(UML!ValueSpecificationAction)
   )
  to
-  t : MM!ValueSpecificationAction (
+  t : UMLs!ValueSpecificationAction (
    value <- s.value,
    result <- s.result,
    output <- s.output,
@@ -7452,12 +7452,12 @@ rule CopyValueSpecificationAction {
 
 rule CopyTimeExpression {
  from
-  s : MM!TimeExpression
+  s : UML!TimeExpression
   (
-   s.oclIsTypeOf(MM!TimeExpression)
+   s.oclIsTypeOf(UML!TimeExpression)
   )
  to
-  t : MM!TimeExpression (
+  t : UMLs!TimeExpression (
    expr <- s.expr,
    observation <- s.observation,
    name <- s.name,
@@ -7489,12 +7489,12 @@ rule CopyTimeExpression {
 
 rule CopyDuration {
  from
-  s : MM!Duration
+  s : UML!Duration
   (
-   s.oclIsTypeOf(MM!Duration)
+   s.oclIsTypeOf(UML!Duration)
   )
  to
-  t : MM!Duration (
+  t : UMLs!Duration (
    expr <- s.expr,
    observation <- s.observation,
    name <- s.name,
@@ -7526,12 +7526,12 @@ rule CopyDuration {
 
 rule CopyDurationInterval {
  from
-  s : MM!DurationInterval
+  s : UML!DurationInterval
   (
-   s.oclIsTypeOf(MM!DurationInterval)
+   s.oclIsTypeOf(UML!DurationInterval)
   )
  to
-  t : MM!DurationInterval (
+  t : UMLs!DurationInterval (
    min <- s.min,
    max <- s.max,
    name <- s.name,
@@ -7563,12 +7563,12 @@ rule CopyDurationInterval {
 
 rule CopyInterval {
  from
-  s : MM!Interval
+  s : UML!Interval
   (
-   s.oclIsTypeOf(MM!Interval)
+   s.oclIsTypeOf(UML!Interval)
   )
  to
-  t : MM!Interval (
+  t : UMLs!Interval (
    min <- s.min,
    max <- s.max,
    name <- s.name,
@@ -7600,12 +7600,12 @@ rule CopyInterval {
 
 rule CopyTimeConstraint {
  from
-  s : MM!TimeConstraint
+  s : UML!TimeConstraint
   (
-   s.oclIsTypeOf(MM!TimeConstraint)
+   s.oclIsTypeOf(UML!TimeConstraint)
   )
  to
-  t : MM!TimeConstraint (
+  t : UMLs!TimeConstraint (
    firstEvent <- s.firstEvent,
    constrainedElement <- s.constrainedElement,
    specification <- s.specification,
@@ -7629,12 +7629,12 @@ rule CopyTimeConstraint {
 
 rule CopyIntervalConstraint {
  from
-  s : MM!IntervalConstraint
+  s : UML!IntervalConstraint
   (
-   s.oclIsTypeOf(MM!IntervalConstraint)
+   s.oclIsTypeOf(UML!IntervalConstraint)
   )
  to
-  t : MM!IntervalConstraint (
+  t : UMLs!IntervalConstraint (
    constrainedElement <- s.constrainedElement,
    specification <- s.specification,
    context <- s.context,
@@ -7657,12 +7657,12 @@ rule CopyIntervalConstraint {
 
 rule CopyTimeInterval {
  from
-  s : MM!TimeInterval
+  s : UML!TimeInterval
   (
-   s.oclIsTypeOf(MM!TimeInterval)
+   s.oclIsTypeOf(UML!TimeInterval)
   )
  to
-  t : MM!TimeInterval (
+  t : UMLs!TimeInterval (
    min <- s.min,
    max <- s.max,
    name <- s.name,
@@ -7694,12 +7694,12 @@ rule CopyTimeInterval {
 
 rule CopyDurationConstraint {
  from
-  s : MM!DurationConstraint
+  s : UML!DurationConstraint
   (
-   s.oclIsTypeOf(MM!DurationConstraint)
+   s.oclIsTypeOf(UML!DurationConstraint)
   )
  to
-  t : MM!DurationConstraint (
+  t : UMLs!DurationConstraint (
    firstEvent <- s.firstEvent,
    constrainedElement <- s.constrainedElement,
    specification <- s.specification,
@@ -7723,12 +7723,12 @@ rule CopyDurationConstraint {
 
 rule CopyTimeObservation {
  from
-  s : MM!TimeObservation
+  s : UML!TimeObservation
   (
-   s.oclIsTypeOf(MM!TimeObservation)
+   s.oclIsTypeOf(UML!TimeObservation)
   )
  to
-  t : MM!TimeObservation (
+  t : UMLs!TimeObservation (
    event <- s.event,
    firstEvent <- s.firstEvent,
    name <- s.name,
@@ -7750,12 +7750,12 @@ rule CopyTimeObservation {
 
 rule CopyDurationObservation {
  from
-  s : MM!DurationObservation
+  s : UML!DurationObservation
   (
-   s.oclIsTypeOf(MM!DurationObservation)
+   s.oclIsTypeOf(UML!DurationObservation)
   )
  to
-  t : MM!DurationObservation (
+  t : UMLs!DurationObservation (
    event <- s.event,
    firstEvent <- s.firstEvent,
    name <- s.name,
@@ -7777,12 +7777,12 @@ rule CopyDurationObservation {
 
 rule CopyFinalState {
  from
-  s : MM!FinalState
+  s : UML!FinalState
   (
-   s.oclIsTypeOf(MM!FinalState)
+   s.oclIsTypeOf(UML!FinalState)
   )
  to
-  t : MM!FinalState (
+  t : UMLs!FinalState (
    isComposite <- s.isComposite,
    isOrthogonal <- s.isOrthogonal,
    isSimple <- s.isSimple,
@@ -7841,12 +7841,12 @@ rule CopyFinalState {
 
 rule CopyTimeEvent {
  from
-  s : MM!TimeEvent
+  s : UML!TimeEvent
   (
-   s.oclIsTypeOf(MM!TimeEvent)
+   s.oclIsTypeOf(UML!TimeEvent)
   )
  to
-  t : MM!TimeEvent (
+  t : UMLs!TimeEvent (
    isRelative <- s.isRelative,
    when <- s.when,
    name <- s.name,
@@ -7868,12 +7868,12 @@ rule CopyTimeEvent {
 
 rule CopyReadVariableAction {
  from
-  s : MM!ReadVariableAction
+  s : UML!ReadVariableAction
   (
-   s.oclIsTypeOf(MM!ReadVariableAction)
+   s.oclIsTypeOf(UML!ReadVariableAction)
   )
  to
-  t : MM!ReadVariableAction (
+  t : UMLs!ReadVariableAction (
    result <- s.result,
    variable <- s.variable,
    output <- s.output,
@@ -7907,12 +7907,12 @@ rule CopyReadVariableAction {
 
 rule CopyClearVariableAction {
  from
-  s : MM!ClearVariableAction
+  s : UML!ClearVariableAction
   (
-   s.oclIsTypeOf(MM!ClearVariableAction)
+   s.oclIsTypeOf(UML!ClearVariableAction)
   )
  to
-  t : MM!ClearVariableAction (
+  t : UMLs!ClearVariableAction (
    variable <- s.variable,
    output <- s.output,
    input <- s.input,
@@ -7945,12 +7945,12 @@ rule CopyClearVariableAction {
 
 rule CopyAddVariableValueAction {
  from
-  s : MM!AddVariableValueAction
+  s : UML!AddVariableValueAction
   (
-   s.oclIsTypeOf(MM!AddVariableValueAction)
+   s.oclIsTypeOf(UML!AddVariableValueAction)
   )
  to
-  t : MM!AddVariableValueAction (
+  t : UMLs!AddVariableValueAction (
    isReplaceAll <- s.isReplaceAll,
    insertAt <- s.insertAt,
    value <- s.value,
@@ -7986,12 +7986,12 @@ rule CopyAddVariableValueAction {
 
 rule CopyRemoveVariableValueAction {
  from
-  s : MM!RemoveVariableValueAction
+  s : UML!RemoveVariableValueAction
   (
-   s.oclIsTypeOf(MM!RemoveVariableValueAction)
+   s.oclIsTypeOf(UML!RemoveVariableValueAction)
   )
  to
-  t : MM!RemoveVariableValueAction (
+  t : UMLs!RemoveVariableValueAction (
    isRemoveDuplicates <- s.isRemoveDuplicates,
    removeAt <- s.removeAt,
    value <- s.value,
@@ -8027,12 +8027,12 @@ rule CopyRemoveVariableValueAction {
 
 rule CopyRaiseExceptionAction {
  from
-  s : MM!RaiseExceptionAction
+  s : UML!RaiseExceptionAction
   (
-   s.oclIsTypeOf(MM!RaiseExceptionAction)
+   s.oclIsTypeOf(UML!RaiseExceptionAction)
   )
  to
-  t : MM!RaiseExceptionAction (
+  t : UMLs!RaiseExceptionAction (
    exception <- s.exception,
    output <- s.output,
    input <- s.input,
@@ -8065,12 +8065,12 @@ rule CopyRaiseExceptionAction {
 
 rule CopyActionInputPin {
  from
-  s : MM!ActionInputPin
+  s : UML!ActionInputPin
   (
-   s.oclIsTypeOf(MM!ActionInputPin)
+   s.oclIsTypeOf(UML!ActionInputPin)
   )
  to
-  t : MM!ActionInputPin (
+  t : UMLs!ActionInputPin (
    fromAction <- s.fromAction,
    isControl <- s.isControl,
    ordering <- s.ordering,
@@ -8122,12 +8122,12 @@ rule CopyActionInputPin {
 
 rule CopyInformationItem {
  from
-  s : MM!InformationItem
+  s : UML!InformationItem
   (
-   s.oclIsTypeOf(MM!InformationItem)
+   s.oclIsTypeOf(UML!InformationItem)
   )
  to
-  t : MM!InformationItem (
+  t : UMLs!InformationItem (
    represented <- s.represented,
    isAbstract <- s.isAbstract,
    generalization <- s.generalization,
@@ -8194,12 +8194,12 @@ rule CopyInformationItem {
 
 rule CopyInformationFlow {
  from
-  s : MM!InformationFlow
+  s : UML!InformationFlow
   (
-   s.oclIsTypeOf(MM!InformationFlow)
+   s.oclIsTypeOf(UML!InformationFlow)
   )
  to
-  t : MM!InformationFlow (
+  t : UMLs!InformationFlow (
    realization <- s.realization,
    conveyed <- s.conveyed,
    informationSource <- s.informationSource,
@@ -8232,12 +8232,12 @@ rule CopyInformationFlow {
 
 rule CopyReadExtentAction {
  from
-  s : MM!ReadExtentAction
+  s : UML!ReadExtentAction
   (
-   s.oclIsTypeOf(MM!ReadExtentAction)
+   s.oclIsTypeOf(UML!ReadExtentAction)
   )
  to
-  t : MM!ReadExtentAction (
+  t : UMLs!ReadExtentAction (
    result <- s.result,
    classifier <- s.classifier,
    output <- s.output,
@@ -8271,12 +8271,12 @@ rule CopyReadExtentAction {
 
 rule CopyReclassifyObjectAction {
  from
-  s : MM!ReclassifyObjectAction
+  s : UML!ReclassifyObjectAction
   (
-   s.oclIsTypeOf(MM!ReclassifyObjectAction)
+   s.oclIsTypeOf(UML!ReclassifyObjectAction)
   )
  to
-  t : MM!ReclassifyObjectAction (
+  t : UMLs!ReclassifyObjectAction (
    isReplaceAll <- s.isReplaceAll,
    oldClassifier <- s.oldClassifier,
    newClassifier <- s.newClassifier,
@@ -8312,12 +8312,12 @@ rule CopyReclassifyObjectAction {
 
 rule CopyReadIsClassifiedObjectAction {
  from
-  s : MM!ReadIsClassifiedObjectAction
+  s : UML!ReadIsClassifiedObjectAction
   (
-   s.oclIsTypeOf(MM!ReadIsClassifiedObjectAction)
+   s.oclIsTypeOf(UML!ReadIsClassifiedObjectAction)
   )
  to
-  t : MM!ReadIsClassifiedObjectAction (
+  t : UMLs!ReadIsClassifiedObjectAction (
    isDirect <- s.isDirect,
    classifier <- s.classifier,
    result <- s.result,
@@ -8353,12 +8353,12 @@ rule CopyReadIsClassifiedObjectAction {
 
 rule CopyStartClassifierBehaviorAction {
  from
-  s : MM!StartClassifierBehaviorAction
+  s : UML!StartClassifierBehaviorAction
   (
-   s.oclIsTypeOf(MM!StartClassifierBehaviorAction)
+   s.oclIsTypeOf(UML!StartClassifierBehaviorAction)
   )
  to
-  t : MM!StartClassifierBehaviorAction (
+  t : UMLs!StartClassifierBehaviorAction (
    object <- s.object,
    output <- s.output,
    input <- s.input,
@@ -8391,12 +8391,12 @@ rule CopyStartClassifierBehaviorAction {
 
 rule CopyReadLinkObjectEndAction {
  from
-  s : MM!ReadLinkObjectEndAction
+  s : UML!ReadLinkObjectEndAction
   (
-   s.oclIsTypeOf(MM!ReadLinkObjectEndAction)
+   s.oclIsTypeOf(UML!ReadLinkObjectEndAction)
   )
  to
-  t : MM!ReadLinkObjectEndAction (
+  t : UMLs!ReadLinkObjectEndAction (
    object <- s.object,
    end <- s.end,
    result <- s.result,
@@ -8431,12 +8431,12 @@ rule CopyReadLinkObjectEndAction {
 
 rule CopyReadLinkObjectEndQualifierAction {
  from
-  s : MM!ReadLinkObjectEndQualifierAction
+  s : UML!ReadLinkObjectEndQualifierAction
   (
-   s.oclIsTypeOf(MM!ReadLinkObjectEndQualifierAction)
+   s.oclIsTypeOf(UML!ReadLinkObjectEndQualifierAction)
   )
  to
-  t : MM!ReadLinkObjectEndQualifierAction (
+  t : UMLs!ReadLinkObjectEndQualifierAction (
    object <- s.object,
    result <- s.result,
    qualifier <- s.qualifier,
@@ -8471,12 +8471,12 @@ rule CopyReadLinkObjectEndQualifierAction {
 
 rule CopyCreateLinkObjectAction {
  from
-  s : MM!CreateLinkObjectAction
+  s : UML!CreateLinkObjectAction
   (
-   s.oclIsTypeOf(MM!CreateLinkObjectAction)
+   s.oclIsTypeOf(UML!CreateLinkObjectAction)
   )
  to
-  t : MM!CreateLinkObjectAction (
+  t : UMLs!CreateLinkObjectAction (
    result <- s.result,
    endData <- s.endData,
    inputValue <- s.inputValue,
@@ -8511,12 +8511,12 @@ rule CopyCreateLinkObjectAction {
 
 rule CopyAcceptEventAction {
  from
-  s : MM!AcceptEventAction
+  s : UML!AcceptEventAction
   (
-   s.oclIsTypeOf(MM!AcceptEventAction)
+   s.oclIsTypeOf(UML!AcceptEventAction)
   )
  to
-  t : MM!AcceptEventAction (
+  t : UMLs!AcceptEventAction (
    isUnmarshall <- s.isUnmarshall,
    result <- s.result,
    trigger <- s.trigger,
@@ -8551,12 +8551,12 @@ rule CopyAcceptEventAction {
 
 rule CopyAcceptCallAction {
  from
-  s : MM!AcceptCallAction
+  s : UML!AcceptCallAction
   (
-   s.oclIsTypeOf(MM!AcceptCallAction)
+   s.oclIsTypeOf(UML!AcceptCallAction)
   )
  to
-  t : MM!AcceptCallAction (
+  t : UMLs!AcceptCallAction (
    returnInformation <- s.returnInformation,
    isUnmarshall <- s.isUnmarshall,
    result <- s.result,
@@ -8592,12 +8592,12 @@ rule CopyAcceptCallAction {
 
 rule CopyReplyAction {
  from
-  s : MM!ReplyAction
+  s : UML!ReplyAction
   (
-   s.oclIsTypeOf(MM!ReplyAction)
+   s.oclIsTypeOf(UML!ReplyAction)
   )
  to
-  t : MM!ReplyAction (
+  t : UMLs!ReplyAction (
    replyToCall <- s.replyToCall,
    returnInformation <- s.returnInformation,
    replyValue <- s.replyValue,
@@ -8632,12 +8632,12 @@ rule CopyReplyAction {
 
 rule CopyUnmarshallAction {
  from
-  s : MM!UnmarshallAction
+  s : UML!UnmarshallAction
   (
-   s.oclIsTypeOf(MM!UnmarshallAction)
+   s.oclIsTypeOf(UML!UnmarshallAction)
   )
  to
-  t : MM!UnmarshallAction (
+  t : UMLs!UnmarshallAction (
    result <- s.result,
    unmarshallType <- s.unmarshallType,
    object <- s.object,
@@ -8672,12 +8672,12 @@ rule CopyUnmarshallAction {
 
 rule CopyReduceAction {
  from
-  s : MM!ReduceAction
+  s : UML!ReduceAction
   (
-   s.oclIsTypeOf(MM!ReduceAction)
+   s.oclIsTypeOf(UML!ReduceAction)
   )
  to
-  t : MM!ReduceAction (
+  t : UMLs!ReduceAction (
    reducer <- s.reducer,
    result <- s.result,
    collection <- s.collection,
@@ -8713,12 +8713,12 @@ rule CopyReduceAction {
 
 rule CopyStartObjectBehaviorAction {
  from
-  s : MM!StartObjectBehaviorAction
+  s : UML!StartObjectBehaviorAction
   (
-   s.oclIsTypeOf(MM!StartObjectBehaviorAction)
+   s.oclIsTypeOf(UML!StartObjectBehaviorAction)
   )
  to
-  t : MM!StartObjectBehaviorAction (
+  t : UMLs!StartObjectBehaviorAction (
    object <- s.object,
    isSynchronous <- s.isSynchronous,
    result <- s.result,
@@ -8755,12 +8755,12 @@ rule CopyStartObjectBehaviorAction {
 
 rule CopyJoinNode {
  from
-  s : MM!JoinNode
+  s : UML!JoinNode
   (
-   s.oclIsTypeOf(MM!JoinNode)
+   s.oclIsTypeOf(UML!JoinNode)
   )
  to
-  t : MM!JoinNode (
+  t : UMLs!JoinNode (
    isCombineDuplicate <- s.isCombineDuplicate,
    joinSpec <- s.joinSpec,
    inStructuredNode <- s.inStructuredNode,
@@ -8788,12 +8788,12 @@ rule CopyJoinNode {
 
 rule CopyDataStoreNode {
  from
-  s : MM!DataStoreNode
+  s : UML!DataStoreNode
   (
-   s.oclIsTypeOf(MM!DataStoreNode)
+   s.oclIsTypeOf(UML!DataStoreNode)
   )
  to
-  t : MM!DataStoreNode (
+  t : UMLs!DataStoreNode (
    ordering <- s.ordering,
    isControlType <- s.isControlType,
    upperBound <- s.upperBound,
@@ -8834,12 +8834,12 @@ rule CopyDataStoreNode {
 
 rule CopyConditionalNode {
  from
-  s : MM!ConditionalNode
+  s : UML!ConditionalNode
   (
-   s.oclIsTypeOf(MM!ConditionalNode)
+   s.oclIsTypeOf(UML!ConditionalNode)
   )
  to
-  t : MM!ConditionalNode (
+  t : UMLs!ConditionalNode (
    isDeterminate <- s.isDeterminate,
    isAssured <- s.isAssured,
    clause <- s.clause,
@@ -8902,12 +8902,12 @@ rule CopyConditionalNode {
 
 rule CopyClause {
  from
-  s : MM!Clause
+  s : UML!Clause
   (
-   s.oclIsTypeOf(MM!Clause)
+   s.oclIsTypeOf(UML!Clause)
   )
  to
-  t : MM!Clause (
+  t : UMLs!Clause (
    test <- s.test,
    body <- s.body,
    predecessorClause <- s.predecessorClause,
@@ -8922,12 +8922,12 @@ rule CopyClause {
 
 rule CopyLoopNode {
  from
-  s : MM!LoopNode
+  s : UML!LoopNode
   (
-   s.oclIsTypeOf(MM!LoopNode)
+   s.oclIsTypeOf(UML!LoopNode)
   )
  to
-  t : MM!LoopNode (
+  t : UMLs!LoopNode (
    isTestedFirst <- s.isTestedFirst,
    bodyPart <- s.bodyPart,
    setupPart <- s.setupPart,
@@ -8995,12 +8995,12 @@ rule CopyLoopNode {
 
 rule CopyExpansionNode {
  from
-  s : MM!ExpansionNode
+  s : UML!ExpansionNode
   (
-   s.oclIsTypeOf(MM!ExpansionNode)
+   s.oclIsTypeOf(UML!ExpansionNode)
   )
  to
-  t : MM!ExpansionNode (
+  t : UMLs!ExpansionNode (
    regionAsOutput <- s.regionAsOutput,
    regionAsInput <- s.regionAsInput,
    ordering <- s.ordering,
@@ -9043,12 +9043,12 @@ rule CopyExpansionNode {
 
 rule CopyExpansionRegion {
  from
-  s : MM!ExpansionRegion
+  s : UML!ExpansionRegion
   (
-   s.oclIsTypeOf(MM!ExpansionRegion)
+   s.oclIsTypeOf(UML!ExpansionRegion)
   )
  to
-  t : MM!ExpansionRegion (
+  t : UMLs!ExpansionRegion (
    mode <- s.mode,
    inputElement <- s.inputElement,
    outputElement <- s.outputElement,
@@ -9110,12 +9110,12 @@ rule CopyExpansionRegion {
 
 rule CopyProtocolTransition {
  from
-  s : MM!ProtocolTransition
+  s : UML!ProtocolTransition
   (
-   s.oclIsTypeOf(MM!ProtocolTransition)
+   s.oclIsTypeOf(UML!ProtocolTransition)
   )
  to
-  t : MM!ProtocolTransition (
+  t : UMLs!ProtocolTransition (
    postCondition <- s.postCondition,
    referred <- s.referred,
    preCondition <- s.preCondition,
@@ -9159,12 +9159,12 @@ rule CopyProtocolTransition {
 
 rule CopyAssociationClass {
  from
-  s : MM!AssociationClass
+  s : UML!AssociationClass
   (
-   s.oclIsTypeOf(MM!AssociationClass)
+   s.oclIsTypeOf(UML!AssociationClass)
   )
  to
-  t : MM!AssociationClass (
+  t : UMLs!AssociationClass (
    nestedClassifier <- s.nestedClassifier,
    ownedOperation <- s.ownedOperation,
    superClass <- s.superClass,
