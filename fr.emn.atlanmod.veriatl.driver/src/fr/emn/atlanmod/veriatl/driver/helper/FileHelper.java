@@ -1,4 +1,4 @@
-package cs.nuim.ie.worflowHelper;
+package fr.emn.atlanmod.veriatl.driver.helper;
 
 import java.io.File;
 import java.io.IOException;

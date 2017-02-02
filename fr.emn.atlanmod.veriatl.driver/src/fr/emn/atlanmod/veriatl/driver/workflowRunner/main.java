@@ -1,4 +1,4 @@
-package cs.nuim.ie.workflowRunner;
+package fr.emn.atlanmod.veriatl.driver.workflowRunner;
 
 
 
@@ -14,16 +14,13 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 
-
-
-import cs.nuim.ie.worflowHelper.Exec;
-import cs.nuim.ie.worflowHelper.FileHelper;
-
-import cs.nuim.ie.worflowHelper.VeriATLPlusPlusExec;
+import fr.emn.atlanmod.veriatl.driver.helper.Exec;
+import fr.emn.atlanmod.veriatl.driver.helper.FileHelper;
+import fr.emn.atlanmod.veriatl.driver.helper.VeriATLPlusPlusExec;
 
 
 
-public class driver {
+public class main {
 
 	public static String base = System.getProperty("user.dir");
 	public static Map<String, String> dirs ;
