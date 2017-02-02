@@ -1,3 +1,8 @@
+module HSM2FSM;
+
+create OUT : UML from IN : UML;
+
+
 helper context uml::Activities!ActivityEdge def: source_and_target(): Boolean = 
   uml::Activities!ActivityEdge.allInstances()->forAll(edge | 
     edge.activity <> null implies
