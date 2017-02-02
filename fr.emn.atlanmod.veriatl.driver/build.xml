@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: 
-Need to change: 
-- ECLIPSE_HOME
-- fr.emn.atlanmod.atl2boogie.location
- -->
-<project basedir="." default="decompose" name="fr.emn.atlanmod.veriatl.driver">
+<project basedir="." default="gen" name="fr.emn.atlanmod.veriatl.driver">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../../Desktop/Eclipse/Mars/eclipse/"/>
-    <property name="fr.emn.atlanmod.atl2boogie.location" value="../../veriatl_plus_plus"/>
+	<!-- location setup -->
+    <property name="ECLIPSE_HOME" value="C:/Users/zcheng/Desktop/Eclipse/Mars/eclipse/"/>
+    <property name="compiler.boogie.location" value="../fr.emn.atlanmod.veriatl.complier.boogie"/>
+	<property name="casestudy.location" value="../fr.emn.atlanmod.veriatl.casestudy.base"/>
+	<property name="debuger.location" value="../fr.emn.atlanmod.veriatl.debug.decomposer"/>
+	
 	<property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-	<property name="projName" value="HSM2FSM"/>
+	<property name="projName" value="HSM2FSM_EXP"/>
 	<property name="mode" value="plusplus"/>
-	<property name="post" value=" UNQCOMPNAME"/>
+	<property name="post" value=" unique_fsm_sm_names"/>
 	
     <path id="Plug-in Dependencies.libraryclasspath">
         <pathelement location="${ECLIPSE_HOME}plugins/org.eclipse.jdt.core_3.11.2.v20160128-0629.jar"/>
@@ -24,6 +23,7 @@ Need to change:
         <pathelement location="${ECLIPSE_HOME}plugins/org.apache.log4j_1.2.15.v201012070815.jar"/>
         <pathelement location="${ECLIPSE_HOME}plugins/com.ibm.icu_54.1.1.v201501272100.jar"/>
         <pathelement location="${ECLIPSE_HOME}plugins/org.antlr.runtime_4.3.0.v201502022030.jar"/>
+    	<pathelement location="${ECLIPSE_HOME}plugins/org.antlr.runtime_3.0.0.v200803061811.jar"/> 
         <pathelement location="${ECLIPSE_HOME}plugins/org.eclipse.core.runtime_3.11.1.v20150903-1804.jar"/>
         <pathelement location="${ECLIPSE_HOME}plugins/javax.annotation_1.2.0.v201401042248.jar"/>
         <pathelement location="${ECLIPSE_HOME}plugins/javax.inject_1.0.0.v20091030.jar"/>
@@ -88,13 +88,12 @@ Need to change:
         <pathelement location="${ECLIPSE_HOME}plugins/org.eclipse.m2m.atl.emftvm_3.7.0.v201603222002.jar"/>
         <pathelement location="${ECLIPSE_HOME}plugins/org.eclipse.m2m.atl.emftvm.trace_3.7.0.v201603222002.jar"/>
     </path>
-    <path id="ie.nuim.cs.veriatl.compiler.classpath">
+    <path id="fr.emn.atlanmod.veriatl.driver.classpath">
         <pathelement location="bin"/>
         <path refid="Plug-in Dependencies.libraryclasspath"/>
         <pathelement location="externalDependencies/commons-io-2.4.jar"/>
-        <pathelement location="externalDependencies/ASMReader.jar"/>
     	<!-- atl2boogie -->
-		<pathelement location="${fr.emn.atlanmod.atl2boogie.location}/bin"/>
+		<pathelement location="${compiler.boogie.location}/bin"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
@@ -105,9 +104,9 @@ Need to change:
         </copy>
     </target>
     <target name="clean">
-    	<delete dir="${user.dir}/${projName}/Auxu"/>
-    	<delete dir="${user.dir}/${projName}/Sub-goals"/>
-    	<delete dir="${user.dir}/${projName}/Trees"/>
+    	<delete dir="${casestudy.location}/${projName}/Auxu"/>
+    	<delete dir="${casestudy.location}/${projName}/Sub-goals"/>
+    	<delete dir="${casestudy.location}/${projName}/Trees"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
@@ -116,7 +115,7 @@ Need to change:
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
-            <classpath refid="ie.nuim.cs.veriatl.compiler.classpath"/>
+            <classpath refid="fr.emn.atlanmod.veriatl.driver.classpath"/>
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
@@ -136,34 +135,34 @@ Need to change:
 	
 	
 	<target depends="clean" name="skeleton">
-        <java classname="cs.nuim.ie.workflowRunner.xpandExec" failonerror="true" fork="yes">
+        <java classname="fr.emn.atlanmod.veriatl.driver.workflowRunner.main" failonerror="true" fork="yes">
         	<arg value="init"/>
-        	<arg value="${projName}"/>
+        	<arg value="${casestudy.location}/${projName}"/>
         	<arg value="${mode}"/>
-            <classpath refid="ie.nuim.cs.veriatl.compiler.classpath"/>
+            <classpath refid="fr.emn.atlanmod.veriatl.driver.classpath"/>
         </java>
 	</target>
 	
     <target depends="skeleton" name="gen">
-        <java classname="cs.nuim.ie.workflowRunner.xpandExec" failonerror="true" fork="yes">
+        <java classname="fr.emn.atlanmod.veriatl.driver.workflowRunner.main" failonerror="true" fork="yes">
         	<arg value="gen"/>
-        	<arg value="${projName}"/>
+        	<arg value="${casestudy.location}/${projName}"/>
         	<arg value="${mode}"/> 
-            <classpath refid="ie.nuim.cs.veriatl.compiler.classpath"/>
+            <classpath refid="fr.emn.atlanmod.veriatl.driver.classpath"/>
         </java>
     </target>
 	
-	<target depends="gen" name="decompose">
+	<target  name="decompose">
 		<subant target="ocldecomposerDriver">
-	      	<fileset dir="C:/Users/zcheng/Desktop/Eclipse/workspace/mars/fr.emn.atlanmod.ocldecomposer/" includes="build.xml"/>
-			<property name="proj" value="${user.dir}/${projName}" />
+	      	<fileset dir="../fr.emn.atlanmod.veriatl.debug.decomposer/" includes="build.xml"/>
+			<property name="proj" value="${casestudy.location}/${projName}" />
 		</subant>
 	</target>   
 	
 	<target name="verify">
 		<subant target="executioner">
-	      	<fileset dir="C:/Users/zcheng/Desktop/Eclipse/workspace/mars/fr.emn.atlanmod.ocldecomposer/" includes="build.xml"/>
-			<property name="proj" value="${user.dir}/${projName}" />
+	      	<fileset dir="../fr.emn.atlanmod.veriatl.debug.decomposer/" includes="build.xml"/>
+			<property name="proj" value="${casestudy.location}/${projName}" />
 			<property name="post" value="${post}" /> 
 			<property name="task" value="original" />
 		</subant>
@@ -171,19 +170,19 @@ Need to change:
 	
 	<target name="debug">
 		<subant target="executioner">
-	      	<fileset dir="C:/Users/zcheng/Desktop/Eclipse/workspace/mars/fr.emn.atlanmod.ocldecomposer/" includes="build.xml"/>
-			<property name="proj" value="${user.dir}/${projName}" />
+	      	<fileset dir="../fr.emn.atlanmod.veriatl.debug.decomposer/" includes="build.xml"/>
+			<property name="proj" value="${casestudy.location}/${projName}" />
 			<property name="post" value="${post}" />
 			<property name="task" value="debug" />
 		</subant>
 	</target> 
 	
     <target name="help">
-        <java classname="cs.nuim.ie.workflowRunner.xpandExec" failonerror="true" fork="yes">
+        <java classname="fr.emn.atlanmod.veriatl.driver.workflowRunner.main" failonerror="true" fork="yes">
         	<arg value="help"/>
         	<arg value="${projName}"/>
         	<arg value="${mode}"/> 
-            <classpath refid="ie.nuim.cs.veriatl.compiler.classpath"/>
+            <classpath refid="fr.emn.atlanmod.veriatl.driver.classpath"/>
         </java>
     </target>
 </project>

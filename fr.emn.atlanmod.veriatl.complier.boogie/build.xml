@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="fr.emn.atlanmod.atl2boogie">
+<project basedir="." default="build" name="fr.emn.atlanmod.atl2boogie">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../Desktop/Eclipse/Mars/eclipse/"/>
-    <property name="ie.nuim.cs.veriatl.compiler.location" value="../Compiler.VeriATL/veriatl.compiler.cs.nuim.ie"/>
+    
+	<property name="ECLIPSE_HOME" value="C:/Users/zcheng/Desktop/Eclipse/Mars/eclipse/"/>
+	<property name="compiler.boogie.location" value="../fr.emn.atlanmod.veriatl.complier.boogie"/>
+	<property name="casestudy.location" value="../fr.emn.atlanmod.veriatl.casestudy.base"/>
+	<property name="debuger.location" value="../fr.emn.atlanmod.veriatl.debug.decomposer"/>
+	<property name="driver.location" value="../fr.emn.atlanmod.veriatl.driver/"/>
+	
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.6"/>
     <property name="source" value="1.6"/>
@@ -37,9 +38,11 @@
         <pathelement location="${ECLIPSE_HOME}plugins/org.eclipse.m2m.atl.core.emf_3.7.0.v201603222002.jar"/>
         <pathelement location="${ECLIPSE_HOME}plugins/org.eclipse.m2m.atl.engine_3.7.0.v201603222002.jar"/>
         <pathelement location="${ECLIPSE_HOME}plugins/org.eclipse.m2m.atl.dsls_3.7.0.v201603222002.jar"/>
-        <pathelement location="${ECLIPSE_HOME}plugins/org.antlr.runtime_3.0.0.v200803061811.jar"/>
+    	
         <pathelement location="${ECLIPSE_HOME}plugins/org.eclipse.m2m.atl.emftvm_3.7.0.v201603222002.jar"/>
         <pathelement location="${ECLIPSE_HOME}plugins/org.eclipse.m2m.atl.emftvm.trace_3.7.0.v201603222002.jar"/>
+    	<pathelement location="${ECLIPSE_HOME}plugins/org.antlr.runtime_4.3.0.v201502022030.jar" />
+    	<pathelement location="${ECLIPSE_HOME}plugins/org.antlr.runtime_3.0.0.v200803061811.jar"/> 
     </path>
     <path id="fr.emn.atlanmod.atl2boogie.classpath">
         <path refid="Plug-in Dependencies.libraryclasspath"/>
@@ -73,8 +76,8 @@
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects">
-        <ant antfile="build.xml" dir="${ie.nuim.cs.veriatl.compiler.location}" inheritAll="false" target="clean"/>
-        <ant antfile="build.xml" dir="${ie.nuim.cs.veriatl.compiler.location}" inheritAll="false" target="build">
+        <ant antfile="build.xml" dir="${driver.location}" inheritAll="false" target="clean"/>
+        <ant antfile="build.xml" dir="${driver.location}" inheritAll="false" target="build">
             <propertyset>
                 <propertyref name="build.compiler"/>
             </propertyset>
