@@ -11,7 +11,7 @@ Need to change:
 	<property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-	<property name="projName" value="IndustrialToAutosar"/>
+	<property name="projName" value="HSM2FSM"/>
 	<property name="mode" value="plusplus"/>
 	<property name="post" value=" UNQCOMPNAME"/>
 	
