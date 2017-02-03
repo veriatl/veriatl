@@ -83,7 +83,7 @@ public class Introduction  {
 			HashMap<EObject, ContextEntry> inferNextLv = ContextHelper.cloneContext(Inferred);
 			inferNextLv.put(bv, new ContextEntry(ContextNature.BV));
 
-			String bvType = TypeInference.infer(loopSrc).getType();
+			myOclType bvType = new myOclType("trgRef", TypeInference.infer(loopSrc).getType());
 			TypeInference.lookup.put(bv.getVarName(), bvType);
 
 			// bv in src

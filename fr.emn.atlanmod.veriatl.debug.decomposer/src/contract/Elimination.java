@@ -157,7 +157,7 @@ public class Elimination {
 				
 				
 				String fstRName = first.substring(0, pos);
-				String outid = first.substring(pos);
+				String outid = first.substring(pos+1);
 				if(outid.equals("0")){
 					genBy = "genBy";
 				}else{
@@ -183,7 +183,7 @@ public class Elimination {
 					
 					
 					String restRName = rule.substring(0, pos2);
-					String outid2 = first.substring(pos2);
+					String outid2 = first.substring(pos2+1);
 					if(outid2.equals("0")){
 						genBy2 = "genBy";
 					}else{
@@ -222,7 +222,7 @@ public class Elimination {
 				
 				
 				String fstRName = first.substring(0, pos);
-				String outid = first.substring(pos);
+				String outid = first.substring(pos+1);
 				if(outid.equals("0")){
 					genBy = "genBy";
 				}else{
@@ -248,7 +248,7 @@ public class Elimination {
 					
 					
 					String restRName = rule.substring(0, pos2);
-					String outid2 = first.substring(pos2);
+					String outid2 = first.substring(pos2+1);
 					if(outid2.equals("0")){
 						genBy2 = "genBy";
 					}else{
