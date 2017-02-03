@@ -96,9 +96,7 @@ public class Trace {
 					String outName = tarPrefix+output.getType();
 					
 					if(clName.equals(outName) || EMFLoader.isSubtype(outName, clName, tarmm)){
-						String traceName = i==0? 
-								String.format("%s", r.getName())
-							  : String.format("%s#%d", r.getName(), i);
+						String traceName = String.format("%s#%d", r.getName(), i);
 											
 						if(rtn.containsKey(clName)){
 							rtn.get(clName).add(traceName);
