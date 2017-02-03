@@ -97,12 +97,15 @@ public class GenBy {
 	private static void printFilter(MatchedRule r, Map<String, String> replacers) {
 		ocl2boogie.onReplacing(replacers);
 
+		TypeInference.lookup.size();
+		
 		OclExpression filter = r.getInPattern().getFilter();
 		if(filter == null){
 			System.out.println("true");
 		}else{
 			//System.out.println(ocl2boogie.genOclExpression(filter, "$trgHeap"));
-			System.out.println(ocl2boogie.genOclExpression(filter, atl.genTrgHeap()));
+			atl.srcHeaps.add("$s");
+			System.out.println(ocl2boogie.genOclExpression(filter, "$s"));
 		}
 		
 	}
