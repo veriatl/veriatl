@@ -7,9 +7,9 @@ import fr.emn.atlanmod.atl2boogie.xtend.lib.myOclType
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Map
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.m2m.atl.common.OCL.IteratorExp
 import org.eclipse.m2m.atl.common.OCL.NavigationOrAttributeCallExp
-import org.eclipse.m2m.atl.common.OCL.OclExpression
 import org.eclipse.m2m.atl.common.OCL.OclModelElement
 import org.eclipse.m2m.atl.common.OCL.OperationCallExp
 import org.eclipse.m2m.atl.common.OCL.OperatorCallExp
@@ -17,7 +17,6 @@ import org.eclipse.m2m.atl.common.OCL.StringExp
 import org.eclipse.m2m.atl.common.OCL.TupleExp
 import org.eclipse.m2m.atl.common.OCL.TuplePart
 import org.eclipse.m2m.atl.common.OCL.VariableExp
-import org.eclipse.emf.ecore.EObject
 
 class TypeInference {
 
@@ -200,9 +199,9 @@ class TypeInference {
 		val cl = expr.name
 		val tp = String.format("%s$%s", mm, cl)
 
-		if (mm.equals(driver.srcmm.name)) {
+		if (mm == driver.srcmm.name) {
 			return new myOclType("srcRef", tp)
-		} else if (mm.equals(driver.trgmm.name)) {
+		} else if (mm == driver.trgmm.name) {
 			return new myOclType("trgRef", tp)
 		} else {
 			return new myOclType
