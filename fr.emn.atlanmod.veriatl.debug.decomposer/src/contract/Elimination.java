@@ -18,12 +18,13 @@ import datastructure.ContextNature;
 import datastructure.Node;
 import datastructure.ProveOption;
 import datastructure.Tactic;
+import fr.emn.atlanmod.atl2boogie.xtend.lib.myOclType;
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference;
 import keywords.Keyword;
 import metamodel.EMFCopier;
 import metamodel.EMFHelper;
 import ocl.OclHelper;
-import ocl.Printer;
-import ocl.TypeInference;
+
 
 public class Elimination {
 	
@@ -142,8 +143,8 @@ public class Elimination {
 			OclExpression col = expr.getSource();
 			OclExpression src = expr.getArguments().get(0);
 			
-			String colType = TypeInference.infer(col, tarmm);
-			String elemType = TypeInference.getElemType(colType);
+			myOclType tp = TypeInference.infer(col);
+			String elemType = tp.getType();
 			
 			
 			
@@ -210,8 +211,8 @@ public class Elimination {
 			OclExpression col = expr.getSource();
 			OclExpression src = expr.getArguments().get(0);
 			
-			String colType = TypeInference.infer(col, tarmm);
-			String elemType = TypeInference.getElemType(colType);
+			myOclType tp = TypeInference.infer(col);
+			String elemType = tp.getType();
 			
 			if(trace.get(elemType)!=null && trace.get(elemType).size()>0){
 				String first = trace.get(elemType).get(0);
@@ -279,17 +280,16 @@ public class Elimination {
 			OclExpression src = expr.getSource();
 			if(src instanceof NavigationOrAttributeCallExp){
 				// identify single valued navigation
-				String tp = TypeInference.infer(src, tarmm);
-
+				myOclType tp = TypeInference.infer(src);
+	
 				
-				
-				if(!tp.startsWith(Keyword.TYPE_COL) && !TypeInference.isPrimitive(tp)){
+				if(!tp.getKind().equals("trgRefs") && !tp.getKind().equals("primitive")){
 					OperationCallExp col = make.createCollectionOperationCallExp();
 					col.setOperationName("allInstances");
 					OclModelElement m = make.createOclModelElement();
 					
-					String mmName = EMFHelper.getModel(tp);
-					String clName = EMFHelper.getClassifier(tp);
+					String mmName = EMFHelper.getModel(tp.getType());
+					String clName = EMFHelper.getClassifier(tp.getType());
 					m.setName(clName);
 					OclModel model = make.createOclModel();
 					model.setName(mmName);

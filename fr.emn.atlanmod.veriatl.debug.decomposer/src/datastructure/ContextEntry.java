@@ -1,8 +1,7 @@
 package datastructure;
 
-import org.eclipse.emf.ecore.EObject;
 
-import ocl.Printer;
+
 
 public class ContextEntry  {
 
