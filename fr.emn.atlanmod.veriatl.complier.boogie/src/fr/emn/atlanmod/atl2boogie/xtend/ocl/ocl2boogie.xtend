@@ -15,6 +15,12 @@ import org.eclipse.m2m.atl.common.OCL.IteratorExp
 class ocl2boogie {
 	
 	public static Map<String, String> iteratorTyping = new HashMap<String, String> 
+	public static Map<String, String> replaceMap
+	public static boolean isReplacing = false
+	
+	
+
+	
 	
 	// dispatcher
 	def static dispatch CharSequence genOclExpression(EObject e, CharSequence heap) '''We don't understand «e.eClass.name» '''
@@ -237,7 +243,9 @@ class ocl2boogie {
 	
 	'''
 	     
-	def static dispatch CharSequence genOclExpression(VariableExp e, CharSequence heap) '''«e.referredVariable.varName»'''
+	def static dispatch CharSequence genOclExpression(VariableExp e, CharSequence heap) '''
+	«val replacedVar = replaceMap.get(e.referredVariable.varName)»
+	«if (isReplacing) replacedVar else e.referredVariable.varName»'''
 	
 	def static dispatch CharSequence genOclExpression(BooleanExp e, CharSequence heap) '''«e.booleanSymbol.toString»'''
 	
@@ -276,6 +284,17 @@ class ocl2boogie {
 			}
 		}
 		return r
+	}
+	
+	
+	def static onReplacing(Map<String, String> m){
+		isReplacing = true
+		replaceMap = m
+	}
+	
+	def static offReplacing(){
+		isReplacing = false
+		replaceMap = new HashMap<String, String> 
 	}
 	
 	

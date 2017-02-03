@@ -1,7 +1,6 @@
 package incremental;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -22,17 +21,14 @@ import org.eclipse.m2m.atl.emftvm.ExecEnv;
 import contract.ContractLoader;
 import contract.Elimination;
 import contract.Introduction;
-
 import datastructure.ContextEntry;
 import datastructure.IncrementalResult;
 import datastructure.Node;
 import datastructure.NodeHelper;
 import datastructure.ProveOption;
 import datastructure.TriBoolean;
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference;
 import metamodel.EMFLoader;
-import ocl.Ocl2Boogie;
-import ocl.Printer;
-import ocl.TypeInference;
 import runtime.VerificationResult;
 import runtime.executioner;
 import transformation.GenBy;

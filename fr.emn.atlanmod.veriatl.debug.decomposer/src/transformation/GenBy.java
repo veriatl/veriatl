@@ -16,8 +16,8 @@ import org.eclipse.m2m.atl.emftvm.InputRuleElement;
 import org.eclipse.m2m.atl.emftvm.OutputRuleElement;
 
 import metamodel.EMFLoader;
-import ocl.Ocl2Boogie;
-import ocl.TypeInference;
+import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
+import fr.emn.atlanmod.atl2boogie.xtend.lib.myOclType;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.*;
 
 
@@ -65,7 +65,7 @@ public class GenBy {
 				printAxiomHeader(r, pos);
 
 				Map<String, String> replacers = getInputsMaps(r, pos);
-				Map<String, String> types = getInputsTypes(r);
+				Map<String, myOclType> types = getInputsTypes(r);
 				for (InPatternElement input : r.getInPattern().getElements()) {
 					printInputElement(input, replacers);
 				}
@@ -81,28 +81,28 @@ public class GenBy {
 		System.setOut(original);
 	}
 
-	private static Map<String, String> getInputsTypes(MatchedRule r) {
-		Map<String, String> rtn = new HashMap<String, String>();
+	private static Map<String, myOclType> getInputsTypes(MatchedRule r) {
+		Map<String, myOclType> rtn = new HashMap<String, myOclType>();
 
-		int i = 0;
 		for (InPatternElement input : r.getInPattern().getElements()) {
 			OclModelElement tp = (OclModelElement) input.getType();
 			String type = String.format("%s$%s", tp.getModel().getName(), tp.getName());
-			rtn.put(input.getVarName(), type);
-			i++;
+			myOclType mTp = new myOclType("srcRef", type);
+			rtn.put(input.getVarName(), mTp);
 		}
 
 		return rtn;
 	}
 
 	private static void printFilter(MatchedRule r, Map<String, String> replacers) {
-		Ocl2BoogieWithReplacer.init(srcMM, replacers);
+		ocl2boogie.onReplacing(replacers);
+
 		OclExpression filter = r.getInPattern().getFilter();
 		if(filter == null){
 			System.out.println("true");
 		}else{
 			//System.out.println(ocl2boogie.genOclExpression(filter, "$trgHeap"));
-			System.out.println(Ocl2BoogieWithReplacer.print(filter));
+			System.out.println(ocl2boogie.genOclExpression(filter, atl.genTrgHeap()));
 		}
 		
 	}

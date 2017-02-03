@@ -1,30 +1,48 @@
 package fr.emn.atlanmod.atl2boogie.xtend.ocl
 
-import org.eclipse.m2m.atl.common.OCL.*
-import org.eclipse.emf.ecore.EPackage
-import java.util.HashMap
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver
-import fr.emn.atlanmod.atl2boogie.xtend.lib.myOclType
-import fr.emn.atlanmod.atl2boogie.xtend.lib.emf
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl
+import fr.emn.atlanmod.atl2boogie.xtend.lib.emf
+import fr.emn.atlanmod.atl2boogie.xtend.lib.myOclType
 import java.util.ArrayList
-import java.util.List
+import java.util.HashMap
+import java.util.Map
+import org.eclipse.m2m.atl.common.OCL.IteratorExp
+import org.eclipse.m2m.atl.common.OCL.NavigationOrAttributeCallExp
+import org.eclipse.m2m.atl.common.OCL.OclExpression
+import org.eclipse.m2m.atl.common.OCL.OclModelElement
+import org.eclipse.m2m.atl.common.OCL.OperationCallExp
+import org.eclipse.m2m.atl.common.OCL.OperatorCallExp
+import org.eclipse.m2m.atl.common.OCL.StringExp
+import org.eclipse.m2m.atl.common.OCL.TupleExp
+import org.eclipse.m2m.atl.common.OCL.TuplePart
+import org.eclipse.m2m.atl.common.OCL.VariableExp
+import org.eclipse.emf.ecore.EObject
 
 class TypeInference {
 
-	def static init() {
+	public static Map<String, myOclType> lookup = new HashMap<String, myOclType>();
+
+
+	def static init(Map<String, myOclType> map) {
+		lookup.clear();
+		lookup.putAll(map);
 	}
 
-	def static dispatch myOclType infer(OclExpression expr) {
+	def static dispatch myOclType infer(EObject expr) {
 		return new myOclType
 	}
+	
 
 	def static dispatch myOclType infer(VariableExp expr) {
 		val v = expr.referredVariable.type
 		val mm = v as OclModelElement
 		var tp = ""
 		var mmName = ""
-		if (expr.referredVariable == null) {
+		if(lookup.containsKey(expr.referredVariable.varName)){
+			return lookup.get(expr.referredVariable.varName)
+		}
+		else if (expr.referredVariable == null) {
 			return new myOclType
 		} else {
 			if (v == null) {

@@ -1,7 +1,6 @@
 package localize;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.atl.common.ATL.MatchedRule;
-import org.eclipse.m2m.atl.common.ATL.Rule;
 import org.eclipse.m2m.atl.common.OCL.OclExpression;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 
@@ -26,8 +24,9 @@ import datastructure.Node;
 import datastructure.NodeHelper;
 import datastructure.ProveOption;
 import file.fileHelper;
+import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import metamodel.EMFLoader;
-import ocl.Ocl2Boogie;
 import transformation.GenBy;
 import transformation.Trace;
 import transformation.TransformationLoader;
@@ -126,7 +125,7 @@ public class ocldecomposerDriver {
 						
 			// print tree test
 			Collections.sort(tree);
-			Ocl2Boogie.init(tarmm);
+			
 			PrintStream out;
 
 			String goalName = post.getCommentsBefore().get(0).replace("--", "")+"/";
@@ -182,7 +181,7 @@ public class ocldecomposerDriver {
 
 
 	private static void printPost(OclExpression post) {
-		System.out.println(String.format("assert %s;", Ocl2Boogie.print(post)));
+		System.out.println(String.format("assert %s;", ocl2boogie.genOclExpression(post, atl.genTrgHeap())));
 		
 	}
 
