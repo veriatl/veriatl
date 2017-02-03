@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="decompose" name="fr.emn.atlanmod.veriatl.driver">
+<project basedir="." default="debug" name="fr.emn.atlanmod.veriatl.driver">
     <property environment="env"/>
 	<!-- location setup -->
     <property name="ECLIPSE_HOME" value="C:/Users/zcheng/Desktop/Eclipse/Mars/eclipse/"/>
