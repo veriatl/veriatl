@@ -6,9 +6,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.atl.common.OCL.*;
 
-import Ocl.TypeInference;
 import keywords.Keyword;
 import metamodel.EMFHelper;
+import ocl.TypeInference;
 
 public class Ocl2BoogieWithReplacer {
 

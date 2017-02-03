@@ -12,9 +12,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.m2m.atl.common.OCL.*;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 
-import Ocl.OclHelper;
-import Ocl.Printer;
-import Ocl.TypeInference;
 import datastructure.ContextEntry;
 import datastructure.ContextHelper;
 import datastructure.ContextNature;
@@ -24,6 +21,9 @@ import datastructure.Tactic;
 import keywords.Keyword;
 import metamodel.EMFCopier;
 import metamodel.EMFHelper;
+import ocl.OclHelper;
+import ocl.Printer;
+import ocl.TypeInference;
 
 public class Elimination {
 	

@@ -1,4 +1,4 @@
-package Ocl;
+package ocl;
 
 import java.util.HashMap;
 import java.util.Map;

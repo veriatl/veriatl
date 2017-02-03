@@ -1,4 +1,4 @@
-package Ocl;
+package ocl;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;

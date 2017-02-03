@@ -35,29 +35,51 @@ class driver {
 	public static var HashSet<String> constants = new HashSet<String>
 	public static var ExecEnv = new ArrayList<MatchedRule>
 	
+	public static var Resource atl_resource
+	public static var Resource contract_resource
 	
 	def static void main(String[] args) {
-		new driver().generate(args.get(0), args.get(1), args.get(2), args.get(3), args.get(4))
+		generate(args.get(0), args.get(1), args.get(2), args.get(3), args.get(4))
 		println("finished")
 		//println(ocl2boogie.iteratorTyping)
 		print(fMapSrc)
 	}
 
+	def static doEMFSetup() {
+		// load metamodels	
+		EPackage.Registry.INSTANCE.put(ATLPackage.eNS_URI, ATLPackage.eINSTANCE)
+		EPackage.Registry.INSTANCE.put(OCLPackage.eNS_URI, OCLPackage.eINSTANCE)
 
-	def generate(String atl, String src, String tar, String contract, String path) {
-		doEMFSetup
+		// register resource processors
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("xmi", new XMIResourceFactoryImpl);
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("atl", new AtlResourceFactoryImpl());
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl());
+	}
+	
+	def static doVeriATLSetup(String atl, String src, String tar, String contract, String path) {
 		val rs = new ResourceSetImpl
-		val atl_resource = rs.getResource(URI.createFileURI(atl), true)
 		
-		
-		val Resource srcRes = rs.getResource(URI.createFileURI(src), true)
-		val Resource trgRes = rs.getResource(URI.createFileURI(tar), true)
+		val srcRes = rs.getResource(URI.createFileURI(src), true)
+		val trgRes = rs.getResource(URI.createFileURI(tar), true)
 		
 		fMapSrc = emf.getsfInfo(srcRes)
 		fMapTrg = emf.getsfInfo(trgRes)
 		srcmm = emf.getEPackage(srcRes)
 		trgmm = emf.getEPackage(trgRes)
 		
+		atl_resource = rs.getResource(URI.createFileURI(atl), true)
+		contract_resource = rs.getResource(URI.createFileURI(contract), true)
+	}
+	
+	
+	
+	
+	/**
+	 * 
+	 */
+	def static generate(String atl, String src, String tar, String contract, String path) {
+		doEMFSetup
+		doVeriATLSetup(atl, src, tar, contract, path)
 
 		// gen matchers
 		var res = "";
@@ -88,15 +110,13 @@ class driver {
 		
 		
 		// gen contracts
-		if(contract!="NoContract"){
-			var res3 = "";
-			val contract_resource = rs.getResource(URI.createFileURI(contract), true)
-			for (content : contract_resource.contents) {
-				res3 += contract2boogie.genHelpers(content)	
-			}
-		
-			Files.write(res3, new File(path+'Preconditions.bpl'), Charsets.UTF_8)
+		var res3 = "";
+			
+		for (content : contract_resource.contents) {
+			res3 += contract2boogie.genHelpers(content)	
 		}
+	
+		Files.write(res3, new File(path+'Preconditions.bpl'), Charsets.UTF_8)
 		
 		
 		// gen src mm
@@ -122,17 +142,8 @@ class driver {
 	
 
 	
-	
-	def doEMFSetup() {
-		// load metamodels	
-		EPackage.Registry.INSTANCE.put(ATLPackage.eNS_URI, ATLPackage.eINSTANCE)
-		EPackage.Registry.INSTANCE.put(OCLPackage.eNS_URI, OCLPackage.eINSTANCE)
 
-		// register resource processors
-		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("xmi", new XMIResourceFactoryImpl);
-		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("atl", new AtlResourceFactoryImpl());
-		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl());
-	}
+
 
 
 		

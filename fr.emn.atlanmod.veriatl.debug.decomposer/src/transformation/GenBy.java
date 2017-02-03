@@ -15,9 +15,9 @@ import org.eclipse.m2m.atl.emftvm.ExecEnv;
 import org.eclipse.m2m.atl.emftvm.InputRuleElement;
 import org.eclipse.m2m.atl.emftvm.OutputRuleElement;
 
-import Ocl.Ocl2Boogie;
-import Ocl.TypeInference;
 import metamodel.EMFLoader;
+import ocl.Ocl2Boogie;
+import ocl.TypeInference;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.*;
 
 

@@ -7,9 +7,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.atl.common.OCL.*;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 
-import Ocl.Ocl2Boogie;
-import Ocl.Printer;
 import keywords.Keyword;
+import ocl.Ocl2Boogie;
+import ocl.Printer;
 import transformation.Trace;
 
 

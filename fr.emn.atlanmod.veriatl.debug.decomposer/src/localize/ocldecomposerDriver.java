@@ -18,7 +18,6 @@ import org.eclipse.m2m.atl.common.ATL.Rule;
 import org.eclipse.m2m.atl.common.OCL.OclExpression;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 
-import Ocl.Ocl2Boogie;
 import contract.ContractLoader;
 import contract.Elimination;
 import contract.Introduction;
@@ -28,6 +27,7 @@ import datastructure.NodeHelper;
 import datastructure.ProveOption;
 import file.fileHelper;
 import metamodel.EMFLoader;
+import ocl.Ocl2Boogie;
 import transformation.GenBy;
 import transformation.Trace;
 import transformation.TransformationLoader;
