@@ -11,6 +11,8 @@ import org.eclipse.m2m.atl.common.ATL.*
 import org.eclipse.m2m.atl.common.OCL.TupleExp
 import java.util.ArrayList
 import org.eclipse.m2m.atl.common.OCL.IteratorExp
+import org.eclipse.m2m.atl.common.OCL.OperationCallExp
+import org.eclipse.m2m.atl.common.OCL.OperatorCallExp
 
 class ocl2boogie {
 	
@@ -31,12 +33,18 @@ class ocl2boogie {
 	«val srcTp = TypeInference.infer(e.source)»«val srcType = srcTp.type»«val srcKind = srcTp.kind»
 	«val op = e.operationName»
 	«val args = e.arguments.map(arg|genOclExpression(arg, heap)).join(" ")»
-	«if (srcKind == "srcRefs") genOclSequenceExpression(e, heap)
-	 else if (op == "oclIsUndefined") String.format("(%s==null || !read(%s, %s, alloc))", src, heap, src)
+	«if (op == "oclIsUndefined") String.format("(%s==null || !read(%s, %s, alloc))", src, heap, src)
 	 else if (op=="allInstances") String.format("Fun#LIB#AllInstanceFrom(%s, %s)", heap, src)
 	 else if (op=="oclIsTypeOf") String.format("dtype(%s) <: %s", src, args)
 	 else if (op=="resolveTemp") gen_resolveTemp(e, heap)
-	 else String.format("We don't understand operation: %s", srcTp)»'''
+	 else if (op=="genBy") gen_genByExpr(e, heap)
+	 else genOclSequenceExpression(e, heap)»'''
+	
+	def static gen_genByExpr(OperationCallExp e, CharSequence heap) '''
+	«val src = e.getSource»
+	«val rl = e.getArguments.get(0)»
+	«val op = e.getOperationName»
+	«String.format("%s(%s, %s, %s, %s)", op, genOclExpression(src, heap), genOclExpression(rl, heap), atl.genSrcHeap, atl.genTrgHeap)»'''
 	
 	// Justification: resolveTemp must have at least two args, the first one is a src var in the current rule context, the second one to identify which tar to retrieve
 	// as a technical requirement, if two rules has the same identifier, their declarations in the rules need to have the same order, e.g. all in position 1/2/3 etc.
@@ -56,6 +64,11 @@ class ocl2boogie {
 		}
 	}
 
+	def static genNaryExpression(OperatorCallExp e, CharSequence heap) '''
+	«val lhs = genOclExpression(e.source, heap)»
+	«val op = {if (e.operationName=="and")  " && " else if (e.operationName=="or") " || " else e.operationName}»
+	«val rhss = e.arguments.map(arg|genOclExpression(arg, heap)).join(op)»
+	«if (e.getArguments.size > 0) String.format("%s %s %s", lhs, op, rhss) else lhs»'''
 	
 	// print string/seq/set
 	def static dispatch CharSequence genOclExpression(OperatorCallExp e, CharSequence heap) '''
@@ -64,8 +77,8 @@ class ocl2boogie {
 	«if (srcKind == "primitive" && srcType == "string") genOclStringExpression(e, heap)
 	 else if (op == "not") String.format("!(%s)", src)
 	 else if (op=="abs") String.format("Math#Abs(%s)", src)
-	 else if (op=="and") String.format("%s && %s", src, args)
-	 else if (op=="or") String.format("%s || %s", src, args)
+	 else if (op=="and") genNaryExpression(e, heap)
+	 else if (op=="or") genNaryExpression(e, heap) 
 	 else if (op=="implies") String.format("%s ==> %s", src, args)
 	 else if (op=="<>") String.format("%s != %s", src, args)
 	 else if (op=="=") String.format("%s == %s", src, args)
@@ -98,10 +111,9 @@ class ocl2boogie {
 	'''
 	
 	//TODO print this way if src is nav, print other way if src is iterator
-	def static genOclSequenceExpression(OperationCallExp expr, CharSequence heap) '''
-	«val src = genOclExpression(expr.source, heap)»«val op = expr.operationName»«val args = expr.arguments.map(arg|genOclExpression(arg, heap)).join(",")»
-	«IF expr.source instanceof NavigationOrAttributeCallExp»
-		«IF op=='size'»Seq#Length(Seq#FromArray(«heap», «src»))«
+	def static genOclSequenceExpression(OperationCallExp expr, CharSequence heap) '''«val src = genOclExpression(expr.source, heap)»«val op = expr.operationName»«val args = expr.arguments.map(arg|genOclExpression(arg, heap)).join(",")»«
+	IF expr.source instanceof NavigationOrAttributeCallExp»«
+		IF op=='size'»Seq#Length(Seq#FromArray(«heap», «src»))«
 		ELSEIF op=='isEmpty'»Seq#IsEmpty(Seq#FromArray(«heap», «src»))«
 		ELSEIF op=='notEmpty'»Seq#NotEmpty(Seq#FromArray(«heap», «src»))«
 		ELSEIF op=='flatten'»Iterator#Flatten(«src», «heap»)«
@@ -111,16 +123,16 @@ class ocl2boogie {
 		    IF op == 'append'»Seq#Build«
 		    ELSEIF op == 'prepend'»Seq#Prepend«
 			ELSEIF op == 'includes'»Seq#Contains«
-			ELSEIF op == 'excludes'»Seq#NotContains«
+			ELSEIF op == 'excludes'»!Seq#Contains«
 			ELSEIF op == 'at'»Seq#Index«
 			ELSEIF op == 'insertAt'»Seq#InsertAt«
 			ELSEIF op == 'subSequence'»Seq#SubSequence«
 			ELSEIF op == 'union'»Seq#Append«
-			ELSE»This sequence operation is not recognized«
-			ENDIF»(Seq#FromArray(«heap», «src»), $Box(«args»))
-		«ENDIF»
-	«ELSE»
-		«IF op=='size'»Seq#Length(«src»)«
+			ELSE»«String.format("We don't understand operation: %s", expr.getOperationName)»«
+			ENDIF»(Seq#FromArray(«heap», «src»), $Box(«args»))«
+		ENDIF»«
+	ELSE»«
+		IF op=='size'»Seq#Length(«src»)«
 		ELSEIF op=='isEmpty'»Seq#IsEmpty(«src»)«
 		ELSEIF op=='notEmpty'»Seq#NotEmpty(«src»)«
 		ELSEIF op=='flatten'»Iterator#Flatten(«src», «heap»)«	// special case where nav/iterator have the same behaviour
@@ -130,16 +142,15 @@ class ocl2boogie {
 		    IF op == 'append'»Seq#Build«
 		    ELSEIF op == 'prepend'»Seq#Prepend«
 			ELSEIF op == 'includes'»Seq#Contains«
-			ELSEIF op == 'excludes'»Seq#NotContains«
+			ELSEIF op == 'excludes'»!Seq#Contains«
 			ELSEIF op == 'at'»Seq#Index«
 			ELSEIF op == 'insertAt'»Seq#InsertAt«
 			ELSEIF op == 'subSequence'»Seq#SubSequence«
 			ELSEIF op == 'union'»Seq#Append«
-			ELSE»This sequence operation is not recognized«
-			ENDIF»(«src», «args»)
-		«ENDIF»
-	«ENDIF»
-	'''
+			ELSE»«String.format("We don't understand operation: %s", expr.getOperationName)»«
+			ENDIF»(«src», «args»)«
+		ENDIF»«
+	ENDIF»'''
 	
 	
 	def static dispatch CharSequence genOclExpression(IteratorExp e, CharSequence heap) '''
@@ -244,8 +255,7 @@ class ocl2boogie {
 	'''
 	     
 	def static dispatch CharSequence genOclExpression(VariableExp e, CharSequence heap) '''
-	«val replacedVar = replaceMap.get(e.referredVariable.varName)»
-	«if (isReplacing) replacedVar else e.referredVariable.varName»'''
+	«if (isReplacing) replaceMap.get(e.referredVariable.varName) else e.referredVariable.varName»'''
 	
 	def static dispatch CharSequence genOclExpression(BooleanExp e, CharSequence heap) '''«e.booleanSymbol.toString»'''
 	
@@ -269,6 +279,7 @@ class ocl2boogie {
 	
 	def static dispatch CharSequence genOclExpression(IntegerExp e, CharSequence heap) '''«e.integerSymbol»'''
 	
+	def static dispatch CharSequence genOclExpression(Iterator e, CharSequence heap) '''«e.getVarName»'''
 	
 	def static dispatch CharSequence genOclExpression(TupleExp e, CharSequence heap) '''
 	«val col = getInitExprs(e)»
