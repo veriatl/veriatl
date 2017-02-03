@@ -24,6 +24,7 @@ import datastructure.Node;
 import datastructure.NodeHelper;
 import datastructure.ProveOption;
 import file.fileHelper;
+import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import metamodel.EMFLoader;
@@ -63,6 +64,9 @@ public class ocldecomposerDriver {
 		String transformationSrcPath = fileHelper.getFirstFilePathbyExt(projPath+dirs.get("atl_src"), "atl");
 		String subGoalsPath = projPath+dirs.get("subgoal")+"/";
 		String genByPath = projPath+dirs.get("subgoal")+"/";
+		
+		driver.doEMFSetup();
+		driver.doVeriATLSetup(transformationSrcPath, srcmmPath, tarmmPath, contractPath, "");
 		
 		ExecEnv env = Trace.moduleLoader(emftvm, moduleName, srcmmPath, tarmmPath, srcmmName, tarmmName);
 		

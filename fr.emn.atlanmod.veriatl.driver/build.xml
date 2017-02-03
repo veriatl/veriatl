@@ -10,9 +10,9 @@
 	<property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-	<property name="projName" value="UML"/>
+	<property name="projName" value="HSM2FSM_EXP"/>
 	<property name="mode" value="plusplus"/>
-	<property name="post" value=" unique_fsm_sm_names"/>
+	<property name="post" value=" fsm_transition_src_multi_lower"/>
 	
     <path id="Plug-in Dependencies.libraryclasspath">
         <pathelement location="${ECLIPSE_HOME}plugins/org.eclipse.jdt.core_3.11.2.v20160128-0629.jar"/>
