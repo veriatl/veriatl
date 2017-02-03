@@ -7,9 +7,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.atl.common.OCL.*;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 
+import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import keywords.Keyword;
-import ocl.Ocl2Boogie;
-import ocl.Printer;
+
 import transformation.Trace;
 
 
@@ -195,22 +196,7 @@ public class Node implements Comparable {
 	
 	
 	
-	@Override
-	public String toString() {
-		String ctx = "";
-		
-		for(EObject entry : this.context.keySet()){
-			ctx += String.format("%s \t *%s*\n",  Printer.print(entry), this.context.get(entry));
-		}
-		
-		String h = "";
-		if(parent != null){
-			h =Integer.toHexString(parent.hashCode());
-		}
-		
-		return String.format("Lv: %d\n Node: %s, Parent: %s\nctx: [%s], \n===\nGoal: %s, \napplied %s\nResult: %s\n", 
-				level, id, h, ctx, Printer.print(content), ruleApplied, this.res.toString());
-	}
+
 	
 	public String toBoogie(ExecEnv env){
 		String rtn = Keyword.EMPTY_STRING;
@@ -218,7 +204,7 @@ public class Node implements Comparable {
 		rtn += "implementation driver(){\n";
 		
 		for(EObject r : this.getBVs()){
-			rtn += String.format("var %s: ref;\n", Ocl2Boogie.print(r));
+			rtn += String.format("var %s: ref;\n", ocl2boogie.genOclExpression(r, atl.genTrgHeap()));
 		}
 		
 		rtn += "call init_tar_model();\n";
@@ -243,15 +229,15 @@ public class Node implements Comparable {
 		
 		
 		for(EObject entry : this.getAssumptions()){
-			rtn += String.format("assume %s;\n",  Ocl2Boogie.print(entry));
+			rtn += String.format("assume %s;\n",  ocl2boogie.genOclExpression(entry, atl.genTrgHeap()));
 		}
 		
 		for(EObject entry : this.getInfers()){
-			rtn += String.format("assume %s;\n",  Ocl2Boogie.print(entry));
+			rtn += String.format("assume %s;\n",  ocl2boogie.genOclExpression(entry, atl.genTrgHeap()));
 		}
 		
 		
-		rtn += String.format("assert %s;\n",  Ocl2Boogie.print(this.getContent()));
+		rtn += String.format("assert %s;\n",  ocl2boogie.genOclExpression(this.content, atl.genTrgHeap()));
 		
 		rtn+="}\n";
 		
