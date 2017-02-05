@@ -70,10 +70,10 @@ class mm2boogie {
 	
 	def static gen_validSrc(EPackage p) '''
 	function valid_src_model($h: HeapType): bool{
-		«(0..<p.EClassifiers.size).map(i | gen_constraints_class(p.EClassifiers.get(i))).join("&&")»
+		«(0..<p.EClassifiers.size).map(i | gen_constraints_class(p.EClassifiers.get(i)) ).join("&&")»
 	} 
 	'''
-	def static dispatch gen_constraints_class(EClassifier cl) ''''''
+	def static dispatch gen_constraints_class(EClassifier cl) '''true'''
 	
 	def static dispatch gen_constraints_class(EClass cl) '''
 	«val bv = "__"+cl.name.toLowerCase»
