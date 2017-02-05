@@ -3,88 +3,15 @@ module HSM2FSM;
 create OUT : UMLs from IN : UML;
 
 
-helper context UML!ActivityEdge def: source_and_target(): Boolean = 
-  UML!ActivityEdge.allInstances()->forAll(edge | 
-    edge.activity <> OclUndefined implies
-	  edge.source.containingActivity() = edge.activity and edge.target.containingActivity() = edge.activity
-);
-	
-helper context UML!ActivityParameterNode def: no_outgoing_edges(): Boolean = 
-  UML!ActivityParameterNode.allInstances()->forAll(node | node.incoming->notEmpty() and 
-	(node.outgoing->isEmpty() implies node.parameter.direction = UML!ParameterDirectionKind.out 
-										or node.parameter.direction = UML!ParameterDirectionKind.inout 
-										or node.parameter.direction = UML!ParameterDirectionKind.return)
-);
-
-helper context UML!ActivityParameterNode def: no_incoming_edges(): Boolean = 
-  UML!ActivityParameterNode.allInstances()->forAll(node | node.outgoing->notEmpty() and 
-	(node.incoming->isEmpty() implies node.parameter.direction = UML!ParameterDirectionKind.in 
-										or node.parameter.direction = UML!ParameterDirectionKind.inout)
-);
-
-helper context UML!ActivityParameterNode def: no_edges(): Boolean = 
-  UML!ActivityParameterNode.allInstances()->forAll(node | node.incoming->isEmpty() or node.outgoing->isEmpty() );
-   
-helper context UML!ActivityParameterNode def: has_parameters(): Boolean = 
-  UML!ActivityParameterNode.allInstances()->forAll(node | 
-    node.activity.ownedParameter->includes(node.parameter)
-);
-
-helper context UML!ActivityParameterNode def: has_parameters_extra(): Boolean = 
+--@pre
+helper context UML!ActivityParameterNode def: pre_has_parameters_extra(): Boolean = --uml_has_parameters_extra
   UML!ActivityParameterNode.allInstances()->forAll(node | 
     node.type = node.parameter.type
 );
 
 
-helper context UML!ActivityPartition def: dimension_not_contained(): Boolean = 
-  UML!ActivityPartition.allInstances()->forAll(part | 
-    part.isDimension implies part.superPartition->isEmpty()
+--@post
+helper context UMLs!ActivityParameterNode def: post_has_parameters_extra(): Boolean = --umls_has_parameters_extra
+  UMLs!ActivityParameterNode.allInstances()->forAll(node | 
+    node.type = node.parameter.type
 );
-
-
-helper context UML!DecisionNode def: decision_input_flow_incoming(): Boolean = 
-  UML!DecisionNode.allInstances()->forAll(node | 
-    node.incoming->includes(node.decisionInputFlow)
-);
-
-helper context UML!DecisionNode def: incoming_outgoing_edges(): Boolean = 
-  UML!DecisionNode.allInstances()->forAll(node | 
-    (node.incoming->size() = 1 or node.incoming->size() = 2) 
-	and node.outgoing->size() > 0
-);
-
-
-helper context UML!DecisionNode def: zero_input_parameters(): Boolean = 
-  UML!DecisionNode.allInstances()->forAll(node | 
-    node.decisionInput <> OclUndefined and 
-	node.decisionInputFlow = OclUndefined and
-	node.incoming->exists(edge | edge.oclIsKindOf(UML!ControlFlow)) implies node.decisionInput.inputParameters()->isEmpty()
-);
-
-helper context UML!DecisionNode def: incoming_object_one_input_parameter(): Boolean = 
-  UML!DecisionNode.allInstances()->forAll(node | 
-    node.decisionInput <> OclUndefined and 
-	node.decisionInputFlow = OclUndefined and
-	node.incoming->forAll(edge | edge.oclIsKindOf(UML!ObjectFlow)) implies node.decisionInput.inputParameters()->size() = 1
-);
-		
-helper context UML!DecisionNode def: two_input_parameters(): Boolean = 
-  UML!DecisionNode.allInstances()->forAll(node | 
-    node.decisionInput <> OclUndefined and 
-	node.decisionInputFlow <> OclUndefined and
-	node.incoming->forAll(edge | edge.oclIsKindOf(UML!ObjectFlow)) implies node.decisionInput.inputParameters()->size() = 2
-);
-
-helper context UML!DecisionNode def: incoming_control_one_input_parameter(): Boolean = 
-  UML!DecisionNode.allInstances()->forAll(node | 
-    node.decisionInput <> OclUndefined and 
-	node.decisionInputFlow <> OclUndefined and
-	node.incoming->exists(edge | edge.oclIsKindOf(UML!ObjectFlow)) implies node.decisionInput.inputParameters()->size() = 1
-);		
-
-
-		
-
-
-		
-
