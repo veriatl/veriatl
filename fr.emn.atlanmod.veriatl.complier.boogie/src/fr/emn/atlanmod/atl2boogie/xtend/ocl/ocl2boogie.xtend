@@ -37,7 +37,7 @@ class ocl2boogie {
 	 else if (op=="allInstances") String.format("Fun#LIB#AllInstanceFrom(%s, %s)", heap, src)
 	 else if (op=="oclIsTypeOf") String.format("dtype(%s) <: %s", src, args)
 	 else if (op=="resolveTemp") gen_resolveTemp(e, heap)
-	 else if (op=="genBy") gen_genByExpr(e, heap)
+	 else if (op.startsWith("genBy")) gen_genByExpr(e, heap)
 	 else genOclSequenceExpression(e, heap)»'''
 	
 	def static gen_genByExpr(OperationCallExp e, CharSequence heap) '''
