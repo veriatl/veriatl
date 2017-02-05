@@ -56,12 +56,13 @@ class mm2boogie {
 	
 	def static dispatch gen_StructuralFeatures(EClassifier cl, EStructuralFeature sf) '''''' 
 	
+	
 	def static dispatch gen_StructuralFeatures(EClassifier cl, EAttribute sf) '''
 	const unique «cl.EPackage.name»$«cl.name».«sf.name»: Field «
 	IF sf.EType.name == 'EString'»String«
 	ELSEIF sf.EType.name == 'EInt'»int«
 	ELSEIF sf.EType.name == 'EBoolean'»bool«
-	ELSE»«sf.EType.name»«ENDIF»;
+	ELSE»ref«ENDIF»;
 	'''
 	
 	def static dispatch gen_StructuralFeatures(EClassifier cl, EReference sf) '''
