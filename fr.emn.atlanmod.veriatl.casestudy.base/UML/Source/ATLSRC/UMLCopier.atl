@@ -7,7 +7,7 @@ rule CopyAbstraction {
  from
   s : UML!Abstraction
   (
-   s.oclIsTypeOf(MM!Abstraction)
+   s.oclIsTypeOf(UML!Abstraction)
   )
  to
   t : UMLs!Abstraction (
@@ -35,7 +35,7 @@ rule CopyAcceptCallAction {
  from
   s : UML!AcceptCallAction
   (
-   s.oclIsTypeOf(MM!AcceptCallAction)
+   s.oclIsTypeOf(UML!AcceptCallAction)
   )
  to
   t : UMLs!AcceptCallAction (
@@ -77,7 +77,7 @@ rule CopyAcceptEventAction {
  from
   s : UML!AcceptEventAction
   (
-   s.oclIsTypeOf(MM!AcceptEventAction)
+   s.oclIsTypeOf(UML!AcceptEventAction)
   )
  to
   t : UMLs!AcceptEventAction (
@@ -118,7 +118,7 @@ rule CopyActionExecutionSpecification {
  from
   s : UML!ActionExecutionSpecification
   (
-   s.oclIsTypeOf(MM!ActionExecutionSpecification)
+   s.oclIsTypeOf(UML!ActionExecutionSpecification)
   )
  to
   t : UMLs!ActionExecutionSpecification (
@@ -143,7 +143,7 @@ rule CopyActionInputPin {
  from
   s : UML!ActionInputPin
   (
-   s.oclIsTypeOf(MM!ActionInputPin)
+   s.oclIsTypeOf(UML!ActionInputPin)
   )
  to
   t : UMLs!ActionInputPin (
@@ -188,7 +188,7 @@ rule CopyActivity {
  from
   s : UML!Activity
   (
-   s.oclIsTypeOf(MM!Activity)
+   s.oclIsTypeOf(UML!Activity)
   )
  to
   t : UMLs!Activity (
@@ -266,7 +266,7 @@ rule CopyActivityFinalNode {
  from
   s : UML!ActivityFinalNode
   (
-   s.oclIsTypeOf(MM!ActivityFinalNode)
+   s.oclIsTypeOf(UML!ActivityFinalNode)
   )
  to
   t : UMLs!ActivityFinalNode (
@@ -297,7 +297,7 @@ rule CopyActivityParameterNode {
  from
   s : UML!ActivityParameterNode
   (
-   s.oclIsTypeOf(MM!ActivityParameterNode)
+   s.oclIsTypeOf(UML!ActivityParameterNode)
   )
  to
   t : UMLs!ActivityParameterNode (
@@ -335,7 +335,7 @@ rule CopyActivityPartition {
  from
   s : UML!ActivityPartition
   (
-   s.oclIsTypeOf(MM!ActivityPartition)
+   s.oclIsTypeOf(UML!ActivityPartition)
   )
  to
   t : UMLs!ActivityPartition (
@@ -367,7 +367,7 @@ rule CopyActor {
  from
   s : UML!Actor
   (
-   s.oclIsTypeOf(MM!Actor)
+   s.oclIsTypeOf(UML!Actor)
   )
  to
   t : UMLs!Actor (
@@ -418,7 +418,7 @@ rule CopyAddStructuralFeatureValueAction {
  from
   s : UML!AddStructuralFeatureValueAction
   (
-   s.oclIsTypeOf(MM!AddStructuralFeatureValueAction)
+   s.oclIsTypeOf(UML!AddStructuralFeatureValueAction)
   )
  to
   t : UMLs!AddStructuralFeatureValueAction (
@@ -462,7 +462,7 @@ rule CopyAddVariableValueAction {
  from
   s : UML!AddVariableValueAction
   (
-   s.oclIsTypeOf(MM!AddVariableValueAction)
+   s.oclIsTypeOf(UML!AddVariableValueAction)
   )
  to
   t : UMLs!AddVariableValueAction (
@@ -504,7 +504,7 @@ rule CopyAnyReceiveEvent {
  from
   s : UML!AnyReceiveEvent
   (
-   s.oclIsTypeOf(MM!AnyReceiveEvent)
+   s.oclIsTypeOf(UML!AnyReceiveEvent)
   )
  to
   t : UMLs!AnyReceiveEvent (
@@ -526,7 +526,7 @@ rule CopyArtifact {
  from
   s : UML!Artifact
   (
-   s.oclIsTypeOf(MM!Artifact)
+   s.oclIsTypeOf(UML!Artifact)
   )
  to
   t : UMLs!Artifact (
@@ -579,7 +579,7 @@ rule CopyAssociation {
  from
   s : UML!Association
   (
-   s.oclIsTypeOf(MM!Association)
+   s.oclIsTypeOf(UML!Association)
   )
  to
   t : UMLs!Association (
@@ -633,7 +633,7 @@ rule CopyAssociationClass {
  from
   s : UML!AssociationClass
   (
-   s.oclIsTypeOf(MM!AssociationClass)
+   s.oclIsTypeOf(UML!AssociationClass)
   )
  to
   t : UMLs!AssociationClass (
@@ -701,7 +701,7 @@ rule CopyBehaviorExecutionSpecification {
  from
   s : UML!BehaviorExecutionSpecification
   (
-   s.oclIsTypeOf(MM!BehaviorExecutionSpecification)
+   s.oclIsTypeOf(UML!BehaviorExecutionSpecification)
   )
  to
   t : UMLs!BehaviorExecutionSpecification (
@@ -726,7 +726,7 @@ rule CopyBroadcastSignalAction {
  from
   s : UML!BroadcastSignalAction
   (
-   s.oclIsTypeOf(MM!BroadcastSignalAction)
+   s.oclIsTypeOf(UML!BroadcastSignalAction)
   )
  to
   t : UMLs!BroadcastSignalAction (
@@ -767,7 +767,7 @@ rule CopyCallBehaviorAction {
  from
   s : UML!CallBehaviorAction
   (
-   s.oclIsTypeOf(MM!CallBehaviorAction)
+   s.oclIsTypeOf(UML!CallBehaviorAction)
   )
  to
   t : UMLs!CallBehaviorAction (
@@ -810,7 +810,7 @@ rule CopyCallEvent {
  from
   s : UML!CallEvent
   (
-   s.oclIsTypeOf(MM!CallEvent)
+   s.oclIsTypeOf(UML!CallEvent)
   )
  to
   t : UMLs!CallEvent (
@@ -833,7 +833,7 @@ rule CopyCallOperationAction {
  from
   s : UML!CallOperationAction
   (
-   s.oclIsTypeOf(MM!CallOperationAction)
+   s.oclIsTypeOf(UML!CallOperationAction)
   )
  to
   t : UMLs!CallOperationAction (
@@ -877,7 +877,7 @@ rule CopyCentralBufferNode {
  from
   s : UML!CentralBufferNode
   (
-   s.oclIsTypeOf(MM!CentralBufferNode)
+   s.oclIsTypeOf(UML!CentralBufferNode)
   )
  to
   t : UMLs!CentralBufferNode (
@@ -914,7 +914,7 @@ rule CopyChangeEvent {
  from
   s : UML!ChangeEvent
   (
-   s.oclIsTypeOf(MM!ChangeEvent)
+   s.oclIsTypeOf(UML!ChangeEvent)
   )
  to
   t : UMLs!ChangeEvent (
@@ -937,7 +937,7 @@ rule CopyClass {
  from
   s : UML!Class
   (
-   s.oclIsTypeOf(MM!Class)
+   s.oclIsTypeOf(UML!Class)
   )
  to
   t : UMLs!Class (
@@ -999,7 +999,7 @@ rule CopyClassifierTemplateParameter {
  from
   s : UML!ClassifierTemplateParameter
   (
-   s.oclIsTypeOf(MM!ClassifierTemplateParameter)
+   s.oclIsTypeOf(UML!ClassifierTemplateParameter)
   )
  to
   t : UMLs!ClassifierTemplateParameter (
@@ -1019,7 +1019,7 @@ rule CopyClause {
  from
   s : UML!Clause
   (
-   s.oclIsTypeOf(MM!Clause)
+   s.oclIsTypeOf(UML!Clause)
   )
  to
   t : UMLs!Clause (
@@ -1039,7 +1039,7 @@ rule CopyClearAssociationAction {
  from
   s : UML!ClearAssociationAction
   (
-   s.oclIsTypeOf(MM!ClearAssociationAction)
+   s.oclIsTypeOf(UML!ClearAssociationAction)
   )
  to
   t : UMLs!ClearAssociationAction (
@@ -1079,7 +1079,7 @@ rule CopyClearStructuralFeatureAction {
  from
   s : UML!ClearStructuralFeatureAction
   (
-   s.oclIsTypeOf(MM!ClearStructuralFeatureAction)
+   s.oclIsTypeOf(UML!ClearStructuralFeatureAction)
   )
  to
   t : UMLs!ClearStructuralFeatureAction (
@@ -1120,7 +1120,7 @@ rule CopyClearVariableAction {
  from
   s : UML!ClearVariableAction
   (
-   s.oclIsTypeOf(MM!ClearVariableAction)
+   s.oclIsTypeOf(UML!ClearVariableAction)
   )
  to
   t : UMLs!ClearVariableAction (
@@ -1159,7 +1159,7 @@ rule CopyCollaboration {
  from
   s : UML!Collaboration
   (
-   s.oclIsTypeOf(MM!Collaboration)
+   s.oclIsTypeOf(UML!Collaboration)
   )
  to
   t : UMLs!Collaboration (
@@ -1215,7 +1215,7 @@ rule CopyCollaborationUse {
  from
   s : UML!CollaborationUse
   (
-   s.oclIsTypeOf(MM!CollaborationUse)
+   s.oclIsTypeOf(UML!CollaborationUse)
   )
  to
   t : UMLs!CollaborationUse (
@@ -1237,7 +1237,7 @@ rule CopyCombinedFragment {
  from
   s : UML!CombinedFragment
   (
-   s.oclIsTypeOf(MM!CombinedFragment)
+   s.oclIsTypeOf(UML!CombinedFragment)
   )
  to
   t : UMLs!CombinedFragment (
@@ -1262,7 +1262,7 @@ rule CopyComment {
  from
   s : UML!Comment
   (
-   s.oclIsTypeOf(MM!Comment)
+   s.oclIsTypeOf(UML!Comment)
   )
  to
   t : UMLs!Comment (
@@ -1278,7 +1278,7 @@ rule CopyCommunicationPath {
  from
   s : UML!CommunicationPath
   (
-   s.oclIsTypeOf(MM!CommunicationPath)
+   s.oclIsTypeOf(UML!CommunicationPath)
   )
  to
   t : UMLs!CommunicationPath (
@@ -1332,7 +1332,7 @@ rule CopyComponent {
  from
   s : UML!Component
   (
-   s.oclIsTypeOf(MM!Component)
+   s.oclIsTypeOf(UML!Component)
   )
  to
   t : UMLs!Component (
@@ -1399,7 +1399,7 @@ rule CopyComponentRealization {
  from
   s : UML!ComponentRealization
   (
-   s.oclIsTypeOf(MM!ComponentRealization)
+   s.oclIsTypeOf(UML!ComponentRealization)
   )
  to
   t : UMLs!ComponentRealization (
@@ -1429,7 +1429,7 @@ rule CopyConditionalNode {
  from
   s : UML!ConditionalNode
   (
-   s.oclIsTypeOf(MM!ConditionalNode)
+   s.oclIsTypeOf(UML!ConditionalNode)
   )
  to
   t : UMLs!ConditionalNode (
@@ -1488,7 +1488,7 @@ rule CopyConnectableElementTemplateParameter {
  from
   s : UML!ConnectableElementTemplateParameter
   (
-   s.oclIsTypeOf(MM!ConnectableElementTemplateParameter)
+   s.oclIsTypeOf(UML!ConnectableElementTemplateParameter)
   )
  to
   t : UMLs!ConnectableElementTemplateParameter (
@@ -1506,7 +1506,7 @@ rule CopyConnectionPointReference {
  from
   s : UML!ConnectionPointReference
   (
-   s.oclIsTypeOf(MM!ConnectionPointReference)
+   s.oclIsTypeOf(UML!ConnectionPointReference)
   )
  to
   t : UMLs!ConnectionPointReference (
@@ -1532,7 +1532,7 @@ rule CopyConnector {
  from
   s : UML!Connector
   (
-   s.oclIsTypeOf(MM!Connector)
+   s.oclIsTypeOf(UML!Connector)
   )
  to
   t : UMLs!Connector (
@@ -1562,7 +1562,7 @@ rule CopyConnectorEnd {
  from
   s : UML!ConnectorEnd
   (
-   s.oclIsTypeOf(MM!ConnectorEnd)
+   s.oclIsTypeOf(UML!ConnectorEnd)
   )
  to
   t : UMLs!ConnectorEnd (
@@ -1585,7 +1585,7 @@ rule CopyConsiderIgnoreFragment {
  from
   s : UML!ConsiderIgnoreFragment
   (
-   s.oclIsTypeOf(MM!ConsiderIgnoreFragment)
+   s.oclIsTypeOf(UML!ConsiderIgnoreFragment)
   )
  to
   t : UMLs!ConsiderIgnoreFragment (
@@ -1611,7 +1611,7 @@ rule CopyConstraint {
  from
   s : UML!Constraint
   (
-   s.oclIsTypeOf(MM!Constraint)
+   s.oclIsTypeOf(UML!Constraint)
   )
  to
   t : UMLs!Constraint (
@@ -1636,7 +1636,7 @@ rule CopyContinuation {
  from
   s : UML!Continuation
   (
-   s.oclIsTypeOf(MM!Continuation)
+   s.oclIsTypeOf(UML!Continuation)
   )
  to
   t : UMLs!Continuation (
@@ -1659,7 +1659,7 @@ rule CopyControlFlow {
  from
   s : UML!ControlFlow
   (
-   s.oclIsTypeOf(MM!ControlFlow)
+   s.oclIsTypeOf(UML!ControlFlow)
   )
  to
   t : UMLs!ControlFlow (
@@ -1692,7 +1692,7 @@ rule CopyCreateLinkAction {
  from
   s : UML!CreateLinkAction
   (
-   s.oclIsTypeOf(MM!CreateLinkAction)
+   s.oclIsTypeOf(UML!CreateLinkAction)
   )
  to
   t : UMLs!CreateLinkAction (
@@ -1732,7 +1732,7 @@ rule CopyCreateLinkObjectAction {
  from
   s : UML!CreateLinkObjectAction
   (
-   s.oclIsTypeOf(MM!CreateLinkObjectAction)
+   s.oclIsTypeOf(UML!CreateLinkObjectAction)
   )
  to
   t : UMLs!CreateLinkObjectAction (
@@ -1773,7 +1773,7 @@ rule CopyCreateObjectAction {
  from
   s : UML!CreateObjectAction
   (
-   s.oclIsTypeOf(MM!CreateObjectAction)
+   s.oclIsTypeOf(UML!CreateObjectAction)
   )
  to
   t : UMLs!CreateObjectAction (
@@ -1813,7 +1813,7 @@ rule CopyDataStoreNode {
  from
   s : UML!DataStoreNode
   (
-   s.oclIsTypeOf(MM!DataStoreNode)
+   s.oclIsTypeOf(UML!DataStoreNode)
   )
  to
   t : UMLs!DataStoreNode (
@@ -1850,7 +1850,7 @@ rule CopyDataType {
  from
   s : UML!DataType
   (
-   s.oclIsTypeOf(MM!DataType)
+   s.oclIsTypeOf(UML!DataType)
   )
  to
   t : UMLs!DataType (
@@ -1900,7 +1900,7 @@ rule CopyDecisionNode {
  from
   s : UML!DecisionNode
   (
-   s.oclIsTypeOf(MM!DecisionNode)
+   s.oclIsTypeOf(UML!DecisionNode)
   )
  to
   t : UMLs!DecisionNode (
@@ -1933,7 +1933,7 @@ rule CopyDependency {
  from
   s : UML!Dependency
   (
-   s.oclIsTypeOf(MM!Dependency)
+   s.oclIsTypeOf(UML!Dependency)
   )
  to
   t : UMLs!Dependency (
@@ -1960,7 +1960,7 @@ rule CopyDeployment {
  from
   s : UML!Deployment
   (
-   s.oclIsTypeOf(MM!Deployment)
+   s.oclIsTypeOf(UML!Deployment)
   )
  to
   t : UMLs!Deployment (
@@ -1990,7 +1990,7 @@ rule CopyDeploymentSpecification {
  from
   s : UML!DeploymentSpecification
   (
-   s.oclIsTypeOf(MM!DeploymentSpecification)
+   s.oclIsTypeOf(UML!DeploymentSpecification)
   )
  to
   t : UMLs!DeploymentSpecification (
@@ -2046,7 +2046,7 @@ rule CopyDestroyLinkAction {
  from
   s : UML!DestroyLinkAction
   (
-   s.oclIsTypeOf(MM!DestroyLinkAction)
+   s.oclIsTypeOf(UML!DestroyLinkAction)
   )
  to
   t : UMLs!DestroyLinkAction (
@@ -2086,7 +2086,7 @@ rule CopyDestroyObjectAction {
  from
   s : UML!DestroyObjectAction
   (
-   s.oclIsTypeOf(MM!DestroyObjectAction)
+   s.oclIsTypeOf(UML!DestroyObjectAction)
   )
  to
   t : UMLs!DestroyObjectAction (
@@ -2127,7 +2127,7 @@ rule CopyDestructionOccurrenceSpecification {
  from
   s : UML!DestructionOccurrenceSpecification
   (
-   s.oclIsTypeOf(MM!DestructionOccurrenceSpecification)
+   s.oclIsTypeOf(UML!DestructionOccurrenceSpecification)
   )
  to
   t : UMLs!DestructionOccurrenceSpecification (
@@ -2152,7 +2152,7 @@ rule CopyDevice {
  from
   s : UML!Device
   (
-   s.oclIsTypeOf(MM!Device)
+   s.oclIsTypeOf(UML!Device)
   )
  to
   t : UMLs!Device (
@@ -2217,7 +2217,7 @@ rule CopyDuration {
  from
   s : UML!Duration
   (
-   s.oclIsTypeOf(MM!Duration)
+   s.oclIsTypeOf(UML!Duration)
   )
  to
   t : UMLs!Duration (
@@ -2242,7 +2242,7 @@ rule CopyDurationConstraint {
  from
   s : UML!DurationConstraint
   (
-   s.oclIsTypeOf(MM!DurationConstraint)
+   s.oclIsTypeOf(UML!DurationConstraint)
   )
  to
   t : UMLs!DurationConstraint (
@@ -2268,7 +2268,7 @@ rule CopyDurationInterval {
  from
   s : UML!DurationInterval
   (
-   s.oclIsTypeOf(MM!DurationInterval)
+   s.oclIsTypeOf(UML!DurationInterval)
   )
  to
   t : UMLs!DurationInterval (
@@ -2293,7 +2293,7 @@ rule CopyDurationObservation {
  from
   s : UML!DurationObservation
   (
-   s.oclIsTypeOf(MM!DurationObservation)
+   s.oclIsTypeOf(UML!DurationObservation)
   )
  to
   t : UMLs!DurationObservation (
@@ -2317,7 +2317,7 @@ rule CopyElementImport {
  from
   s : UML!ElementImport
   (
-   s.oclIsTypeOf(MM!ElementImport)
+   s.oclIsTypeOf(UML!ElementImport)
   )
  to
   t : UMLs!ElementImport (
@@ -2338,7 +2338,7 @@ rule CopyEnumeration {
  from
   s : UML!Enumeration
   (
-   s.oclIsTypeOf(MM!Enumeration)
+   s.oclIsTypeOf(UML!Enumeration)
   )
  to
   t : UMLs!Enumeration (
@@ -2389,7 +2389,7 @@ rule CopyEnumerationLiteral {
  from
   s : UML!EnumerationLiteral
   (
-   s.oclIsTypeOf(MM!EnumerationLiteral)
+   s.oclIsTypeOf(UML!EnumerationLiteral)
   )
  to
   t : UMLs!EnumerationLiteral (
@@ -2416,7 +2416,7 @@ rule CopyExceptionHandler {
  from
   s : UML!ExceptionHandler
   (
-   s.oclIsTypeOf(MM!ExceptionHandler)
+   s.oclIsTypeOf(UML!ExceptionHandler)
   )
  to
   t : UMLs!ExceptionHandler (
@@ -2434,7 +2434,7 @@ rule CopyExecutionEnvironment {
  from
   s : UML!ExecutionEnvironment
   (
-   s.oclIsTypeOf(MM!ExecutionEnvironment)
+   s.oclIsTypeOf(UML!ExecutionEnvironment)
   )
  to
   t : UMLs!ExecutionEnvironment (
@@ -2499,7 +2499,7 @@ rule CopyExecutionOccurrenceSpecification {
  from
   s : UML!ExecutionOccurrenceSpecification
   (
-   s.oclIsTypeOf(MM!ExecutionOccurrenceSpecification)
+   s.oclIsTypeOf(UML!ExecutionOccurrenceSpecification)
   )
  to
   t : UMLs!ExecutionOccurrenceSpecification (
@@ -2524,7 +2524,7 @@ rule CopyExpansionNode {
  from
   s : UML!ExpansionNode
   (
-   s.oclIsTypeOf(MM!ExpansionNode)
+   s.oclIsTypeOf(UML!ExpansionNode)
   )
  to
   t : UMLs!ExpansionNode (
@@ -2563,7 +2563,7 @@ rule CopyExpansionRegion {
  from
   s : UML!ExpansionRegion
   (
-   s.oclIsTypeOf(MM!ExpansionRegion)
+   s.oclIsTypeOf(UML!ExpansionRegion)
   )
  to
   t : UMLs!ExpansionRegion (
@@ -2621,7 +2621,7 @@ rule CopyExpression {
  from
   s : UML!Expression
   (
-   s.oclIsTypeOf(MM!Expression)
+   s.oclIsTypeOf(UML!Expression)
   )
  to
   t : UMLs!Expression (
@@ -2646,7 +2646,7 @@ rule CopyExtend {
  from
   s : UML!Extend
   (
-   s.oclIsTypeOf(MM!Extend)
+   s.oclIsTypeOf(UML!Extend)
   )
  to
   t : UMLs!Extend (
@@ -2673,7 +2673,7 @@ rule CopyExtension {
  from
   s : UML!Extension
   (
-   s.oclIsTypeOf(MM!Extension)
+   s.oclIsTypeOf(UML!Extension)
   )
  to
   t : UMLs!Extension (
@@ -2729,7 +2729,7 @@ rule CopyExtensionEnd {
  from
   s : UML!ExtensionEnd
   (
-   s.oclIsTypeOf(MM!ExtensionEnd)
+   s.oclIsTypeOf(UML!ExtensionEnd)
   )
  to
   t : UMLs!ExtensionEnd (
@@ -2778,7 +2778,7 @@ rule CopyExtensionPoint {
  from
   s : UML!ExtensionPoint
   (
-   s.oclIsTypeOf(MM!ExtensionPoint)
+   s.oclIsTypeOf(UML!ExtensionPoint)
   )
  to
   t : UMLs!ExtensionPoint (
@@ -2802,7 +2802,7 @@ rule CopyFinalState {
  from
   s : UML!FinalState
   (
-   s.oclIsTypeOf(MM!FinalState)
+   s.oclIsTypeOf(UML!FinalState)
   )
  to
   t : UMLs!FinalState (
@@ -2848,7 +2848,7 @@ rule CopyFlowFinalNode {
  from
   s : UML!FlowFinalNode
   (
-   s.oclIsTypeOf(MM!FlowFinalNode)
+   s.oclIsTypeOf(UML!FlowFinalNode)
   )
  to
   t : UMLs!FlowFinalNode (
@@ -2879,7 +2879,7 @@ rule CopyForkNode {
  from
   s : UML!ForkNode
   (
-   s.oclIsTypeOf(MM!ForkNode)
+   s.oclIsTypeOf(UML!ForkNode)
   )
  to
   t : UMLs!ForkNode (
@@ -2910,7 +2910,7 @@ rule CopyFunctionBehavior {
  from
   s : UML!FunctionBehavior
   (
-   s.oclIsTypeOf(MM!FunctionBehavior)
+   s.oclIsTypeOf(UML!FunctionBehavior)
   )
  to
   t : UMLs!FunctionBehavior (
@@ -2982,7 +2982,7 @@ rule CopyGate {
  from
   s : UML!Gate
   (
-   s.oclIsTypeOf(MM!Gate)
+   s.oclIsTypeOf(UML!Gate)
   )
  to
   t : UMLs!Gate (
@@ -3003,7 +3003,7 @@ rule CopyGeneralOrdering {
  from
   s : UML!GeneralOrdering
   (
-   s.oclIsTypeOf(MM!GeneralOrdering)
+   s.oclIsTypeOf(UML!GeneralOrdering)
   )
  to
   t : UMLs!GeneralOrdering (
@@ -3025,7 +3025,7 @@ rule CopyGeneralization {
  from
   s : UML!Generalization
   (
-   s.oclIsTypeOf(MM!Generalization)
+   s.oclIsTypeOf(UML!Generalization)
   )
  to
   t : UMLs!Generalization (
@@ -3046,7 +3046,7 @@ rule CopyGeneralizationSet {
  from
   s : UML!GeneralizationSet
   (
-   s.oclIsTypeOf(MM!GeneralizationSet)
+   s.oclIsTypeOf(UML!GeneralizationSet)
   )
  to
   t : UMLs!GeneralizationSet (
@@ -3072,7 +3072,7 @@ rule CopyImage {
  from
   s : UML!Image
   (
-   s.oclIsTypeOf(MM!Image)
+   s.oclIsTypeOf(UML!Image)
   )
  to
   t : UMLs!Image (
@@ -3089,7 +3089,7 @@ rule CopyInclude {
  from
   s : UML!Include
   (
-   s.oclIsTypeOf(MM!Include)
+   s.oclIsTypeOf(UML!Include)
   )
  to
   t : UMLs!Include (
@@ -3114,7 +3114,7 @@ rule CopyInformationFlow {
  from
   s : UML!InformationFlow
   (
-   s.oclIsTypeOf(MM!InformationFlow)
+   s.oclIsTypeOf(UML!InformationFlow)
   )
  to
   t : UMLs!InformationFlow (
@@ -3146,7 +3146,7 @@ rule CopyInformationItem {
  from
   s : UML!InformationItem
   (
-   s.oclIsTypeOf(MM!InformationItem)
+   s.oclIsTypeOf(UML!InformationItem)
   )
  to
   t : UMLs!InformationItem (
@@ -3195,7 +3195,7 @@ rule CopyInitialNode {
  from
   s : UML!InitialNode
   (
-   s.oclIsTypeOf(MM!InitialNode)
+   s.oclIsTypeOf(UML!InitialNode)
   )
  to
   t : UMLs!InitialNode (
@@ -3226,7 +3226,7 @@ rule CopyInputPin {
  from
   s : UML!InputPin
   (
-   s.oclIsTypeOf(MM!InputPin)
+   s.oclIsTypeOf(UML!InputPin)
   )
  to
   t : UMLs!InputPin (
@@ -3270,7 +3270,7 @@ rule CopyInstanceSpecification {
  from
   s : UML!InstanceSpecification
   (
-   s.oclIsTypeOf(MM!InstanceSpecification)
+   s.oclIsTypeOf(UML!InstanceSpecification)
   )
  to
   t : UMLs!InstanceSpecification (
@@ -3297,7 +3297,7 @@ rule CopyInstanceValue {
  from
   s : UML!InstanceValue
   (
-   s.oclIsTypeOf(MM!InstanceValue)
+   s.oclIsTypeOf(UML!InstanceValue)
   )
  to
   t : UMLs!InstanceValue (
@@ -3321,7 +3321,7 @@ rule CopyInteraction {
  from
   s : UML!Interaction
   (
-   s.oclIsTypeOf(MM!Interaction)
+   s.oclIsTypeOf(UML!Interaction)
   )
  to
   t : UMLs!Interaction (
@@ -3398,7 +3398,7 @@ rule CopyInteractionConstraint {
  from
   s : UML!InteractionConstraint
   (
-   s.oclIsTypeOf(MM!InteractionConstraint)
+   s.oclIsTypeOf(UML!InteractionConstraint)
   )
  to
   t : UMLs!InteractionConstraint (
@@ -3425,7 +3425,7 @@ rule CopyInteractionOperand {
  from
   s : UML!InteractionOperand
   (
-   s.oclIsTypeOf(MM!InteractionOperand)
+   s.oclIsTypeOf(UML!InteractionOperand)
   )
  to
   t : UMLs!InteractionOperand (
@@ -3455,7 +3455,7 @@ rule CopyInteractionUse {
  from
   s : UML!InteractionUse
   (
-   s.oclIsTypeOf(MM!InteractionUse)
+   s.oclIsTypeOf(UML!InteractionUse)
   )
  to
   t : UMLs!InteractionUse (
@@ -3482,7 +3482,7 @@ rule CopyInterface {
  from
   s : UML!Interface
   (
-   s.oclIsTypeOf(MM!Interface)
+   s.oclIsTypeOf(UML!Interface)
   )
  to
   t : UMLs!Interface (
@@ -3536,7 +3536,7 @@ rule CopyInterfaceRealization {
  from
   s : UML!InterfaceRealization
   (
-   s.oclIsTypeOf(MM!InterfaceRealization)
+   s.oclIsTypeOf(UML!InterfaceRealization)
   )
  to
   t : UMLs!InterfaceRealization (
@@ -3566,7 +3566,7 @@ rule CopyInterruptibleActivityRegion {
  from
   s : UML!InterruptibleActivityRegion
   (
-   s.oclIsTypeOf(MM!InterruptibleActivityRegion)
+   s.oclIsTypeOf(UML!InterruptibleActivityRegion)
   )
  to
   t : UMLs!InterruptibleActivityRegion (
@@ -3593,7 +3593,7 @@ rule CopyInterval {
  from
   s : UML!Interval
   (
-   s.oclIsTypeOf(MM!Interval)
+   s.oclIsTypeOf(UML!Interval)
   )
  to
   t : UMLs!Interval (
@@ -3618,7 +3618,7 @@ rule CopyIntervalConstraint {
  from
   s : UML!IntervalConstraint
   (
-   s.oclIsTypeOf(MM!IntervalConstraint)
+   s.oclIsTypeOf(UML!IntervalConstraint)
   )
  to
   t : UMLs!IntervalConstraint (
@@ -3643,7 +3643,7 @@ rule CopyJoinNode {
  from
   s : UML!JoinNode
   (
-   s.oclIsTypeOf(MM!JoinNode)
+   s.oclIsTypeOf(UML!JoinNode)
   )
  to
   t : UMLs!JoinNode (
@@ -3676,7 +3676,7 @@ rule CopyLifeline {
  from
   s : UML!Lifeline
   (
-   s.oclIsTypeOf(MM!Lifeline)
+   s.oclIsTypeOf(UML!Lifeline)
   )
  to
   t : UMLs!Lifeline (
@@ -3701,7 +3701,7 @@ rule CopyLinkEndCreationData {
  from
   s : UML!LinkEndCreationData
   (
-   s.oclIsTypeOf(MM!LinkEndCreationData)
+   s.oclIsTypeOf(UML!LinkEndCreationData)
   )
  to
   t : UMLs!LinkEndCreationData (
@@ -3720,7 +3720,7 @@ rule CopyLinkEndData {
  from
   s : UML!LinkEndData
   (
-   s.oclIsTypeOf(MM!LinkEndData)
+   s.oclIsTypeOf(UML!LinkEndData)
   )
  to
   t : UMLs!LinkEndData (
@@ -3737,7 +3737,7 @@ rule CopyLinkEndDestructionData {
  from
   s : UML!LinkEndDestructionData
   (
-   s.oclIsTypeOf(MM!LinkEndDestructionData)
+   s.oclIsTypeOf(UML!LinkEndDestructionData)
   )
  to
   t : UMLs!LinkEndDestructionData (
@@ -3756,7 +3756,7 @@ rule CopyLiteralBoolean {
  from
   s : UML!LiteralBoolean
   (
-   s.oclIsTypeOf(MM!LiteralBoolean)
+   s.oclIsTypeOf(UML!LiteralBoolean)
   )
  to
   t : UMLs!LiteralBoolean (
@@ -3780,7 +3780,7 @@ rule CopyLiteralInteger {
  from
   s : UML!LiteralInteger
   (
-   s.oclIsTypeOf(MM!LiteralInteger)
+   s.oclIsTypeOf(UML!LiteralInteger)
   )
  to
   t : UMLs!LiteralInteger (
@@ -3804,7 +3804,7 @@ rule CopyLiteralNull {
  from
   s : UML!LiteralNull
   (
-   s.oclIsTypeOf(MM!LiteralNull)
+   s.oclIsTypeOf(UML!LiteralNull)
   )
  to
   t : UMLs!LiteralNull (
@@ -3827,7 +3827,7 @@ rule CopyLiteralReal {
  from
   s : UML!LiteralReal
   (
-   s.oclIsTypeOf(MM!LiteralReal)
+   s.oclIsTypeOf(UML!LiteralReal)
   )
  to
   t : UMLs!LiteralReal (
@@ -3851,7 +3851,7 @@ rule CopyLiteralString {
  from
   s : UML!LiteralString
   (
-   s.oclIsTypeOf(MM!LiteralString)
+   s.oclIsTypeOf(UML!LiteralString)
   )
  to
   t : UMLs!LiteralString (
@@ -3875,7 +3875,7 @@ rule CopyLiteralUnlimitedNatural {
  from
   s : UML!LiteralUnlimitedNatural
   (
-   s.oclIsTypeOf(MM!LiteralUnlimitedNatural)
+   s.oclIsTypeOf(UML!LiteralUnlimitedNatural)
   )
  to
   t : UMLs!LiteralUnlimitedNatural (
@@ -3899,7 +3899,7 @@ rule CopyLoopNode {
  from
   s : UML!LoopNode
   (
-   s.oclIsTypeOf(MM!LoopNode)
+   s.oclIsTypeOf(UML!LoopNode)
   )
  to
   t : UMLs!LoopNode (
@@ -3963,7 +3963,7 @@ rule CopyManifestation {
  from
   s : UML!Manifestation
   (
-   s.oclIsTypeOf(MM!Manifestation)
+   s.oclIsTypeOf(UML!Manifestation)
   )
  to
   t : UMLs!Manifestation (
@@ -3992,7 +3992,7 @@ rule CopyMergeNode {
  from
   s : UML!MergeNode
   (
-   s.oclIsTypeOf(MM!MergeNode)
+   s.oclIsTypeOf(UML!MergeNode)
   )
  to
   t : UMLs!MergeNode (
@@ -4023,7 +4023,7 @@ rule CopyMessage {
  from
   s : UML!Message
   (
-   s.oclIsTypeOf(MM!Message)
+   s.oclIsTypeOf(UML!Message)
   )
  to
   t : UMLs!Message (
@@ -4051,7 +4051,7 @@ rule CopyMessageOccurrenceSpecification {
  from
   s : UML!MessageOccurrenceSpecification
   (
-   s.oclIsTypeOf(MM!MessageOccurrenceSpecification)
+   s.oclIsTypeOf(UML!MessageOccurrenceSpecification)
   )
  to
   t : UMLs!MessageOccurrenceSpecification (
@@ -4076,7 +4076,7 @@ rule CopyModel {
  from
   s : UML!Model
   (
-   s.oclIsTypeOf(MM!Model)
+   s.oclIsTypeOf(UML!Model)
   )
  to
   t : UMLs!Model (
@@ -4115,7 +4115,7 @@ rule CopyNode {
  from
   s : UML!Node
   (
-   s.oclIsTypeOf(MM!Node)
+   s.oclIsTypeOf(UML!Node)
   )
  to
   t : UMLs!Node (
@@ -4180,7 +4180,7 @@ rule CopyObjectFlow {
  from
   s : UML!ObjectFlow
   (
-   s.oclIsTypeOf(MM!ObjectFlow)
+   s.oclIsTypeOf(UML!ObjectFlow)
   )
  to
   t : UMLs!ObjectFlow (
@@ -4217,7 +4217,7 @@ rule CopyOccurrenceSpecification {
  from
   s : UML!OccurrenceSpecification
   (
-   s.oclIsTypeOf(MM!OccurrenceSpecification)
+   s.oclIsTypeOf(UML!OccurrenceSpecification)
   )
  to
   t : UMLs!OccurrenceSpecification (
@@ -4241,7 +4241,7 @@ rule CopyOpaqueAction {
  from
   s : UML!OpaqueAction
   (
-   s.oclIsTypeOf(MM!OpaqueAction)
+   s.oclIsTypeOf(UML!OpaqueAction)
   )
  to
   t : UMLs!OpaqueAction (
@@ -4283,7 +4283,7 @@ rule CopyOpaqueBehavior {
  from
   s : UML!OpaqueBehavior
   (
-   s.oclIsTypeOf(MM!OpaqueBehavior)
+   s.oclIsTypeOf(UML!OpaqueBehavior)
   )
  to
   t : UMLs!OpaqueBehavior (
@@ -4355,7 +4355,7 @@ rule CopyOpaqueExpression {
  from
   s : UML!OpaqueExpression
   (
-   s.oclIsTypeOf(MM!OpaqueExpression)
+   s.oclIsTypeOf(UML!OpaqueExpression)
   )
  to
   t : UMLs!OpaqueExpression (
@@ -4382,7 +4382,7 @@ rule CopyOperation {
  from
   s : UML!Operation
   (
-   s.oclIsTypeOf(MM!Operation)
+   s.oclIsTypeOf(UML!Operation)
   )
  to
   t : UMLs!Operation (
@@ -4433,7 +4433,7 @@ rule CopyOperationTemplateParameter {
  from
   s : UML!OperationTemplateParameter
   (
-   s.oclIsTypeOf(MM!OperationTemplateParameter)
+   s.oclIsTypeOf(UML!OperationTemplateParameter)
   )
  to
   t : UMLs!OperationTemplateParameter (
@@ -4451,7 +4451,7 @@ rule CopyOutputPin {
  from
   s : UML!OutputPin
   (
-   s.oclIsTypeOf(MM!OutputPin)
+   s.oclIsTypeOf(UML!OutputPin)
   )
  to
   t : UMLs!OutputPin (
@@ -4495,7 +4495,7 @@ rule CopyPackage {
  from
   s : UML!Package
   (
-   s.oclIsTypeOf(MM!Package)
+   s.oclIsTypeOf(UML!Package)
   )
  to
   t : UMLs!Package (
@@ -4533,7 +4533,7 @@ rule CopyPackageImport {
  from
   s : UML!PackageImport
   (
-   s.oclIsTypeOf(MM!PackageImport)
+   s.oclIsTypeOf(UML!PackageImport)
   )
  to
   t : UMLs!PackageImport (
@@ -4553,7 +4553,7 @@ rule CopyPackageMerge {
  from
   s : UML!PackageMerge
   (
-   s.oclIsTypeOf(MM!PackageMerge)
+   s.oclIsTypeOf(UML!PackageMerge)
   )
  to
   t : UMLs!PackageMerge (
@@ -4572,7 +4572,7 @@ rule CopyParameter {
  from
   s : UML!Parameter
   (
-   s.oclIsTypeOf(MM!Parameter)
+   s.oclIsTypeOf(UML!Parameter)
   )
  to
   t : UMLs!Parameter (
@@ -4610,7 +4610,7 @@ rule CopyParameterSet {
  from
   s : UML!ParameterSet
   (
-   s.oclIsTypeOf(MM!ParameterSet)
+   s.oclIsTypeOf(UML!ParameterSet)
   )
  to
   t : UMLs!ParameterSet (
@@ -4632,7 +4632,7 @@ rule CopyPartDecomposition {
  from
   s : UML!PartDecomposition
   (
-   s.oclIsTypeOf(MM!PartDecomposition)
+   s.oclIsTypeOf(UML!PartDecomposition)
   )
  to
   t : UMLs!PartDecomposition (
@@ -4659,7 +4659,7 @@ rule CopyPort {
  from
   s : UML!Port
   (
-   s.oclIsTypeOf(MM!Port)
+   s.oclIsTypeOf(UML!Port)
   )
  to
   t : UMLs!Port (
@@ -4715,7 +4715,7 @@ rule CopyPrimitiveType {
  from
   s : UML!PrimitiveType
   (
-   s.oclIsTypeOf(MM!PrimitiveType)
+   s.oclIsTypeOf(UML!PrimitiveType)
   )
  to
   t : UMLs!PrimitiveType (
@@ -4765,7 +4765,7 @@ rule CopyProfile {
  from
   s : UML!Profile
   (
-   s.oclIsTypeOf(MM!Profile)
+   s.oclIsTypeOf(UML!Profile)
   )
  to
   t : UMLs!Profile (
@@ -4805,7 +4805,7 @@ rule CopyProfileApplication {
  from
   s : UML!ProfileApplication
   (
-   s.oclIsTypeOf(MM!ProfileApplication)
+   s.oclIsTypeOf(UML!ProfileApplication)
   )
  to
   t : UMLs!ProfileApplication (
@@ -4825,7 +4825,7 @@ rule CopyProperty {
  from
   s : UML!Property
   (
-   s.oclIsTypeOf(MM!Property)
+   s.oclIsTypeOf(UML!Property)
   )
  to
   t : UMLs!Property (
@@ -4874,7 +4874,7 @@ rule CopyProtocolConformance {
  from
   s : UML!ProtocolConformance
   (
-   s.oclIsTypeOf(MM!ProtocolConformance)
+   s.oclIsTypeOf(UML!ProtocolConformance)
   )
  to
   t : UMLs!ProtocolConformance (
@@ -4893,7 +4893,7 @@ rule CopyProtocolStateMachine {
  from
   s : UML!ProtocolStateMachine
   (
-   s.oclIsTypeOf(MM!ProtocolStateMachine)
+   s.oclIsTypeOf(UML!ProtocolStateMachine)
   )
  to
   t : UMLs!ProtocolStateMachine (
@@ -4968,7 +4968,7 @@ rule CopyProtocolTransition {
  from
   s : UML!ProtocolTransition
   (
-   s.oclIsTypeOf(MM!ProtocolTransition)
+   s.oclIsTypeOf(UML!ProtocolTransition)
   )
  to
   t : UMLs!ProtocolTransition (
@@ -5008,7 +5008,7 @@ rule CopyPseudostate {
  from
   s : UML!Pseudostate
   (
-   s.oclIsTypeOf(MM!Pseudostate)
+   s.oclIsTypeOf(UML!Pseudostate)
   )
  to
   t : UMLs!Pseudostate (
@@ -5034,7 +5034,7 @@ rule CopyQualifierValue {
  from
   s : UML!QualifierValue
   (
-   s.oclIsTypeOf(MM!QualifierValue)
+   s.oclIsTypeOf(UML!QualifierValue)
   )
  to
   t : UMLs!QualifierValue (
@@ -5050,7 +5050,7 @@ rule CopyRaiseExceptionAction {
  from
   s : UML!RaiseExceptionAction
   (
-   s.oclIsTypeOf(MM!RaiseExceptionAction)
+   s.oclIsTypeOf(UML!RaiseExceptionAction)
   )
  to
   t : UMLs!RaiseExceptionAction (
@@ -5089,7 +5089,7 @@ rule CopyReadExtentAction {
  from
   s : UML!ReadExtentAction
   (
-   s.oclIsTypeOf(MM!ReadExtentAction)
+   s.oclIsTypeOf(UML!ReadExtentAction)
   )
  to
   t : UMLs!ReadExtentAction (
@@ -5129,7 +5129,7 @@ rule CopyReadIsClassifiedObjectAction {
  from
   s : UML!ReadIsClassifiedObjectAction
   (
-   s.oclIsTypeOf(MM!ReadIsClassifiedObjectAction)
+   s.oclIsTypeOf(UML!ReadIsClassifiedObjectAction)
   )
  to
   t : UMLs!ReadIsClassifiedObjectAction (
@@ -5171,7 +5171,7 @@ rule CopyReadLinkAction {
  from
   s : UML!ReadLinkAction
   (
-   s.oclIsTypeOf(MM!ReadLinkAction)
+   s.oclIsTypeOf(UML!ReadLinkAction)
   )
  to
   t : UMLs!ReadLinkAction (
@@ -5212,7 +5212,7 @@ rule CopyReadLinkObjectEndAction {
  from
   s : UML!ReadLinkObjectEndAction
   (
-   s.oclIsTypeOf(MM!ReadLinkObjectEndAction)
+   s.oclIsTypeOf(UML!ReadLinkObjectEndAction)
   )
  to
   t : UMLs!ReadLinkObjectEndAction (
@@ -5253,7 +5253,7 @@ rule CopyReadLinkObjectEndQualifierAction {
  from
   s : UML!ReadLinkObjectEndQualifierAction
   (
-   s.oclIsTypeOf(MM!ReadLinkObjectEndQualifierAction)
+   s.oclIsTypeOf(UML!ReadLinkObjectEndQualifierAction)
   )
  to
   t : UMLs!ReadLinkObjectEndQualifierAction (
@@ -5294,7 +5294,7 @@ rule CopyReadSelfAction {
  from
   s : UML!ReadSelfAction
   (
-   s.oclIsTypeOf(MM!ReadSelfAction)
+   s.oclIsTypeOf(UML!ReadSelfAction)
   )
  to
   t : UMLs!ReadSelfAction (
@@ -5333,7 +5333,7 @@ rule CopyReadStructuralFeatureAction {
  from
   s : UML!ReadStructuralFeatureAction
   (
-   s.oclIsTypeOf(MM!ReadStructuralFeatureAction)
+   s.oclIsTypeOf(UML!ReadStructuralFeatureAction)
   )
  to
   t : UMLs!ReadStructuralFeatureAction (
@@ -5374,7 +5374,7 @@ rule CopyReadVariableAction {
  from
   s : UML!ReadVariableAction
   (
-   s.oclIsTypeOf(MM!ReadVariableAction)
+   s.oclIsTypeOf(UML!ReadVariableAction)
   )
  to
   t : UMLs!ReadVariableAction (
@@ -5414,7 +5414,7 @@ rule CopyRealization {
  from
   s : UML!Realization
   (
-   s.oclIsTypeOf(MM!Realization)
+   s.oclIsTypeOf(UML!Realization)
   )
  to
   t : UMLs!Realization (
@@ -5442,7 +5442,7 @@ rule CopyReception {
  from
   s : UML!Reception
   (
-   s.oclIsTypeOf(MM!Reception)
+   s.oclIsTypeOf(UML!Reception)
   )
  to
   t : UMLs!Reception (
@@ -5480,7 +5480,7 @@ rule CopyReclassifyObjectAction {
  from
   s : UML!ReclassifyObjectAction
   (
-   s.oclIsTypeOf(MM!ReclassifyObjectAction)
+   s.oclIsTypeOf(UML!ReclassifyObjectAction)
   )
  to
   t : UMLs!ReclassifyObjectAction (
@@ -5522,7 +5522,7 @@ rule CopyRedefinableTemplateSignature {
  from
   s : UML!RedefinableTemplateSignature
   (
-   s.oclIsTypeOf(MM!RedefinableTemplateSignature)
+   s.oclIsTypeOf(UML!RedefinableTemplateSignature)
   )
  to
   t : UMLs!RedefinableTemplateSignature (
@@ -5551,7 +5551,7 @@ rule CopyReduceAction {
  from
   s : UML!ReduceAction
   (
-   s.oclIsTypeOf(MM!ReduceAction)
+   s.oclIsTypeOf(UML!ReduceAction)
   )
  to
   t : UMLs!ReduceAction (
@@ -5593,7 +5593,7 @@ rule CopyRegion {
  from
   s : UML!Region
   (
-   s.oclIsTypeOf(MM!Region)
+   s.oclIsTypeOf(UML!Region)
   )
  to
   t : UMLs!Region (
@@ -5627,7 +5627,7 @@ rule CopyRemoveStructuralFeatureValueAction {
  from
   s : UML!RemoveStructuralFeatureValueAction
   (
-   s.oclIsTypeOf(MM!RemoveStructuralFeatureValueAction)
+   s.oclIsTypeOf(UML!RemoveStructuralFeatureValueAction)
   )
  to
   t : UMLs!RemoveStructuralFeatureValueAction (
@@ -5671,7 +5671,7 @@ rule CopyRemoveVariableValueAction {
  from
   s : UML!RemoveVariableValueAction
   (
-   s.oclIsTypeOf(MM!RemoveVariableValueAction)
+   s.oclIsTypeOf(UML!RemoveVariableValueAction)
   )
  to
   t : UMLs!RemoveVariableValueAction (
@@ -5713,7 +5713,7 @@ rule CopyReplyAction {
  from
   s : UML!ReplyAction
   (
-   s.oclIsTypeOf(MM!ReplyAction)
+   s.oclIsTypeOf(UML!ReplyAction)
   )
  to
   t : UMLs!ReplyAction (
@@ -5754,7 +5754,7 @@ rule CopySendObjectAction {
  from
   s : UML!SendObjectAction
   (
-   s.oclIsTypeOf(MM!SendObjectAction)
+   s.oclIsTypeOf(UML!SendObjectAction)
   )
  to
   t : UMLs!SendObjectAction (
@@ -5796,7 +5796,7 @@ rule CopySendSignalAction {
  from
   s : UML!SendSignalAction
   (
-   s.oclIsTypeOf(MM!SendSignalAction)
+   s.oclIsTypeOf(UML!SendSignalAction)
   )
  to
   t : UMLs!SendSignalAction (
@@ -5838,7 +5838,7 @@ rule CopySequenceNode {
  from
   s : UML!SequenceNode
   (
-   s.oclIsTypeOf(MM!SequenceNode)
+   s.oclIsTypeOf(UML!SequenceNode)
   )
  to
   t : UMLs!SequenceNode (
@@ -5894,7 +5894,7 @@ rule CopySignal {
  from
   s : UML!Signal
   (
-   s.oclIsTypeOf(MM!Signal)
+   s.oclIsTypeOf(UML!Signal)
   )
  to
   t : UMLs!Signal (
@@ -5943,7 +5943,7 @@ rule CopySignalEvent {
  from
   s : UML!SignalEvent
   (
-   s.oclIsTypeOf(MM!SignalEvent)
+   s.oclIsTypeOf(UML!SignalEvent)
   )
  to
   t : UMLs!SignalEvent (
@@ -5966,7 +5966,7 @@ rule CopySlot {
  from
   s : UML!Slot
   (
-   s.oclIsTypeOf(MM!Slot)
+   s.oclIsTypeOf(UML!Slot)
   )
  to
   t : UMLs!Slot (
@@ -5983,7 +5983,7 @@ rule CopyStartClassifierBehaviorAction {
  from
   s : UML!StartClassifierBehaviorAction
   (
-   s.oclIsTypeOf(MM!StartClassifierBehaviorAction)
+   s.oclIsTypeOf(UML!StartClassifierBehaviorAction)
   )
  to
   t : UMLs!StartClassifierBehaviorAction (
@@ -6022,7 +6022,7 @@ rule CopyStartObjectBehaviorAction {
  from
   s : UML!StartObjectBehaviorAction
   (
-   s.oclIsTypeOf(MM!StartObjectBehaviorAction)
+   s.oclIsTypeOf(UML!StartObjectBehaviorAction)
   )
  to
   t : UMLs!StartObjectBehaviorAction (
@@ -6065,7 +6065,7 @@ rule CopyState {
  from
   s : UML!State
   (
-   s.oclIsTypeOf(MM!State)
+   s.oclIsTypeOf(UML!State)
   )
  to
   t : UMLs!State (
@@ -6111,7 +6111,7 @@ rule CopyStateInvariant {
  from
   s : UML!StateInvariant
   (
-   s.oclIsTypeOf(MM!StateInvariant)
+   s.oclIsTypeOf(UML!StateInvariant)
   )
  to
   t : UMLs!StateInvariant (
@@ -6134,7 +6134,7 @@ rule CopyStateMachine {
  from
   s : UML!StateMachine
   (
-   s.oclIsTypeOf(MM!StateMachine)
+   s.oclIsTypeOf(UML!StateMachine)
   )
  to
   t : UMLs!StateMachine (
@@ -6208,7 +6208,7 @@ rule CopyStereotype {
  from
   s : UML!Stereotype
   (
-   s.oclIsTypeOf(MM!Stereotype)
+   s.oclIsTypeOf(UML!Stereotype)
   )
  to
   t : UMLs!Stereotype (
@@ -6272,7 +6272,7 @@ rule CopyStringExpression {
  from
   s : UML!StringExpression
   (
-   s.oclIsTypeOf(MM!StringExpression)
+   s.oclIsTypeOf(UML!StringExpression)
   )
  to
   t : UMLs!StringExpression (
@@ -6300,7 +6300,7 @@ rule CopyStructuredActivityNode {
  from
   s : UML!StructuredActivityNode
   (
-   s.oclIsTypeOf(MM!StructuredActivityNode)
+   s.oclIsTypeOf(UML!StructuredActivityNode)
   )
  to
   t : UMLs!StructuredActivityNode (
@@ -6355,7 +6355,7 @@ rule CopySubstitution {
  from
   s : UML!Substitution
   (
-   s.oclIsTypeOf(MM!Substitution)
+   s.oclIsTypeOf(UML!Substitution)
   )
  to
   t : UMLs!Substitution (
@@ -6385,7 +6385,7 @@ rule CopyTemplateBinding {
  from
   s : UML!TemplateBinding
   (
-   s.oclIsTypeOf(MM!TemplateBinding)
+   s.oclIsTypeOf(UML!TemplateBinding)
   )
  to
   t : UMLs!TemplateBinding (
@@ -6405,7 +6405,7 @@ rule CopyTemplateParameter {
  from
   s : UML!TemplateParameter
   (
-   s.oclIsTypeOf(MM!TemplateParameter)
+   s.oclIsTypeOf(UML!TemplateParameter)
   )
  to
   t : UMLs!TemplateParameter (
@@ -6423,7 +6423,7 @@ rule CopyTemplateParameterSubstitution {
  from
   s : UML!TemplateParameterSubstitution
   (
-   s.oclIsTypeOf(MM!TemplateParameterSubstitution)
+   s.oclIsTypeOf(UML!TemplateParameterSubstitution)
   )
  to
   t : UMLs!TemplateParameterSubstitution (
@@ -6441,7 +6441,7 @@ rule CopyTemplateSignature {
  from
   s : UML!TemplateSignature
   (
-   s.oclIsTypeOf(MM!TemplateSignature)
+   s.oclIsTypeOf(UML!TemplateSignature)
   )
  to
   t : UMLs!TemplateSignature (
@@ -6458,7 +6458,7 @@ rule CopyTestIdentityAction {
  from
   s : UML!TestIdentityAction
   (
-   s.oclIsTypeOf(MM!TestIdentityAction)
+   s.oclIsTypeOf(UML!TestIdentityAction)
   )
  to
   t : UMLs!TestIdentityAction (
@@ -6499,7 +6499,7 @@ rule CopyTimeConstraint {
  from
   s : UML!TimeConstraint
   (
-   s.oclIsTypeOf(MM!TimeConstraint)
+   s.oclIsTypeOf(UML!TimeConstraint)
   )
  to
   t : UMLs!TimeConstraint (
@@ -6525,7 +6525,7 @@ rule CopyTimeEvent {
  from
   s : UML!TimeEvent
   (
-   s.oclIsTypeOf(MM!TimeEvent)
+   s.oclIsTypeOf(UML!TimeEvent)
   )
  to
   t : UMLs!TimeEvent (
@@ -6549,7 +6549,7 @@ rule CopyTimeExpression {
  from
   s : UML!TimeExpression
   (
-   s.oclIsTypeOf(MM!TimeExpression)
+   s.oclIsTypeOf(UML!TimeExpression)
   )
  to
   t : UMLs!TimeExpression (
@@ -6574,7 +6574,7 @@ rule CopyTimeInterval {
  from
   s : UML!TimeInterval
   (
-   s.oclIsTypeOf(MM!TimeInterval)
+   s.oclIsTypeOf(UML!TimeInterval)
   )
  to
   t : UMLs!TimeInterval (
@@ -6599,7 +6599,7 @@ rule CopyTimeObservation {
  from
   s : UML!TimeObservation
   (
-   s.oclIsTypeOf(MM!TimeObservation)
+   s.oclIsTypeOf(UML!TimeObservation)
   )
  to
   t : UMLs!TimeObservation (
@@ -6623,7 +6623,7 @@ rule CopyTransition {
  from
   s : UML!Transition
   (
-   s.oclIsTypeOf(MM!Transition)
+   s.oclIsTypeOf(UML!Transition)
   )
  to
   t : UMLs!Transition (
@@ -6660,7 +6660,7 @@ rule CopyTrigger {
  from
   s : UML!Trigger
   (
-   s.oclIsTypeOf(MM!Trigger)
+   s.oclIsTypeOf(UML!Trigger)
   )
  to
   t : UMLs!Trigger (
@@ -6682,7 +6682,7 @@ rule CopyUnmarshallAction {
  from
   s : UML!UnmarshallAction
   (
-   s.oclIsTypeOf(MM!UnmarshallAction)
+   s.oclIsTypeOf(UML!UnmarshallAction)
   )
  to
   t : UMLs!UnmarshallAction (
@@ -6723,7 +6723,7 @@ rule CopyUsage {
  from
   s : UML!Usage
   (
-   s.oclIsTypeOf(MM!Usage)
+   s.oclIsTypeOf(UML!Usage)
   )
  to
   t : UMLs!Usage (
@@ -6750,7 +6750,7 @@ rule CopyUseCase {
  from
   s : UML!UseCase
   (
-   s.oclIsTypeOf(MM!UseCase)
+   s.oclIsTypeOf(UML!UseCase)
   )
  to
   t : UMLs!UseCase (
@@ -6805,7 +6805,7 @@ rule CopyValuePin {
  from
   s : UML!ValuePin
   (
-   s.oclIsTypeOf(MM!ValuePin)
+   s.oclIsTypeOf(UML!ValuePin)
   )
  to
   t : UMLs!ValuePin (
@@ -6850,7 +6850,7 @@ rule CopyValueSpecificationAction {
  from
   s : UML!ValueSpecificationAction
   (
-   s.oclIsTypeOf(MM!ValueSpecificationAction)
+   s.oclIsTypeOf(UML!ValueSpecificationAction)
   )
  to
   t : UMLs!ValueSpecificationAction (
@@ -6890,7 +6890,7 @@ rule CopyVariable {
  from
   s : UML!Variable
   (
-   s.oclIsTypeOf(MM!Variable)
+   s.oclIsTypeOf(UML!Variable)
   )
  to
   t : UMLs!Variable (
