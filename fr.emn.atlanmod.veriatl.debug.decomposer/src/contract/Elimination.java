@@ -183,7 +183,7 @@ public class Elimination {
 					
 					
 					String restRName = rule.substring(0, pos2);
-					String outid2 = first.substring(pos2+1);
+					String outid2 = rule.substring(pos2+1);
 					if(outid2.equals("0")){
 						genBy2 = "genBy";
 					}else{
@@ -248,7 +248,7 @@ public class Elimination {
 					
 					
 					String restRName = rule.substring(0, pos2);
-					String outid2 = first.substring(pos2+1);
+					String outid2 = rule.substring(pos2+1);
 					if(outid2.equals("0")){
 						genBy2 = "genBy";
 					}else{
@@ -328,15 +328,4 @@ public class Elimination {
 		
 	}
 
-	// the input is with the format of "ruleName#outElementOrder"
-	// see Trace.java getTrace for more information
-	private static String genByGenerator(String arg) {
-		int pos = arg.lastIndexOf("#");
-		String[] args =  {arg.substring(0, pos), arg.substring(pos)};
-		
-		
-		
-		
-		return null;
-	}
 }
