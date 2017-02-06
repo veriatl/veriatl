@@ -97,8 +97,8 @@ class emf {
 	}
 
 	/**
-	 * Return a list of classifiers in `order`. The order is defined as: if `A` extends `B`, then B must in the returned list before A.
-	 * This is to cooperate with Boogie constant VC generation.
+	 * Return a list of EClasses in `order`. The order is defined as: if `A` extends `B`, then B must in the returned list before A.
+	 * This is to cooperate with Boogie VC generation for constants.
 	 */
 	def static ArrayList<EClass> getOrderedClassifiers(EPackage p) {
 		var int i = 0;
@@ -132,4 +132,38 @@ class emf {
 		return rtn
 	}
 
+
+
+	/** 
+	 * return a list of EClasses, which are descendants of the given classifier `clName`.
+	 * */
+	def static ArrayList<EClass> getAllSubClasses(EPackage p, String clName){
+		var ArrayList<EClass> rtn = new ArrayList<EClass>();
+		
+		val EClass cl =  p.getEClassifier(clName) as EClass
+		
+		var int oldSize = -1
+		rtn.add(cl)
+		
+		while(oldSize != rtn.size){
+			oldSize = rtn.size()
+			var ArrayList<EClass> temp = new ArrayList<EClass>();
+			
+			for(EClass trg : rtn){
+				for (EClassifier e : p.EClassifiers) {
+					if (e instanceof EClass) {
+						if (!rtn.contains(e) && e.ESuperTypes.contains(trg)) {
+							temp.add(e)
+						}
+					}
+				}
+			}	
+			
+			rtn.addAll(temp)
+			
+		}
+		
+		
+		return rtn
+	}
 }
