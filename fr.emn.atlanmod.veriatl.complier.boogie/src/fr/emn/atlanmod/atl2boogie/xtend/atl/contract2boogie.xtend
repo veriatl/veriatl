@@ -14,14 +14,14 @@ class contract2boogie {
 	def static dispatch genHelpers(Module mod) '''		
 	procedure driver();
 	  modifies $tarHeap, $linkHeap;
-	  requires valid_src_model($srcHeap);
+	  free requires valid_src_model($srcHeap);
 	  «FOR e : mod.elements»«genPrecondition(e)»«ENDFOR»
 	'''
 	
 	def static dispatch genPrecondition(ModuleElement h) '''	'''
 	
 	def static dispatch genPrecondition(Helper h) '''		
-	«if (h.commentsBefore.toString().contains("--@pre")){"requires "+ genOCLFeature(h.definition.feature)+";"}»
+	«if (h.commentsBefore.toString().contains("--@pre")){"free requires "+ genOCLFeature(h.definition.feature)+";"}»
 	'''
 	
 	def static dispatch genOCLFeature(OclFeature f) '''	'''
