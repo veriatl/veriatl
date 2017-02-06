@@ -8,6 +8,9 @@ import org.eclipse.m2m.atl.common.ATL.*
 import org.eclipse.m2m.atl.common.OCL.*
 import org.eclipse.m2m.atl.common.ATL.MatchedRule
 
+
+
+//TODO the user should specify whether they want requires `free` or not. That is another option for VeriATL
 class matcher2boogie {
 	static int modDepth = 0;
 	
@@ -34,7 +37,7 @@ class matcher2boogie {
 	
 	procedure init_tar_model();
 	  modifies $tarHeap;
-	  ensures  (forall $o: ref :: $o == null || !read($tarHeap, $o, alloc));
+	  free ensures  (forall $o: ref :: $o == null || !read($tarHeap, $o, alloc));
 	
 	«FOR e : mod.elements»
 		«genModuleElement_match(e)»	
@@ -79,7 +82,7 @@ class matcher2boogie {
 	
 	// generate the nth precondition of matching phase of a matched rule
 	def static genMatchingPreAt(MatchedRule r, int id) '''
-	  requires (forall «r.inPattern.elements.map(e | atl.genInPattern(e, "", ": ref")).join(',')» ::
+	  free requires (forall «r.inPattern.elements.map(e | atl.genInPattern(e, "", ": ref")).join(',')» ::
 	    «r.inPattern.elements.map(e | atl.genInPatternAllocation(e, atl.genSrcHeap.toString)).join(' && ')» ==>
 	      printGuard_«r.name»(«atl.genSrcHeap», «r.inPattern.elements.map(e | atl.genInPattern(e, "", "")).join(',')») ==> 
 	        ( «atl.genOutPattern(r.inPattern.elements, id)»==null || !read(«atl.genTrgHeap», «atl.genOutPattern(r.inPattern.elements, id)», alloc))
@@ -88,7 +91,7 @@ class matcher2boogie {
 	
 	// generate the nth outcome postcondition of matching phase of a matched rule
 	def static genMatchingPostOutcomeAt(MatchedRule r, int id) '''
-  	  ensures (forall «r.inPattern.elements.map(e | atl.genInPattern(e, "", ": ref")).join(',')» ::
+  	  free ensures (forall «r.inPattern.elements.map(e | atl.genInPattern(e, "", ": ref")).join(',')» ::
   	  	    «r.inPattern.elements.map(e | atl.genInPatternAllocation(e, atl.genSrcHeap.toString)).join(' && ')» ==>
   	  	      printGuard_«r.name»(«atl.genSrcHeap», «r.inPattern.elements.map(e | atl.genInPattern(e, "", "")).join(',')») ==> 
   	  	        (   «atl.genOutPattern(r.inPattern.elements, id)»!=null 
@@ -98,7 +101,7 @@ class matcher2boogie {
 	'''
 	// generate the frame postcondition of matching phase of a matched rule
 	def static genMatchingPostFrame(MatchedRule r) '''
-  	  ensures (forall<alpha> «atl.genFrameBVElem()»: ref, «atl.genFrameBVField()»: Field alpha ::
+  	  free ensures (forall<alpha> «atl.genFrameBVElem()»: ref, «atl.genFrameBVField()»: Field alpha ::
   	  	(«atl.genFrameBVElem()» == null 
   	  	|| read(«atl.genTrgHeap()», «atl.genFrameBVElem()», «atl.genFrameBVField()») == read(old(«atl.genTrgHeap()»), «atl.genFrameBVElem()», «atl.genFrameBVField()») 
   	  	|| «(0..r.outPattern.elements.size-1).map(i | genMatchingPostFrameAt(r, i)).join(" || ")» )
@@ -107,7 +110,7 @@ class matcher2boogie {
 	
 	def static genMatchingPostFrameExtra(MatchedRule rule) '''
 	«FOR i : (rule.outPattern.elements.size..<modDepth)»
-	ensures (forall<alpha> __$i: Seq ref ::
+	free ensures (forall<alpha> __$i: Seq ref ::
 	  !read(old(«atl.genTrgHeap()»), «atl.getLinkFunction(i)»(__$i), alloc) ==> !read(«atl.genTrgHeap()», «atl.getLinkFunction(i)»(__$i), alloc)
 	);
 	«ENDFOR»

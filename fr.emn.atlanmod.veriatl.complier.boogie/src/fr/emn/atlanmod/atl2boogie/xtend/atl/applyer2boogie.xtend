@@ -14,7 +14,8 @@ import org.eclipse.m2m.atl.common.ATL.Binding
 import org.eclipse.m2m.atl.common.ATL.OutPatternElement
 import java.util.List
 
-// genMatchingPostOutcomeAt and genApplyingPreOutcomeAt
+
+//TODO the user should specify whether they want `free` or not. That is another option for VeriATL
 class applyer2boogie {
 	// dispatcher
 	def static dispatch genModule_applys(EObject o) '''
@@ -41,13 +42,13 @@ class applyer2boogie {
 	// matched rule
 	def static dispatch genModuleElement_apply(MatchedRule r) '''
 	procedure «r.name»_applyAll() returns ();
-	  requires surj_tar_model(«atl.genSrcHeap», «atl.genTrgHeap»);
+	  free requires surj_tar_model(«atl.genSrcHeap», «atl.genTrgHeap»);
 	  «(0..r.outPattern.elements.size-1).map(i | genApplyingPreOutcomeAt(r, i)).join("\n")»
 	  modifies «atl.genTrgHeap»;
 	  // Rule Outcome
 	  «(0..r.outPattern.elements.size-1).map(i | genApplyingPostOutcomeAt(r, i)).join("\n")»
 	  // Frame property
-	  ensures (forall<alpha> «atl.genFrameBVElem()»: ref, «atl.genFrameBVField()»: Field alpha :: 
+	  free ensures (forall<alpha> «atl.genFrameBVElem()»: ref, «atl.genFrameBVField()»: Field alpha :: 
 		  ( «(0..r.outPattern.elements.size-1).map(i | if(r.outPattern.elements.get(i).bindings.size>0) genApplyingPostFrameAt(r, i) else "false").join(" || ")» 
 		    // not ideal frame cond, since using dtype to constraint $o is not very precise
 		    «IF (hasMultiValBindings(r))»|| (dtype(__$o) == class._System.array && __$f == alloc)«ENDIF»
@@ -85,7 +86,7 @@ class applyer2boogie {
 «if (out.bindings.exists(b | b.propertyName == out.bindings.get(bid).propertyName && out.bindings.indexOf(b)>bid)) "" else genApplyingPostOutcomeBindingAt(r,outid,out,bid)»'''
 	
 	def static genApplyingPostOutcomeBindingAt(MatchedRule r, int outid, OutPatternElement out, int bid) '''
-ensures (forall «r.inPattern.elements.map(e | atl.genInPattern(e, "", ": ref")).join(',')» ::
+free ensures (forall «r.inPattern.elements.map(e | atl.genInPattern(e, "", ": ref")).join(',')» ::
   «r.inPattern.elements.map(e | atl.genInPatternAllocation(e, atl.genSrcHeap.toString)).join(' && ')» ==>
     printGuard_«r.name»(«atl.genSrcHeap», «r.inPattern.elements.map(e | atl.genInPattern(e, "", "")).join(',')») ==> 
       «resolve(r,outid,out,bid)»
@@ -216,7 +217,7 @@ dtype(read(«atl.genTrgHeap()», «atl.genOutPattern(rule.inPattern.elements,out
 	
 	// generate the nth outcome postcondition of matching phase of a matched rule
 	def static genApplyingPreOutcomeAt(MatchedRule r, int id) '''
-  	  requires (forall «r.inPattern.elements.map(e | atl.genInPattern(e, "", ": ref")).join(',')» ::
+  	  free requires (forall «r.inPattern.elements.map(e | atl.genInPattern(e, "", ": ref")).join(',')» ::
   	  	    «r.inPattern.elements.map(e | atl.genInPatternAllocation(e, atl.genSrcHeap.toString)).join(' && ')» ==>
   	  	      printGuard_«r.name»(«atl.genSrcHeap», «r.inPattern.elements.map(e | atl.genInPattern(e, "", "")).join(',')») ==> 
   	  	        (   «atl.genOutPattern(r.inPattern.elements, id)»!=null 
