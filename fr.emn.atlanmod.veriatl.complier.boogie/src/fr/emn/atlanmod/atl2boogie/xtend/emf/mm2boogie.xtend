@@ -2,18 +2,16 @@ package fr.emn.atlanmod.atl2boogie.xtend.emf
 
 import org.eclipse.emf.ecore.*
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver
+import fr.emn.atlanmod.atl2boogie.xtend.lib.emf
 import org.eclipse.emf.ecore.EClassifier
 
 class mm2boogie {
 	
 	def static gen_Metamodel(EPackage p) '''
 	«{driver.constants.add(p.name);""}»
-	// print classifier const
-	«FOR e : p.EClassifiers»
-		«gen_topClassifiers(e)»	
-	«ENDFOR»
-	
-	«FOR e : p.EClassifiers»
+	«val clLists = emf.getOrderedClassifiers(p)»
+	// print classifier const	
+	«FOR e : clLists»
 		«gen_Classifiers(e)»	
 	«ENDFOR»
 	
@@ -28,30 +26,18 @@ class mm2boogie {
 		«gen_validSrc(p)»
 	«ENDIF»
 	'''
-	def static dispatch gen_topClassifiers(EClassifier cl) ''''''
-	
-	def static dispatch gen_topClassifiers(EClass cl) '''
-	«val mmName = cl.EPackage.name»
-	«IF cl.ESuperTypes.size == 0
-	»const unique «mmName»$«cl.name»: ClassName extends complete;
-	«FOR sf : cl.EStructuralFeatures»
-		«gen_StructuralFeatures(cl, sf)»	
-	«ENDFOR»
-	   «if (cl.abstract) String.format("axiom (forall r: ref :: dtype(r)!= %s$%s);", mmName, cl.name)»
-	«ENDIF»
-	'''
+
 	
 	def static dispatch gen_Classifiers(EClassifier cl) ''''''
 	
+	// if (cl.ESuperTypes.size > 0) mmName + "$" + cl.ESuperTypes.get(0).name else ""
 	def static dispatch gen_Classifiers(EClass cl) '''
 	«val mmName = cl.EPackage.name»
-	«IF cl.ESuperTypes.size != 0
-	»const unique «mmName»$«cl.name»: ClassName extends «(0..<cl.ESuperTypes.size).map(i | mmName + "$" + cl.ESuperTypes.get(i).name).join(",")» complete;
+	const unique «mmName»$«cl.name»: ClassName extends «(0..<cl.ESuperTypes.size).map(i | mmName + "$" + cl.ESuperTypes.get(i).name).join(",")» complete;
 	«FOR sf : cl.EStructuralFeatures»
 		«gen_StructuralFeatures(cl, sf)»	
 	«ENDFOR»
 	   «if (cl.abstract) String.format("axiom (forall r: ref :: dtype(r)!= %s$%s);", mmName, cl.name)»
-	«ENDIF»
 	'''
 	
 	def static dispatch gen_StructuralFeatures(EClassifier cl, EStructuralFeature sf) '''''' 
@@ -96,6 +82,8 @@ class mm2boogie {
 	  )
 	)
 	'''
+	
+	
 	
 	
 }
