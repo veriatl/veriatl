@@ -61,7 +61,9 @@ public class Context {
         this.contractPath = contract;
         this.basePath = base;
         this.postName = post;
-
+        
+        
+        
         transformationInstance = inModel.trimFileExtension().lastSegment() + "2" + outModel.trimFileExtension().lastSegment();
         tempDirectory = outModel.trimFileExtension().trimSegments(1).appendSegment(transformationInstance + "-trace");
 
@@ -101,9 +103,9 @@ public class Context {
             	m = Mode.DEBUG;
             }
 
-            URI contract = URI.createURI(configuration.getAttribute(VeriATLLaunchConstants.CONTRACT_PATH, Collections.emptyMap()).values().iterator().next());
-            URI base = URI.createURI(configuration.getAttribute(VeriATLLaunchConstants.PROJ_PATH, Collections.emptyMap()).values().iterator().next());
-            String post = configuration.getAttribute(VeriATLLaunchConstants.POST_NAME, Collections.emptyMap()).values().iterator().next();
+            URI contract = URI.createURI(configuration.getAttribute(VeriATLLaunchConstants.CONTRACT_PATH, ""));
+            URI base = URI.createURI(configuration.getAttribute(VeriATLLaunchConstants.PROJ_PATH, ""));
+            String post = configuration.getAttribute(VeriATLLaunchConstants.POST_NAME, "");
             
             
             return new Context(pluginUri, moduleName, metamodels, inModel, outModel, m, contract, base, post, monitor);

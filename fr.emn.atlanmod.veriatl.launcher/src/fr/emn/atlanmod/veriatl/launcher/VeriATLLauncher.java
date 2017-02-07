@@ -3,12 +3,16 @@
  */
 package fr.emn.atlanmod.veriatl.launcher;
 
+import java.util.Iterator;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
+import org.eclipse.emf.common.util.URI;
 
+import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.veriatl.core.Context;
 import fr.emn.atlanmod.veriatl.core.Mode;
 import fr.emn.atlanmod.veriatl.util.Metamodels;
@@ -30,13 +34,27 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
         // Register all metamodels
         context.metamodels().forEach(Metamodels::register);
 
+        // set in/out metamodels
+        Iterator<URI> it = context.metamodels().iterator();
+        context.outMetamodel(it.next());
+    	context.inMetamodel(it.next());
+        
+        
         // Run transformation
         if (context.mode() == Mode.EXEC) {
         	System.out.println("VeriATL: EXEC Successfully executed");
         	//Tasks.forwardTransformation().apply(context);
         }
         else if (context.mode() == Mode.GEN) {
-        	System.out.println("VeriATL: GENBOOGIE Successfully executed");
+        	System.out.println(context.basePath().toPlatformString(true));
+        	driver.generate(
+        			context.module().appendFileExtension("atl"), 
+        			context.inMetamodel(), 
+        			context.outMetamodel(), 
+        			context.contractPath(),
+        			context.basePath().toPlatformString(true)+"Auxu/");
+        	
+        	
         	//Tasks.forwardTransformation().apply(context);
         }
         else if (context.mode() == Mode.VERIFY) {

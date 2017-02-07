@@ -39,7 +39,7 @@ class driver {
 	public static var Resource contract_resource
 	
 	def static void main(String[] args) {
-		generate(args.get(0), args.get(1), args.get(2), args.get(3), args.get(4))
+		//generate(args.get(0), args.get(1), args.get(2), args.get(3), args.get(4))
 		println("finished")
 		//println(ocl2boogie.iteratorTyping)
 		print(fMapSrc)
@@ -56,19 +56,19 @@ class driver {
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl());
 	}
 	
-	def static doVeriATLSetup(String atl, String src, String tar, String contract, String path) {
+	def static doVeriATLSetup(URI atl, URI src, URI trg, URI contract) {
 		val rs = new ResourceSetImpl
 		
-		val srcRes = rs.getResource(URI.createFileURI(src), true)
-		val trgRes = rs.getResource(URI.createFileURI(tar), true)
+		val srcRes = rs.getResource(src, true)
+		val trgRes = rs.getResource(trg, true)
 		
 		fMapSrc = emf.getsfInfo(srcRes)
 		fMapTrg = emf.getsfInfo(trgRes)
 		srcmm = emf.getEPackage(srcRes)
 		trgmm = emf.getEPackage(trgRes)
 		
-		atl_resource = rs.getResource(URI.createFileURI(atl), true)
-		contract_resource = rs.getResource(URI.createFileURI(contract), true)
+		atl_resource = rs.getResource(atl, true)
+		contract_resource = rs.getResource(contract, true)
 	}
 	
 	
@@ -77,9 +77,9 @@ class driver {
 	/**
 	 * 
 	 */
-	def static generate(String atl, String src, String tar, String contract, String path) {
+	def static generate(URI atl, URI src, URI tar, URI contract, String path) {
 		doEMFSetup
-		doVeriATLSetup(atl, src, tar, contract, path)
+		doVeriATLSetup(atl, src, tar, contract)
 
 		// gen matchers
 		var res = "";
