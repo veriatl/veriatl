@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+    <extension
+            point="org.eclipse.debug.core.launchConfigurationTypes">
+        <launchConfigurationType
+                delegate="fr.emn.atlanmod.veriatl.launcher.VeriATLLauncher"
+                delegateDescription="This is for test"
+                delegateName="Launcher Test"
+                id="fr.emn.atlanmod.veriatl.launcher"
+                modes="run,debug"
+                name="VeriATL verifier">
+        </launchConfigurationType>
+    </extension>
+
+    <extension
+            point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+        <launchConfigurationTabGroup
+                class="fr.emn.atlanmod.veriatl.launcher.ui.VeriATLTabGroup"
+                id="fr.emn.atlanmod.veriatl.launcher.ui.tabgroups"
+                type="fr.emn.atlanmod.veriatl.launcher">
+        </launchConfigurationTabGroup>
+    </extension>
+</plugin>
