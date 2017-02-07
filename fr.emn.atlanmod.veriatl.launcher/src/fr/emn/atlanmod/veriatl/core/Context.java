@@ -5,6 +5,8 @@ import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.atl.emftvm.launcher.EMFTVMLaunchConstants;
 
+import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
+
 import java.util.Collections;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,11 @@ public class Context {
     private final String transformationInstance;
     private final URI tempDirectory;
 
+    private final URI contractPath;
+    private final URI basePath;
+    private final String postName;
+    
+    
     private final IProgressMonitor monitor;
 
     private boolean initialized;
@@ -37,7 +44,8 @@ public class Context {
     /**
      * Constructs a new {@code Context} with the given parameters.
      */
-    private Context(URI pluginUri, String moduleName, Iterable<URI> metamodels, URI inModel, URI outModel, Mode mode, IProgressMonitor monitor) {
+    private Context(URI pluginUri, String moduleName, Iterable<URI> metamodels, URI inModel, URI outModel, Mode mode, 
+    		URI contract, URI base, String post, IProgressMonitor monitor) {
         this.pluginUri = pluginUri;
         this.moduleName = moduleName;
 
@@ -49,6 +57,10 @@ public class Context {
         this.mode = mode;
 
         this.monitor = monitor;
+        
+        this.contractPath = contract;
+        this.basePath = base;
+        this.postName = post;
 
         transformationInstance = inModel.trimFileExtension().lastSegment() + "2" + outModel.trimFileExtension().lastSegment();
         tempDirectory = outModel.trimFileExtension().trimSegments(1).appendSegment(transformationInstance + "-trace");
@@ -89,8 +101,12 @@ public class Context {
             	m = Mode.DEBUG;
             }
 
-
-            return new Context(pluginUri, moduleName, metamodels, inModel, outModel, m, monitor);
+            URI contract = URI.createURI(configuration.getAttribute(VeriATLLaunchConstants.CONTRACT_PATH, Collections.emptyMap()).values().iterator().next());
+            URI base = URI.createURI(configuration.getAttribute(VeriATLLaunchConstants.PROJ_PATH, Collections.emptyMap()).values().iterator().next());
+            String post = configuration.getAttribute(VeriATLLaunchConstants.POST_NAME, Collections.emptyMap()).values().iterator().next();
+            
+            
+            return new Context(pluginUri, moduleName, metamodels, inModel, outModel, m, contract, base, post, monitor);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -215,6 +231,34 @@ public class Context {
         this.initialized = true;
     }
 
+    
+    
+    /**
+     * Returns the path of the contract.
+     *
+     * @return the contractPath
+     */
+    public URI contractPath() {
+        return contractPath;
+    }
+    
+    /**
+     * Returns the project path.
+     *
+     * @return the basePath
+     */
+    public URI basePath() {
+        return basePath;
+    }
+    
+    /**
+     * Returns the name of the postcondition to be verified.
+     *
+     * @return the postName
+     */
+    public String postName() {
+        return postName;
+    }
     /**
      * Returns the progress monitor of this context.
      *
