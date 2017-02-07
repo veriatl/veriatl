@@ -21,6 +21,16 @@ Require-Bundle:
  org.eclipse.xtend.middleend.xtend;bundle-version="1.0.0";resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.core.resources,
- fr.emn.atlanmod.veriatl.complier.boogie;bundle-version="1.0.0"
+ fr.emn.atlanmod.veriatl.complier.boogie;bundle-version="1.0.0",
+ fr.emn.atlanmod.veriatl.debug.decomposer
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: fr.emn.atlanmod.veriatl.driver.helper
+Export-Package: fr.emn.atlanmod.veriatl.driver.helper,
+ fr.emn.atlanmod.veriatl.driver.workflowRunner,
+ org.apache.commons.io,
+ org.apache.commons.io.comparator,
+ org.apache.commons.io.filefilter,
+ org.apache.commons.io.input,
+ org.apache.commons.io.monitor,
+ org.apache.commons.io.output
+Bundle-ClassPath: lib/commons-io-2.4.jar,
+ .

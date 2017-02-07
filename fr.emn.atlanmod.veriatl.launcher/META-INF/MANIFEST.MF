@@ -15,6 +15,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.m2m.atl.emftvm,
  org.eclipse.m2m.atl.adt.ui,
- org.eclipse.m2m.atl.common
+ org.eclipse.m2m.atl.common,
+ fr.emn.atlanmod.veriatl.complier.boogie
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

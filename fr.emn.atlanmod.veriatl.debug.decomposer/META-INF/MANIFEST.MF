@@ -3,11 +3,8 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Ocldecomposer
 Bundle-SymbolicName: fr.emn.atlanmod.veriatl.debug.decomposer
 Bundle-Version: 1.0.0.qualifier
-Bundle-ClassPath: ocldecomposer.jar,
- zcheng/Desktop/Eclipse/Mars/eclipse/plugins/org.eclipse.emf.ecore.xmi_2.11.1.v20160208-0816.jar,
- zcheng/Desktop/Eclipse/Mars/eclipse/plugins/org.eclipse.emf.ecore_2.11.2.v20160208-0816.jar,
- zcheng/Desktop/Eclipse/Mars/eclipse/plugins/org.eclipse.emf.common_2.11.1.v20160208-0816.jar,
- externalDependency/commons-io-2.4.jar
+Bundle-ClassPath: 
+ lib/commons-io-2.4.jar
 Export-Package: contract,
  datastructure,
  incremental,
