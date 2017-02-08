@@ -25,9 +25,9 @@
 <stringAttribute key="POST NAME" value="unique_fsm_sm_names"/>
 <stringAttribute key="PROJ PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI"/>
 <listAttribute key="Superimpose"/>
-<booleanAttribute key="debug" value="false"/>
+<booleanAttribute key="debug" value="true"/>
 <booleanAttribute key="executeATL" value="false"/>
 <booleanAttribute key="genBoogie" value="false"/>
 <booleanAttribute key="test" value="false"/>
-<booleanAttribute key="verify" value="true"/>
+<booleanAttribute key="verify" value="false"/>
 </launchConfiguration>
