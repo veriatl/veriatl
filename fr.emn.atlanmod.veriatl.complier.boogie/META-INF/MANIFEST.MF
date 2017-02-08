@@ -22,5 +22,6 @@ Require-Bundle: org.eclipse.xtend.lib,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: fr.emn.atlanmod.atl2boogie.xtend.core,
  fr.emn.atlanmod.atl2boogie.xtend.lib,
- fr.emn.atlanmod.atl2boogie.xtend.ocl
+ fr.emn.atlanmod.atl2boogie.xtend.ocl,
+ fr.emn.atlanmod.atl2boogie.xtend.util
 Bundle-ClassPath: .
