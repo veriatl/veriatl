@@ -6,7 +6,9 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.Commands;
+import fr.emn.atlanmod.veriatl.util.URIs;
 
 
 public final class Tasks {
@@ -25,18 +27,33 @@ public final class Tasks {
      *
      */
     public static void execBoogie(Context context) {
-
-    	
+    	ArrayList<String> args = new ArrayList<String>();
         String z3abs = z3Path.resolve("z3")+".exe";
+        
+        // add Boogie options
+        args.add("/nologo");
+        args.add("/z3exe:"+z3abs);
+        args.add("/trace");
+        
+        // add prelude files
         String veriatlabs = veriATLPath.toAbsolutePath().toString()+"\\Prelude\\";
+        args.addAll(getFiles(veriatlabs));
         
-        getFiles(veriatlabs);
+        // add auxu files
+        String auxu = URIs.abs(context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
+        args.addAll(getFiles(auxu));
         
-        Commands.boogie().exec().execute(
-        		"/nologo",
-                "/z3exe:"+z3abs, 
-                
+        // add postcondition to be verified
+        String post = URIs.abs(context.basePath()
+        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+        		.appendSegment(context.postName())
+        		.appendSegment("original")
+        		.appendFileExtension("bpl")
         );
+        args.add(post);
+        
+        
+        Commands.boogie().exec().execute(args);
     }
     
     

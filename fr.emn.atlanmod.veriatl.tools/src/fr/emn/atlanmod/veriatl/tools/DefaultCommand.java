@@ -56,11 +56,12 @@ public class DefaultCommand implements Command {
     }
 
     @Override
-    public int execute(String... args) {
+    public int execute(ArrayList<String>  args) {
         List<String> command = new ArrayList<>();
         command.add(path.resolve(executable).toString());
-        command.addAll(Arrays.asList(args));
+        command.addAll(args);
 
+        System.out.println(args);
         ProcessBuilder pb = new ProcessBuilder()
                 .command(command)
                 .directory(path.toFile())
@@ -73,9 +74,9 @@ public class DefaultCommand implements Command {
             int exitValue = process.waitFor();
             printStream(process.getInputStream(), System.out);
 
-//            if (exitValue != 0) {
-//                throw new RuntimeException("The execution ended with an error: " + exitValue + ". See the trace for more information");
-//            }
+            if (exitValue != 0) {
+                throw new RuntimeException("The execution ended with an error: " + exitValue + ". See the trace for more information");
+            }
             return exitValue;
         }
         catch (IOException e) {

@@ -1,5 +1,7 @@
 package fr.emn.atlanmod.veriatl.tools;
 
+import java.util.ArrayList;
+
 /**
  * A command-line that can be executed.
  */
@@ -13,5 +15,5 @@ public interface Command {
      *
      * @return the result of the execution ({@code 0 = success}
      */
-    int execute(String... args);
+    int execute(ArrayList<String> args);
 }
