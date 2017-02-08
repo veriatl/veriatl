@@ -123,7 +123,7 @@ public class ocldecomposerDriver {
 			
 			String org = printDriver(env, post);
 			driver.generateBoogieFile(output, CompilerConstants.ORG, CompilerConstants.BOOGIE_EXT, org);	
-			NodeHelper.printTreeBasic(outputPath, goalName, tree);
+			NodeHelper.printTreeBasic(outputPath.trimSegments(1), goalName, tree);
 		}
 		
 		
