@@ -39,4 +39,21 @@ class URIs {
 		return target;
 
 	}
+	
+	def public static void delete(URI target) throws RuntimeException{
+
+		val URIConverter uriConverter = new ExtensibleURIConverterImpl();
+
+		try {
+			if(uriConverter.exists(target, null)){
+				uriConverter.delete(target, null)
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
+
+	}
 }

@@ -40,4 +40,22 @@ public class URIs {
     }
     return target;
   }
+  
+  public static void delete(final URI target) throws RuntimeException {
+    final URIConverter uriConverter = new ExtensibleURIConverterImpl();
+    try {
+      boolean _exists = uriConverter.exists(target, null);
+      if (_exists) {
+        uriConverter.delete(target, null);
+      }
+    } catch (final Throwable _t) {
+      if (_t instanceof IOException) {
+        final IOException e = (IOException)_t;
+        e.printStackTrace();
+        throw new RuntimeException(e);
+      } else {
+        throw Exceptions.sneakyThrow(_t);
+      }
+    }
+  }
 }
