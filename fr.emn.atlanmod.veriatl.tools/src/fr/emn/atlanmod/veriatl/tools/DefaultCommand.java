@@ -9,8 +9,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * A default {@link Command} that executes a program using {@link ProcessBuilder}s and {@link Process}s.
@@ -68,7 +66,6 @@ public class DefaultCommand implements Command {
                 .directory(path.toFile())
                 .redirectErrorStream(true);
 
-        System.out.println("Executing: " + executable + " " + Stream.of(args).collect(Collectors.joining(" ")));
 
         Process process = null;
         try {
@@ -76,9 +73,9 @@ public class DefaultCommand implements Command {
             int exitValue = process.waitFor();
             printStream(process.getInputStream(), System.out);
 
-            if (exitValue != 0) {
-                throw new RuntimeException("The execution ended with an error: " + exitValue + ". See the trace for more information");
-            }
+//            if (exitValue != 0) {
+//                throw new RuntimeException("The execution ended with an error: " + exitValue + ". See the trace for more information");
+//            }
             return exitValue;
         }
         catch (IOException e) {

@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.URI;
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.veriatl.core.Context;
 import fr.emn.atlanmod.veriatl.core.Mode;
+import fr.emn.atlanmod.veriatl.core.Tasks;
 import fr.emn.atlanmod.veriatl.util.Metamodels;
 import localize.ocldecomposerDriver;
 
@@ -65,8 +66,7 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 				e.printStackTrace();
 			}
 		} else if (context.mode() == Mode.VERIFY) {
-			System.out.println("VeriATL: VERIFY Successfully executed");
-			// Tasks.backwardTransformation().apply(context);
+			Tasks.execBoogie(context);
 		} else if (context.mode() == Mode.DEBUG) {
 			System.out.println("VeriATL: DEBUG Successfully executed");
 			// Tasks.backwardTransformation().apply(context);

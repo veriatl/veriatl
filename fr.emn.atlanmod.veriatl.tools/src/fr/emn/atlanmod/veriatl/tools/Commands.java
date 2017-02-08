@@ -20,79 +20,70 @@ import static java.util.Objects.isNull;
  */
 public class Commands {
 
-    private static final String BUNDLE_SYMBOLIC_NAME = "org.eclipse.m2m.atl.atlgt.tools";
+	private static final String BUNDLE_SYMBOLIC_NAME = "fr.emn.atlanmod.veriatl.tools";
 
-    private Commands() {
-        throw new IllegalStateException("This class should not be initialized");
-    }
+	private Commands() {
+		throw new IllegalStateException("This class should not be initialized");
+	}
 
-    /**
-     * Returns a specific {@link CommandBuilder} for ATL-GT.
-     *
-     * @return a new builder
-     */
-    public static AtlGtCommandBuilder atlGt() {
-        return new AtlGtCommandBuilder(resolve("ATL-GT"));
-    }
 
-    /**
-     * Returns a specific {@link CommandBuilder} for GRoundTram.
-     *
-     * @return a new builder
-     */
-    public static GRoundTramCommandBuilder gRoundTram() {
-        return new GRoundTramCommandBuilder(resolve("ground_tram-0.9.5"));
-    }
+	
+	/**
+	 * Returns a specific {@link CommandBuilder} for Boogie.
+	 *
+	 * @return a new builder
+	 */
+	public static BoogieCommandBuilder boogie() {
+		return new BoogieCommandBuilder(resolve("Boogie-2.3.0"));
+	}
 
-    /**
-     * Resolves the absolute path of a library's binaries, according to the given {@code name}. These binaries must be
-     * located in the {@code lib/${name}/bin} folder of the current bundle.
-     *
-     * @param name the name of the library
-     *
-     * @return the absolute path of the library
-     */
-    private static Path resolve(String name) {
-        IPath internalPath = new org.eclipse.core.runtime.Path(String.format("lib/%s/bin/%s", name, os()));
-        Bundle bundle = Platform.getBundle(BUNDLE_SYMBOLIC_NAME);
-        Map<String, String> options = Collections.emptyMap();
+	/**
+	 * Resolves the absolute path of a library's binaries, according to the
+	 * given {@code name}. These binaries must be located in the
+	 * {@code lib/${name}/bin} folder of the current bundle.
+	 *
+	 * @param name
+	 *            the name of the library
+	 *
+	 * @return the absolute path of the library
+	 */
+	public static Path resolve(String name) {
+		IPath internalPath = new org.eclipse.core.runtime.Path(String.format("lib/%s/%s", name, os()));
+		Bundle bundle = Platform.getBundle(BUNDLE_SYMBOLIC_NAME);
+		Map<String, String> options = Collections.emptyMap();
 
-        try {
-            URL url = FileLocator.resolve(FileLocator.find(bundle, internalPath, options));
+		try {
+			URL url = FileLocator.resolve(FileLocator.find(bundle, internalPath, options));
 
-            if (isNull(url)) {
-                throw new NullPointerException("Unable to find the binaries in '" + internalPath + "'");
-            }
+			if (isNull(url)) {
+				throw new NullPointerException("Unable to find the binaries in '" + internalPath + "'");
+			}
 
-            return Paths.get(url.toURI());
-        }
-        catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
+			return Paths.get(url.toURI());
+		} catch (IOException | URISyntaxException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
 
-    private static String os() {
-        String name = System.getProperty("os.name").toLowerCase();
-        String arch = System.getProperty("os.arch").toLowerCase();
+	private static String os() {
+		String name = System.getProperty("os.name").toLowerCase();
+		String arch = System.getProperty("os.arch").toLowerCase();
 
-        if (name.contains("win")) {
-            name = "win";
-        }
-        else if (name.contains("mac")) {
-            name = "osx";
-        }
-        else {
-            name = "linux";
-        }
+		if (name.contains("win")) {
+			name = "win";
+		} else if (name.contains("mac")) {
+			name = "osx";
+		} else {
+			name = "linux";
+		}
 
-        if (arch.contains("64")) {
-            arch = "64";
-        }
-        else {
-            arch = "32";
-        }
+		if (arch.contains("64")) {
+			arch = "64";
+		} else {
+			arch = "32";
+		}
 
-        return String.format("%s-%s", name, arch);
-    }
+		return String.format("%s-%s", name, arch);
+	}
 }
