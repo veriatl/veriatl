@@ -5,14 +5,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 
+import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs;
+import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import runtime.executioner;
 
 public class NodeHelper {
@@ -124,17 +129,8 @@ public class NodeHelper {
 
 
 
-	public static String printTree(String tarProj, String post, ArrayList<Node> tree) throws Exception {
-		String p = post.replace("/", "");
-		String folder = String.format("%s/Trees/", tarProj);
-		FileUtils.forceMkdir(new File(folder));
-		
-		PrintStream original = new PrintStream(System.out);
-		String file = String.format("%s/Trees/%s", tarProj, p);
-		
-		String fileName = String.format("%s.gv", file);
-		PrintStream out = new PrintStream(new FileOutputStream(fileName));
-		System.setOut(out);
+	public static URI printTree(URI tarProj, String post, ArrayList<Node> tree) throws Exception {
+		URI output = tarProj.appendSegment(CompilerConstants.TREE).appendSegment(post).appendFileExtension(CompilerConstants.GVEXT);
 		
 		String content = "digraph G {\n";
 		
@@ -151,25 +147,14 @@ public class NodeHelper {
 		
 		content += "}\n";
 		
-		System.out.println(content);
-		out.close();
-		System.setOut(original);
+		URIs.write(output, content);
 		
-		return file;
+		return output;
 
 	}
 
-	public static void printTreeBasic(String tarProj, String post, ArrayList<Node> tree) throws Exception {
-		String p = post.replace("/", "");
-		String folder = String.format("%s/Trees/", tarProj);
-		FileUtils.forceMkdir(new File(folder));
-		
-		PrintStream original = new PrintStream(System.out);
-		String file = String.format("%s/Trees/%s", tarProj, p);
-		
-		String fileName = String.format("%s.gv", file);
-		PrintStream out = new PrintStream(new FileOutputStream(fileName));
-		System.setOut(out);
+	public static void printTreeBasic(URI tarProj, String post, ArrayList<Node> tree) throws Exception {		
+		URI output = tarProj.appendSegment(CompilerConstants.TREE).appendSegment(post).appendFileExtension(CompilerConstants.GVEXT);
 		
 		String content = "digraph G {\n";
 		
@@ -191,27 +176,20 @@ public class NodeHelper {
 		}
 		
 		content += "}\n";
-		
-		System.out.println(content);
-		out.close();
-		System.setOut(original);
+
+		URIs.write(output, content);
 		
 
 	}
 
-	public static void updateTreeBasic(String tarProj, String post, Map<String, String> map) throws Exception {
-		String p = post.replace("/", "");
-		String folder = String.format("%s/Trees/", tarProj);
-		FileUtils.forceMkdir(new File(folder));
+	public static void updateTreeBasic(URI tarProj, String post, Map<String, String> map) throws Exception {
+		URI file = tarProj.appendSegment(CompilerConstants.TREE).appendSegment(post).appendFileExtension(CompilerConstants.GVEXT);
 		
-		PrintStream original = new PrintStream(System.out);
-		String file = String.format("%s/Trees/%s", tarProj, p);
-		
-		String fileName = String.format("%s.gv", file);
-		
-		
+		URIConverter uriConverter = new ExtensibleURIConverterImpl();
+		InputStream inputStream = uriConverter.createInputStream(file);
+				
 		// read in content
-		BufferedReader input = new BufferedReader (new InputStreamReader (new FileInputStream (fileName)));
+		BufferedReader input = new BufferedReader (new InputStreamReader (inputStream));
 		String line;
 		String content = "";
         while ((line = input.readLine()) != null) {
@@ -235,12 +213,9 @@ public class NodeHelper {
 			}
 		}
 		content += "}\n";
-		PrintStream out = new PrintStream(new FileOutputStream(fileName), false);
-		System.setOut(out);
-		System.out.println(content);
-		out.close();
-		System.setOut(original);
-		
+
+		URI output = tarProj.appendSegment(CompilerConstants.TREE).appendSegment(post).appendFileExtension(CompilerConstants.GVEXT);
+		URIs.write(output, content);
 
 	}
 	

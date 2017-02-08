@@ -116,6 +116,16 @@ public class Context {
         }
     }
 
+    
+    /**
+     * Returns the {@link String} of the ATL module name.
+     *
+     * @return the String
+     */
+    public String moduleName() {
+        return moduleName;
+    }
+    
     /**
      * Returns the {@link URI} of the ATL module, without its extension.
      *

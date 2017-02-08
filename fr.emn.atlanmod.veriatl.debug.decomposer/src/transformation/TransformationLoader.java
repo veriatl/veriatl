@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.m2m.atl.common.ATL.Helper;
 import org.eclipse.m2m.atl.common.ATL.MatchedRule;
 import org.eclipse.m2m.atl.common.ATL.Module;
@@ -23,31 +24,23 @@ public class TransformationLoader {
 public static String atlEcore = "src/metamodel/ATL.ecore";
 
 	
-	public static List<MatchedRule> init(String contractPath) throws Exception{
-		InputStream input = new FileInputStream(contractPath);
-		AtlParser atlParser = AtlParser.getDefault();
-		IModel m = atlParser.parseToModel(input);
-		
-		//IExtractor extractor = new EMFExtractor();
-		//extractor.extract(m, contractPath+".xmi");
+	public static List<MatchedRule> init(Resource m) throws Exception{
+
 		
 		ArrayList<MatchedRule> rtn = new ArrayList<MatchedRule>();
 		
-		if(m instanceof EMFModel){
-			EMFModel emf = (EMFModel) m;
-			for(EObject o : emf.getResource().getContents()){
-				if(o instanceof Module){
-					Module mod = (Module) o;
-					for(ModuleElement elem : mod.getElements()){
-						if(elem instanceof MatchedRule){
-							MatchedRule r = (MatchedRule) elem;		
-							rtn.add(r);
-							
-						}
+		for(EObject o : m.getContents()){
+			if(o instanceof Module){
+				Module mod = (Module) o;
+				for(ModuleElement elem : mod.getElements()){
+					if(elem instanceof MatchedRule){
+						MatchedRule r = (MatchedRule) elem;		
+						rtn.add(r);
+						
 					}
 				}
-			}	
-		}
+			}
+		}	
 		
 		return rtn;
 	}

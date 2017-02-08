@@ -6,9 +6,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
@@ -25,10 +23,10 @@ import metamodel.EMFLoader;
 
 public class Trace {
 
+	private static final EmftvmFactory FACTORY = EmftvmFactory.eINSTANCE;
 	
-	
-	public static ExecEnv moduleLoader(String ATLFilePath, String ATLModuleName, 
-			String sourceMMPath, String targetMMPath, String sourceId, String targetId)
+	public static ExecEnv moduleLoader(URI emftvmPath, String moduleName, 
+			URI srcURI, URI trgURI, String sourceId, String targetId)
 	{
 		ExecEnv env = EmftvmFactory.eINSTANCE.createExecEnv();
 		ResourceSet rs = new ResourceSetImpl();
@@ -36,40 +34,20 @@ public class Trace {
 		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
 		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("emftvm", new EMFTVMResourceFactoryImpl());
 		
+		// Load src metamodels
+		Metamodel srcMetamodel = FACTORY.createMetamodel();
+		srcMetamodel.setResource(rs.getResource(srcURI, true));
+		env.registerMetaModel(sourceId, srcMetamodel);
 		
-		
-		
-		if(sourceId!=""){
-			// Load metamodels
-			Metamodel metaModel = EmftvmFactory.eINSTANCE.createMetamodel();
-			metaModel.setResource(rs.getResource(URI.createFileURI(sourceMMPath), true));
-			env.registerMetaModel(sourceId, metaModel);
-
-			Resource r = rs.getResource(URI.createFileURI(sourceMMPath), true);
-			EObject eObject = r.getContents().get(0);
-			if (eObject instanceof EPackage) {
-			    EPackage p = (EPackage)eObject;
-			    rs.getPackageRegistry().put(p.getNsURI(), p);
-			}
-		}
+		// Load trg metamodels
+		Metamodel trgMetaModel = FACTORY.createMetamodel();
+		trgMetaModel.setResource(rs.getResource(trgURI, true));
+		env.registerMetaModel(targetId, trgMetaModel);
 	
-		if(targetId!=""){
-			// Load metamodels
-			Metamodel metaModel = EmftvmFactory.eINSTANCE.createMetamodel();
-			metaModel.setResource(rs.getResource(URI.createFileURI(targetMMPath), true));
-			env.registerMetaModel(targetId, metaModel);
-
-			Resource r = rs.getResource(URI.createFileURI(targetMMPath), true);
-			EObject eObject = r.getContents().get(0);
-			if (eObject instanceof EPackage) {
-			    EPackage p = (EPackage)eObject;
-			    rs.getPackageRegistry().put(p.getNsURI(), p);
-			}
-		}
 		
 		// load emftvm module
-		DefaultModuleResolver mr = new DefaultModuleResolver(URI.createFileURI(ATLFilePath).toString(), rs);
-		env.loadModule(mr, ATLModuleName);
+		DefaultModuleResolver mr = new DefaultModuleResolver(emftvmPath.toString()+ "/", rs);
+		env.loadModule(mr, moduleName);
 		
 		return env;
 		
@@ -128,13 +106,5 @@ public class Trace {
 	
 	
 	
-	public static void main(String[] args) throws Exception {
-		
-		
-		ExecEnv env = moduleLoader(args[0], args[1],args[2], args[3],args[4], args[5]);
-		EPackage tarmm = EMFLoader.loadEcore(args[3]);
-		System.out.println(getTrace(tarmm, env));
-
-	}
 
 }

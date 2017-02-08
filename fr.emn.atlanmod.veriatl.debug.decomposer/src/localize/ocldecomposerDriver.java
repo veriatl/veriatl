@@ -1,7 +1,5 @@
 package localize;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,9 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.atl.common.ATL.MatchedRule;
 import org.eclipse.m2m.atl.common.OCL.OclExpression;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
@@ -23,11 +20,11 @@ import datastructure.ContextEntry;
 import datastructure.Node;
 import datastructure.NodeHelper;
 import datastructure.ProveOption;
-import file.fileHelper;
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
+import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
-import metamodel.EMFLoader;
+import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import transformation.GenBy;
 import transformation.Trace;
 import transformation.TransformationLoader;
@@ -37,54 +34,37 @@ public class ocldecomposerDriver {
 	
 	
 	// Notice: Termination of this strategy depends on what rules are selected, e.g. if inclusion elimin 1 and 2 are both presented, of course it will loop forever
-	// it also depends on whether a fixpoint can be reached at each stage.
+	// it also depends on whether a fix-point can be reached at each stage.
 	
 	// the limitation of this strategy is that it doesn't handle well if eliminate triggers new introduction, which is we trying to avoid because of mutual recursive call.
 	
 	// the most difficulty part is type inference, and deep copy of objects.
-	public static void main(String[] args) throws Exception {
+	@SuppressWarnings("unchecked")
+	public static void decompose(URI atl, URI emftvm, String moduleName, URI src, URI trg, URI contract, URI outputPath) throws Exception {
 		long start = System.currentTimeMillis();
-		PrintStream original = System.out;
+
 		
-		if(args.length < 1){
-	    	throw new Exception("no option provided to continue VeriATL, using \"help\" to see available options");
-	    }
-		
-		Map<String, String> dirs = fileHelper.loadDirPlus();
-		String projPath = args[0];
-		String emftvm = projPath+dirs.get("emftvm")+"/";
-		String moduleName = fileHelper.getFirstFileNamebyExt(emftvm, "emftvm");
-		String srcmmPath = fileHelper.getFirstFilePathbyExt(projPath+dirs.get("srcmm"), "ecore");
-		String tarmmPath = fileHelper.getFirstFilePathbyExt(projPath+dirs.get("tarmm"), "ecore");
-		String srcmmName = fileHelper.getFirstFileNamebyExt(projPath+dirs.get("srcmm"), "ecore");
-		String tarmmName = fileHelper.getFirstFileNamebyExt(projPath+dirs.get("tarmm"), "ecore");
-		
-		
-		String contractPath = fileHelper.getFirstFilePathbyExt(projPath+dirs.get("contract_src"), "atl");
-		String transformationSrcPath = fileHelper.getFirstFilePathbyExt(projPath+dirs.get("atl_src"), "atl");
-		String subGoalsPath = projPath+dirs.get("subgoal")+"/";
-		String genByPath = projPath+dirs.get("subgoal")+"/";
-		
+
+		// initialization
 		driver.doEMFSetup();
-		driver.doVeriATLSetup(transformationSrcPath, srcmmPath, tarmmPath, contractPath, "");
+		driver.doVeriATLSetup(atl, src, trg, contract);
+		ExecEnv env = Trace.moduleLoader(emftvm.trimFileExtension().trimSegments(1), moduleName, src, trg, driver.srcmm.getName(), driver.trgmm.getName());
+		Map<String, ArrayList<String>> trace = Trace.getTrace(driver.trgmm, env);
+		List<OclExpression> postconditions = ContractLoader.init(driver.contract_resource);
+		List<MatchedRule> rules = TransformationLoader.init(driver.atl_resource);
 		
-		ExecEnv env = Trace.moduleLoader(emftvm, moduleName, srcmmPath, tarmmPath, srcmmName, tarmmName);
+
 		
-		EPackage srcmm = EMFLoader.loadEcore(srcmmPath);
-		EPackage tarmm = EMFLoader.loadEcore(tarmmPath);
-		Map<String, ArrayList<String>> trace = Trace.getTrace(tarmm, env);
 		
-		List<OclExpression> postconditions = ContractLoader.init(contractPath);
-		List<MatchedRule> rules = TransformationLoader.init(transformationSrcPath);
+		// clean sub-goals previously generated
+		URIs.delete(outputPath);
 		
-		if(new File(subGoalsPath).exists()){
-			FileUtils.cleanDirectory(new File(subGoalsPath));
-		}
 		
+		// proof strategy starts
 		for (OclExpression post : postconditions) {
 			
 			ArrayList<Node> tree = new ArrayList<Node>();
-			Introduction.init(env, trace, tree, tarmm);
+			Introduction.init(env, trace, tree, driver.trgmm);
 			
 			HashMap<EObject, ContextEntry> emptyTrace = new HashMap<EObject, ContextEntry>();
 			Node root = new Node(0, post, null, emptyTrace, null, null);
@@ -108,7 +88,7 @@ public class ocldecomposerDriver {
 			
 
 			//elimin
-			Elimination.init(env, trace, tree, tarmm);
+			Elimination.init(env, trace, tree, driver.trgmm);
 			while(!Elimination.terminated(NodeHelper.findLeafs(tree))){
 				ArrayList<Node> leafs = NodeHelper.findLeafs(tree);
 				
@@ -127,76 +107,69 @@ public class ocldecomposerDriver {
 
 			}
 						
-			// print tree test
 			Collections.sort(tree);
 			
-			PrintStream out;
+			// print Boogie file for each leafs of the generated Proof tree
+			String goalName = post.getCommentsBefore().get(0).replace("--", "");
+			URI output = outputPath.appendSegment(goalName);
 
-			String goalName = post.getCommentsBefore().get(0).replace("--", "")+"/";
-			String folderName = String.format("%s%s", subGoalsPath,goalName);
-			File file = new File(folderName); 
-			FileUtils.forceMkdir(file);
-			
 			int i = 0;
 			for(Node n : NodeHelper.findLeafs(tree)){
-				String fileName = String.format("%scase%02d.bpl", folderName,i);
-				out =  new PrintStream(new FileOutputStream(fileName));
-				System.setOut(out);
-				System.out.println(n.toBoogie(env));
-			
-				n.setName(String.format("case%02d", i));
+				String cse = String.format("case%04d",i);
+				n.setName(String.format("case%04d", i));
+				driver.generateBoogieFile(output, cse, CompilerConstants.BOOGIE_EXT, n.toBoogie(env));		
 				i++;
 			}
 			
-			printDriver(env, post, folderName);
-			NodeHelper.printTreeBasic(projPath, goalName, tree);
+			String org = printDriver(env, post);
+			driver.generateBoogieFile(output, CompilerConstants.ORG, CompilerConstants.BOOGIE_EXT, org);	
+			NodeHelper.printTreeBasic(outputPath, goalName, tree);
 		}
 		
 		
+		// Print Genby predicate
+		GenBy.init(rules,driver.srcmm);
+		String genby = GenBy.print();
+		driver.generateBoogieFile(outputPath, CompilerConstants.GENBY, CompilerConstants.BOOGIE_EXT, genby);
 		
-		GenBy.init(rules,srcmm);
-		GenBy.print(genByPath);
 
-		
-		System.setOut(original);
 		long end = System.currentTimeMillis();
 		System.out.println(end-start);
 		
 		
 	}
 
-	private static void printDriver(ExecEnv env, OclExpression post, String folderName) throws Exception {
-		String fileName = String.format("%soriginal.bpl", folderName);
-		PrintStream out =  new PrintStream(new FileOutputStream(fileName));
-		System.setOut(out);
-		
-		printDriverHeader();
+	private static String printDriver(ExecEnv env, OclExpression post)  {		
+		String res="";
+		res += printDriverHeader();
 		for(org.eclipse.m2m.atl.emftvm.Rule r : env.getRules()){
-			System.out.println(String.format("call %s_matchAll();", r.getName()));
+			res += String.format("call %s_matchAll();\n", r.getName());
 		}
 		for(org.eclipse.m2m.atl.emftvm.Rule r : env.getRules()){
-			System.out.println(String.format("call %s_applyAll();", r.getName()));
+			res += String.format("call %s_applyAll();\n", r.getName());
 		}
-		System.out.println();
-		printPost(post);
-		printDriverFooter();
+		res += "\n";
+		res += printPost(post);
+		res += printDriverFooter();
+		return res;
 	}
 
 
 
-	private static void printPost(OclExpression post) {
-		System.out.println(String.format("assert %s;", ocl2boogie.genOclExpression(post, atl.genTrgHeap())));
-		
+	private static String printPost(OclExpression post) {
+		return String.format("assert %s;\n", ocl2boogie.genOclExpression(post, atl.genTrgHeap()));		
 	}
 
-	private static void printDriverHeader() {
-		System.out.println("implementation driver(){");
-		System.out.println("call init_tar_model(); ");
-		
+	private static String printDriverHeader() {
+		String res = "";
+		res += "implementation driver(){\n";
+		res += "call init_tar_model();\n";	
+		return res;
 	}
 	
-	private static void printDriverFooter() {
-		System.out.println("}");
+	private static String printDriverFooter() {
+		String res = "}\n";
+		return res;
 	}
 	
 	

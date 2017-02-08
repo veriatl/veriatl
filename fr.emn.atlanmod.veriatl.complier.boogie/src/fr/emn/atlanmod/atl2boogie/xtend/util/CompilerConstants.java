@@ -19,5 +19,13 @@ public interface CompilerConstants {
 
 	String CONST = "constants";
 	
-	String EXT = "bpl";
+	String BOOGIE_EXT = "bpl";
+	
+	String GVEXT = "gv";
+
+	String ORG = "original";
+
+	String GENBY = "genBy";
+	
+	String TREE = "Trees";
 }
