@@ -27,7 +27,7 @@
 <listAttribute key="Superimpose"/>
 <booleanAttribute key="debug" value="false"/>
 <booleanAttribute key="executeATL" value="false"/>
-<booleanAttribute key="genBoogie" value="false"/>
+<booleanAttribute key="genBoogie" value="true"/>
 <booleanAttribute key="test" value="false"/>
-<booleanAttribute key="verify" value="true"/>
+<booleanAttribute key="verify" value="false"/>
 </launchConfiguration>
