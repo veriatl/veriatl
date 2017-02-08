@@ -2,17 +2,15 @@ package runtime;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
+import org.eclipse.emf.common.util.URI;
 
 import datastructure.NodeHelper;
-import file.fileHelper;
 
 
 public class executioner {
@@ -113,7 +111,7 @@ public class executioner {
 	}
 	
 	
-	public static void debugPost(String proj, String post) throws Exception{
+	public static void debugPost(URI proj, String post) throws Exception{
 		String path = String.format("%s/Sub-goals/%s/", proj, post);  //TODO make folder name load from global configuration file.
 		ArrayList<String> subs = fileHelper.getFileNamesByPathExt(path, "bpl");
 		int succ = 0;
@@ -145,22 +143,5 @@ public class executioner {
 	}
 	
 	
-	
-	public static void main(String[] args) throws Exception {
-		String proj = args[0];
-		String post = args[1];
-		String task = args[2];
-		init(proj);
-		
-		if(task.equals("original")){
-			verifyPost(proj, post);
-		}else if(task.equals("debug")){
-			debugPost(proj, post);
-		}
-		
-		
-		
-		
-		
-	}
+
 }
