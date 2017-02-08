@@ -1,16 +1,12 @@
 package fr.emn.atlanmod.atl2boogie.xtend.lib
 
+import java.util.ArrayList
 import java.util.HashMap
+import java.util.List
 import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.m2m.atl.common.ATL.OutPatternElement
-import org.eclipse.m2m.atl.common.OCL.OclModelElement
-import fr.emn.atlanmod.atl2boogie.xtend.core.driver
-import org.eclipse.emf.common.util.EList
-import java.util.List
-import java.util.ArrayList
-import org.eclipse.emf.ecore.EClassifier
 
 class emf {
 	def static getsfInfo(Resource resource) {

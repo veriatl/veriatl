@@ -1,14 +1,13 @@
 package fr.emn.atlanmod.atl2boogie.xtend.core
 
-import com.google.common.base.Charsets
-import com.google.common.io.Files
 import fr.emn.atlanmod.atl2boogie.xtend.atl.applyer2boogie
 import fr.emn.atlanmod.atl2boogie.xtend.atl.contract2boogie
 import fr.emn.atlanmod.atl2boogie.xtend.atl.matcher2boogie
 import fr.emn.atlanmod.atl2boogie.xtend.atl.surjective2boogie
 import fr.emn.atlanmod.atl2boogie.xtend.emf.mm2boogie
+import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs
 import fr.emn.atlanmod.atl2boogie.xtend.lib.emf
-import java.io.File
+import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.HashSet
@@ -22,8 +21,6 @@ import org.eclipse.m2m.atl.common.ATL.ATLPackage
 import org.eclipse.m2m.atl.common.ATL.MatchedRule
 import org.eclipse.m2m.atl.common.OCL.OCLPackage
 import org.eclipse.m2m.atl.emftvm.compiler.AtlResourceFactoryImpl
-import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs
-import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants
 
 class driver {
 	
@@ -87,7 +84,7 @@ class driver {
 			match += matcher2boogie.genModule_matches(content)	
 		}
 		
-		generateBoogieFile(outputPath, CompilerConstants.MATCHER, CompilerConstants.EXT, match)
+		generateBoogieFile(outputPath, CompilerConstants.MATCHER, CompilerConstants.BOOGIE_EXT, match)
 
 		
 		// gen applyers
@@ -97,7 +94,7 @@ class driver {
 			apply += applyer2boogie.genModule_applys(content)	
 		}
 		
-		generateBoogieFile(outputPath, CompilerConstants.APPLIER, CompilerConstants.EXT, apply)
+		generateBoogieFile(outputPath, CompilerConstants.APPLIER, CompilerConstants.BOOGIE_EXT, apply)
 		
 
 		
@@ -108,7 +105,7 @@ class driver {
 			surject += surjective2boogie.genModule_surjective(content)	
 		}
 		
-		generateBoogieFile(outputPath, CompilerConstants.SURJECT, CompilerConstants.EXT, surject)
+		generateBoogieFile(outputPath, CompilerConstants.SURJECT, CompilerConstants.BOOGIE_EXT, surject)
 		
 		
 		// gen contracts
@@ -118,13 +115,13 @@ class driver {
 			pre += contract2boogie.genHelpers(content)	
 		}
 	
-		generateBoogieFile(outputPath, CompilerConstants.PRE, CompilerConstants.EXT, pre)
+		generateBoogieFile(outputPath, CompilerConstants.PRE, CompilerConstants.BOOGIE_EXT, pre)
 		
 		
 		// gen src mm
 		var srcBoogie = "";
 		srcBoogie += mm2boogie.gen_Metamodel(srcmm)	
-		generateBoogieFile(outputPath, srcmm.name, CompilerConstants.EXT, srcBoogie)
+		generateBoogieFile(outputPath, srcmm.name, CompilerConstants.BOOGIE_EXT, srcBoogie)
 		
 
 		
@@ -132,7 +129,7 @@ class driver {
 		// gen trg mm
 		var trgBoogie = "";
 		trgBoogie += mm2boogie.gen_Metamodel(trgmm)	
-		generateBoogieFile(outputPath, trgmm.name, CompilerConstants.EXT, trgBoogie)
+		generateBoogieFile(outputPath, trgmm.name, CompilerConstants.BOOGIE_EXT, trgBoogie)
 		
 
 		
@@ -142,7 +139,7 @@ class driver {
 			const += String.format("const unique _%s: String;\n", s)
 		}
 		
-		generateBoogieFile(outputPath, CompilerConstants.CONST, CompilerConstants.EXT, const)
+		generateBoogieFile(outputPath, CompilerConstants.CONST, CompilerConstants.BOOGIE_EXT, const)
 		
 		
 	}
