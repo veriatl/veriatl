@@ -17,4 +17,6 @@ public interface VeriATLLaunchConstants {
 	String STRING_DEFAULT = "";
 	
 	String BOOGIE_FOLDER_NAME = "Auxu";
+
+	String SUBGOAL_FOLDER_NAME = "Sub-goals";
 }

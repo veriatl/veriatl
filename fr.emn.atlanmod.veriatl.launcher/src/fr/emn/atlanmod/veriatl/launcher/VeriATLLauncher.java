@@ -17,61 +17,65 @@ import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.veriatl.core.Context;
 import fr.emn.atlanmod.veriatl.core.Mode;
 import fr.emn.atlanmod.veriatl.util.Metamodels;
+import localize.ocldecomposerDriver;
 
 /**
  * @author zcheng
  *
  */
 public class VeriATLLauncher implements ILaunchConfigurationDelegate {
-    @Override
-    public void launch(ILaunchConfiguration launchConfiguration, String mode, ILaunch launch, IProgressMonitor monitor) {
+	@Override
+	public void launch(ILaunchConfiguration launchConfiguration, String mode, ILaunch launch,
+			IProgressMonitor monitor) {
 
-        SubMonitor subMonitor = SubMonitor.convert(monitor);
-        subMonitor.beginTask("VeriATL", 16);
+		SubMonitor subMonitor = SubMonitor.convert(monitor);
+		subMonitor.beginTask("VeriATL", 16);
 
-        // Loads the current context
-        Context context = Context.from(launchConfiguration, subMonitor);
+		// Loads the current context
+		Context context = Context.from(launchConfiguration, subMonitor);
 
-        // Register all metamodels
-        context.metamodels().forEach(Metamodels::register);
+		// Register all metamodels
+		context.metamodels().forEach(Metamodels::register);
 
-        // set in/out metamodels
-        Iterator<URI> it = context.metamodels().iterator();
-        context.outMetamodel(it.next());
-    	context.inMetamodel(it.next());
-        
-        
-        // Run transformation
-        if (context.mode() == Mode.EXEC) {
-        	System.out.println("VeriATL: EXEC Successfully executed");
-        	//Tasks.forwardTransformation().apply(context);
-        }
-        else if (context.mode() == Mode.GEN) {
-        	System.out.println();
-        	driver.generate(
-        			context.module().appendFileExtension("atl"), 
-        			context.inMetamodel(), 
-        			context.outMetamodel(), 
-        			context.contractPath(),
-        			context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
-        	
-        	
-        	//Tasks.forwardTransformation().apply(context);
-        }
-        else if (context.mode() == Mode.VERIFY) {
-        	System.out.println("VeriATL: VERIFY Successfully executed");
-        	//Tasks.backwardTransformation().apply(context);
-        }
-        else if (context.mode() == Mode.DEBUG) {
-        	System.out.println("VeriATL: DEBUG Successfully executed");
-        	//Tasks.backwardTransformation().apply(context);
-        }
-        else {
-            throw new IllegalStateException("Unknown mode");
-        }
+		// set in/out metamodels
+		Iterator<URI> it = context.metamodels().iterator();
+		context.outMetamodel(it.next());
+		context.inMetamodel(it.next());
 
-        subMonitor.done();
+		// Run transformation
+		if (context.mode() == Mode.EXEC) {
+			System.out.println("VeriATL: EXEC Successfully executed");
+			// Tasks.forwardTransformation().apply(context);
+		} else if (context.mode() == Mode.GEN) {
+			
+			driver.generate(context.module().appendFileExtension("atl"), context.inMetamodel(), context.outMetamodel(),
+					context.contractPath(),
+					context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
 
-        System.out.println("VeriATL: Successfully executed");
-    }
+			try {
+				ocldecomposerDriver.decompose(
+						context.module().appendFileExtension("atl"),
+						context.module().appendFileExtension("emftvm"), 
+						context.moduleName(), 
+						context.inMetamodel(),
+						context.outMetamodel(), 
+						context.contractPath(),
+						context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (context.mode() == Mode.VERIFY) {
+			System.out.println("VeriATL: VERIFY Successfully executed");
+			// Tasks.backwardTransformation().apply(context);
+		} else if (context.mode() == Mode.DEBUG) {
+			System.out.println("VeriATL: DEBUG Successfully executed");
+			// Tasks.backwardTransformation().apply(context);
+		} else {
+			throw new IllegalStateException("Unknown mode");
+		}
+
+		subMonitor.done();
+
+		System.out.println("VeriATL: Successfully executed");
+	}
 }
