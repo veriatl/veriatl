@@ -1,14 +1,17 @@
 package fr.emn.atlanmod.atl2boogie.xtend.core
 
-import fr.emn.atlanmod.atl2boogie.xtend.lib.emf
-import fr.emn.atlanmod.atl2boogie.xtend.ocl.*
-import fr.emn.atlanmod.atl2boogie.xtend.atl.matcher2boogie
+import com.google.common.base.Charsets
+import com.google.common.io.Files
 import fr.emn.atlanmod.atl2boogie.xtend.atl.applyer2boogie
 import fr.emn.atlanmod.atl2boogie.xtend.atl.contract2boogie
+import fr.emn.atlanmod.atl2boogie.xtend.atl.matcher2boogie
 import fr.emn.atlanmod.atl2boogie.xtend.atl.surjective2boogie
 import fr.emn.atlanmod.atl2boogie.xtend.emf.mm2boogie
-
+import fr.emn.atlanmod.atl2boogie.xtend.lib.emf
+import java.io.File
+import java.util.ArrayList
 import java.util.HashMap
+import java.util.HashSet
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.resource.Resource
@@ -16,15 +19,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.eclipse.m2m.atl.common.ATL.ATLPackage
+import org.eclipse.m2m.atl.common.ATL.MatchedRule
 import org.eclipse.m2m.atl.common.OCL.OCLPackage
 import org.eclipse.m2m.atl.emftvm.compiler.AtlResourceFactoryImpl
-import java.io.File
-import com.google.common.base.Charsets
-import com.google.common.io.Files
-import java.util.HashSet
-
-import org.eclipse.m2m.atl.common.ATL.MatchedRule
-import java.util.ArrayList
+import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs
+import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants
 
 class driver {
 	
@@ -77,73 +76,84 @@ class driver {
 	/**
 	 * 
 	 */
-	def static generate(URI atl, URI src, URI tar, URI contract, String path) {
+	def static generate(URI atl, URI src, URI trg, URI contract, URI outputPath) {
 		doEMFSetup
-		doVeriATLSetup(atl, src, tar, contract)
+		doVeriATLSetup(atl, src, trg, contract)
 
 		// gen matchers
-		var res = "";
+		var match = "";
 		
 		for (content : atl_resource.contents) {
-			res += matcher2boogie.genModule_matches(content)	
+			match += matcher2boogie.genModule_matches(content)	
 		}
 		
-		Files.write(res, new File(path+'ATL_match.bpl'), Charsets.UTF_8)
+		generateBoogieFile(outputPath, CompilerConstants.MATCHER, CompilerConstants.EXT, match)
+
 		
 		// gen applyers
-		var res2 = "";
+		var apply = "";
 		
 		for (content : atl_resource.contents) {
-			res2 += applyer2boogie.genModule_applys(content)	
+			apply += applyer2boogie.genModule_applys(content)	
 		}
 		
-		Files.write(res2, new File(path+'ATL_apply.bpl'), Charsets.UTF_8)
+		generateBoogieFile(outputPath, CompilerConstants.APPLIER, CompilerConstants.EXT, apply)
+		
+
 		
 		// gen surjectivity function
-		var res4 = "";
+		var surject = "";
 		
 		for (content : atl_resource.contents) {
-			res4 += surjective2boogie.genModule_surjective(content)	
+			surject += surjective2boogie.genModule_surjective(content)	
 		}
 		
-		Files.write(res4, new File(path+'surjective.bpl'), Charsets.UTF_8)
+		generateBoogieFile(outputPath, CompilerConstants.SURJECT, CompilerConstants.EXT, surject)
 		
 		
 		// gen contracts
-		var res3 = "";
+		var pre = "";
 			
 		for (content : contract_resource.contents) {
-			res3 += contract2boogie.genHelpers(content)	
+			pre += contract2boogie.genHelpers(content)	
 		}
 	
-		Files.write(res3, new File(path+'Preconditions.bpl'), Charsets.UTF_8)
+		generateBoogieFile(outputPath, CompilerConstants.PRE, CompilerConstants.EXT, pre)
 		
 		
 		// gen src mm
-		var res5 = "";
-		res5 += mm2boogie.gen_Metamodel(srcmm)	
-		Files.write(res5, new File(path+srcmm.name+'.bpl'), Charsets.UTF_8)
+		var srcBoogie = "";
+		srcBoogie += mm2boogie.gen_Metamodel(srcmm)	
+		generateBoogieFile(outputPath, srcmm.name, CompilerConstants.EXT, srcBoogie)
+		
+
 		
 		
 		// gen trg mm
-		var res6 = "";
-		res6 += mm2boogie.gen_Metamodel(trgmm)	
-		Files.write(res6, new File(path+trgmm.name+'.bpl'), Charsets.UTF_8)
+		var trgBoogie = "";
+		trgBoogie += mm2boogie.gen_Metamodel(trgmm)	
+		generateBoogieFile(outputPath, trgmm.name, CompilerConstants.EXT, trgBoogie)
 		
-		// gen trg mm
-		var res7 = "";
+
+		
+		// gen constants
+		var const = "";
 		for (s : constants) {
-			res7 += String.format("const unique _%s: String;\n", s)
+			const += String.format("const unique _%s: String;\n", s)
 		}
 		
-		Files.write(res7, new File(path+'constants.bpl'), Charsets.UTF_8)
+		generateBoogieFile(outputPath, CompilerConstants.CONST, CompilerConstants.EXT, const)
+		
 		
 	}
 	
 
 	
 
-
+	def static URI generateBoogieFile(URI outputPath, String fileName, String ext, String content){
+		val URI outputURI = outputPath.appendSegment(fileName).appendFileExtension(ext)
+		return URIs.write(outputURI, content)
+	}
 
 
 		

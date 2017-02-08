@@ -1,0 +1,23 @@
+/**
+ * 
+ */
+package fr.emn.atlanmod.atl2boogie.xtend.util;
+
+/**
+ * @author zcheng
+ *
+ */
+public interface CompilerConstants {
+	
+	String MATCHER = "ATL_match";
+	
+	String APPLIER = "ATL_apply";
+	
+	String SURJECT = "surjective";
+	
+	String PRE = "Preconditions";
+
+	String CONST = "constants";
+	
+	String EXT = "bpl";
+}

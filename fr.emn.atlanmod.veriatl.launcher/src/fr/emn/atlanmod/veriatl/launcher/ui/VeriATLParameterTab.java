@@ -96,7 +96,7 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
 				if ((result != null) && (result instanceof IFolder)) {
 					final IFolder currentFolder = (IFolder)result;
 					final String path = currentFolder.getFullPath().toString();
-					proj.setText("platform:/resource" + path+"/");
+					proj.setText("platform:/resource" + path);
 					updateLaunchConfigurationDialog();
 				}
 			}

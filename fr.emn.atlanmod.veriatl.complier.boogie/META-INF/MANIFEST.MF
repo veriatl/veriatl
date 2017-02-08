@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: atl 2 Boogie compiler
-Bundle-SymbolicName: fr.emn.atlanmod.veriatl.complier.boogie
+Bundle-SymbolicName: fr.emn.atlanmod.veriatl.complier.boogie;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Vendor: Zheng Cheng
 Require-Bundle: org.eclipse.xtend.lib,
@@ -23,3 +23,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: fr.emn.atlanmod.atl2boogie.xtend.core,
  fr.emn.atlanmod.atl2boogie.xtend.lib,
  fr.emn.atlanmod.atl2boogie.xtend.ocl
+Bundle-ClassPath: .

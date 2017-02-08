@@ -15,4 +15,6 @@ public interface VeriATLLaunchConstants {
 	String PROJ_PATH = "PROJ PATH";
 	
 	String STRING_DEFAULT = "";
+	
+	String BOOGIE_FOLDER_NAME = "Auxu";
 }

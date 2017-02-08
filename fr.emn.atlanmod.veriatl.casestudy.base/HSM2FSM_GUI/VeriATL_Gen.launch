@@ -23,7 +23,7 @@
 <mapEntry key="OUT" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI/Source/FSM.xmi"/>
 </mapAttribute>
 <stringAttribute key="POST NAME" value="unique_fsm_sm_names"/>
-<stringAttribute key="PROJ PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI/"/>
+<stringAttribute key="PROJ PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI"/>
 <listAttribute key="Superimpose"/>
 <booleanAttribute key="debug" value="false"/>
 <booleanAttribute key="executeATL" value="false"/>

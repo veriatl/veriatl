@@ -5,6 +5,7 @@ package fr.emn.atlanmod.veriatl.launcher;
 
 import java.util.Iterator;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.debug.core.ILaunch;
@@ -46,13 +47,13 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
         	//Tasks.forwardTransformation().apply(context);
         }
         else if (context.mode() == Mode.GEN) {
-        	System.out.println(context.basePath().toPlatformString(true));
+        	System.out.println();
         	driver.generate(
         			context.module().appendFileExtension("atl"), 
         			context.inMetamodel(), 
         			context.outMetamodel(), 
         			context.contractPath(),
-        			context.basePath().toPlatformString(true)+"Auxu/");
+        			context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
         	
         	
         	//Tasks.forwardTransformation().apply(context);
