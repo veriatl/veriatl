@@ -68,14 +68,12 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 		} else if (context.mode() == Mode.VERIFY) {
 			Tasks.execBoogie(context);
 		} else if (context.mode() == Mode.DEBUG) {
-			System.out.println("VeriATL: DEBUG Successfully executed");
-			// Tasks.backwardTransformation().apply(context);
+			Tasks.debugBoogie(context);
 		} else {
 			throw new IllegalStateException("Unknown mode");
 		}
 
 		subMonitor.done();
 
-		System.out.println("VeriATL: Successfully executed");
 	}
 }

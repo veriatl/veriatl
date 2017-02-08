@@ -61,7 +61,7 @@ public class DefaultCommand implements Command {
         command.add(path.resolve(executable).toString());
         command.addAll(args);
 
-        System.out.println(args);
+        
         ProcessBuilder pb = new ProcessBuilder()
                 .command(command)
                 .directory(path.toFile())

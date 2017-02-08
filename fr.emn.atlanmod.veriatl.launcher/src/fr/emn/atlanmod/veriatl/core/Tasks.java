@@ -6,6 +6,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.Commands;
 import fr.emn.atlanmod.veriatl.util.URIs;
@@ -21,7 +22,7 @@ public final class Tasks {
     }
 
     /**
-     * Step 1. Exec Boogie.
+     * Exec Boogie.
      * <p>
      * ???
      *
@@ -33,7 +34,7 @@ public final class Tasks {
         // add Boogie options
         args.add("/nologo");
         args.add("/z3exe:"+z3abs);
-        args.add("/trace");
+        //args.add("/trace");
         
         // add prelude files
         String veriatlabs = veriATLPath.toAbsolutePath().toString()+"\\Prelude\\";
@@ -47,13 +48,66 @@ public final class Tasks {
         String post = URIs.abs(context.basePath()
         		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
         		.appendSegment(context.postName())
-        		.appendSegment("original")
-        		.appendFileExtension("bpl")
+        		.appendSegment(CompilerConstants.ORG)
+        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
         );
         args.add(post);
         
         
         Commands.boogie().exec().execute(args);
+    }
+    
+    
+    /**
+     * Debug Boogie.
+     * <p>
+     * ???
+     *
+     */
+    public static void debugBoogie(Context context) {
+    	ArrayList<String> args = new ArrayList<String>();
+        String z3abs = z3Path.resolve("z3")+".exe";
+        
+        // add Boogie options
+        args.add("/nologo");
+        args.add("/z3exe:"+z3abs);
+
+        
+        // add prelude files
+        String veriatlabs = veriATLPath.toAbsolutePath().toString()+"\\Prelude\\";
+        args.addAll(getFiles(veriatlabs));
+        
+        // add auxu files
+        String auxu = URIs.abs(context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
+        args.addAll(getFiles(auxu));
+        
+        // retrieve sub-goals
+        String post = URIs.abs(context.basePath()
+        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+        		.appendSegment(context.postName())
+        );
+        ArrayList<String> subs = getFiles(post);
+        ArrayList<String> argsClone = new ArrayList<String>();
+        for(String sub : subs) {
+        	if(!sub.contains(CompilerConstants.ORG+"."+CompilerConstants.BOOGIE_EXT)) {
+        		argsClone.addAll(args);
+            	argsClone.add(sub);
+            	
+            	String genBy = URIs.abs(context.basePath()
+                		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+                		.appendSegment(CompilerConstants.GENBY)
+                		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
+                );
+            	argsClone.add(genBy);
+            	
+            	Commands.boogie().exec().execute(argsClone);
+        	} 	
+        }
+        
+        
+        
+        
+        
     }
     
     
