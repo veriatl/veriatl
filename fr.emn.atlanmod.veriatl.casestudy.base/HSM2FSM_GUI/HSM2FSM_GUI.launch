@@ -24,10 +24,12 @@
 </mapAttribute>
 <stringAttribute key="POST NAME" value="unique_fsm_sm_names"/>
 <stringAttribute key="PROJ PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI"/>
+<stringAttribute key="SOURCE MM PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI/Source/HSM.ecore"/>
 <listAttribute key="Superimpose"/>
-<booleanAttribute key="debug" value="true"/>
+<stringAttribute key="TARGET MM PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI/Source/FSM.ecore"/>
+<booleanAttribute key="debug" value="false"/>
 <booleanAttribute key="executeATL" value="false"/>
-<booleanAttribute key="genBoogie" value="false"/>
+<booleanAttribute key="genBoogie" value="true"/>
 <booleanAttribute key="test" value="false"/>
 <booleanAttribute key="verify" value="false"/>
 </launchConfiguration>
