@@ -624,12 +624,7 @@ UML!Signal.allInstances()->includes(r.signal) implies
     r.name = r.signal.name
 ); 
 
---@pre
-helper context UML!RedefinableElement def: pre_non_leaf_redefinition(): Boolean = --non_leaf_redefinition
-  UML!RedefinableElement.allInstances()->forAll(re |  
-    self.redefinedElement->forAll(rere|
-      not(re.isLeaf))
-); 
+
 
 --@pre
 helper context UML!ReplyAction def: pre_event_on_reply_to_call_trigger(): Boolean = --event_on_reply_to_call_trigger
@@ -1388,12 +1383,7 @@ UMLs!Signal.allInstances()->contains(r.signal) implies
     r.name = r.signal.name
 ); 
 
---@post
-helper context UMLs!RedefinableElement def: post_non_leaf_redefinition(): Boolean = --non_leaf_redefinition
-  UMLs!RedefinableElement.allInstances()->forAll(re |  
-    self.redefinedElement->forAll(rere|
-      not(re.isLeaf))
-); 
+
 
 --@post
 helper context UMLs!ReplyAction def: post_event_on_reply_to_call_trigger(): Boolean = --event_on_reply_to_call_trigger
