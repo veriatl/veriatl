@@ -63,8 +63,7 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 				e.printStackTrace();
 			}
 			
-			driver.clean();
-			ocldecomposerDriver.clean();
+			
 		} else if (context.mode() == Mode.VERIFY) {
 			Tasks.execBoogie(context);
 		} else if (context.mode() == Mode.DEBUG) {
