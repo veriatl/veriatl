@@ -14,6 +14,8 @@ import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.emf.common.util.URI;
 
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference;
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import fr.emn.atlanmod.veriatl.core.Context;
 import fr.emn.atlanmod.veriatl.core.Mode;
 import fr.emn.atlanmod.veriatl.core.Tasks;
@@ -63,7 +65,8 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 				e.printStackTrace();
 			}
 			
-			
+			TypeInference.clean();
+			ocl2boogie.clean();
 		} else if (context.mode() == Mode.VERIFY) {
 			Tasks.execBoogie(context);
 		} else if (context.mode() == Mode.DEBUG) {
