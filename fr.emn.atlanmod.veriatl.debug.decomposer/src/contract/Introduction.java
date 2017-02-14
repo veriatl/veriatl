@@ -22,6 +22,7 @@ import datastructure.ProveOption;
 import datastructure.Tactic;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.myOclType;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference;
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import keywords.Keyword;
 import metamodel.EMFCopier;
 import metamodel.EMFHelper;
@@ -51,6 +52,8 @@ public class Introduction  {
 		trace = t;
 		tree =tr;
 		tarmm = mm;
+		//TypeInference.clean();
+		//ocl2boogie.clean();
 	}
 
 

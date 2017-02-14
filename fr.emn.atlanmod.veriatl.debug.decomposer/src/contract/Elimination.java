@@ -20,6 +20,7 @@ import datastructure.ProveOption;
 import datastructure.Tactic;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.myOclType;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference;
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import keywords.Keyword;
 import metamodel.EMFCopier;
 import metamodel.EMFHelper;
@@ -39,6 +40,8 @@ public class Elimination {
 		trace = t;
 		tree =tr;
 		tarmm = mm;
+		//TypeInference.clean();
+		//ocl2boogie.clean();
 	}
 	
 	public static boolean terminated(ArrayList<Node> leafs){
@@ -178,9 +181,8 @@ public class Elimination {
 				List<String> subTrace  = trace.get(elemType).subList(1, trace.get(elemType).size());
 				
 				for(String rule : subTrace ){
-					int pos2 = first.lastIndexOf("#");
+					int pos2 = rule.lastIndexOf("#");
 					String genBy2 = "";
-					
 					
 					String restRName = rule.substring(0, pos2);
 					String outid2 = rule.substring(pos2+1);
@@ -243,7 +245,7 @@ public class Elimination {
 				List<String> subTrace  = trace.get(elemType).subList(1, trace.get(elemType).size());
 				
 				for(String rule : subTrace){
-					int pos2 = first.lastIndexOf("#");
+					int pos2 = rule.lastIndexOf("#");
 					String genBy2 = "";
 					
 					
