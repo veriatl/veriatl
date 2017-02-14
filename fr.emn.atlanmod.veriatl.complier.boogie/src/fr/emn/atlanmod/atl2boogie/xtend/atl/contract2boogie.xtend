@@ -7,6 +7,7 @@ import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl
 
 class contract2boogie {
+	public static String debugPost = ""
 	// dispatcher
 	def static dispatch genHelpers(EObject o) ''' '''
 	
@@ -26,5 +27,5 @@ class contract2boogie {
 	
 	def static dispatch genOCLFeature(OclFeature f) '''	'''
 	
-	def static dispatch genOCLFeature(Operation f) '''«ocl2boogie.genOclExpression(f.body, atl.genSrcHeap)»'''
+	def static dispatch genOCLFeature(Operation f) '''«{debugPost = f.name;null}»«ocl2boogie.genOclExpression(f.body, atl.genSrcHeap)»'''
 }
