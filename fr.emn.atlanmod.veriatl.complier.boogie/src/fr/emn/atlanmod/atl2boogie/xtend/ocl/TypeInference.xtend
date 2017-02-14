@@ -86,7 +86,7 @@ class TypeInference {
 			val sf = emf.getFeatureNameInMetamodel(driver.fMapSrc, driver.srcmm, mm, cl, f)
 			val sfType = driver.fMapSrc.get(sf)
 		
-			println(contract2boogie.debugPost)
+			println("Debug:"+ "TypeInference.java"+contract2boogie.debugPost)
 			
 			if (emf.isPrimitive(sfType)) {
 				return new myOclType("primitive", sfType)
@@ -297,5 +297,9 @@ class TypeInference {
 
 	def static dispatch myOclType infer(Boolean expr) {
 		return new myOclType("primitive", "bool")
+	}
+	
+	def static void clean(){
+		init(new HashMap)
 	}
 }
