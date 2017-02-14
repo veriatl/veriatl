@@ -4,6 +4,7 @@ import fr.emn.atlanmod.atl2boogie.xtend.core.driver
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl
 import fr.emn.atlanmod.atl2boogie.xtend.lib.emf
 import fr.emn.atlanmod.atl2boogie.xtend.lib.myOclType
+import fr.emn.atlanmod.atl2boogie.xtend.atl.contract2boogie
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Map
@@ -74,15 +75,19 @@ class TypeInference {
 		val o = expr.source
 		val f = expr.name
 
+		
 		val oType = infer(o)
 
+		
 		if (oType.kind == "srcRef") {
 			val tp = oType.getType.split("\\$")
 			val mm = tp.get(0)
 			val cl = tp.get(1)
 			val sf = emf.getFeatureNameInMetamodel(driver.fMapSrc, driver.srcmm, mm, cl, f)
 			val sfType = driver.fMapSrc.get(sf)
-
+		
+			println(contract2boogie.debugPost)
+			
 			if (emf.isPrimitive(sfType)) {
 				return new myOclType("primitive", sfType)
 			} else if (sfType.startsWith("ref:")) {
