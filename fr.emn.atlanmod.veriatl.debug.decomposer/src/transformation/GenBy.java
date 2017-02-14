@@ -70,6 +70,7 @@ public class GenBy {
 
 		}
 
+		ocl2boogie.offReplacing();
 		return res;
 	}
 
