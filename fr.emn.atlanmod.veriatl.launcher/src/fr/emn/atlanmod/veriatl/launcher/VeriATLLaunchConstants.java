@@ -19,4 +19,8 @@ public interface VeriATLLaunchConstants {
 	String BOOGIE_FOLDER_NAME = "Auxu";
 
 	String SUBGOAL_FOLDER_NAME = "Sub-goals";
+	
+	String SRC_PATH = "SOURCE MM PATH";
+	
+	String TRG_PATH = "TARGET MM PATH";
 }

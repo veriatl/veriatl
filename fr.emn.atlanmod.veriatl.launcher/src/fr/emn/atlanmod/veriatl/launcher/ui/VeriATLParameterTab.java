@@ -37,9 +37,13 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
     private Text post;
     private Text proj;
     
+    private Text srcMMPath;
+    private Text trgMMPath;
+    
     private Group basicGroup;
     private Group modeGroup;
     private Group contractGroup;
+    private Group metamodelGroup;
     
     @Override
     public void createControl(Composite parent) {
@@ -61,6 +65,11 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
         modeGroup.setLayout(new GridLayout(4, false));
         modeGroup.setText("Verification Mode");
 
+        metamodelGroup = new Group(rootContainer, SWT.NULL);
+        metamodelGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        metamodelGroup.setLayout(new GridLayout(10, false));
+        metamodelGroup.setText("Metamodels");
+        
         contractGroup = new Group(rootContainer, SWT.NULL);
         contractGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         contractGroup.setLayout(new GridLayout(8, false));
@@ -68,6 +77,7 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
         
         buildBasicGroup();
         buildModeGroup();
+        buildMetamodels();
         buildContractControls();
         
         setControl(scrollContainer);
@@ -150,6 +160,64 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
 	}
 
 	
+	private void buildMetamodels() {
+
+		final Label srcLabel = new Label(metamodelGroup, SWT.LEFT);
+		srcLabel.setText("Source Metamodel:"); //$NON-NLS-1$
+
+		srcMMPath = new Text(metamodelGroup, SWT.BORDER);
+		srcMMPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
+		
+		final Button browseWorkspace = new Button(metamodelGroup, SWT.NULL);
+		browseWorkspace.setText("Workspace...");
+		browseWorkspace.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent evt) {
+				final WorkspaceFileDialog dialog = new WorkspaceFileDialog(getShell(), (String[])null);
+				final Object result = dialog.open() == Dialog.OK ? dialog.getFirstResult() : null;
+				if ((result != null) && (result instanceof IFile)) {
+					final IFile currentFile = (IFile)result;
+					final String path = currentFile.getFullPath().toString();
+					srcMMPath.setText("platform:/resource" + path);
+					updateLaunchConfigurationDialog();
+				}
+			}
+		});
+
+
+		final Label filler = new Label(metamodelGroup, SWT.NULL);
+		filler.setLayoutData(new GridData(SWT.NULL, SWT.NULL, false, false, 2, 1));
+
+		
+
+		final Label trgLabel = new Label(metamodelGroup, SWT.LEFT);
+		trgLabel.setText("Target Metamodel:"); //$NON-NLS-1$
+
+		trgMMPath = new Text(metamodelGroup, SWT.BORDER);
+		trgMMPath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
+		
+		final Button browseWorkspace2 = new Button(metamodelGroup, SWT.NULL);
+		browseWorkspace2.setText("Workspace...");
+		browseWorkspace2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent evt) {
+				final WorkspaceFileDialog dialog = new WorkspaceFileDialog(getShell(), (String[])null);
+				final Object result = dialog.open() == Dialog.OK ? dialog.getFirstResult() : null;
+				if ((result != null) && (result instanceof IFile)) {
+					final IFile currentFile = (IFile)result;
+					final String path = currentFile.getFullPath().toString();
+					trgMMPath.setText("platform:/resource" + path);
+					updateLaunchConfigurationDialog();
+				}
+			}
+		});
+
+
+		
+		
+	}
+	
+	
 	private void buildContractControls() {
 
 		final Label pathLabel = new Label(contractGroup, SWT.LEFT);
@@ -213,6 +281,10 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
             proj.setText(configuration.getAttribute(VeriATLLaunchConstants.PROJ_PATH, VeriATLLaunchConstants.STRING_DEFAULT));
             location.setText(configuration.getAttribute(VeriATLLaunchConstants.CONTRACT_PATH, VeriATLLaunchConstants.STRING_DEFAULT));
             post.setText(configuration.getAttribute(VeriATLLaunchConstants.POST_NAME, VeriATLLaunchConstants.STRING_DEFAULT));
+            
+            srcMMPath.setText(configuration.getAttribute(VeriATLLaunchConstants.SRC_PATH, VeriATLLaunchConstants.STRING_DEFAULT));
+            trgMMPath.setText(configuration.getAttribute(VeriATLLaunchConstants.TRG_PATH, VeriATLLaunchConstants.STRING_DEFAULT));
+            
         }
         catch (CoreException e) {
             e.printStackTrace();
@@ -229,6 +301,10 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
         configuration.setAttribute(VeriATLLaunchConstants.PROJ_PATH, proj.getText());
         configuration.setAttribute(VeriATLLaunchConstants.CONTRACT_PATH, location.getText());
         configuration.setAttribute(VeriATLLaunchConstants.POST_NAME, post.getText());
+        
+        configuration.setAttribute(VeriATLLaunchConstants.SRC_PATH, srcMMPath.getText());
+        configuration.setAttribute(VeriATLLaunchConstants.TRG_PATH, trgMMPath.getText());
+        
     }
 
     @Override

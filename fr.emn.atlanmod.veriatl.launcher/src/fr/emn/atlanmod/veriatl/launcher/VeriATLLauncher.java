@@ -36,19 +36,16 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 		Context context = Context.from(launchConfiguration, subMonitor);
 
 		// Register all metamodels
-		context.metamodels().forEach(Metamodels::register);
+		Metamodels.register(context.inMetamodel());
+		Metamodels.register(context.outMetamodel());
 
-		// set in/out metamodels
-		Iterator<URI> it = context.metamodels().iterator();
-		context.outMetamodel(it.next());
-		context.inMetamodel(it.next());
-
+		
 		// Run transformation
 		if (context.mode() == Mode.EXEC) {
 			System.out.println("VeriATL: EXEC Successfully executed");
 			// Tasks.forwardTransformation().apply(context);
 		} else if (context.mode() == Mode.GEN) {
-			
+
 			driver.generate(context.module().appendFileExtension("atl"), context.inMetamodel(), context.outMetamodel(),
 					context.contractPath(),
 					context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
@@ -65,6 +62,9 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+			driver.clean();
+			ocldecomposerDriver.clean();
 		} else if (context.mode() == Mode.VERIFY) {
 			Tasks.execBoogie(context);
 		} else if (context.mode() == Mode.DEBUG) {
@@ -74,6 +74,6 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 		}
 
 		subMonitor.done();
-
+		System.out.println("Finished");
 	}
 }
