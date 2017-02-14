@@ -28,5 +28,8 @@ class contract2boogie {
 	
 	def static dispatch genOCLFeature(OclFeature f) '''	'''
 	
-	def static dispatch genOCLFeature(Operation f) '''«{TypeInference.clean();debugPost = f.name;null}»«ocl2boogie.genOclExpression(f.body, atl.genSrcHeap)»'''
+	def static dispatch genOCLFeature(Operation f) '''
+	«{debugPost = f.name;null}»
+	«ocl2boogie.genOclExpression(f.body, atl.genSrcHeap)»
+	«{TypeInference.clean();ocl2boogie.clean();null}»'''
 }

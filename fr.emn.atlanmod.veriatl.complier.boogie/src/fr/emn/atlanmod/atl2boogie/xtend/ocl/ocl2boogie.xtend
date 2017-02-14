@@ -309,5 +309,9 @@ class ocl2boogie {
 		replaceMap = new HashMap<String, String> 
 	}
 	
+	def static clean(){
+		iteratorTyping.clear()
+	}
+	
 	
 }
