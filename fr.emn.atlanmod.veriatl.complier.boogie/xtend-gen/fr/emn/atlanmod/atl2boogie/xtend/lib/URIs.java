@@ -25,9 +25,7 @@ public class URIs {
     final URIConverter uriConverter = new ExtensibleURIConverterImpl();
     try {
       OutputStream outputStream = uriConverter.createOutputStream(target);
-      Charset _forName = Charset.forName("UTF-8");
-      byte[] _bytes = content.getBytes(_forName);
-      outputStream.write(_bytes);
+      outputStream.write(content.getBytes(Charset.forName("UTF-8")));
       outputStream.close();
     } catch (final Throwable _t) {
       if (_t instanceof IOException) {
