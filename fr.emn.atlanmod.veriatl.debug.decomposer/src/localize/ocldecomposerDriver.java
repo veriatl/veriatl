@@ -23,6 +23,7 @@ import datastructure.ProveOption;
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import transformation.GenBy;
@@ -112,7 +113,7 @@ public class ocldecomposerDriver {
 			// print Boogie file for each leafs of the generated Proof tree
 			String goalName = post.getCommentsBefore().get(0).replace("--", "");
 			URI output = outputPath.appendSegment(goalName);
-
+			System.out.println(String.format("Debug: ocldecomposerDriver.java ln 120, goalName: %s", goalName));
 			int i = 0;
 			for(Node n : NodeHelper.findLeafs(tree)){
 				String cse = String.format("case%04d",i);
