@@ -105,6 +105,7 @@ class ocl2boogie {
 		ELSEIF op == 'endsWith'»String#EndsWith(«src», «args»)«
 		ELSEIF op == 'substring'»String#Substring(«src», «args»)«
 		ELSEIF op == '<>'»«String.format("%s != %s", src, args)»«
+		ELSEIF op == '='»«String.format("%s == %s", src, args)»«
 		ELSE»We don't understand string operation: «op»«
 		ENDIF»
 	«ENDIF»
