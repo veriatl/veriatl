@@ -91,7 +91,6 @@ public class GenBy {
 		
 		ocl2boogie.onReplacing(replacers);
 
-		TypeInference.lookup.size();
 		
 		OclExpression filter = r.getInPattern().getFilter();
 		if(filter == null){
