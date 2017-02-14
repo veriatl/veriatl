@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="fr.emn.atlanmod.veriatl.launcher">
+<stringAttribute key="ATL File Name" value="//fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UMLCopier.atl"/>
+<stringAttribute key="CONTRACT PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UML.normalize.ocl.atl"/>
+<mapAttribute key="Inout Model Options"/>
+<mapAttribute key="Inout Models"/>
+<mapAttribute key="Inout Models Output Locations"/>
+<mapAttribute key="Input Model Options"/>
+<mapAttribute key="Input Models">
+<mapEntry key="IN" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI/Source/HSM.xmi"/>
+</mapAttribute>
+<mapAttribute key="Metamodel Options"/>
+<mapAttribute key="Metamodels">
+<mapEntry key="UML" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UML.ecore"/>
+<mapEntry key="UMLs" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UMLs.ecore"/>
+</mapAttribute>
+<stringAttribute key="Module Name" value="UMLCopier"/>
+<stringAttribute key="Module Path" value="/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/"/>
+<mapAttribute key="Output Model Options">
+<mapEntry key="OUT" value="allowIntermodelReferences derivedFile"/>
+</mapAttribute>
+<mapAttribute key="Output Models">
+<mapEntry key="OUT" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI/Source/HSM.xmi"/>
+</mapAttribute>
+<stringAttribute key="POST NAME" value="unmarshall"/>
+<stringAttribute key="PROJ PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML"/>
+<stringAttribute key="SOURCE MM PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UML.ecore"/>
+<listAttribute key="Superimpose"/>
+<stringAttribute key="TARGET MM PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UMLs.ecore"/>
+<booleanAttribute key="debug" value="false"/>
+<booleanAttribute key="genBoogie" value="true"/>
+<booleanAttribute key="test" value="false"/>
+<booleanAttribute key="verify" value="false"/>
+</launchConfiguration>

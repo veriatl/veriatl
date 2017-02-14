@@ -1,6 +1,5 @@
 module UMLCopierContract;
 create OUT : UMLs from IN : UML;
-
 --@pre
 helper context UML!AcceptCallAction def: pre_unmarshall(): Boolean = --unmarshall
   UML!AcceptCallAction.allInstances()->forAll(aca |  
