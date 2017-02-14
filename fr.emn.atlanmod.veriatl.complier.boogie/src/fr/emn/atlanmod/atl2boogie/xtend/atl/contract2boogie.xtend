@@ -5,6 +5,7 @@ import org.eclipse.m2m.atl.common.ATL.*
 import org.eclipse.m2m.atl.common.OCL.*
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference
 
 class contract2boogie {
 	public static String debugPost = ""
@@ -27,5 +28,5 @@ class contract2boogie {
 	
 	def static dispatch genOCLFeature(OclFeature f) '''	'''
 	
-	def static dispatch genOCLFeature(Operation f) '''«{debugPost = f.name;null}»«ocl2boogie.genOclExpression(f.body, atl.genSrcHeap)»'''
+	def static dispatch genOCLFeature(Operation f) '''«{TypeInference.clean();debugPost = f.name;null}»«ocl2boogie.genOclExpression(f.body, atl.genSrcHeap)»'''
 }
