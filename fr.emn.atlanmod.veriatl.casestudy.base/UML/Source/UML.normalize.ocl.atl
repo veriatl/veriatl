@@ -360,13 +360,7 @@ _in.outgoing->size()>0 implies
       ae1_.oclIsKindOf(UML!ControlFlow))
 ); 
 
---@pre
-helper context UML!InstanceSpecification def: pre_deployment_artifact(): Boolean = --deployment_artifact
-  UML!InstanceSpecification.allInstances()->forAll(is |  
-is.classifier->size()>0 implies 
-    is.deployedArtifact->notEmpty() implies is.classifier->exists(c1_|
-      c1_.oclIsKindOf(UML!Artifact))
-); 
+ 
 
 --@pre
 helper context UML!InstanceSpecification def: pre_deployment_target(): Boolean = --deployment_target
@@ -466,12 +460,7 @@ oe.body->size()>0 implies
     oe.language->notEmpty() implies oe.body->size() = oe.language->size()
 ); 
 
---@pre
-helper context UML!Parameter def: pre_connector_end(): Boolean = --connector_end
-  UML!Parameter.allInstances()->forAll(p |  
-p.end->size()>0 implies 
-    p.end->notEmpty() implies p.collaborationRole->notEmpty()
-); 
+
 
 --@pre
 helper context UML!Parameter def: pre_stream_and_exception(): Boolean = --stream_and_exception
@@ -1194,13 +1183,7 @@ _in.outgoing->size()>0 implies
       ae1_.oclIsKindOf(UMLs!ControlFlow))
 ); 
 
---@post
-helper context UMLs!InstanceSpecification def: post_deployment_artifact(): Boolean = --deployment_artifact
-  UMLs!InstanceSpecification.allInstances()->forAll(is |  
-is.classifier->size()>0 implies 
-    is.deployedArtifact->notEmpty() implies is.classifier->exists(c1_|
-      c1_.oclIsKindOf(UMLs!Artifact))
-); 
+
 
 --@post
 helper context UMLs!InstanceSpecification def: post_deployment_target(): Boolean = --deployment_target
