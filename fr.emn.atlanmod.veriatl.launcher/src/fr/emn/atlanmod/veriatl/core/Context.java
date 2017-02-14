@@ -19,8 +19,7 @@ public class Context {
     private final URI pluginUri;
     private final String moduleName;
 
-    private final Iterable<URI> metamodels;
-
+    
     private final URI inModel;
     private final URI outModel;
 
@@ -44,12 +43,13 @@ public class Context {
     /**
      * Constructs a new {@code Context} with the given parameters.
      */
-    private Context(URI pluginUri, String moduleName, Iterable<URI> metamodels, URI inModel, URI outModel, Mode mode, 
+    private Context(URI pluginUri, String moduleName, URI src, URI trg, URI inModel, URI outModel, Mode mode, 
     		URI contract, URI base, String post, IProgressMonitor monitor) {
         this.pluginUri = pluginUri;
         this.moduleName = moduleName;
 
-        this.metamodels = metamodels;
+        this.inMetamodel = src;
+        this.outMetamodel = trg;
 
         this.inModel = inModel;
         this.outModel = outModel;
@@ -84,10 +84,9 @@ public class Context {
             String modulePath = configuration.getAttribute(EMFTVMLaunchConstants.MODULE_PATH, "");
             URI pluginUri = URI.createPlatformResourceURI(modulePath.substring(0, modulePath.lastIndexOf("/")), false);
 
-            Iterable<URI> metamodels = configuration.getAttribute(EMFTVMLaunchConstants.METAMODELS, Collections.emptyMap())
-                    .values().stream()
-                    .map(URI::createURI)
-                    .collect(Collectors.toList());
+            URI src = URI.createURI(configuration.getAttribute(VeriATLLaunchConstants.SRC_PATH, ""));
+            URI trg = URI.createURI(configuration.getAttribute(VeriATLLaunchConstants.TRG_PATH, ""));
+            
 
             URI inModel = URI.createURI(configuration.getAttribute(EMFTVMLaunchConstants.INPUT_MODELS, Collections.emptyMap()).values().iterator().next());
             URI outModel = URI.createURI(configuration.getAttribute(EMFTVMLaunchConstants.OUTPUT_MODELS, Collections.emptyMap()).values().iterator().next());
@@ -108,7 +107,7 @@ public class Context {
             String post = configuration.getAttribute(VeriATLLaunchConstants.POST_NAME, "");
             
             
-            return new Context(pluginUri, moduleName, metamodels, inModel, outModel, m, contract, base, post, monitor);
+            return new Context(pluginUri, moduleName, src, trg, inModel, outModel, m, contract, base, post, monitor);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -135,14 +134,8 @@ public class Context {
         return pluginUri.appendSegment(moduleName);
     }
 
-    /**
-     * Returns the list of metamodels.
-     *
-     * @return an immutable list
-     */
-    public Iterable<URI> metamodels() {
-        return metamodels;
-    }
+
+    
 
     /**
      * Returns the input model.
@@ -204,7 +197,6 @@ public class Context {
      * @param inMetamodel the URI of the metamodel
      */
     public void inMetamodel(URI inMetamodel) {
-        System.out.println("Source metamodel: " + inMetamodel);
         this.inMetamodel = inMetamodel;
     }
 
@@ -223,7 +215,6 @@ public class Context {
      * @param outMetamodel the URI of the metamodel
      */
     public void outMetamodel(URI outMetamodel) {
-        System.out.println("Target metamodel: " + outMetamodel);
         this.outMetamodel = outMetamodel;
     }
 
