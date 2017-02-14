@@ -158,8 +158,6 @@ class driver {
 	
 	
 	
-	def static void clean(){
-		TypeInference.init(new HashMap)
-	}
+
 	
 }
