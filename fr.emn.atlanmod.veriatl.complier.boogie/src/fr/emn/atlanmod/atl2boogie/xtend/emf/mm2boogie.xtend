@@ -48,6 +48,9 @@ class mm2boogie {
 	IF sf.EType.name == 'EString'»String«
 	ELSEIF sf.EType.name == 'EInt'»int«
 	ELSEIF sf.EType.name == 'EBoolean'»bool«
+	ELSEIF sf.EType.name == 'String'»String«
+	ELSEIF sf.EType.name == 'Integer'»int«
+	ELSEIF sf.EType.name == 'Boolean'»bool«
 	ELSE»ref«ENDIF»;
 	'''
 	

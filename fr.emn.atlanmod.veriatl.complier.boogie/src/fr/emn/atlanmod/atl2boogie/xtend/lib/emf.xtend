@@ -17,11 +17,12 @@ class emf {
 					if (c instanceof EClass) {
 						for (sf : c.getEStructuralFeatures()) {
 							var nm = String.format("%s$%s.%s", content.name, c.name, sf.name)
-							if (sf.getEType.getName == "EInt") {
+							val sfTp = sf.getEType.getName
+							if (sfTp == "EInt" || sfTp == "Integer") {
 								r.put(nm, "int")
-							} else if (sf.getEType.getName == "EString") {
+							} else if (sfTp == "EString" || sfTp == "String") {
 								r.put(nm, "string")
-							} else if (sf.getEType.getName == "EBoolean") {
+							} else if (sfTp == "EBoolean" || sfTp == "Boolean") {
 								r.put(nm, "bool")
 							} else {
 								val mm = (content as EPackage).name
@@ -63,6 +64,7 @@ class emf {
 			return sf
 		} else {
 			val clazz = findEClassByName(pac, cl)
+
 			for (EClass sup : clazz.getEAllSuperTypes()) {
 				sf = String.format("%s$%s.%s", mm, sup.name, p)
 				if (map.keySet.contains(sf)) {

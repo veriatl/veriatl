@@ -21,6 +21,7 @@ import org.eclipse.m2m.atl.common.ATL.ATLPackage
 import org.eclipse.m2m.atl.common.ATL.MatchedRule
 import org.eclipse.m2m.atl.common.OCL.OCLPackage
 import org.eclipse.m2m.atl.emftvm.compiler.AtlResourceFactoryImpl
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference
 
 class driver {
 	
@@ -76,7 +77,8 @@ class driver {
 	def static generate(URI atl, URI src, URI trg, URI contract, URI outputPath) {
 		doEMFSetup
 		doVeriATLSetup(atl, src, trg, contract)
-
+		
+		
 		// gen matchers
 		var match = "";
 		
@@ -86,7 +88,6 @@ class driver {
 		
 		generateBoogieFile(outputPath, CompilerConstants.MATCHER, CompilerConstants.BOOGIE_EXT, match)
 
-		
 		// gen applyers
 		var apply = "";
 		
@@ -157,6 +158,8 @@ class driver {
 	
 	
 	
-	
+	def static void clean(){
+		TypeInference.init(new HashMap)
+	}
 	
 }
