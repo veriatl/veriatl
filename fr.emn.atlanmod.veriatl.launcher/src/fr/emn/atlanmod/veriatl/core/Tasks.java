@@ -101,6 +101,7 @@ public final class Tasks {
             	argsClone.add(genBy);
             	
             	Commands.boogie().exec().execute(argsClone);
+            	argsClone.clear();
         	} 	
         }
         
