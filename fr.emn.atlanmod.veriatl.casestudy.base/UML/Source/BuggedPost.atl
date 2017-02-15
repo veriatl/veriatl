@@ -1,0 +1,145 @@
+module UMLCopierContract;
+create OUT : UMLs from IN : UML;
+
+
+ 
+
+--@post
+helper context UMLs!ReadIsClassifiedObjectAction def: post_boolean_result(): Boolean = --ReadIsClassifiedObjectAction_boolean_result
+  UMLs!ReadIsClassifiedObjectAction.allInstances()->forAll(ricoa |  
+UMLs!Type.allInstances()->includes(ricoa.result.type) implies 
+UMLs!OutputPin.allInstances()->includes(ricoa.result) implies 
+    ricoa.result.type = Boolean
+); 
+
+--@post
+helper context UMLs!TestIdentityAction def: post_result_is_boolean(): Boolean = --TestIdentityAction_result_is_boolean
+  UMLs!TestIdentityAction.allInstances()->forAll(tia |  
+UMLs!Type.allInstances()->includes(tia.result.type) implies 
+UMLs!OutputPin.allInstances()->includes(tia.result) implies 
+    tia.result.type = Boolean
+); 
+
+--@post
+helper context UMLs!ParameterSet def: post_same_parameterized_entity(): Boolean = --ParameterSet_same_parameterized_entity
+  UMLs!ParameterSet.allInstances()->forAll(ps |  
+UMLs!Element.allInstances()->includes(ps.owner) implies 
+ps.parameter->size()>0 implies 
+    ps.parameter->forAll(pp1,pp2|
+    UMLs!Element.allInstances()->includes(pp1.owner) implies 
+    UMLs!Element.allInstances()->includes(pp2.owner) implies 
+      ps.owner = pp1.owner and ps.owner = pp2.owner and pp1.direction = pp2.direction)
+); 
+
+--@post
+helper context UMLs!QualifierValue def: post_qualifier_attribute(): Boolean = --QualifierValue_qualifier_attribute
+  UMLs!QualifierValue.allInstances()->forAll(qv |  
+UMLs!Property.allInstances()->includes(qv.qualifier) implies 
+    qv.qualifier.end.qualifier->includes(qv.qualifier)
+); 
+
+--@post
+helper context UMLs!ReadLinkObjectEndAction def: post_association_of_association(): Boolean = --ReadLinkObjectEndAction_association_of_association
+  UMLs!ReadLinkObjectEndAction.allInstances()->forAll(rloea |  
+UMLs!Association.allInstances()->includes(rloea.end.association) implies 
+UMLs!Property.allInstances()->includes(rloea.end) implies 
+    rloea.end.association.oclIsKindOf(UMLs!AssociationClass)
+); 
+
+
+--@post
+helper context UMLs!ReadLinkObjectEndQualifierAction def: post_type_of_object(): Boolean = --ReadLinkObjectEndQualifierAction_type_of_object
+  UMLs!ReadLinkObjectEndQualifierAction.allInstances()->forAll(rloeqa |  
+UMLs!Type.allInstances()->includes(rloeqa.object.type) implies 
+UMLs!InputPin.allInstances()->includes(rloeqa.object) implies 
+UMLs!Property.allInstances()->includes(rloeqa.qualifier) implies 
+UMLs!Association.allInstances()->includes(rloeqa.qualifier.associationEnd.association) implies 
+UMLs!Property.allInstances()->includes(rloeqa.qualifier.associationEnd) implies 
+    rloeqa.object.type = rloeqa.qualifier.associationEnd.association
+); 
+
+--@post
+helper context UMLs!ReadLinkObjectEndQualifierAction def: post_ends_of_association(): Boolean = --ReadLinkObjectEndQualifierAction_ends_of_association
+  UMLs!ReadLinkObjectEndQualifierAction.allInstances()->forAll(rloeqa |  
+UMLs!Association.allInstances()->includes(rloeqa.qualifier.associationEnd.association) implies 
+UMLs!Property.allInstances()->includes(rloeqa.qualifier) implies 
+rloeqa.qualifier.associationEnd.association.memberEnd->size()>0 implies 
+UMLs!Property.allInstances()->includes(rloeqa.qualifier.associationEnd) implies 
+    rloeqa.qualifier.associationEnd.association.memberEnd->forAll(pe|
+      not(pe.isStatic))
+); 
+
+--@post
+helper context UMLs!RedefinableElement def: post_non_leaf_redefinition(): Boolean = --RedefinableElement_non_leaf_redefinition
+  UMLs!RedefinableElement.allInstances()->forAll(re |  
+re.redefinedElement->size()>0 implies 
+    re.redefinedElement->forAll(rere|
+      not(rere.isLeaf))
+); 
+
+
+-- # Hang
+--@post
+helper context UMLs!Trigger def: post_trigger_with_ports(): Boolean = --Trigger_trigger_with_ports
+  UMLs!Trigger.allInstances()->forAll(t |  
+UMLs!Event.allInstances()->includes(t.event) implies 
+t.port->size()>0 implies 
+    t.port->notEmpty() implies t.event.oclIsKindOf(UMLs!MessageEvent)
+); 
+
+--@post
+helper context UMLs!ReplyAction def: post_event_on_reply_to_call_trigger(): Boolean = --ReplyAction_event_on_reply_to_call_trigger
+  UMLs!ReplyAction.allInstances()->forAll(ra |  
+UMLs!Trigger.allInstances()->includes(ra.replyToCall) implies 
+UMLs!Event.allInstances()->includes(ra.replyToCall.event) implies 
+    ra.replyToCall.event.oclIsKindOf(UMLs!CallEvent)
+); 
+
+--@post
+helper context UMLs!ReadLinkObjectEndQualifierAction def: post_association_of_association(): Boolean = --ReadLinkObjectEndQualifierAction_association_of_association
+  UMLs!ReadLinkObjectEndQualifierAction.allInstances()->forAll(rloeqa |  
+UMLs!Property.allInstances()->includes(rloeqa.qualifier.associationEnd) implies 
+UMLs!Association.allInstances()->includes(rloeqa.qualifier.associationEnd.association) implies 
+UMLs!Property.allInstances()->includes(rloeqa.qualifier) implies 
+    rloeqa.qualifier.associationEnd.association.oclIsKindOf(UMLs!AssociationClass)
+); 
+
+--@post
+helper context UMLs!ReadSelfAction def: post_type(): Boolean = --ReadSelfAction_type
+  UMLs!ReadSelfAction.allInstances()->forAll(rsa |  
+UMLs!OutputPin.allInstances()->includes(rsa.result) implies 
+UMLs!Type.allInstances()->includes(rsa.result.type) implies 
+UMLs!Classifier.allInstances()->includes(rsa.context) implies 
+    rsa.result.type = rsa.context
+); 
+
+--@post
+helper context UMLs!ReadStructuralFeatureAction def: post_type_and_ordering(): Boolean = --ReadStructuralFeatureAction_type_and_ordering
+  UMLs!ReadStructuralFeatureAction.allInstances()->forAll(rsfa |  
+UMLs!StructuralFeature.allInstances()->includes(rsfa.structuralFeature) implies 
+UMLs!Type.allInstances()->includes(rsfa.result.type) implies 
+UMLs!OutputPin.allInstances()->includes(rsfa.result) implies 
+UMLs!Type.allInstances()->includes(rsfa.structuralFeature.type) implies 
+    rsfa.result.type = rsfa.structuralFeature.type and rsfa.result.isOrdered = rsfa.structuralFeature.isOrdered
+); 
+
+--@post
+helper context UMLs!ReadVariableAction def: post_type_and_ordering(): Boolean = --ReadVariableAction_type_and_ordering
+  UMLs!ReadVariableAction.allInstances()->forAll(rva |  
+UMLs!OutputPin.allInstances()->includes(rva.result) implies 
+UMLs!Variable.allInstances()->includes(rva.variable) implies 
+UMLs!Type.allInstances()->includes(rva.result.type) implies 
+UMLs!Type.allInstances()->includes(rva.variable.type) implies 
+    rva.result.type = rva.variable.type and rva.result.isOrdered = rva.variable.isOrdered
+); 
+
+
+-- # Exectrace: Introduction -> TypeInference -> Null Pointer
+
+
+--@post
+helper context UMLs!Parameter def: post_connector_end(): Boolean = --Parameter_connector_end
+  UMLs!Parameter.allInstances()->forAll(p |  
+p.end->size()>0 implies 
+    p.end->notEmpty() implies p.collaborationRole->notEmpty()
+); 

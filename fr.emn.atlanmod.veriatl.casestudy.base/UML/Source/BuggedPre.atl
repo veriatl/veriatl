@@ -1,0 +1,83 @@
+module UMLCopierContract;
+create OUT : UMLs from IN : UML;
+
+-- # Boogie printing
+--@pre
+helper context UML!Port def: pre_encapsulated_owner(): Boolean = --encapsulated_owner
+  UML!Port.allInstances()->forAll(p |  
+UML!Element.allInstances()->includes(p.owner) implies 
+    p.owner = p.ownedPort
+); 
+
+
+--@pre
+helper context UML!QualifierValue def: pre_qualifier_attribute(): Boolean = --qualifier_attribute
+  UML!QualifierValue.allInstances()->forAll(qv |  
+UML!Property.allInstances()->includes(qv.qualifier) implies 
+    qv.qualifier.end.qualifier->includes(qv.qualifier)
+); 
+
+--@pre
+helper context UML!TemplateBinding def: pre_one_parameter_substitution(): Boolean = --one_parameter_substitution
+  UML!TemplateBinding.allInstances()->forAll(tb |  
+tb.signature.parameter->size()>0 implies 
+UML!TemplateSignature.allInstances()->includes(tb.signature) implies 
+tb.parameterSubstitution->size()>0 implies 
+    tb.signature.parameter->forAll(tpp|
+      tb.parameterSubstitution->select(tpsb|
+      UML!TemplateParameter.allInstances()->includes(tpsb.formal) implies 
+        tpsb.formal = tpp)->size() <= 1)
+); 
+
+
+--@pre
+helper context UML!TestIdentityAction def: pre_result_is_boolean(): Boolean = --result_is_boolean
+  UML!TestIdentityAction.allInstances()->forAll(tia |  
+UML!Type.allInstances()->includes(tia.result.type) implies 
+UML!OutputPin.allInstances()->includes(tia.result) implies 
+    tia.result.type = Boolean
+); 
+
+--@pre
+helper context UML!DecisionNode def: pre_incoming_outgoing_edges(): Boolean = --incoming_outgoing_edges
+  UML!DecisionNode.allInstances()->forAll(dn |  
+dn.outgoing->size()>0 implies 
+dn.incoming->size()>0 implies 
+    dn.incoming->size() = 1 or dn.incoming->size() = 2 and dn.outgoing->size() > 0
+); 
+
+--@pre
+helper context UML!Parameter def: pre_connector_end(): Boolean = --connector_end
+  UML!Parameter.allInstances()->forAll(p |  
+p.end->size()>0 implies 
+    p.end->notEmpty() implies p.collaborationRole->notEmpty()
+); 
+
+--@pre
+helper context UML!ReadIsClassifiedObjectAction def: pre_boolean_result(): Boolean = --boolean_result
+  UML!ReadIsClassifiedObjectAction.allInstances()->forAll(ricoa |  
+UML!Type.allInstances()->includes(ricoa.result.type) implies 
+UML!OutputPin.allInstances()->includes(ricoa.result) implies 
+    ricoa.result.type = Boolean
+); 
+
+
+
+
+
+-- # Boogie printing -> invalid type for argument 1 in application of Seq#FromArray:
+--@pre
+helper context UML!OpaqueAction def: pre_language_body_size(): Boolean = --language_body_size
+  UML!OpaqueAction.allInstances()->forAll(oa |  
+oa.language->size()>0 implies 
+oa.body->size()>0 implies 
+    oa.language->notEmpty() implies oa.body->size() = oa.language->size()
+); 
+
+--@pre
+helper context UML!OpaqueExpression def: pre_language_body_size(): Boolean = --language_body_size
+  UML!OpaqueExpression.allInstances()->forAll(oe |  
+oe.language->size()>0 implies 
+oe.body->size()>0 implies 
+    oe.language->notEmpty() implies oe.body->size() = oe.language->size()
+); 
