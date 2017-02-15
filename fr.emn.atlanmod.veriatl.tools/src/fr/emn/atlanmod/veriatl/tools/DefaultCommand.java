@@ -1,10 +1,12 @@
 package fr.emn.atlanmod.veriatl.tools;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,10 +72,14 @@ public class DefaultCommand implements Command {
 
         Process process = null;
         try {
+        	long start = System.currentTimeMillis();
             process = pb.start();
             int exitValue = process.waitFor();
+            long end = System.currentTimeMillis();
+            long time = end - start;
             printStream(process.getInputStream(), System.out);
-
+            printStream(new ByteArrayInputStream(Long.toString(time).getBytes(StandardCharsets.UTF_8)), System.out);
+            
             if (exitValue != 0) {
                 throw new RuntimeException("The execution ended with an error: " + exitValue + ". See the trace for more information");
             }
