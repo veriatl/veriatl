@@ -22,13 +22,13 @@
 <mapAttribute key="Output Models">
 <mapEntry key="OUT" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI/Source/HSM.xmi"/>
 </mapAttribute>
-<stringAttribute key="POST NAME" value="unmarshall"/>
+<stringAttribute key="POST NAME" value="InformationItem_not_instantiable"/>
 <stringAttribute key="PROJ PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML"/>
 <stringAttribute key="SOURCE MM PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UML.ecore"/>
 <listAttribute key="Superimpose"/>
 <stringAttribute key="TARGET MM PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UMLs.ecore"/>
 <booleanAttribute key="debug" value="false"/>
-<booleanAttribute key="genBoogie" value="true"/>
+<booleanAttribute key="genBoogie" value="false"/>
 <booleanAttribute key="test" value="false"/>
-<booleanAttribute key="verify" value="false"/>
+<booleanAttribute key="verify" value="true"/>
 </launchConfiguration>
