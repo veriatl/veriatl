@@ -8,8 +8,16 @@ import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.m2m.atl.common.OCL.*;
+import org.eclipse.m2m.atl.common.OCL.BooleanExp;
+import org.eclipse.m2m.atl.common.OCL.IteratorExp;
+import org.eclipse.m2m.atl.common.OCL.NavigationOrAttributeCallExp;
+import org.eclipse.m2m.atl.common.OCL.OCLFactory;
+import org.eclipse.m2m.atl.common.OCL.OclExpression;
+import org.eclipse.m2m.atl.common.OCL.OclModel;
+import org.eclipse.m2m.atl.common.OCL.OclModelElement;
+import org.eclipse.m2m.atl.common.OCL.OperationCallExp;
+import org.eclipse.m2m.atl.common.OCL.OperatorCallExp;
+import org.eclipse.m2m.atl.common.OCL.StringExp;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 
 import datastructure.ContextEntry;
@@ -20,10 +28,8 @@ import datastructure.ProveOption;
 import datastructure.Tactic;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.myOclType;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference;
-import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
-import keywords.Keyword;
 import metamodel.EMFCopier;
-import metamodel.EMFHelper;
+import metamodel.EMFLoader;
 import ocl.OclHelper;
 
 
@@ -290,8 +296,8 @@ public class Elimination {
 					col.setOperationName("allInstances");
 					OclModelElement m = make.createOclModelElement();
 					
-					String mmName = EMFHelper.getModel(tp.getType());
-					String clName = EMFHelper.getClassifier(tp.getType());
+					String mmName = EMFLoader.getModel(tp.getType());
+					String clName = EMFLoader.getClassifier(tp.getType());
 					m.setName(clName);
 					OclModel model = make.createOclModel();
 					model.setName(mmName);

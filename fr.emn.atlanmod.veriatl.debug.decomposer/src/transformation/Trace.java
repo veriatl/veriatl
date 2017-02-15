@@ -2,6 +2,7 @@ package transformation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
@@ -59,6 +60,7 @@ public class Trace {
 	public static Map<String, ArrayList<String>> getTrace(EPackage tarmm, ExecEnv env) throws Exception{
 		
 		Map<String, ArrayList<String>> rtn = new HashMap<String, ArrayList<String>>();
+		Map<String, HashSet<String>> inheritence = EMFLoader.readParantsInfo(tarmm);
 		
 		String tarPrefix = tarmm.getName()+"$";
 		
@@ -73,7 +75,7 @@ public class Trace {
 				for(OutputRuleElement output : r.getOutputElements()){
 					String outName = tarPrefix+output.getType();
 					
-					if(clName.equals(outName) || EMFLoader.isSubtype(outName, clName, tarmm)){
+					if(clName.equals(outName) || EMFLoader.isSubtype(outName, clName, tarmm, inheritence)){
 						String traceName = String.format("%s#%d", r.getName(), i);
 											
 						if(rtn.containsKey(clName)){

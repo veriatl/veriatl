@@ -1,14 +1,8 @@
 package datastructure;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -18,7 +12,6 @@ import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 
 import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
-import runtime.executioner;
 
 public class NodeHelper {
 
