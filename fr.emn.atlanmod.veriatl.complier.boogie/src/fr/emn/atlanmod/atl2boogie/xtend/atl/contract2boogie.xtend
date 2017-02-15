@@ -23,7 +23,8 @@ class contract2boogie {
 	def static dispatch genPrecondition(ModuleElement h) '''	'''
 	
 	def static dispatch genPrecondition(Helper h) '''		
-	«if (h.commentsBefore.toString().contains("--@pre")){"free requires "+ genOCLFeature(h.definition.feature)+";"}»
+	«if (h.commentsBefore.toString().contains("--@pre"))
+	{ "//" + (h.definition.feature as Operation).name + "\n  free requires "+ genOCLFeature(h.definition.feature)+";"}»
 	'''
 	
 	def static dispatch genOCLFeature(OclFeature f) '''	'''

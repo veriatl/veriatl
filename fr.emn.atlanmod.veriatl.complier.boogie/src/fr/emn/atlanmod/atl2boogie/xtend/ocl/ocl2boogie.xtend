@@ -35,7 +35,8 @@ class ocl2boogie {
 	«val args = e.arguments.map(arg|genOclExpression(arg, heap)).join(" ")»
 	«if (op == "oclIsUndefined") String.format("(%s==null || !read(%s, %s, alloc))", src, heap, src)
 	 else if (op=="allInstances") String.format("Fun#LIB#AllInstanceFrom(%s, %s)", heap, src)
-	 else if (op=="oclIsTypeOf") String.format("dtype(%s) <: %s", src, args)
+	 else if (op=="oclIsTypeOf") String.format("dtype(%s) == %s", src, args)
+	 else if (op=="oclIsKindOf") String.format("dtype(%s) <: %s", src, args)
 	 else if (op=="resolveTemp") gen_resolveTemp(e, heap)
 	 else if (op.startsWith("genBy")) gen_genByExpr(e, heap)
 	 else genOclSequenceExpression(e, heap)»'''
@@ -72,7 +73,9 @@ class ocl2boogie {
 	
 	// print string/seq/set
 	def static dispatch CharSequence genOclExpression(OperatorCallExp e, CharSequence heap) '''
-	«val src = genOclExpression(e.source, heap)»«val op = e.operationName»«val args = e.arguments.map(arg|genOclExpression(arg, heap)).join(" ")»
+	«val src = genOclExpression(e.source, heap)»
+	«val op = e.operationName»
+	«val args = e.arguments.map(arg|genOclExpression(arg, heap)).join(op)»
 	«val srcTp = TypeInference.infer(e.source)»«val srcType = srcTp.type»«val srcKind = srcTp.kind»
 	«if (srcKind == "primitive" && srcType == "string") genOclStringExpression(e, heap)
 	 else if (op == "not") String.format("!(%s)", src)
