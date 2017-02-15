@@ -4,8 +4,10 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -122,8 +124,13 @@ public class ocldecomposerDriver {
 				i++;
 			}
 			
-			String org = printDriver(env, post);
+			//TODO This is the Boogie program with the full transformation trace, less efficient to verify
+			//String org = printDriver(env, post);
+			
+			String org = prtingFastDriver(env, post, NodeHelper.findLeafs(tree));
 			driver.generateBoogieFile(output, CompilerConstants.ORG, CompilerConstants.BOOGIE_EXT, org);	
+			
+			
 			NodeHelper.printTreeBasic(outputPath.trimSegments(1), goalName, tree);
 		}
 		
@@ -131,6 +138,7 @@ public class ocldecomposerDriver {
 		// Print Genby predicate
 		GenBy.init(rules,driver.srcmm);
 		String genby = GenBy.print();
+		
 		driver.generateBoogieFile(outputPath, CompilerConstants.GENBY, CompilerConstants.BOOGIE_EXT, genby);
 		
 
@@ -140,6 +148,28 @@ public class ocldecomposerDriver {
 		
 	}
 
+	private static String prtingFastDriver(ExecEnv env, OclExpression post, ArrayList<Node> leafs)  {		
+		String res="";
+		res += printDriverHeader();
+		
+		Set<String> involvedRules = new HashSet<String>();
+		for(Node n : leafs){
+			involvedRules.addAll(n.getInvolvedRuls());	
+		}
+		
+		for(String r : involvedRules){
+			res += String.format("call %s_matchAll();\n", r);
+		}
+		for(String r : involvedRules){
+			res += String.format("call %s_applyAll();\n", r);
+		}
+		res += "\n";
+		res += printPost(post);
+		res += printDriverFooter();
+		return res;
+	}
+	
+	
 	private static String printDriver(ExecEnv env, OclExpression post)  {		
 		String res="";
 		res += printDriverHeader();
