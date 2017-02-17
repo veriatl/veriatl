@@ -3,6 +3,20 @@ create OUT : UMLs from IN : UML;
 
 
  
+--@post
+helper context UMLs!Port def: post_encapsulated_owner(): Boolean = --Port_encapsulated_owner
+  UMLs!Port.allInstances()->forAll(p |  
+UMLs!Element.allInstances()->includes(p.owner) implies 
+    p.owner = p.ownedPort
+); 
+
+--@post
+helper context UMLs!OpaqueExpression def: post_language_body_size(): Boolean = --OpaqueExpression_language_body_size
+  UMLs!OpaqueExpression.allInstances()->forAll(oe |  
+oe.language->size()>0 implies 
+oe.body->size()>0 implies 
+    oe.language->notEmpty() implies oe.body->size() = oe.language->size()
+); 
 
 --@post
 helper context UMLs!ReadIsClassifiedObjectAction def: post_boolean_result(): Boolean = --ReadIsClassifiedObjectAction_boolean_result
@@ -18,6 +32,26 @@ helper context UMLs!TestIdentityAction def: post_result_is_boolean(): Boolean = 
 UMLs!Type.allInstances()->includes(tia.result.type) implies 
 UMLs!OutputPin.allInstances()->includes(tia.result) implies 
     tia.result.type = Boolean
+); 
+
+--@post
+helper context UMLs!DecisionNode def: post_incoming_outgoing_edges(): Boolean = --DecisionNode_incoming_outgoing_edges
+  UMLs!DecisionNode.allInstances()->forAll(dn |  
+dn.outgoing->size()>0 implies 
+dn.incoming->size()>0 implies 
+    dn.incoming->size() = 1 or dn.incoming->size() = 2 and dn.outgoing->size() > 0
+); 
+
+--@post
+helper context UMLs!TemplateBinding def: post_one_parameter_substitution(): Boolean = --TemplateBinding_one_parameter_substitution
+  UMLs!TemplateBinding.allInstances()->forAll(tb |  
+tb.signature.parameter->size()>0 implies 
+UMLs!TemplateSignature.allInstances()->includes(tb.signature) implies 
+tb.parameterSubstitution->size()>0 implies 
+    tb.signature.parameter->forAll(tpp|
+      tb.parameterSubstitution->select(tpsb|
+      UMLs!TemplateParameter.allInstances()->includes(tpsb.formal) implies 
+        tpsb.formal = tpp)->size() <= 1)
 ); 
 
 --@post

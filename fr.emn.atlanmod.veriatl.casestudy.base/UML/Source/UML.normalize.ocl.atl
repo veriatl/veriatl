@@ -639,11 +639,6 @@ vp.incoming->size()>0 implies
 
 
 
-
-
-
-
-
 --@post
 helper context UMLs!AcceptCallAction def: post_unmarshall(): Boolean = --AcceptCallAction_unmarshall
   UMLs!AcceptCallAction.allInstances()->forAll(aca |  
@@ -808,13 +803,7 @@ dn.incoming->size()>0 implies
     dn.incoming->includes(dn.decisionInputFlow)
 ); 
 
---@post
-helper context UMLs!DecisionNode def: post_incoming_outgoing_edges(): Boolean = --DecisionNode_incoming_outgoing_edges
-  UMLs!DecisionNode.allInstances()->forAll(dn |  
-dn.outgoing->size()>0 implies 
-dn.incoming->size()>0 implies 
-    dn.incoming->size() = 1 or dn.incoming->size() = 2 and dn.outgoing->size() > 0
-); 
+
 
 --@post
 helper context UMLs!DurationConstraint def: post_has_one_or_two_constrainedElements(): Boolean = --DurationConstraint_has_one_or_two_constrainedElements
@@ -919,8 +908,8 @@ _if.conveyed->size()>0 implies
 helper context UMLs!InformationItem def: post_has_no(): Boolean = --InformationItem_has_no
   UMLs!InformationItem.allInstances()->forAll(ii |  
 ii.generalization->size()>0 implies 
-ii.feature->size()>0 implies 
-    ii.generalization->isEmpty() and ii.feature->isEmpty()
+(ii.feature->size()>0 implies 
+   (ii.generalization->isEmpty() and ii.feature->isEmpty()))
 ); 
 
 --@post
@@ -989,21 +978,8 @@ helper context UMLs!ObjectFlow def: post_is_multicast_or_is_multireceive(): Bool
     not(of.isMulticast and of.isMultireceive)
 ); 
 
---@post
-helper context UMLs!OpaqueAction def: post_language_body_size(): Boolean = --OpaqueAction_language_body_size
-  UMLs!OpaqueAction.allInstances()->forAll(oa |  
-oa.language->size()>0 implies 
-oa.body->size()>0 implies 
-    oa.language->notEmpty() implies oa.body->size() = oa.language->size()
-); 
 
---@post
-helper context UMLs!OpaqueExpression def: post_language_body_size(): Boolean = --OpaqueExpression_language_body_size
-  UMLs!OpaqueExpression.allInstances()->forAll(oe |  
-oe.language->size()>0 implies 
-oe.body->size()>0 implies 
-    oe.language->notEmpty() implies oe.body->size() = oe.language->size()
-); 
+
 
 
 --@post
@@ -1026,12 +1002,7 @@ helper context UMLs!Pin def: post_not_unique(): Boolean = --Pin_not_unique
     not(p.isUnique)
 ); 
 
---@post
-helper context UMLs!Port def: post_encapsulated_owner(): Boolean = --Port_encapsulated_owner
-  UMLs!Port.allInstances()->forAll(p |  
-UMLs!Element.allInstances()->includes(p.owner) implies 
-    p.owner = p.ownedPort
-); 
+
 
 --@post
 helper context UMLs!Property def: post_derived_union_is_read_only(): Boolean = --Property_derived_union_is_read_only
@@ -1074,13 +1045,6 @@ UMLs!Type.allInstances()->includes(rea.result.type) implies
     rea.result.type = rea.classifier
 ); 
 
---@post
-helper context UMLs!ReadIsClassifiedObjectAction def: post_boolean_result(): Boolean = --ReadIsClassifiedObjectAction_boolean_result
-  UMLs!ReadIsClassifiedObjectAction.allInstances()->forAll(ricoa |  
-UMLs!Type.allInstances()->includes(ricoa.result.type) implies 
-UMLs!OutputPin.allInstances()->includes(ricoa.result) implies 
-    ricoa.result.type = Boolean
-); 
 
 --@post
 helper context UMLs!ReadLinkObjectEndAction def: post_ends_of_association(): Boolean = --ReadLinkObjectEndAction_ends_of_association
@@ -1201,25 +1165,9 @@ tb.parameterSubstitution->size()>0 implies
       tb.signature.parameter->includes(tpsb.formal))
 ); 
 
---@post
-helper context UMLs!TemplateBinding def: post_one_parameter_substitution(): Boolean = --TemplateBinding_one_parameter_substitution
-  UMLs!TemplateBinding.allInstances()->forAll(tb |  
-tb.signature.parameter->size()>0 implies 
-UMLs!TemplateSignature.allInstances()->includes(tb.signature) implies 
-tb.parameterSubstitution->size()>0 implies 
-    tb.signature.parameter->forAll(tpp|
-      tb.parameterSubstitution->select(tpsb|
-      UMLs!TemplateParameter.allInstances()->includes(tpsb.formal) implies 
-        tpsb.formal = tpp)->size() <= 1)
-); 
 
---@post
-helper context UMLs!TestIdentityAction def: post_result_is_boolean(): Boolean = --TestIdentityAction_result_is_boolean
-  UMLs!TestIdentityAction.allInstances()->forAll(tia |  
-UMLs!Type.allInstances()->includes(tia.result.type) implies 
-UMLs!OutputPin.allInstances()->includes(tia.result) implies 
-    tia.result.type = Boolean
-); 
+
+
 
 --@post
 helper context UMLs!TimeConstraint def: post_has_one_constrainedElement(): Boolean = --TimeConstraint_has_one_constrainedElement
