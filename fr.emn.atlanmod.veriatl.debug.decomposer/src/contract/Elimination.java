@@ -152,7 +152,7 @@ public class Elimination {
 				
 				//TODO should do more precise check here
 				if(srcExp.getOperationName().equals("size") && intExp.getIntegerSymbol() == 0){
-					//System.out.println("jackpot");
+
 					OclExpression navExp = srcExp.getSource();
 					myOclType tp = TypeInference.infer(navExp);
 					String elemType = tp.getType();
@@ -164,7 +164,7 @@ public class Elimination {
 						Iterator it = make.createIterator();
 						
 						// bounded variable with this kind of `____name` is very important, since we use this to track whether this assumption relateds to trace.
-						it.setVarName("____bv");
+						it.setVarName("____bv"+it.hashCode());
 								
 						forall.setName("forAll");
 						forall.setSource(copyNav);
