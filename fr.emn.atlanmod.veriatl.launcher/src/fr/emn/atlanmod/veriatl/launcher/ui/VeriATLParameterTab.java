@@ -256,7 +256,12 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
 
 		post = new Text(contractGroup, SWT.BORDER);
 		post.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
-		
+		post.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent  e) {
+                updateLaunchConfigurationDialog();
+            }
+        });
 		
 	}
 	
