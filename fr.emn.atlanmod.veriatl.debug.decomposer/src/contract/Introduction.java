@@ -183,11 +183,14 @@ public class Introduction  {
 			OclExpression lhs = expr.getSource();
 			OclExpression rhs = expr.getArguments().get(0);
 			
-			Node n1 = new Node(depth + 1, lhs, curr, Inferred, ProveOption.EACH, Tactic.SPLIT);
+			HashMap<EObject, ContextEntry> inferNextLvLhs =  ContextHelper.cloneContext(Inferred);
+			HashMap<EObject, ContextEntry> inferNextLvRhs =  ContextHelper.cloneContext(Inferred);
+			
+			Node n1 = new Node(depth + 1, lhs, curr, inferNextLvLhs, ProveOption.EACH, Tactic.SPLIT);
 			tree.add(n1);
 			
 			
-			Node n2 = new Node(depth + 1, rhs, curr, Inferred, ProveOption.EACH, Tactic.SPLIT);
+			Node n2 = new Node(depth + 1, rhs, curr, inferNextLvRhs, ProveOption.EACH, Tactic.SPLIT);
 			tree.add(n2);
 			
 				
