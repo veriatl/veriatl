@@ -14,5 +14,6 @@ public enum Tactic {
 	AND_ELIM,
 	IMPLY_ELIM,
 	NEG_ELIM, 
-	NAV_SINGLE_INTRO,
+	NAV_SINGLE_INTRO, 
+	SIZE_ELIM_1,
 }

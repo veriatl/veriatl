@@ -9,6 +9,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.m2m.atl.common.OCL.BooleanExp;
+import org.eclipse.m2m.atl.common.OCL.IntegerExp;
+import org.eclipse.m2m.atl.common.OCL.Iterator;
 import org.eclipse.m2m.atl.common.OCL.IteratorExp;
 import org.eclipse.m2m.atl.common.OCL.NavigationOrAttributeCallExp;
 import org.eclipse.m2m.atl.common.OCL.OCLFactory;
@@ -18,6 +20,7 @@ import org.eclipse.m2m.atl.common.OCL.OclModelElement;
 import org.eclipse.m2m.atl.common.OCL.OperationCallExp;
 import org.eclipse.m2m.atl.common.OCL.OperatorCallExp;
 import org.eclipse.m2m.atl.common.OCL.StringExp;
+import org.eclipse.m2m.atl.common.OCL.VariableExp;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 
 import datastructure.ContextEntry;
@@ -66,10 +69,7 @@ public class Elimination {
 	}
 	
 	public static void elimin(Node n, EObject expr) {
-		if (expr instanceof IteratorExp) {
-			IteratorExp todo = (IteratorExp) expr;
-			_elimin(n, todo);
-		}else if(expr instanceof OperatorCallExp){
+		if(expr instanceof OperatorCallExp){
 			OperatorCallExp todo = (OperatorCallExp) expr;
 			_elimin(n, todo);
 		}else if(expr instanceof OperationCallExp){
@@ -78,9 +78,7 @@ public class Elimination {
 		}
 	}
 	
-	static void _elimin(Node n, IteratorExp expr) {
-		
-	}
+
 	
 	static void _elimin(Node n, OperatorCallExp expr) {
 		if(expr.getOperationName().equals("and")){
@@ -143,6 +141,107 @@ public class Elimination {
 					tree.add(nn);
 				}
 			}
+		}else if(expr.getOperationName().equals(">")){
+			OclExpression src = expr.getSource();
+			OclExpression arg = expr.getArguments().get(0);
+			
+			
+			if(src instanceof OperationCallExp && arg instanceof IntegerExp){
+				OperationCallExp srcExp = (OperationCallExp)src;
+				IntegerExp  intExp = (IntegerExp) arg;
+				
+				//TODO should do more precise check here
+				if(srcExp.getOperationName().equals("size") && intExp.getIntegerSymbol() == 0){
+					//System.out.println("jackpot");
+					OclExpression navExp = srcExp.getSource();
+					myOclType tp = TypeInference.infer(navExp);
+					String elemType = tp.getType();
+
+					if(trace.get(elemType)!=null && trace.get(elemType).size()>0){
+						// initialize to-be-created loop
+						IteratorExp forall = make.createIteratorExp();
+						OclExpression copyNav = EMFCopier.deepCopy(navExp);
+						Iterator it = make.createIterator();
+						
+						// bounded variable with this kind of `____name` is very important, since we use this to track whether this assumption relateds to trace.
+						it.setVarName("____bv");
+								
+						forall.setName("forAll");
+						forall.setSource(copyNav);
+						forall.getIterators().add(it);
+						
+						// create to-be-created loop body
+						String first = trace.get(elemType).get(0);	
+						int pos = first.lastIndexOf("#");
+						String genBy = "";
+						
+						// create a bv that refers to the boundedVariable `it`
+						VariableExp bv = make.createVariableExp();
+						bv.setReferredVariable(it);
+						
+						String fstRName = first.substring(0, pos);
+						String outid = first.substring(pos+1);
+						if(outid.equals("0")){
+							genBy = "genBy";
+						}else{
+							genBy = String.format("genBy%s", outid);
+						}
+						
+						OperationCallExp c1 = make.createOperationCallExp();
+						c1.setOperationName(genBy);
+						StringExp s = make.createStringExp();
+						s.setStringSymbol(fstRName);
+						c1.setSource(EMFCopier.deepCopy(bv));
+						c1.getArguments().add(s);
+						
+						OperatorCallExp or = make.createOperatorCallExp();
+						or.setOperationName("or");
+						or.setSource(c1);
+						
+						List<String> subTrace  = trace.get(elemType).subList(1, trace.get(elemType).size());
+						
+						for(String rule : subTrace ){
+							int pos2 = rule.lastIndexOf("#");
+							String genBy2 = "";
+							
+							String restRName = rule.substring(0, pos2);
+							String outid2 = rule.substring(pos2+1);
+							if(outid2.equals("0")){
+								genBy2 = "genBy";
+							}else{
+								genBy2 = String.format("genBy%s", outid2);
+							}
+							
+							OperationCallExp cn = make.createOperationCallExp();
+							cn.setOperationName(genBy2);
+							StringExp sn = make.createStringExp();
+							sn.setStringSymbol(restRName);
+							cn.setSource(EMFCopier.deepCopy(bv));
+							cn.getArguments().add(sn);
+							
+							or.getArguments().add(cn);
+						}
+						
+						// init loop body
+						forall.setBody(or);
+						
+						// continue elimination rules
+						HashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(n.getContext());
+						inferNextLv.put(forall, new ContextEntry(ContextNature.INFER));
+						
+						Node newNode = new Node(n.getLevel() + 1, n.getContent(), n, inferNextLv, n.getRel2Parent(), Tactic.SIZE_ELIM_1);
+						tree.add(newNode);
+						
+
+					}
+					
+					
+					
+					
+				}
+				
+			}
+			
 		}
 		
 	}
