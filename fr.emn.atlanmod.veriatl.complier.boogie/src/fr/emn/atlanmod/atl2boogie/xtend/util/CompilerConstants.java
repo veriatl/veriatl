@@ -28,4 +28,6 @@ public interface CompilerConstants {
 	String GENBY = "genBy";
 	
 	String TREE = "Trees";
+
+	String FULL = "fullDriver";
 }

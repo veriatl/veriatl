@@ -32,7 +32,8 @@ import transformation.TransformationLoader;
 
 public class ocldecomposerDriver {
 	
-	
+	//TODO should get rid of this, if we not interested in print full driver with full post.
+	static  public HashMap<String, String> postStrings = new HashMap<String, String>();
 	
 	// Notice: Termination of this strategy depends on what rules are selected, e.g. if inclusion elimin 1 and 2 are both presented, of course it will loop forever
 	// it also depends on whether a fix-point can be reached at each stage.
@@ -113,7 +114,7 @@ public class ocldecomposerDriver {
 			// print Boogie file for each leafs of the generated Proof tree
 			String goalName = post.getCommentsBefore().get(0).replace("--", "");
 			URI output = outputPath.appendSegment(goalName);
-			System.out.println(String.format("Debug: ocldecomposerDriver.java ln 120, goalName: %s start", goalName));
+			//System.out.println(String.format("Debug: ocldecomposerDriver.java ln 120, goalName: %s start", goalName));
 			int i = 0;
 			for(Node n : NodeHelper.findLeafs(tree)){
 				String cse = String.format("case%04d",i);
@@ -125,14 +126,16 @@ public class ocldecomposerDriver {
 			//TODO This is the Boogie program with the full transformation trace, less efficient to verify
 			//String org = printDriver(env, post);
 			
-			String org = prtingFastDriver(env, post, NodeHelper.findLeafs(tree));
+			String org = prtingFastDriver(env, post, NodeHelper.findLeafs(tree), goalName);
 			driver.generateBoogieFile(output, CompilerConstants.ORG, CompilerConstants.BOOGIE_EXT, org);	
 			
 			
 			NodeHelper.printTreeBasic(outputPath.trimSegments(1), goalName, tree);
-			System.out.println(String.format("Debug: ocldecomposerDriver.java ln 120, goalName: %s end", goalName));
+			//System.out.println(String.format("Debug: ocldecomposerDriver.java ln 120, goalName: %s end", goalName));
 		}
 		
+		String org = prtingFullDriver(env);
+		driver.generateBoogieFile(outputPath, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);
 		
 		// Print Genby predicate
 		GenBy.init(rules,driver.srcmm);
@@ -147,7 +150,34 @@ public class ocldecomposerDriver {
 		
 	}
 
-	private static String prtingFastDriver(ExecEnv env, OclExpression post, ArrayList<Node> leafs)  {		
+	/**
+	 * @param env
+	 * @return
+	 */
+	private static String prtingFullDriver(ExecEnv env) {
+		String res="";
+		res += printDriverHeader();
+		
+
+		
+		for(org.eclipse.m2m.atl.emftvm.Rule r : env.getRules()){
+			res += String.format("call %s_matchAll();\n", r.getName());
+		}
+		for(org.eclipse.m2m.atl.emftvm.Rule r : env.getRules()){
+			res += String.format("call %s_applyAll();\n", r.getName());
+		}
+
+		for(String postName : postStrings.keySet()){
+			res += String.format("// %s \n", postName);
+			res += postStrings.get(postName);
+		}
+		
+		
+		res += printDriverFooter();
+		return res;
+	}
+
+	private static String prtingFastDriver(ExecEnv env, OclExpression post, ArrayList<Node> leafs, String goal)  {		
 		String res="";
 		res += printDriverHeader();
 		
@@ -163,8 +193,13 @@ public class ocldecomposerDriver {
 			res += String.format("call %s_applyAll();\n", r);
 		}
 		res += "\n";
+		res += String.format("//%s \n", goal);
+		res += String.format("// rule size -> %d\n", involvedRules.size());
 		res += printPost(post);
 		res += printDriverFooter();
+		
+		postStrings.put(goal, printPost(post));
+		
 		return res;
 	}
 	
