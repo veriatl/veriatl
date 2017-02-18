@@ -20,6 +20,7 @@ import fr.emn.atlanmod.veriatl.core.Context;
 import fr.emn.atlanmod.veriatl.core.Mode;
 import fr.emn.atlanmod.veriatl.core.Tasks;
 import fr.emn.atlanmod.veriatl.util.Metamodels;
+import localize.experimentDriver;
 import localize.ocldecomposerDriver;
 
 /**
@@ -53,7 +54,15 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 					context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
 
 			try {
-				ocldecomposerDriver.decompose(
+//				ocldecomposerDriver.decompose(
+//						context.module().appendFileExtension("atl"),
+//						context.module().appendFileExtension("emftvm"), 
+//						context.moduleName(), 
+//						context.inMetamodel(),
+//						context.outMetamodel(), 
+//						context.contractPath(),
+//						context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME));
+				experimentDriver.decompose(
 						context.module().appendFileExtension("atl"),
 						context.module().appendFileExtension("emftvm"), 
 						context.moduleName(), 
