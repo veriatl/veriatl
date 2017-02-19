@@ -34,6 +34,8 @@ public class experimentDriver {
 	
 	static public String SINGLE ="single";
 	static public String PLUSONE ="plusone";
+	static public String INC ="incremental";
+	
 	
 	//TODO should get rid of this, if we not interested in print full driver with full post.
 	static  public HashMap<String, String> postsStrings = new HashMap<String, String>();
@@ -132,7 +134,9 @@ public class experimentDriver {
 		String org = prtingFullDriver(env);
 		driver.generateBoogieFile(outputPath, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);
 			
-		combinePlusOne(outputPath);
+		//combinePlusOne(outputPath);
+		inc(outputPath, 1);
+		
 		
 		long end = System.currentTimeMillis();
 		System.out.println(end-start);
@@ -141,7 +145,69 @@ public class experimentDriver {
 	}
 
 	
+	private static void inc(URI outputPath, int n ) {
+		
+		ArrayList<String> nRuleTrace = new ArrayList<String>();
+		
+		for(String post : posts) {
+			HashSet<String> postTrace = postsTrace.get(post);
+			if(postTrace.size() <= n) {
+				nRuleTrace.add(post);
+			}
+			
+		}
+		
+		ArrayList<String> incCase = new ArrayList<String>();
+		URI output = outputPath.appendSegment(experimentDriver.INC);
+		
+		for(String post : nRuleTrace) {
+			incCase.add(post);
+			String content = genContent(incCase);
+			String fileName = String.format("%03d", incCase.size());
+			driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, content);
+		}
+		
+	}
 	
+	
+	private static String genContent(ArrayList<String> incCase) {
+		HashSet<String> involvedRules = new HashSet<String>();
+		
+		for(String post : incCase) {
+			involvedRules.addAll(postsTrace.get(post));
+		}
+		
+		
+		String res="";
+		res += printDriverHeader();
+		
+		for(String r : involvedRules){
+			res += String.format("call %s_matchAll();\n", r);
+		}
+		for(String r : involvedRules){
+			res += String.format("call %s_applyAll();\n", r);
+		}
+		
+		res += "\n";
+		
+
+		res += "\n";
+		
+		// print postconditions
+		for(String post : incCase) {
+			res += String.format("// %s \n", post);
+			res += postsStrings.get(post);
+			res += "\n";
+		}
+		
+		
+		
+		res += printDriverFooter();
+		
+		return res;
+	}
+
+
 	private static void combinePlusOne(URI outputPath) {
 		for(String post : posts) {
 			HashSet<String> postTrace = postsTrace.get(post);
