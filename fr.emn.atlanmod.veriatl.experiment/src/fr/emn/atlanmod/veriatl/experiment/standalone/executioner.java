@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class executioner {
@@ -14,10 +15,26 @@ public class executioner {
 	static String boogie;
 	static String z3;
 
-	String[] excludes = new String[] { 
-			"Behavior_feature_of_context_classifier.bpl",
-			"CommunicationPath_association_ends.bpl" 
+	static String[] excludes = new String[] { 
+			"Behavior_feature_of_context_classifier", //Solved
+			"CommunicationPath_association_ends", //Solved
+			"ConsiderIgnoreFragment_type",	
+			"Constraint_not_apply_to_self",
+			"CreateObjectAction_classifier_not_abstract",
+			"DurationConstraint_has_one_or_two_constrainedElements",
+			"ReadLinkObjectEndAction_ends_of_association",
+			"TimeConstraint_has_one_constrainedElement" 
 	};
+	
+	
+	static String[] includes = new String[] { 
+			
+			"InformationFlow_convey_classifiers", //Solved:80
+			//"State_destinations_or_sources_of_transitions", //Solved:180
+
+	};
+
+
 
 	public static void init(String p, String mission) {
 		proj = p;
@@ -39,13 +56,46 @@ public class executioner {
 		return r;
 	}
 
+	
+	
+	private static boolean isVerify(String trg) {
+		boolean res = false;
+		
+		for(String post : excludes) {
+			
+			if(trg.indexOf(post)!=-1) {
+				
+				res = true;
+			}
+		}
+		return res;
+	}
+	
+	
+
+	
+	private static boolean isVerify2(String trg) {
+		boolean res = false;
+		
+		for(String post : includes) {
+			if(trg.indexOf(post)!=-1) {
+				if(!isVerify(trg)) {
+					res = true;
+				}
+				
+			}
+		}
+			
+		return res;
+	}
+	
 	public static void verify() throws Exception {
 
 		List<String> params = new ArrayList<String>();
 		params.add(boogie);
 		params.add("/nologo");
 		params.add("/z3exe:" + z3);
-		params.add("/timeLimit:60");
+		params.add("/timeLimit:150");
 
 		params.addAll(getFiles(preludePath));
 		params.addAll(getFiles(auxuPath));
@@ -63,37 +113,45 @@ public class executioner {
 
 			String[] args = paramsClone.toArray(new String[0]);
 
-			long start = System.currentTimeMillis();
-			Process p = Runtime.getRuntime().exec(args);
-			p.waitFor();
-			long end = System.currentTimeMillis();
 
-			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			String res = "false";
+			//if(isVerify2(post)) {
+			if(true) {
+				long start = System.currentTimeMillis();
+				Process p = Runtime.getRuntime().exec(args);
+				p.waitFor();
+				long end = System.currentTimeMillis();
+				
+				BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+				String res = "false";
 
-			long time = end - start;
+				long time = end - start;
 
-			String line;
-			while ((line = input.readLine()) != null) {
-				//System.out.println(line);
-				if (line.indexOf(", 0 errors") != -1) {
-					if (line.indexOf("time out") != -1 || line.indexOf("inconclusive") != -1) {
-						res = "inconclusive";
-					} else {
-						res = "true";
+				String line;
+				while ((line = input.readLine()) != null) {
+					//System.out.println(line);
+					if (line.indexOf(", 0 errors") != -1) {
+						if (line.indexOf("time out") != -1 || line.indexOf("inconclusive") != -1) {
+							res = "inconclusive";
+						} else {
+							res = "true";
+						}
+						break;
 					}
-					break;
 				}
-			}
 
-			input.close();
-			System.out.println(String.format("Id:%s,	Res:%s,	Time:%s ", id, res, time));
+				input.close();
+				System.out.println(String.format("Id:%s,	Res:%s,	Time:%s ", id, res, time));
+				
+			}
+			
+
+			
 		}
 
 	}
 
 	public static void main(String[] args) throws Exception {
-		init("UML", "single");
+		init("UML", "incremental");
 		verify();
 
 	}
