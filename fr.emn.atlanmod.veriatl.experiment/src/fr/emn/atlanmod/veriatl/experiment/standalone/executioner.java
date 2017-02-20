@@ -2,7 +2,10 @@ package fr.emn.atlanmod.veriatl.experiment.standalone;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +59,14 @@ public class executioner {
 		return r;
 	}
 
-	
+	private static void moveFile(String folder, String src) throws IOException {
+		String moveTo = folder + "/finished/";
+		Files.createDirectories(Paths.get(moveTo));
+		
+		File a = new File(src);
+		a.renameTo(new File(moveTo + a.getName()));
+		a.delete();
+	}
 	
 	private static boolean isVerify(String trg) {
 		boolean res = false;
@@ -141,6 +151,7 @@ public class executioner {
 
 				input.close();
 				System.out.println(String.format("Id:%s,	Res:%s,	Time:%s ", id, res, time));
+				moveFile(subgoalPath, post);
 				
 			}
 			
@@ -151,8 +162,24 @@ public class executioner {
 	}
 
 	public static void main(String[] args) throws Exception {
+		//init("UML", "subsumes/4-Pin_control_pins");
+		//init("UML", "subsumes/4-FinalNode_no_outgoing_edges");
+		//verify();
+		
+			
+//		File f = new File("./UML/Sub-goals/subsumes/");
+//		for (final File file : f.listFiles()) {
+//			if(file.isDirectory()){
+//				String n = String.format("subsumes/%s", file.getName());
+//				init("UML", n);
+//				verify();
+//			}
+//		}
+			
+		
 		init("UML", "incremental");
 		verify();
+		
 
 	}
 }
