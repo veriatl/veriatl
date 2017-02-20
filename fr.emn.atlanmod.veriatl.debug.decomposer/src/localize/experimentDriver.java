@@ -1,15 +1,25 @@
 package localize;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.m2m.atl.common.ATL.MatchedRule;
 import org.eclipse.m2m.atl.common.OCL.OclExpression;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
@@ -40,6 +50,7 @@ public class experimentDriver {
 	//TODO should get rid of this, if we not interested in print full driver with full post.
 	static  public HashMap<String, String> postsStrings = new HashMap<String, String>();
 	static  public HashMap<String, HashSet<String>> postsTrace = new HashMap<String, HashSet<String>>();
+	static  public HashMap<String, Integer> postsTime = new HashMap<String, Integer>();
 	static public ArrayList<String> posts = new ArrayList<String>();
 	
 	// Notice: Termination of this strategy depends on what rules are selected, e.g. if inclusion elimin 1 and 2 are both presented, of course it will loop forever
@@ -135,7 +146,13 @@ public class experimentDriver {
 		driver.generateBoogieFile(outputPath, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);
 			
 		//combinePlusOne(outputPath);
+		
+		loadVerificationTime(outputPath);
 		inc(outputPath, 1);
+		
+		//subsumed(outputPath, 4);
+		//subsumed(outputPath, 3);
+		//subsumed(outputPath, 2);
 		
 		
 		long end = System.currentTimeMillis();
@@ -144,7 +161,78 @@ public class experimentDriver {
 		
 	}
 
+	/**
+	 * find an initial post (Post_i) with trace size `n`, then find any other posts (Post_s1 .. Post_sx) whose trace that are subsumed by the initial post
+	 * Finally, incrementally build VCs = Post_i && Post_s1 && ... && Post_sx, where Post_s1 to Post_sx are ordered by their verification time.
+	 * 
+	 * Aim: 
+	 * 	- if subsumes, is it always worthwhile to combine posts; 
+	 *  - when we have to chop into two sets of post, because combined posts is too difficult to solve.
+	 * */
+	private static void subsumed(URI outputPath, int n ) {
+		
+		ArrayList<String> nRuleTrace = new ArrayList<String>();
+		
+		// find initial post with trace of size `n`
+		for(String post : posts) {
+			HashSet<String> postTrace = postsTrace.get(post);
+			if(postTrace.size() == n) {
+				nRuleTrace.add(post);
+			}
+			
+		}
+		
+		HashMap<String, HashSet<String>> subsumes = new HashMap<String, HashSet<String>>();
+		
+		// initialize subsumes
+		for(String post : nRuleTrace) {
+			subsumes.put(post, new HashSet<String>());			
+		}
+		
+		// find subsumes
+		for(String post : nRuleTrace) {
+			HashSet<String> postTrace = postsTrace.get(post);
+			
+			for(String rest : posts){
+				HashSet<String> restTrace = postsTrace.get(rest);
+				Set<String> intersection = new HashSet<String>(restTrace); 
+				intersection.retainAll(postTrace);
+				
+				if(intersection.size() == restTrace.size() && !post.equals(rest)){
+					subsumes.get(post).add(rest);
+				}			
+			}
 	
+		}
+		
+		
+		for(String post : nRuleTrace) {
+			URI output = outputPath.appendSegment("subsumes").appendSegment(n+"-"+post);
+			ArrayList<String> incCase = new ArrayList<String>();
+			incCase.add(post);
+			
+			ArrayList<String> subs = new ArrayList<String>(subsumes.get(post));
+			Collections.sort(subs, new Comparator<String>(){
+			    public int compare(String s1, String s2){
+			        return postsTime.get(s1) - postsTime.get(s2);
+			    }
+
+			});
+			
+			for(String sub : subs){
+				incCase.add(sub);
+				String content = genContent(incCase);
+				String fileName = String.format("%03d", incCase.size());
+				driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, content);
+			}	
+			
+		}
+	
+	}
+	
+	/**
+	 * 
+	 * */
 	private static void inc(URI outputPath, int n ) {
 		
 		ArrayList<String> nRuleTrace = new ArrayList<String>();
@@ -160,7 +248,15 @@ public class experimentDriver {
 		ArrayList<String> incCase = new ArrayList<String>();
 		URI output = outputPath.appendSegment(experimentDriver.INC);
 		
-		for(String post : nRuleTrace) {
+		ArrayList<String> subs = new ArrayList<String>(nRuleTrace);
+		Collections.sort(subs, new Comparator<String>(){
+		    public int compare(String s1, String s2){
+		        return postsTime.get(s1) - postsTime.get(s2);
+		    }
+
+		});
+		
+		for(String post : subs) {
 			incCase.add(post);
 			String content = genContent(incCase);
 			String fileName = String.format("%03d", incCase.size());
@@ -195,7 +291,7 @@ public class experimentDriver {
 		
 		// print postconditions
 		for(String post : incCase) {
-			res += String.format("// %s \n", post);
+			res += String.format("// %s : %s\n", post, postsTime.get(post));
 			res += postsStrings.get(post);
 			res += "\n";
 		}
@@ -207,7 +303,9 @@ public class experimentDriver {
 		return res;
 	}
 
-
+	/**
+	 * 
+	 * */
 	private static void combinePlusOne(URI outputPath) {
 		for(String post : posts) {
 			HashSet<String> postTrace = postsTrace.get(post);
@@ -331,6 +429,29 @@ public class experimentDriver {
 	private static String printDriverFooter() {
 		String res = "}\n";
 		return res;
+	}
+	
+	
+	private static void loadVerificationTime(URI output) throws IOException{
+		URI res = output.trimSegments(1).appendSegment("Res").appendSegment("single").appendFileExtension("txt");
+		URIConverter uriConverter = new ExtensibleURIConverterImpl();
+				
+		InputStream is = uriConverter.createInputStream(res);
+		List<String> doc = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)).lines().collect(Collectors.toList());	
+		
+		for(String ln : doc){
+			String[] t = ln.split(",");
+			if(t.length == 3){
+				String id = t[0];
+				String time = t[2].replace("Time:", "").trim();
+				id = id.replace("Id:UML-", "").replace(".bpl", "").trim();
+				postsTime.put(id, Integer.parseInt(time));
+			}
+		}
+		
+		
+		
+		
 	}
 	
 	
