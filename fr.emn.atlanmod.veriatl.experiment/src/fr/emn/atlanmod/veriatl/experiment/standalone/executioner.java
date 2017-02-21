@@ -139,14 +139,19 @@ public class executioner {
 				String line;
 				while ((line = input.readLine()) != null) {
 					//System.out.println(line);
-					if (line.indexOf(", 0 errors") != -1) {
-						if (line.indexOf("time out") != -1 || line.indexOf("inconclusive") != -1) {
+					if(line.indexOf("Boogie program verifier finished") != -1){
+						if (line.indexOf("inconclusive") != -1) {
 							res = "inconclusive";
-						} else {
-							res = "true";
+						} else if (line.indexOf("time out") != -1){
+							res = "time_out";
+						} else{
+							if (line.indexOf(", 0 errors") != -1) {
+								res = "true";
+							}
 						}
 						break;
 					}
+					
 				}
 
 				input.close();
@@ -177,7 +182,7 @@ public class executioner {
 //		}
 			
 		
-		init("UML", "incremental");
+		init("UML", "big_disjoint_15");
 		verify();
 		
 

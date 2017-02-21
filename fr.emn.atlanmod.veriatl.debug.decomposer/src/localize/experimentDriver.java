@@ -1,12 +1,12 @@
 package localize;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -36,7 +36,6 @@ import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
-import transformation.GenBy;
 import transformation.Trace;
 import transformation.TransformationLoader;
 
@@ -46,6 +45,18 @@ public class experimentDriver {
 	static public String PLUSONE ="plusone";
 	static public String INC ="incremental";
 	
+	static String[] excludes = new String[] { 
+			"Behavior_feature_of_context_classifier", //Solved
+			"CommunicationPath_association_ends", //Solved
+			"ConsiderIgnoreFragment_type",	
+			"Constraint_not_apply_to_self",
+			"CreateObjectAction_classifier_not_abstract",
+			"DurationConstraint_has_one_or_two_constrainedElements",
+			"ReadLinkObjectEndAction_ends_of_association",
+			"TimeConstraint_has_one_constrainedElement",
+			"InformationFlow_convey_classifiers",
+			"State_destinations_or_sources_of_transitions"
+	};
 	
 	//TODO should get rid of this, if we not interested in print full driver with full post.
 	static  public HashMap<String, String> postsStrings = new HashMap<String, String>();
@@ -148,12 +159,15 @@ public class experimentDriver {
 		//combinePlusOne(outputPath);
 		
 		loadVerificationTime(outputPath);
-		inc(outputPath, 1);
+		//inc(outputPath, 1);
 		
 		//subsumed(outputPath, 4);
 		//subsumed(outputPath, 3);
 		//subsumed(outputPath, 2);
-		
+		big_and_disjoint(outputPath, 1, 4);
+		big_and_disjoint(outputPath, 4, 10);
+		big_and_disjoint(outputPath, 10, 15);
+		big_and_disjoint(outputPath, 15, 999);
 		
 		long end = System.currentTimeMillis();
 		System.out.println(end-start);
@@ -161,6 +175,74 @@ public class experimentDriver {
 		
 	}
 
+	
+	
+	
+	private static void big_and_disjoint(URI outputPath, int min, int max){
+		ArrayList<String> nRuleTrace = new ArrayList<String>();
+		
+		// find initial post with trace of size `n`
+		for(String post : posts) {
+			HashSet<String> postTrace = postsTrace.get(post);
+			if(postTrace.size() >= min && postTrace.size() < max) {
+				if(!Arrays.asList(excludes).contains(post)){
+					nRuleTrace.add(post);
+				}
+					
+			}
+			
+		}
+		
+		HashMap<String, HashSet<String>> disjoint = new HashMap<String, HashSet<String>>();
+		
+		// initialize subsumes
+		for(String post : nRuleTrace) {
+			disjoint.put(post, new HashSet<String>());			
+		}
+		
+		// find disjoints
+		for(String post : nRuleTrace) {
+			HashSet<String> postTrace = postsTrace.get(post);
+			
+			for(String rest : posts){
+				HashSet<String> restTrace = postsTrace.get(rest);
+				Set<String> intersection = new HashSet<String>(restTrace); 
+				intersection.retainAll(postTrace);
+				
+				if(intersection.size() == 0 && !Arrays.asList(excludes).contains(rest)){
+					disjoint.get(post).add(rest);
+				}			
+			}
+	
+		}
+		
+		
+		for(String post : nRuleTrace) {
+			URI output = outputPath.appendSegment("big_disjoint_"+Integer.toString(min));
+			
+			
+			ArrayList<String> subs = new ArrayList<String>(disjoint.get(post));
+			Collections.sort(subs, new Comparator<String>(){
+			    public int compare(String s1, String s2){
+			        return postsTime.get(s1) - postsTime.get(s2);
+			    }
+
+			});
+			
+			for(String sub : subs){
+				ArrayList<String> incCase = new ArrayList<String>();
+				incCase.add(post);
+				incCase.add(sub);
+				String content = genContent(incCase);
+				String fileName = String.format("%s-%03d-%s", post, subs.indexOf(sub), sub);
+				driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, content);
+			}	
+			
+		}
+	}
+	
+	
+	
 	/**
 	 * find an initial post (Post_i) with trace size `n`, then find any other posts (Post_s1 .. Post_sx) whose trace that are subsumed by the initial post
 	 * Finally, incrementally build VCs = Post_i && Post_s1 && ... && Post_sx, where Post_s1 to Post_sx are ordered by their verification time.
