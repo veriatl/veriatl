@@ -171,7 +171,8 @@ public class experimentDriver {
 		big_and_disjoint(outputPath, 10, 15);
 		big_and_disjoint(outputPath, 15, 999);
 		
-		big_and_disjoint(outputPath, 1, 10);
+		big_and_disjoint(outputPath, 1, 5);
+		big_and_disjoint(outputPath, 5, 10);
 
 		
 		long end = System.currentTimeMillis();
