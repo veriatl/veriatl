@@ -168,11 +168,11 @@ public class experimentDriver {
 		//subsumed(outputPath, 3);
 		//subsumed(outputPath, 2);
 		
-		big_and_disjoint(outputPath, 10, 15);
-		big_and_disjoint(outputPath, 15, 999);
+		categorization(outputPath, 10, 15);
+		categorization(outputPath, 15, 999);
 		
-		big_and_disjoint(outputPath, 1, 5);
-		big_and_disjoint(outputPath, 5, 10);
+		categorization(outputPath, 1, 5);
+		categorization(outputPath, 5, 10);
 
 		
 		long end = System.currentTimeMillis();
@@ -182,7 +182,68 @@ public class experimentDriver {
 	}
 
 	
-	
+	private static void categorization(URI outputPath, int min, int max){
+		ArrayList<String> nRuleTrace = new ArrayList<String>();
+		
+		// find initial post with trace of size `n`
+		for(String post : posts) {
+			HashSet<String> postTrace = postsTrace.get(post);
+			if(postTrace.size() >= min && postTrace.size() < max) {
+				if(!Arrays.asList(excludes).contains(post)){
+					nRuleTrace.add(post);
+				}
+					
+			}
+			
+		}
+
+		// sort posts by verification time
+		ArrayList<String> subs = new ArrayList<String>(posts);
+		Collections.sort(subs, new Comparator<String>(){
+		    public int compare(String s1, String s2){
+		        return postsTime.get(s1) - postsTime.get(s2);
+		    }
+		});
+		
+		
+		for(String post : nRuleTrace) {
+			URI output = outputPath.appendSegment("big_disjoint_"+Integer.toString(min));
+			HashSet<String> postTrace = postsTrace.get(post);
+			
+			for(String rest : subs){
+				HashSet<String> restTrace = postsTrace.get(rest);
+				if(!rest.equals(post) 
+						&& !Arrays.asList(excludes).contains(rest)
+						&& !done.contains(String.format("%s-%s", post, rest))
+				) {
+					Set<String> intersection = new HashSet<String>(postTrace);
+					intersection.retainAll(restTrace);
+					
+					// determine trace relationships of two postconditions
+					String nature = "";
+					if(intersection.size() == 0){
+						nature = "disjoint";
+					}else {
+						nature = String.format("sharing$%s", intersection.size());
+					}
+					
+					
+					ArrayList<String> incCase = new ArrayList<String>();
+					incCase.add(post);
+					incCase.add(rest);
+					String content = genContent(incCase);
+					String fileName = String.format("%s-%03d-%s-%s", post, subs.indexOf(rest), rest, nature);
+					driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, content);
+					
+					done.add(String.format("%s-%s", post,rest));
+					done.add(String.format("%s-%s", rest, post));
+					
+				}
+				
+			}	
+			
+		}
+	}
 	
 	private static void big_and_disjoint(URI outputPath, int min, int max){
 		ArrayList<String> nRuleTrace = new ArrayList<String>();
