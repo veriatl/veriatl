@@ -45,6 +45,9 @@ public class experimentDriver {
 	static public String PLUSONE ="plusone";
 	static public String INC ="incremental";
 	
+	
+	static HashSet<String> done = new HashSet<String>();
+	
 	static String[] excludes = new String[] { 
 			"Behavior_feature_of_context_classifier", //Solved
 			"CommunicationPath_association_ends", //Solved
@@ -164,10 +167,12 @@ public class experimentDriver {
 		//subsumed(outputPath, 4);
 		//subsumed(outputPath, 3);
 		//subsumed(outputPath, 2);
-		big_and_disjoint(outputPath, 1, 4);
-		big_and_disjoint(outputPath, 4, 10);
+		
 		big_and_disjoint(outputPath, 10, 15);
 		big_and_disjoint(outputPath, 15, 999);
+		
+		big_and_disjoint(outputPath, 1, 10);
+
 		
 		long end = System.currentTimeMillis();
 		System.out.println(end-start);
@@ -230,12 +235,18 @@ public class experimentDriver {
 			});
 			
 			for(String sub : subs){
-				ArrayList<String> incCase = new ArrayList<String>();
-				incCase.add(post);
-				incCase.add(sub);
-				String content = genContent(incCase);
-				String fileName = String.format("%s-%03d-%s", post, subs.indexOf(sub), sub);
-				driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, content);
+				if(!done.contains(String.format("%s-%s", post,sub))) {
+					ArrayList<String> incCase = new ArrayList<String>();
+					incCase.add(post);
+					incCase.add(sub);
+					String content = genContent(incCase);
+					String fileName = String.format("%s-%03d-%s", post, subs.indexOf(sub), sub);
+					driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, content);
+					
+					done.add(String.format("%s-%s", post,sub));
+					done.add(String.format("%s-%s", sub, post));
+				}
+				
 			}	
 			
 		}
