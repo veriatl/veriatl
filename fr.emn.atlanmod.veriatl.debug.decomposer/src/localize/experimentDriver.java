@@ -160,7 +160,7 @@ public class experimentDriver {
 		driver.generateBoogieFile(outputPath, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);
 			
 		//combinePlusOne(outputPath);
-		
+		done.clear();
 		loadVerificationTime(outputPath);
 		//inc(outputPath, 1);
 		
