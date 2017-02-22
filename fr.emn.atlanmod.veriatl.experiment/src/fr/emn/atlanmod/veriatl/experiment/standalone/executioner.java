@@ -146,7 +146,7 @@ public class executioner {
 							res = "time_out";
 						} else{
 							if (line.indexOf(", 0 errors") != -1) {
-								res = "true";
+								res = "true";	//dummy
 							}
 						}
 						break;
