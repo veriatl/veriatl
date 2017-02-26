@@ -162,7 +162,7 @@ public class experimentDriver {
 			
 			// Print single postcondition in its consice presentation.
 			String org = prtingFastDriver(env, post, NodeHelper.findLeafs(tree), goalName);
-			driver.generateBoogieFile(output, String.format("%s-%s", goalName, postsTrace.get(goalName)), CompilerConstants.BOOGIE_EXT, org);	
+			driver.generateBoogieFile(output, String.format("%s-%d", goalName, postsTrace.get(goalName).size()), CompilerConstants.BOOGIE_EXT, org);	
 			
 			
 			
