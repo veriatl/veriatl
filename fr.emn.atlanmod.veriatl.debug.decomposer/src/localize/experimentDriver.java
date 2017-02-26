@@ -143,9 +143,20 @@ public class experimentDriver {
 						
 			Collections.sort(tree);
 
+			
+			
 			String goalName = post.getCommentsBefore().get(0).replace("--", "");	
 			URI output = outputPath.appendSegment(experimentDriver.SINGLE);
 
+//			// generate sub-goals
+//			int i = 0;
+//			for(Node n : NodeHelper.findLeafs(tree)){
+//				String cse = String.format("case%04d",i);
+//				n.setName(String.format("case%04d", i));
+//				driver.generateBoogieFile(output, cse, CompilerConstants.BOOGIE_EXT, n.toBoogie(env));		
+//				i++;
+//			}
+			
 			// Print single postcondition in its consice presentation.
 			String org = prtingFastDriver(env, post, NodeHelper.findLeafs(tree), goalName);
 			driver.generateBoogieFile(output, goalName, CompilerConstants.BOOGIE_EXT, org);	
@@ -157,23 +168,24 @@ public class experimentDriver {
 		}
 		
 		String org = prtingFullDriver(env);
-		driver.generateBoogieFile(outputPath, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);
+//		driver.generateBoogieFile(outputPath, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);
 			
 		//combinePlusOne(outputPath);
 		
-		loadVerificationTime(outputPath);
+//		loadVerificationTime(outputPath);
 		//inc(outputPath, 1);
 		
 		//subsumed(outputPath, 4);
 		//subsumed(outputPath, 3);
 		//subsumed(outputPath, 2);
 		
-		categorization(outputPath, 10, 15);
-		categorization(outputPath, 15, 999);
-		
-		categorization(outputPath, 1, 5);
-		categorization(outputPath, 5, 10);
+//		categorization(outputPath, 10, 15);
+//		categorization(outputPath, 15, 999);
+//		
+//		categorization(outputPath, 1, 5);
+//		categorization(outputPath, 5, 10);
 
+//		singleMutation(outputPath);
 		
 		long end = System.currentTimeMillis();
 		System.out.println(end-start);
@@ -182,6 +194,35 @@ public class experimentDriver {
 	}
 
 	
+	private static void singleMutation(URI outputPath) {
+		ArrayList<String> subs = new ArrayList<String>(posts);
+		Collections.sort(subs, new Comparator<String>(){
+		    public int compare(String s1, String s2){
+		        return postsTime.get(s1) - postsTime.get(s2);
+		    }
+		});
+		
+		for (String post : subs) {
+			URI output = outputPath.appendSegment("Mutation");
+			ArrayList<String> todo = new ArrayList<String>();
+			todo.add(post);
+			String content = genMutation(todo);
+			String file = String.format("%03d.%s", subs.indexOf(post), post);
+			driver.generateBoogieFile(output, file, CompilerConstants.BOOGIE_EXT, content);
+		}
+		
+		for (String post : subs) {
+			URI output = outputPath.appendSegment("singleMutation");
+			ArrayList<String> todo = new ArrayList<String>();
+			todo.add(post);
+			String content = genMutationSingle(todo);
+			String file = String.format("%03d.%s", subs.indexOf(post), post);
+			driver.generateBoogieFile(output, file, CompilerConstants.BOOGIE_EXT, content);
+		}
+
+	}
+
+
 	private static void categorization(URI outputPath, int min, int max){
 		ArrayList<String> nRuleTrace = new ArrayList<String>();
 		
@@ -418,6 +459,85 @@ public class experimentDriver {
 			driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, content);
 		}
 		
+	}
+	
+	private static String genMutationSingle(ArrayList<String> incCase) {
+		HashSet<String> involvedRules = new HashSet<String>();
+		
+		for(String post : incCase) {
+			involvedRules.addAll(postsTrace.get(post));
+		}
+		
+		
+		String res="";
+		res += printDriverHeader();
+		
+		for(String r : involvedRules){
+			res += String.format("call %s_matchAll();\n", r);
+		}
+		for(String r : involvedRules){
+			res += String.format("call %s_applyAll();\n", r);
+		}
+		
+		res += "\n";
+		
+
+		res += "\n";
+		
+
+		
+		// print postconditions
+		for(String post : incCase) {
+			//res += postsStrings.get(post).replace("assert ", "assert !(").replace(";", ");");
+			res += postsStrings.get(post).replaceFirst("==>", "<==>");
+			res += "\n";
+		}
+		
+		res += printDriverFooter();
+		
+		return res;
+	}
+	
+	private static String genMutation(ArrayList<String> incCase) {
+		HashSet<String> involvedRules = new HashSet<String>();
+		
+		for(String post : incCase) {
+			involvedRules.addAll(postsTrace.get(post));
+		}
+		
+		
+		String res="";
+		res += printDriverHeader();
+		
+		for(String r : involvedRules){
+			res += String.format("call %s_matchAll();\n", r);
+		}
+		for(String r : involvedRules){
+			res += String.format("call %s_applyAll();\n", r);
+		}
+		
+		res += "\n";
+		
+
+		res += "\n";
+		
+		// print postconditions
+		for(String post : incCase) {
+			res += String.format("// %s : %s\n", post, postsTime.get(post));
+			res += postsStrings.get(post);
+			res += "\n";
+		}
+		
+		// print postconditions
+		for(String post : incCase) {
+			//res += postsStrings.get(post).replace("assert ", "assert !(").replace(";", ");");
+			res += postsStrings.get(post).replaceFirst("==>", "<==>");
+			res += "\n";
+		}
+		
+		res += printDriverFooter();
+		
+		return res;
 	}
 	
 	
