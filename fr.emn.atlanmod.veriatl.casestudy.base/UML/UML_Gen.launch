@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="fr.emn.atlanmod.veriatl.launcher">
 <stringAttribute key="ATL File Name" value="//fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UMLCopier.atl"/>
-<stringAttribute key="CONTRACT PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UML.normalize.ocl.atl"/>
+<stringAttribute key="CONTRACT PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/test.atl"/>
 <mapAttribute key="Inout Model Options"/>
 <mapAttribute key="Inout Models"/>
 <mapAttribute key="Inout Models Output Locations"/>
