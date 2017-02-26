@@ -183,6 +183,7 @@ public class executioner {
 			
 		
 		init("UML", "single");
+		init("UML", "big_disjoint_1");
 		verify();
 		
 
