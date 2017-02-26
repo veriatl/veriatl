@@ -1,66 +1,64 @@
-// time limit : 300
-Id:UML-AcceptCallAction_unmarshall.bpl,	Res:true,	Time:7266 
-Id:UML-AcceptEventAction_no_input_pins.bpl,	Res:true,	Time:10682 
-Id:UML-AcceptEventAction_no_output_pins.bpl,	Res:false,	Time:8068 
-Id:UML-ActionInputPin_input_pin.bpl,	Res:true,	Time:34855 
-Id:UML-ActionInputPin_one_output_pin.bpl,	Res:true,	Time:18356 
-Id:UML-ActivityParameterNode_has_parameters.bpl,	Res:true,	Time:7530 
-Id:UML-ActivityParameterNode_same_type.bpl,	Res:true,	Time:7724 
-Id:UML-ActivityParameterNode_no_edges.bpl,	Res:true,	Time:7814 
-Id:UML-Behavior_feature_of_context_classifier.bpl,	Res:true,	Time:159763 
-Id:UML-BehavioralFeature_abstract_no_method.bpl,	Res:true,	Time:9271 
-Id:UML-CallAction_synchronous_call.bpl,	Res:true,	Time:11026 
-Id:UML-ClassifierTemplateParameter_has_constraining_classifier.bpl,	Res:true,	Time:6869 
-Id:UML-CommunicationPath_association_ends.bpl,	Res:false,	Time:160621 
-Id:UML-Component_no_nested_classifiers.bpl,	Res:true,	Time:20455 
-Id:UML-ConditionalNode_no_input_pins.bpl,	Res:true,	Time:9178 
-Id:UML-ConsiderIgnoreFragment_type.bpl,	Res:inconclusive,	Time:161382 
-Id:UML-Constraint_not_apply_to_self.bpl,	Res:inconclusive,	Time:163080 
-Id:UML-CreateObjectAction_classifier_not_abstract.bpl,	Res:inconclusive,	Time:160596 
-Id:UML-CreateObjectAction_classifier_not_association_class.bpl,	Res:true,	Time:42501 
-Id:UML-CreateObjectAction_same_type.bpl,	Res:true,	Time:7892 
-Id:UML-DecisionNode_decision_input_flow_incoming.bpl,	Res:true,	Time:7561 
-Id:UML-DurationConstraint_has_one_or_two_constrainedElements.bpl,	Res:inconclusive,	Time:164884 
-Id:UML-Enumeration_immutable.bpl,	Res:false,	Time:12849 
-Id:UML-ExceptionHandler_handler_body_edges.bpl,	Res:true,	Time:8642 
-Id:UML-ExceptionHandler_handler_body_owner.bpl,	Res:true,	Time:11613 
-Id:UML-ExecutionSpecification_same_lifeline.bpl,	Res:true,	Time:7960 
-Id:UML-Extend_extension_points.bpl,	Res:true,	Time:7973 
-Id:UML-Extension_is_binary.bpl,	Res:true,	Time:9083 
-Id:UML-FinalNode_no_outgoing_edges.bpl,	Res:true,	Time:9177 
-Id:UML-FinalState_no_outgoing_transitions.bpl,	Res:true,	Time:7987 
-Id:UML-FinalState_no_regions.bpl,	Res:true,	Time:7851 
-Id:UML-ForkNode_one_incoming_edge.bpl,	Res:true,	Time:8013 
-Id:UML-InformationFlow_convey_classifiers.bpl,	Res:false,	Time:71641 
-Id:UML-InformationItem_has_no.bpl,	Res:true,	Time:10516 
-Id:UML-InformationItem_not_instantiable.bpl,	Res:true,	Time:7387 
-Id:UML-InitialNode_no_incoming_edges.bpl,	Res:true,	Time:7812 
-Id:UML-InitialNode_control_edges.bpl,	Res:false,	Time:8950 
-Id:UML-JoinNode_one_outgoing_edge.bpl,	Res:true,	Time:7840 
-Id:UML-LinkAction_not_static.bpl,	Res:false,	Time:41622 
-Id:UML-MergeNode_one_outgoing_edge.bpl,	Res:true,	Time:8291 
-Id:UML-Node_internal_structure.bpl,	Res:false,	Time:51544 
-Id:UML-ObjectFlow_no_executable_nodes.bpl,	Res:true,	Time:11145 
-Id:UML-ObjectFlow_is_multicast_or_is_multireceive.bpl,	Res:true,	Time:6983 
-Id:UML-Parameter_stream_and_exception.bpl,	Res:true,	Time:7060 
-Id:UML-Pin_control_pins.bpl,	Res:true,	Time:10581 
-Id:UML-Pin_not_unique.bpl,	Res:true,	Time:10592 
-Id:UML-Property_derived_union_is_read_only.bpl,	Res:true,	Time:9410 
-Id:UML-Property_derived_union_is_derived.bpl,	Res:true,	Time:9111 
-Id:UML-Property_subsetted_property_names.bpl,	Res:false,	Time:10956 
-Id:UML-ProtocolStateMachine_protocol_transitions.bpl,	Res:false,	Time:15415 
-Id:UML-ReadExtentAction_type_is_classifier.bpl,	Res:true,	Time:7505 
-Id:UML-ReadLinkObjectEndAction_ends_of_association.bpl,	Res:inconclusive,	Time:159268 
-Id:UML-ReadLinkObjectEndAction_type_of_result.bpl,	Res:true,	Time:8459 
-Id:UML-ReadLinkObjectEndAction_type_of_object.bpl,	Res:true,	Time:9682 
-Id:UML-ReadLinkObjectEndQualifierAction_same_type.bpl,	Res:true,	Time:7907 
-Id:UML-Reception_same_name_as_signal.bpl,	Res:true,	Time:9505 
-Id:UML-State_submachine_states.bpl,	Res:true,	Time:7184 
-Id:UML-State_composite_states.bpl,	Res:true,	Time:9662 
-Id:UML-State_destinations_or_sources_of_transitions.bpl,	Res:false,	Time:157800 
-Id:UML-State_submachine_or_regions.bpl,	Res:true,	Time:8817 
-Id:UML-StringExpression_operands.bpl,	Res:false,	Time:15638 
-Id:UML-StructuralFeatureAction_not_static.bpl,	Res:true,	Time:61374 
-Id:UML-TemplateBinding_parameter_substitution_formal.bpl,	Res:true,	Time:16189 
-Id:UML-TimeConstraint_has_one_constrainedElement.bpl,	Res:inconclusive,	Time:158732 
-Id:UML-ValuePin_no_incoming_edges.bpl,	Res:true,	Time:8344 
+AcceptCallAction_unmarshall	TRUE	8921	1
+AcceptEventAction_no_input_pins	TRUE	10895	5
+AcceptEventAction_no_output_pins	FALSE	11518	4
+ActionInputPin_input_pin	FALSE	135583	45
+ActionInputPin_one_output_pin	time_out	162506	44
+ActivityParameterNode_has_parameters	TRUE	13183	3
+ActivityParameterNode_no_edges	TRUE	8553	3
+ActivityParameterNode_same_type	time_out	159682	29
+Behavior_feature_of_context_classifier	time_out	160679	22
+BehavioralFeature_abstract_no_method	TRUE	21157	8
+CallAction_synchronous_call	TRUE	11453	4
+ClassifierTemplateParameter_has_constraining_classifier	TRUE	10157	28
+CommunicationPath_association_ends	time_out	160972	27
+Component_no_nested_classifiers	TRUE	20714	27
+ConditionalNode_no_input_pins	TRUE	9753	4
+ConsiderIgnoreFragment_type	time_out	166010	170
+Constraint_not_apply_to_self	time_out	185639	193
+CreateObjectAction_classifier_not_abstract	time_out	161742	28
+CreateObjectAction_classifier_not_association_class	TRUE	41661	28
+CreateObjectAction_same_type	time_out	160805	29
+DecisionNode_decision_input_flow_incoming	TRUE	10725	3
+DurationConstraint_has_one_or_two_constrainedElements	time_out	166572	193
+Enumeration_immutable	FALSE	13353	4
+ExceptionHandler_handler_body_edges	time_out	163047	53
+ExecutionSpecification_same_lifeline	TRUE	38078	7
+Extend_extension_points	TRUE	51244	3
+Extension_is_binary	TRUE	9244	4
+FinalNode_no_outgoing_edges	TRUE	9302	4
+FinalState_no_outgoing_transitions	TRUE	8628	3
+FinalState_no_regions	TRUE	8056	2
+ForkNode_one_incoming_edge	TRUE	7965	3
+InformationFlow_convey_classifiers	FALSE	82296	28
+InformationItem_has_no	TRUE	12774	8
+InformationItem_not_instantiable	TRUE	7947	1
+InitialNode_control_edges	FALSE	9577	3
+InitialNode_no_incoming_edges	TRUE	8744	3
+JoinNode_one_outgoing_edge	TRUE	8622	3
+LinkAction_not_static	FALSE	45850	10
+MergeNode_one_outgoing_edge	TRUE	8526	3
+Node_internal_structure	FALSE	56151	6
+ObjectFlow_is_multicast_or_is_multireceive	TRUE	7586	1
+ObjectFlow_no_executable_nodes	time_out	161000	58
+Parameter_stream_and_exception	TRUE	7215	1
+Pin_control_pins	TRUE	10406	4
+Pin_not_unique	TRUE	10350	4
+Property_derived_union_is_derived	TRUE	9084	3
+Property_derived_union_is_read_only	TRUE	9123	3
+Property_subsetted_property_names	FALSE	11045	3
+ProtocolStateMachine_protocol_transitions	FALSE	15934	4
+ReadExtentAction_type_is_classifier	time_out	160481	29
+ReadLinkObjectEndAction_ends_of_association	FALSE	71088	8
+ReadLinkObjectEndAction_type_of_object	time_out	161662	34
+ReadLinkObjectEndAction_type_of_result	time_out	160836	32
+ReadLinkObjectEndQualifierAction_same_type	time_out	161469	32
+Reception_same_name_as_signal	TRUE	9218	2
+State_composite_states	TRUE	10134	3
+State_destinations_or_sources_of_transitions	time_out	158468	6
+State_submachine_or_regions	TRUE	8641	2
+State_submachine_states	TRUE	7393	3
+StringExpression_operands	FALSE	13217	15
+StructuralFeatureAction_not_static	TRUE	61213	7
+TemplateBinding_parameter_substitution_formal	FALSE	16504	8
+TimeConstraint_has_one_constrainedElement	time_out	168093	193
+ValuePin_no_incoming_edges	TRUE	8093	3
