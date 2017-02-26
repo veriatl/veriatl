@@ -96,6 +96,7 @@ public class experimentDriver {
 		
 		// proof strategy starts
 		for (OclExpression post : postconditions) {
+			System.out.println(post.getCommentsBefore().get(0).replace("--", "") + "start");
 			
 			ArrayList<Node> tree = new ArrayList<Node>();
 			Introduction.init(env, trace, tree, driver.trgmm);
@@ -148,6 +149,8 @@ public class experimentDriver {
 			String goalName = post.getCommentsBefore().get(0).replace("--", "");	
 			URI output = outputPath.appendSegment(experimentDriver.SINGLE);
 
+			
+			
 //			// generate sub-goals
 //			int i = 0;
 //			for(Node n : NodeHelper.findLeafs(tree)){
@@ -161,7 +164,7 @@ public class experimentDriver {
 			String org = prtingFastDriver(env, post, NodeHelper.findLeafs(tree), goalName);
 			driver.generateBoogieFile(output, goalName, CompilerConstants.BOOGIE_EXT, org);	
 			
-			
+			System.out.println(goalName + "end");
 			
 			
 

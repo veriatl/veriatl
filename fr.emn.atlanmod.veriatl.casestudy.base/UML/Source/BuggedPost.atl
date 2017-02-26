@@ -113,6 +113,17 @@ re.redefinedElement->size()>0 implies
 
 
 -- # Hang
+	--@post
+	helper context UMLs!ExceptionHandler def: post_handler_body_owner(): Boolean = --ExceptionHandler_handler_body_owner
+	  UMLs!ExceptionHandler.allInstances()->forAll(eh |  
+UMLs!ExecutableNode.allInstances()->includes(eh.handlerBody) implies (
+UMLs!Element.allInstances()->includes(eh.protectedNode.owner) implies (
+UMLs!ExecutableNode.allInstances()->includes(eh.protectedNode) implies (
+UMLs!Element.allInstances()->includes(eh.handlerBody.owner) implies (
+	    eh.handlerBody.owner = eh.protectedNode.owner
+	    ))))
+	); 
+	
 --@post
 helper context UMLs!Trigger def: post_trigger_with_ports(): Boolean = --Trigger_trigger_with_ports
   UMLs!Trigger.allInstances()->forAll(t |  
