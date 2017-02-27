@@ -147,12 +147,13 @@ public class experimentDriver {
 			
 			
 			String goalName = post.getCommentsBefore().get(0).replace("--", "");	
-			URI output = outputPath.appendSegment(experimentDriver.SINGLE);
+			
 
 			
 			
 //			// generate sub-goals
 //			int i = 0;
+//			URI output = outputPath.appendSegment(experimentDriver.SINGLE).appendSegment(goalName);
 //			for(Node n : NodeHelper.findLeafs(tree)){
 //				String cse = String.format("case%04d",i);
 //				n.setName(String.format("case%04d", i));
@@ -162,6 +163,7 @@ public class experimentDriver {
 			
 			// Print single postcondition in its consice presentation.
 			String org = prtingFastDriver(env, post, NodeHelper.findLeafs(tree), goalName);
+			URI output = outputPath.appendSegment(experimentDriver.SINGLE);
 			driver.generateBoogieFile(output, String.format("%s-%d", goalName, postsTrace.get(goalName).size()), CompilerConstants.BOOGIE_EXT, org);	
 			
 			
@@ -175,18 +177,18 @@ public class experimentDriver {
 			
 		//combinePlusOne(outputPath);
 		
-//		loadVerificationTime(outputPath);
+		loadVerificationTime(outputPath);
 		//inc(outputPath, 1);
 		
 		//subsumed(outputPath, 4);
 		//subsumed(outputPath, 3);
 		//subsumed(outputPath, 2);
 		
-//		categorization(outputPath, 10, 15);
-//		categorization(outputPath, 15, 999);
+		couple(outputPath, 1, 999);
+//		couple(outputPath, 15, 999);
 //		
-//		categorization(outputPath, 1, 5);
-//		categorization(outputPath, 5, 10);
+//		couple(outputPath, 1, 5);
+//		couple(outputPath, 5, 10);
 
 //		singleMutation(outputPath);
 		
@@ -226,16 +228,16 @@ public class experimentDriver {
 	}
 
 
-	private static void categorization(URI outputPath, int min, int max){
+	private static void couple(URI outputPath, int min, int max){
 		ArrayList<String> nRuleTrace = new ArrayList<String>();
 		
 		// find initial post with trace of size `n`
 		for(String post : posts) {
 			HashSet<String> postTrace = postsTrace.get(post);
 			if(postTrace.size() >= min && postTrace.size() < max) {
-				if(!Arrays.asList(excludes).contains(post)){
+				//if(!Arrays.asList(excludes).contains(post)){
 					nRuleTrace.add(post);
-				}
+				//}
 					
 			}
 			
@@ -251,13 +253,13 @@ public class experimentDriver {
 		
 		
 		for(String post : nRuleTrace) {
-			URI output = outputPath.appendSegment("big_disjoint_"+Integer.toString(min));
+			URI output = outputPath.appendSegment("couple");
 			HashSet<String> postTrace = postsTrace.get(post);
 			
 			for(String rest : subs){
 				HashSet<String> restTrace = postsTrace.get(rest);
 				if(!rest.equals(post) 
-						&& !Arrays.asList(excludes).contains(rest)
+						//&& !Arrays.asList(excludes).contains(rest)
 						&& !done.contains(String.format("%s-%s", post, rest))
 				) {
 					Set<String> intersection = new HashSet<String>(postTrace);
@@ -718,11 +720,11 @@ public class experimentDriver {
 		List<String> doc = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)).lines().collect(Collectors.toList());	
 		
 		for(String ln : doc){
-			String[] t = ln.split(",");
-			if(t.length == 3){
-				String id = t[0];
-				String time = t[2].replace("Time:", "").trim();
-				id = id.replace("Id:UML-", "").replace(".bpl", "").trim();
+			String[] t = ln.split("\t");
+			if(t.length == 4){
+				String id = t[0].trim();
+				String time = t[2].trim();
+
 				postsTime.put(id, Integer.parseInt(time));
 			}
 		}
