@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class executioner {
+public class WindowsDriver {
 	static String proj;
 	static String preludePath;
 	static String auxuPath;
