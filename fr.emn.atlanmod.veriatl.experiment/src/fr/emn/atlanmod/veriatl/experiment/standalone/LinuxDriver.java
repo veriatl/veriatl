@@ -46,7 +46,7 @@ public class LinuxDriver{
 
 		preludePath = "./lib/VeriATL-1.0.0/win-64/Prelude/";
 		boogie = "./lib/Boogie-2.3.0/win-64/Boogie.exe";
-		z3 = "./lib/Z3-4.5.1/linux-64/z3.exe";
+		z3 = "./z3";
 
 	}
 
@@ -132,7 +132,7 @@ public class LinuxDriver{
 				p.waitFor();
 				long end = System.currentTimeMillis();
 				
-				BufferedReader input = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+				BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 				String res = "false";
 
 				long time = end - start;
