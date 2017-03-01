@@ -47,7 +47,7 @@ public class LinuxDriver{
 		preludePath = "./lib/VeriATL-1.0.0/win-64/Prelude/";
 		boogie = "./lib/Boogie-2.3.0/win-64/Boogie.exe";
 		z3 = "./z3";
-
+		
 	}
 
 	private static ArrayList<String> getFiles(String folder) {
