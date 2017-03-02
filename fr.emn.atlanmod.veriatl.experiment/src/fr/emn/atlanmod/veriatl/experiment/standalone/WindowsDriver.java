@@ -163,7 +163,7 @@ public class WindowsDriver implements Configure{
 				try{
 					Files.write(Paths.get("./UML-test/Res.txt"), String.format("Id:%s,	Res:%s,	Time:%s ", id, res, time).getBytes(), StandardOpenOption.APPEND);
 				} catch (IOException e) {
-				   e.printStackTrace();
+					e.printStackTrace();
 				}
 			}
 			
