@@ -1,0 +1,1 @@
+Id:UML-test-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML-test/Sub-goals/single/InitialNode_no_incoming_edges-3.bpl,	Res:true,	Time:11807 
