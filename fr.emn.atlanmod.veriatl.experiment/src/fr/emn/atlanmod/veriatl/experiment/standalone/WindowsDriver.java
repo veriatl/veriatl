@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -158,6 +160,11 @@ public class WindowsDriver {
 				System.out.println(String.format("Id:%s,	Res:%s,	Time:%s ", id, res, time));
 				moveFile(subgoalPath, post);
 				
+				try{
+					Files.write(Paths.get("myfile.txt"), String.format("Id:%s,	Res:%s,	Time:%s ", id, res, time).getBytes(), StandardOpenOption.APPEND);
+				} catch (IOException e) {
+				   // do nothing
+				}
 			}
 			
 

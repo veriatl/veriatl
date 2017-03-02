@@ -1,0 +1,37 @@
+\incremental\001.bpl,	Res:true,	Time:6896 
+\incremental\002.bpl,	Res:true,	Time:27033 
+\incremental\003.bpl,	Res:true,	Time:34208 
+\incremental\004.bpl,	Res:true,	Time:37625 
+\incremental\005.bpl,	Res:true,	Time:40046 
+\incremental\006.bpl,	Res:true,	Time:47756 
+\incremental\007.bpl,	Res:true,	Time:62440 
+\incremental\008.bpl,	Res:true,	Time:87135 
+\incremental\009.bpl,	Res:inconclusive,	Time:158019 
+the rest 9 PO will certainly be inconclusive
+
+
+=== another scheduling, post with shorter verification time goes first
+\incremental\001.bpl,	Res:true,	Time:8099 
+\incremental\002.bpl,	Res:true,	Time:8887 
+\incremental\003.bpl,	Res:true,	Time:9179 
+\incremental\004.bpl,	Res:true,	Time:10130 
+\incremental\005.bpl,	Res:true,	Time:12485 
+\incremental\006.bpl,	Res:true,	Time:42961 
+\incremental\007.bpl,	Res:true,	Time:66218 
+\incremental\008.bpl,	Res:true,	Time:107489 
+\incremental\009.bpl,	Res:inconclusive,	Time:159479 
+
+
+Facts:
+// if trace of `a` , a + b ~= a && b
+// if same set of trace, a + b > a && b
+// Add one post or two is ok, add 9 together starts to problematic
+// from 8 -> 9, added ExceptionHandler_handler_body_edges (9s to verify), but the 1 && ... && 9, takes more than just add this 8s.
+
+//
+
+
+
+conjecture:
+
+// if not total inclusion, it is not worthwhile to combine them.

@@ -1,0 +1,6 @@
+Id:UML-AcceptCallAction_unmarshall_ExceptionHandler_handler_body_edges.001_001_000.bpl,	Res:true,	Time:39940 
+Id:UML-AcceptCallAction_unmarshall_ExceptionHandler_handler_body_owner.001_001_000.bpl,	Res:inconclusive,	Time:159384
+
+
+Id:UML-AcceptCallAction_unmarshall_ActionInputPin_input_pin.001_003_000.bpl,	Res:true,	Time:70995 
+Id:UML-AcceptCallAction_unmarshall_ActionInputPin_one_output_pin.001_001_000.bpl,	Res:true,	Time:34730  
