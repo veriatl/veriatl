@@ -6,11 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class LinuxDriver{
+public class LinuxDriver implements Configure{
 	static String proj;
 	static String preludePath;
 	static String auxuPath;
@@ -106,7 +107,7 @@ public class LinuxDriver{
 		params.add(boogie);
 		params.add("/nologo");
 		params.add("/z3exe:" + z3);
-		params.add("/timeLimit:150");
+		params.add("/timeLimit:"+ TIMELIMIT);
 
 		params.addAll(getFiles(preludePath));
 		params.addAll(getFiles(auxuPath));
@@ -157,8 +158,13 @@ public class LinuxDriver{
 
 				input.close();
 				System.out.println(String.format("Id:%s,	Res:%s,	Time:%s ", id, res, time));
-				//moveFile(subgoalPath, post);
+				moveFile(subgoalPath, post);
 				
+				try{
+					Files.write(Paths.get("./UML-test/Res.txt"), String.format("Id:%s,	Res:%s,	Time:%s ", id, res, time).getBytes(), StandardOpenOption.APPEND);
+				} catch (IOException e) {
+				   e.printStackTrace();
+				}
 			}
 			
 
@@ -183,7 +189,7 @@ public class LinuxDriver{
 //		}
 			
 		
-		init("UML", "single");
+		init("UML-test", "single");
 		verify();
 		
 

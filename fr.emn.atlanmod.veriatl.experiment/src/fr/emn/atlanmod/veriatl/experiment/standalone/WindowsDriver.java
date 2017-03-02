@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class WindowsDriver {
+public class WindowsDriver implements Configure{
 	static String proj;
 	static String preludePath;
 	static String auxuPath;
@@ -107,7 +107,7 @@ public class WindowsDriver {
 		params.add(boogie);
 		params.add("/nologo");
 		params.add("/z3exe:" + z3);
-		params.add("/timeLimit:150");
+		params.add("/timeLimit:" + TIMELIMIT);
 
 		params.addAll(getFiles(preludePath));
 		params.addAll(getFiles(auxuPath));
@@ -161,9 +161,9 @@ public class WindowsDriver {
 				moveFile(subgoalPath, post);
 				
 				try{
-					Files.write(Paths.get("myfile.txt"), String.format("Id:%s,	Res:%s,	Time:%s ", id, res, time).getBytes(), StandardOpenOption.APPEND);
+					Files.write(Paths.get("./UML-test/Res.txt"), String.format("Id:%s,	Res:%s,	Time:%s ", id, res, time).getBytes(), StandardOpenOption.APPEND);
 				} catch (IOException e) {
-				   // do nothing
+				   e.printStackTrace();
 				}
 			}
 			
@@ -189,7 +189,7 @@ public class WindowsDriver {
 //		}
 			
 		
-		init("UML", "single");
+		init("UML-test", "single");
 		verify();
 		
 
