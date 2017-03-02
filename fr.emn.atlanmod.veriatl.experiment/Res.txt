@@ -1,65 +1,65 @@
 Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/InitialNode_no_incoming_edges-3.bpl,	Res:true,	Time:11022
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/CallAction_synchronous_call-4.bpl,	Res:true,	Time:15103
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/FinalState_no_regions-2.bpl,	Res:true,	Time:10922
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ExceptionHandler_handler_body_edges-53.bpl,	Res:time_out,	Time:614680
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/AcceptEventAction_no_output_pins-4.bpl,	Res:false,	Time:15658
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ActionInputPin_one_output_pin-44.bpl,	Res:time_out,	Time:612527
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/CommunicationPath_association_ends-27.bpl,	Res:false,	Time:432205
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ObjectFlow_no_executable_nodes-58.bpl,	Res:time_out,	Time:612793
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ReadLinkObjectEndAction_type_of_object-34.bpl,	Res:time_out,	Time:614066
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Pin_control_pins-4.bpl,	Res:true,	Time:12902
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Reception_same_name_as_signal-2.bpl,	Res:true,	Time:11806
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ConditionalNode_no_input_pins-4.bpl,	Res:true,	Time:11749
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Component_no_nested_classifiers-27.bpl,	Res:true,	Time:25338
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/BehavioralFeature_abstract_no_method-8.bpl,	Res:true,	Time:26418
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ObjectFlow_is_multicast_or_is_multireceive-1.bpl,	Res:true,	Time:8699
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Extend_extension_points-3.bpl,	Res:true,	Time:80589
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/TimeConstraint_has_one_constrainedElement-193.bpl,	Res:time_out,	Time:644518
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/State_composite_states-3.bpl,	Res:true,	Time:13095
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/TemplateBinding_parameter_substitution_formal-8.bpl,	Res:false,	Time:22737
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/InformationItem_not_instantiable-1.bpl,	Res:true,	Time:9475
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Constraint_not_apply_to_self-193.bpl,	Res:time_out,	Time:618417
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/StringExpression_operands-15.bpl,	Res:false,	Time:16577
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/FinalState_no_outgoing_transitions-3.bpl,	Res:true,	Time:9975
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/LinkAction_not_static-10.bpl,	Res:false,	Time:57538
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/DecisionNode_decision_input_flow_incoming-3.bpl,	Res:true,	Time:13098
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ActivityParameterNode_same_type-29.bpl,	Res:time_out,	Time:613163
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/CreateObjectAction_same_type-29.bpl,	Res:false,	Time:613866
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Enumeration_immutable-4.bpl,	Res:false,	Time:17466
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ForkNode_one_incoming_edge-3.bpl,	Res:true,	Time:10833
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/InformationFlow_convey_classifiers-28.bpl,	Res:false,	Time:113557
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ClassifierTemplateParameter_has_constraining_classifier-28.bpl,	Res:true,	Time:12249
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/State_destinations_or_sources_of_transitions-6.bpl,	Res:false,	Time:235629
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ValuePin_no_incoming_edges-3.bpl,	Res:true,	Time:10117
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ActionInputPin_input_pin-45.bpl,	Res:false,	Time:150852
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ProtocolStateMachine_protocol_transitions-4.bpl,	Res:false,	Time:22059
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/AcceptCallAction_unmarshall-1.bpl,	Res:true,	Time:8920
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/CreateObjectAction_classifier_not_association_class-28.bpl,	Res:true,	Time:57721
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Property_derived_union_is_read_only-3.bpl,	Res:true,	Time:11232
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Behavior_feature_of_context_classifier-22.bpl,	Res:time_out,	Time:613017
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ReadExtentAction_type_is_classifier-29.bpl,	Res:time_out,	Time:613974
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ReadLinkObjectEndAction_ends_of_association-8.bpl,	Res:false,	Time:93904
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/StructuralFeatureAction_not_static-7.bpl,	Res:true,	Time:86754
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ExecutionSpecification_same_lifeline-7.bpl,	Res:true,	Time:50393
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ActivityParameterNode_no_edges-3.bpl,	Res:true,	Time:10725
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ReadLinkObjectEndQualifierAction_same_type-32.bpl,	Res:time_out,	Time:613205
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Property_subsetted_property_names-3.bpl,	Res:false,	Time:13867
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/FinalNode_no_outgoing_edges-4.bpl,	Res:true,	Time:11460
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/InformationItem_has_no-8.bpl,	Res:true,	Time:12599
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ReadLinkObjectEndAction_type_of_result-32.bpl,	Res:time_out,	Time:613604
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Property_derived_union_is_derived-3.bpl,	Res:true,	Time:11551
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/State_submachine_states-3.bpl,	Res:true,	Time:8462
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/State_submachine_or_regions-2.bpl,	Res:true,	Time:11136
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/JoinNode_one_outgoing_edge-3.bpl,	Res:true,	Time:9586
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/DurationConstraint_has_one_or_two_constrainedElements-193.bpl,	Res:time_out,	Time:616607
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ActivityParameterNode_has_parameters-3.bpl,	Res:true,	Time:16360
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/MergeNode_one_outgoing_edge-3.bpl,	Res:true,	Time:9810
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/AcceptEventAction_no_input_pins-5.bpl,	Res:true,	Time:13810
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/CreateObjectAction_classifier_not_abstract-28.bpl,	Res:time_out,	Time:613835
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Node_internal_structure-6.bpl,	Res:false,	Time:70960
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Extension_is_binary-4.bpl,	Res:true,	Time:11717
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Pin_not_unique-4.bpl,	Res:true,	Time:13345
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/Parameter_stream_and_exception-1.bpl,	Res:true,	Time:8352
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/ConsiderIgnoreFragment_type-170.bpl,	Res:time_out,	Time:623962
- Id:UML-/home/atlanmodelsteam/zcheng/eclipse/git/VeriATL/fr.emn.atlanmod.veriatl.experiment/./UML/Sub-goals/single/InitialNode_control_edges-3.bpl,	Res:false,	Time:11543
+CallAction_synchronous_call-4.bpl,	Res:true,	Time:15103
+FinalState_no_regions-2.bpl,	Res:true,	Time:10922
+ExceptionHandler_handler_body_edges-53.bpl,	Res:time_out,	Time:614680
+AcceptEventAction_no_output_pins-4.bpl,	Res:false,	Time:15658
+ActionInputPin_one_output_pin-44.bpl,	Res:time_out,	Time:612527
+CommunicationPath_association_ends-27.bpl,	Res:false,	Time:432205
+ObjectFlow_no_executable_nodes-58.bpl,	Res:time_out,	Time:612793
+ReadLinkObjectEndAction_type_of_object-34.bpl,	Res:time_out,	Time:614066
+Pin_control_pins-4.bpl,	Res:true,	Time:12902
+Reception_same_name_as_signal-2.bpl,	Res:true,	Time:11806
+ConditionalNode_no_input_pins-4.bpl,	Res:true,	Time:11749
+Component_no_nested_classifiers-27.bpl,	Res:true,	Time:25338
+BehavioralFeature_abstract_no_method-8.bpl,	Res:true,	Time:26418
+ObjectFlow_is_multicast_or_is_multireceive-1.bpl,	Res:true,	Time:8699
+Extend_extension_points-3.bpl,	Res:true,	Time:80589
+TimeConstraint_has_one_constrainedElement-193.bpl,	Res:time_out,	Time:644518
+State_composite_states-3.bpl,	Res:true,	Time:13095
+TemplateBinding_parameter_substitution_formal-8.bpl,	Res:false,	Time:22737
+InformationItem_not_instantiable-1.bpl,	Res:true,	Time:9475
+Constraint_not_apply_to_self-193.bpl,	Res:time_out,	Time:618417
+StringExpression_operands-15.bpl,	Res:false,	Time:16577
+FinalState_no_outgoing_transitions-3.bpl,	Res:true,	Time:9975
+LinkAction_not_static-10.bpl,	Res:false,	Time:57538
+DecisionNode_decision_input_flow_incoming-3.bpl,	Res:true,	Time:13098
+ActivityParameterNode_same_type-29.bpl,	Res:time_out,	Time:613163
+CreateObjectAction_same_type-29.bpl,	Res:false,	Time:613866
+Enumeration_immutable-4.bpl,	Res:false,	Time:17466
+ForkNode_one_incoming_edge-3.bpl,	Res:true,	Time:10833
+InformationFlow_convey_classifiers-28.bpl,	Res:false,	Time:113557
+ClassifierTemplateParameter_has_constraining_classifier-28.bpl,	Res:true,	Time:12249
+State_destinations_or_sources_of_transitions-6.bpl,	Res:false,	Time:235629
+ValuePin_no_incoming_edges-3.bpl,	Res:true,	Time:10117
+ActionInputPin_input_pin-45.bpl,	Res:false,	Time:150852
+ProtocolStateMachine_protocol_transitions-4.bpl,	Res:false,	Time:22059
+AcceptCallAction_unmarshall-1.bpl,	Res:true,	Time:8920
+CreateObjectAction_classifier_not_association_class-28.bpl,	Res:true,	Time:57721
+Property_derived_union_is_read_only-3.bpl,	Res:true,	Time:11232
+Behavior_feature_of_context_classifier-22.bpl,	Res:time_out,	Time:613017
+ReadExtentAction_type_is_classifier-29.bpl,	Res:time_out,	Time:613974
+ReadLinkObjectEndAction_ends_of_association-8.bpl,	Res:false,	Time:93904
+StructuralFeatureAction_not_static-7.bpl,	Res:true,	Time:86754
+ExecutionSpecification_same_lifeline-7.bpl,	Res:true,	Time:50393
+ActivityParameterNode_no_edges-3.bpl,	Res:true,	Time:10725
+ReadLinkObjectEndQualifierAction_same_type-32.bpl,	Res:time_out,	Time:613205
+Property_subsetted_property_names-3.bpl,	Res:false,	Time:13867
+FinalNode_no_outgoing_edges-4.bpl,	Res:true,	Time:11460
+InformationItem_has_no-8.bpl,	Res:true,	Time:12599
+ReadLinkObjectEndAction_type_of_result-32.bpl,	Res:time_out,	Time:613604
+Property_derived_union_is_derived-3.bpl,	Res:true,	Time:11551
+State_submachine_states-3.bpl,	Res:true,	Time:8462
+State_submachine_or_regions-2.bpl,	Res:true,	Time:11136
+JoinNode_one_outgoing_edge-3.bpl,	Res:true,	Time:9586
+DurationConstraint_has_one_or_two_constrainedElements-193.bpl,	Res:time_out,	Time:616607
+ActivityParameterNode_has_parameters-3.bpl,	Res:true,	Time:16360
+MergeNode_one_outgoing_edge-3.bpl,	Res:true,	Time:9810
+AcceptEventAction_no_input_pins-5.bpl,	Res:true,	Time:13810
+CreateObjectAction_classifier_not_abstract-28.bpl,	Res:time_out,	Time:613835
+Node_internal_structure-6.bpl,	Res:false,	Time:70960
+Extension_is_binary-4.bpl,	Res:true,	Time:11717
+Pin_not_unique-4.bpl,	Res:true,	Time:13345
+Parameter_stream_and_exception-1.bpl,	Res:true,	Time:8352
+ConsiderIgnoreFragment_type-170.bpl,	Res:time_out,	Time:623962
+InitialNode_control_edges-3.bpl,	Res:false,	Time:11543
  
