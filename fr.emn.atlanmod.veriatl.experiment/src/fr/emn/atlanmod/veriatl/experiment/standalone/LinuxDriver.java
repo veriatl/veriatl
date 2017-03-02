@@ -161,7 +161,7 @@ public class LinuxDriver implements Configure{
 				moveFile(subgoalPath, post);
 				
 				try{
-					Files.write(Paths.get("./UML-test/Res.txt"), String.format("Id:%s,	Res:%s,	Time:%s ", id, res, time).getBytes(), StandardOpenOption.APPEND);
+					Files.write(Paths.get("./UML-test/Res.txt"), String.format("Id:%s,	Res:%s,	Time:%s\n ", id, res, time).getBytes(), StandardOpenOption.APPEND);
 				} catch (IOException e) {
 				   e.printStackTrace();
 				}
