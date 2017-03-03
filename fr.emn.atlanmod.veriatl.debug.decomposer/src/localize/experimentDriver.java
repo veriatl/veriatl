@@ -111,21 +111,21 @@ public class experimentDriver {
 			ArrayList<Node> newLeafs;
 			
 			do{
-				oldLeafs = NodeHelper.findLeafs(tree);
+				oldLeafs = NodeHelper.findAllLeafs(tree);
 				
 				for(Node n : oldLeafs){
 					//TODO, default prove option
 					Introduction.introduction(n, n.getContent(), n.getContext(), n.getLevel(), ProveOption.EACH);	
 				}
 				
-				newLeafs = NodeHelper.findLeafs(tree);
+				newLeafs = NodeHelper.findAllLeafs(tree);
 			}while(!oldLeafs.containsAll(newLeafs));
 			
 
 			//elimin
 			Elimination.init(env, trace, tree, driver.trgmm);
-			while(!Elimination.terminated(NodeHelper.findLeafs(tree))){
-				ArrayList<Node> leafs = NodeHelper.findLeafs(tree);
+			while(!Elimination.terminated(NodeHelper.findAllLeafs(tree))){
+				ArrayList<Node> leafs = NodeHelper.findAllLeafs(tree);
 				
 				for(Node n : leafs){
 					HashMap<EObject, ContextEntry> ctx = n.getContext();
@@ -162,7 +162,7 @@ public class experimentDriver {
 //			}
 			
 			// Print single postcondition in its consice presentation.
-			String org = prtingFastDriver(env, post, NodeHelper.findLeafs(tree), goalName);
+			String org = prtingFastDriver(env, post, NodeHelper.findAllLeafs(tree), goalName);
 			URI output = outputPath.appendSegment(experimentDriver.SINGLE);
 			driver.generateBoogieFile(output, String.format("%s-%d", goalName, postsTrace.get(goalName).size()), CompilerConstants.BOOGIE_EXT, org);	
 			

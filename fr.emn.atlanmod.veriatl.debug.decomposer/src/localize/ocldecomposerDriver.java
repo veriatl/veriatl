@@ -86,21 +86,21 @@ public class ocldecomposerDriver {
 			ArrayList<Node> newLeafs;
 			
 			do{
-				oldLeafs = NodeHelper.findLeafs(tree);
+				oldLeafs = NodeHelper.findAllLeafs(tree);
 				
 				for(Node n : oldLeafs){
 					//TODO, default prove option
 					Introduction.introduction(n, n.getContent(), n.getContext(), n.getLevel(), ProveOption.EACH);	
 				}
 				
-				newLeafs = NodeHelper.findLeafs(tree);
+				newLeafs = NodeHelper.findAllLeafs(tree);
 			}while(!oldLeafs.containsAll(newLeafs));
 			
 
 			//elimin
 			Elimination.init(env, trace, tree, driver.trgmm);
-			while(!Elimination.terminated(NodeHelper.findLeafs(tree))){
-				ArrayList<Node> leafs = NodeHelper.findLeafs(tree);
+			while(!Elimination.terminated(NodeHelper.findAllLeafs(tree))){
+				ArrayList<Node> leafs = NodeHelper.findAllLeafs(tree);
 				
 				for(Node n : leafs){
 					HashMap<EObject, ContextEntry> ctx = n.getContext();
@@ -129,7 +129,7 @@ public class ocldecomposerDriver {
 			URI output = outputPath.appendSegment(goalName);
 			//System.out.println(String.format("Debug: ocldecomposerDriver.java ln 120, goalName: %s start", goalName));
 			int i = 0;
-			for(Node n : NodeHelper.findLeafs(tree)){
+			for(Node n : NodeHelper.findAllLeafs(tree)){
 				String cse = String.format("case%04d",i);
 				n.setName(String.format("case%04d", i));
 				driver.generateBoogieFile(output, cse, CompilerConstants.BOOGIE_EXT, n.toBoogie(env));		
@@ -139,7 +139,7 @@ public class ocldecomposerDriver {
 			//TODO This is the Boogie program with the full transformation trace, less efficient to verify
 			//String org = printDriver(env, post);
 			
-			String org = prtingFastDriver(env, post, NodeHelper.findLeafs(tree), goalName);
+			String org = prtingFastDriver(env, post, NodeHelper.findAllLeafs(tree), goalName);
 			driver.generateBoogieFile(output, CompilerConstants.ORG, CompilerConstants.BOOGIE_EXT, org);	
 			
 			
@@ -168,6 +168,8 @@ public class ocldecomposerDriver {
 	
 	
 	/**
+	 * write proof tree to a URI,
+	 * TODO refactor to URIs
 	 * @param outputPath
 	 * @param tree
 	 */

@@ -17,8 +17,9 @@ import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import fr.emn.atlanmod.veriatl.core.Context;
+import fr.emn.atlanmod.veriatl.core.IncrementalTasks;
 import fr.emn.atlanmod.veriatl.core.Mode;
-import fr.emn.atlanmod.veriatl.core.Tasks;
+import fr.emn.atlanmod.veriatl.core.NormalTasks;
 import fr.emn.atlanmod.veriatl.util.Metamodels;
 import localize.experimentDriver;
 import localize.ocldecomposerDriver;
@@ -77,9 +78,17 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 			TypeInference.clean();
 			ocl2boogie.clean();
 		} else if (context.mode() == Mode.VERIFY) {
-			Tasks.execBoogie(context);
+			// added for testing purpose
+			String aRule = "SM2SM";
+			String pCache = "2017-03-03-11-20-48";
+			String cCache = "2017-03-03-11-21-42";
+			IncrementalTasks.execBoogie(context, aRule, pCache, cCache);
 		} else if (context.mode() == Mode.DEBUG) {
-			Tasks.debugBoogie(context);
+			// added for testing purpose
+			String aRule = "SM2SM";
+			String pCache = "2017-03-03-11-20-48";
+			String cCache = "2017-03-03-11-21-42";
+			IncrementalTasks.debugBoogie(context, aRule, pCache, cCache);
 		} else {
 			throw new IllegalStateException("Unknown mode");
 		}

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
@@ -26,9 +28,52 @@ public class NodeHelper {
 	}
 	
 
+	/**
+	 * find all the leafs of a particular node {@code n} (in a given proof tree)
+	 * */
+	public static HashSet<Node> findDescendantLeafs(ArrayList<Node> tree, Node trg){
+		
+		HashSet<Node> immediateDescendants = new HashSet<Node>(tree);
+		HashSet<Node> descendantLeafs = new HashSet<Node>();
+		
+		for(Node n : immediateDescendants){
+			if(isLeaf(tree, n)){
+				descendantLeafs.add(n);
+			}
+		}
+		
+		for(Node n : immediateDescendants){
+			descendantLeafs.addAll(findDescendantLeafs(tree, n));
+		}
+		
+		return descendantLeafs;
+		
+	}
 	
 	
-	public static ArrayList<Node> findLeafs(ArrayList<Node> tree){
+	/**
+	 * find a sub-goal {@code n} in the given {@code tree} with exact hypotheses and conclusions
+	 * */
+	public static Node findSubInCache(List<Node> tree, Node n) {
+		
+		for (Node curr : tree) {
+
+			boolean conclusion = n.conclusion.equals(curr.conclusion);
+			boolean hypotheses = n.hypotheses.containsAll(curr.hypotheses);
+
+			if (conclusion && hypotheses) {
+				return curr;
+			}
+		}
+
+		return null;
+	}
+	
+	
+	/**
+	 * find all the leafs of a given proof tree
+	 * */
+	public static ArrayList<Node> findAllLeafs(ArrayList<Node> tree){
 		
 		ArrayList<Node> nonLeafs = new ArrayList<Node>();
 		ArrayList<Node> Leafs = new ArrayList<Node>();
@@ -49,7 +94,33 @@ public class NodeHelper {
 		
 	}
 
-	public static ArrayList<Node> findChildren(Node parent, ArrayList<Node> tree) {
+	
+	/**
+	 * test if a node {@code trg} is leaf or not in {@code tree}.
+	 * */
+	public static boolean isLeaf(ArrayList<Node> tree, Node trg){
+		
+		HashSet<Node> nonLeafs = new HashSet<Node>();
+	
+		for(Node n : tree){
+			if(n.parent != null){
+				nonLeafs.add(n.parent);
+			}
+		}
+		
+		if(!nonLeafs.contains(trg)){
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+	
+	
+	/**
+	 * find immediate descendant of {@code parent}} in {@code tree}}.
+	 * */
+	public static ArrayList<Node> findImmediateDescendants(ArrayList<Node> tree, Node parent) {
 		ArrayList<Node> children =  new ArrayList<Node>();
 		
 		for(Node n : tree){
@@ -64,7 +135,7 @@ public class NodeHelper {
 	public static Node findSimplifiedPost(ArrayList<Node> vTree) {
 		Node r = findRoot(vTree);
 		
-		ArrayList<Node> children = findChildren(r, vTree);
+		ArrayList<Node> children = findImmediateDescendants(vTree,r);
 		
 		int count = 0;
 		Node next = null;
@@ -102,7 +173,7 @@ public class NodeHelper {
 		
 		while(r.getResult() == TriBoolean.UNKNOWN){
 			Node s = findSimplifiedPost(vTree);	
-			TriBoolean res = TriBoolean.compute(findChildren(s, vTree));
+			TriBoolean res = TriBoolean.compute(findImmediateDescendants(vTree,r));
 			s.setResult(res);	
 			normalizeTree(vTree);
 		}

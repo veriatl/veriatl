@@ -5,14 +5,22 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 
+import datastructure.Node;
+import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import static java.util.Objects.nonNull;
 
@@ -102,4 +110,27 @@ public final class URIs {
             throw new RuntimeException(e);
         }
     }
+    
+    
+	@SuppressWarnings("unchecked")
+	/**
+	 * load proof tree from the given URI, return {@code null} if no tree is found.
+	 * */
+	public static ArrayList<Node> load(URI src) {
+		URIConverter uriConverter = new ExtensibleURIConverterImpl();
+		ArrayList<Node> arr;
+
+		try {
+			InputStream inputStream = uriConverter.createInputStream(src);
+			ObjectInputStream in = new ObjectInputStream(inputStream);
+			arr = (ArrayList<Node>) in.readObject();
+			in.close();
+			return arr;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+
 }

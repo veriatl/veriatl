@@ -19,6 +19,9 @@ import transformation.Trace;
 
 public class Node implements Comparable, Serializable {
 
+	private static final long serialVersionUID = 6537298493984410475L;
+	
+	
 	String id;
 	String name;
 	int level;
@@ -34,6 +37,7 @@ public class Node implements Comparable, Serializable {
 	HashSet<String> hypotheses;
 	String conclusion;
 	HashSet<String> traces;
+	boolean checked;
 	
 	public Node(int lv, OclExpression ct, Node pt, HashMap<EObject, ContextEntry> ctx, ProveOption rel, Tactic rule){
 		this.level = lv;
@@ -49,6 +53,7 @@ public class Node implements Comparable, Serializable {
 		hypotheses = new HashSet<String>();
 		traces = new HashSet<String>();
 		conclusion = "";
+		checked = false;
 	}
 
 	
@@ -321,6 +326,14 @@ public class Node implements Comparable, Serializable {
 		this.name = name;
 	}
 
+	public boolean isChecked() {
+		return this.checked;
+	}
+	
+	public void Check(boolean v) {
+		this.checked = v;
+	}
+	
 	//TODO order the hypotheses
 	public void Stringlize(){
 		for(EObject entry : this.getAssumptions()){
@@ -337,4 +350,36 @@ public class Node implements Comparable, Serializable {
 		this.conclusion = conclusion;
 	}
 
+
+	public HashSet<String> getHypotheses() {
+		return hypotheses;
+	}
+
+
+	public void setHypotheses(HashSet<String> hypotheses) {
+		this.hypotheses = hypotheses;
+	}
+
+
+	public String getConclusion() {
+		return conclusion;
+	}
+
+
+	public void setConclusion(String conclusion) {
+		this.conclusion = conclusion;
+	}
+
+
+	public HashSet<String> getTraces() {
+		return traces;
+	}
+
+
+	public void setTraces(HashSet<String> traces) {
+		this.traces = traces;
+	}
+
+	
+	
 }
