@@ -85,11 +85,11 @@ public final class IncrementalTasks {
     	for(Node n: NodeHelper.findAllLeafs(curTree)){
 
     		if(n.isChecked()){
-    			System.out.println(String.format("%s is %s", n.getName(), n.getResult().toString()));
+    			System.out.println(String.format("Checked: %s is %s", n.getName(), n.getResult().toString()));
     		}else{
     			Node cache = NodeHelper.findSubInCache(oldTree, n);
     			
-    			if(cache != null && !n.getTraces().contains(affectedRule)){
+    			if(cache != null && !cache.getResult().toString().equals("UNKNOWN") && !n.getTraces().contains(affectedRule)){
     				System.out.println(String.format("%s is %s", n.getName(), cache.getResult().toString()));
     			}else{
     				todo.add(n.getName());
