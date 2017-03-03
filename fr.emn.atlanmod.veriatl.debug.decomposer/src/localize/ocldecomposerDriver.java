@@ -1,7 +1,13 @@
 package localize;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,6 +16,8 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.m2m.atl.common.ATL.MatchedRule;
 import org.eclipse.m2m.atl.common.OCL.OclExpression;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
@@ -43,7 +51,7 @@ public class ocldecomposerDriver {
 	// the most difficulty part is type inference, and deep copy of objects.
 	@SuppressWarnings("unchecked")
 	public static void decompose(URI atl, URI emftvm, String moduleName, URI src, URI trg, URI contract, URI outputPath) throws Exception {
-		long start = System.currentTimeMillis();
+
 
 		
 
@@ -111,6 +119,11 @@ public class ocldecomposerDriver {
 						
 			Collections.sort(tree);
 			
+			// make string representation of hypotheses and conclusion of each node
+			for(Node n : tree){
+				n.Stringlize();
+			}
+
 			// print Boogie file for each leafs of the generated Proof tree
 			String goalName = post.getCommentsBefore().get(0).replace("--", "");
 			URI output = outputPath.appendSegment(goalName);
@@ -132,10 +145,13 @@ public class ocldecomposerDriver {
 			
 			NodeHelper.printTreeBasic(outputPath.trimSegments(1), goalName, tree);
 			//System.out.println(String.format("Debug: ocldecomposerDriver.java ln 120, goalName: %s end", goalName));
+			
+			// serialize proof tree
+			serialize(outputPath.trimSegments(1), goalName, tree);
 		}
 		
-		String org = prtingFullDriver(env);
-		driver.generateBoogieFile(outputPath, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);
+		//String org = prtingFullDriver(env);
+		//driver.generateBoogieFile(outputPath, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);
 		
 		// Print Genby predicate
 		GenBy.init(rules,driver.srcmm);
@@ -144,11 +160,43 @@ public class ocldecomposerDriver {
 		driver.generateBoogieFile(outputPath, CompilerConstants.GENBY, CompilerConstants.BOOGIE_EXT, genby);
 		
 
-		long end = System.currentTimeMillis();
-		System.out.println(end-start);
+	}
+
+	
+	
+	
+	
+	
+	/**
+	 * @param outputPath
+	 * @param tree
+	 */
+	private static void serialize(URI outputPath, String post, ArrayList<Node> tree) {
+		String timeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
+		String cache = String.format("%s", timeStamp);
+		
+		URI cachePath = outputPath.appendSegment(CompilerConstants.CACHE).appendSegment(post).appendSegment(cache).appendFileExtension(CompilerConstants.CACHEEXT);
+		
+		URIConverter uriConverter = new ExtensibleURIConverterImpl();
+
+		try {
+			OutputStream outputStream = uriConverter.createOutputStream(cachePath);
+			ObjectOutputStream out = new ObjectOutputStream(outputStream);
+			out.writeObject(tree);
+	        out.flush();
+	        out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 		
 		
 	}
+
+
+
+
+
 
 	/**
 	 * @param env

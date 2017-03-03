@@ -54,15 +54,7 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 					context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
 
 			try {
-//				ocldecomposerDriver.decompose(
-//						context.module().appendFileExtension("atl"),
-//						context.module().appendFileExtension("emftvm"), 
-//						context.moduleName(), 
-//						context.inMetamodel(),
-//						context.outMetamodel(), 
-//						context.contractPath(),
-//						context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME));
-				experimentDriver.decompose(
+				ocldecomposerDriver.decompose(
 						context.module().appendFileExtension("atl"),
 						context.module().appendFileExtension("emftvm"), 
 						context.moduleName(), 
@@ -70,6 +62,14 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 						context.outMetamodel(), 
 						context.contractPath(),
 						context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME));
+//				experimentDriver.decompose(
+//						context.module().appendFileExtension("atl"),
+//						context.module().appendFileExtension("emftvm"), 
+//						context.moduleName(), 
+//						context.inMetamodel(),
+//						context.outMetamodel(), 
+//						context.contractPath(),
+//						context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

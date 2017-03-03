@@ -30,4 +30,8 @@ public interface CompilerConstants {
 	String TREE = "Trees";
 
 	String FULL = "fullDriver";
+
+	String CACHEEXT = "cache";
+
+	String CACHE = "Caches";
 }

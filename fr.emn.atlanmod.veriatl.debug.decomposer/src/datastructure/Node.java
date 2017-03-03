@@ -1,7 +1,9 @@
 package datastructure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.atl.common.OCL.*;
@@ -15,18 +17,23 @@ import transformation.Trace;
 
 
 
-public class Node implements Comparable {
+public class Node implements Comparable, Serializable {
 
 	String id;
 	String name;
 	int level;
-	OclExpression content;
+	transient OclExpression content;
 	Node parent;
 	Node backUpParent;
-	HashMap<EObject, ContextEntry> context;
-	ProveOption rel2Parent;
-	Tactic ruleApplied;
+	transient HashMap<EObject, ContextEntry> context;
+	transient ProveOption rel2Parent;
+	transient Tactic ruleApplied;
 	TriBoolean res;
+	
+	// for serialization;
+	HashSet<String> hypotheses;
+	String conclusion;
+	HashSet<String> traces;
 	
 	public Node(int lv, OclExpression ct, Node pt, HashMap<EObject, ContextEntry> ctx, ProveOption rel, Tactic rule){
 		this.level = lv;
@@ -38,6 +45,10 @@ public class Node implements Comparable {
 		this.res = TriBoolean.UNKNOWN;
 		this.id = Integer.toHexString(this.hashCode());
 		this.name = "";
+		
+		hypotheses = new HashSet<String>();
+		traces = new HashSet<String>();
+		conclusion = "";
 	}
 
 	
@@ -254,6 +265,9 @@ public class Node implements Comparable {
 			}	
 		}
 		
+		// to serialize traces of this node
+		this.traces.addAll(list);
+		
 		for(String r : list){
 			rtn += String.format("call %s_matchAll();\n", r);
 		}
@@ -263,16 +277,14 @@ public class Node implements Comparable {
 		}
 		
 		
-		for(EObject entry : this.getAssumptions()){
-			rtn += String.format("assume %s;\n",  ocl2boogie.genOclExpression(entry, atl.genTrgHeap()));
-		}
-		
-		for(EObject entry : this.getInfers()){
-			rtn += String.format("assume %s;\n",  ocl2boogie.genOclExpression(entry, atl.genTrgHeap()));
+		for(String entry : this.hypotheses){
+			String assume = String.format("assume %s;\n",  entry);
+			rtn += assume ;
 		}
 		
 		
-		rtn += String.format("assert %s;\n",  ocl2boogie.genOclExpression(this.content, atl.genTrgHeap()));
+		String ast = String.format("assert %s;\n",  this.conclusion);
+		rtn += ast;
 		
 		rtn+="}\n";
 		
@@ -309,6 +321,20 @@ public class Node implements Comparable {
 		this.name = name;
 	}
 
-
+	//TODO order the hypotheses
+	public void Stringlize(){
+		for(EObject entry : this.getAssumptions()){
+			String assume = ocl2boogie.genOclExpression(entry, atl.genTrgHeap()).toString();
+			this.hypotheses.add(assume);
+		}
+		
+		for(EObject entry : this.getInfers()){
+			String assume = ocl2boogie.genOclExpression(entry, atl.genTrgHeap()).toString();
+			this.hypotheses.add(assume);
+		}
+		
+		String conclusion = ocl2boogie.genOclExpression(this.content, atl.genTrgHeap()).toString();
+		this.conclusion = conclusion;
+	}
 
 }
