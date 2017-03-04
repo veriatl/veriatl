@@ -167,6 +167,9 @@ public class NodeHelper {
 
 	}
 
+	
+
+	
 	/**
 	 * populate the leafs of trg using the src
 	 * */
@@ -225,7 +228,10 @@ public class NodeHelper {
 		return temp;
 	}
 
-	private static void normalizeTree(ArrayList<Node> tree) {
+	/**
+	 * restore the tree, because `findSimplifiedPost` set parent node to null
+	 * */
+	public static void restore(ArrayList<Node> tree) {
 		for(Node n : tree){
 			if(n.getBackUpParent()!=null){
 				n.setParent(n.getBackUpParent());

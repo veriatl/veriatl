@@ -70,6 +70,8 @@ public class ocldecomposerDriver {
 		// clean sub-goals previously generated
 		URIs.delete(outputPath);
 		
+		// TODO create sub-goals folder with post name
+		
 		
 		// proof strategy starts
 		for (OclExpression post : postconditions) {

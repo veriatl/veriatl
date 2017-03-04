@@ -31,7 +31,7 @@ public final class IncrementalTasks {
     /**
      * Exec Boogie.
      * <p>
-     * TODO bug in simplified POST trace, bug in find simplified post
+     *   
      *
      */
     public static void execBoogie(Context context, String affectedRule, String previousCache, String currentCache) {
@@ -58,12 +58,11 @@ public final class IncrementalTasks {
 			}else{
 				curTree = NodeHelper.populate(oldTree, curTree, affectedRule);
 				
-				for(Node n : curTree) {
-					System.out.println(String.format("%s: %s", n.getId(), n.getResult()));
-				}
 				
 				Node simPost = NodeHelper.findSimplifiedPost(curTree);
-
+				NodeHelper.restore(curTree);
+				
+				System.out.println(simPost.getId());
 				
 				if(simPost!=null){
 					// generate PO
