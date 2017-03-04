@@ -3,6 +3,14 @@
  */
 package fr.emn.atlanmod.veriatl.launcher;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.debug.core.ILaunch;
@@ -17,6 +25,7 @@ import fr.emn.atlanmod.veriatl.core.IncrementalTasks;
 import fr.emn.atlanmod.veriatl.core.Mode;
 import fr.emn.atlanmod.veriatl.core.NormalTasks;
 import fr.emn.atlanmod.veriatl.util.Metamodels;
+import fr.emn.atlanmod.veriatl.util.URIs;
 import localize.ocldecomposerDriver;
 
 /**
@@ -72,22 +81,70 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 			
 			TypeInference.clean();
 			ocl2boogie.clean();
-		} else if (context.mode() == Mode.VERIFY) {
+		} else  {
 			String aRule = "SM2SM";
-			String pCache = "2017-03-04-15-03-10";
-			String cCache = "2017-03-04-20-45-48";
-			IncrementalTasks.execBoogie(context, aRule, pCache, cCache);
-		} else if (context.mode() == Mode.DEBUG) {
-			// added for testing purpose
-			String aRule = "SM2SM";
-			String pCache = "2017-03-04-15-02-49";
-			String cCache = "2017-03-04-15-03-10";
-			IncrementalTasks.debugBoogie(context, aRule, pCache, cCache);
-		} else {
-			throw new IllegalStateException("Unknown mode");
-		}
+			
+			// load caches, and sort in desc order.
+			ArrayList<String> caches = URIs.allNames(context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(context.postName()));
+			Collections.sort(caches, new Comparator<String>(){
+			    public int compare(String s1, String s2){
+			    	DateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+			    	Date d1;
+			    	Date d2 ;
+					try {
+						d1 = df.parse(s1);
+						d2 = df.parse(s2);
+						return d1.compareTo(d2);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+			    	
+			        return 0;
+			    }
+			});
+			
+
+			
+			String pCache = prevCache(caches);
+			String cCache = curCache(caches);
+			
+			if (context.mode() == Mode.VERIFY) {
+				if(pCache == null) {
+					NormalTasks.execBoogie(context);
+				}else {
+					//TODO if is in incremental mode
+					IncrementalTasks.execBoogie(context, aRule, pCache, cCache);
+				}
+			}else if (context.mode() == Mode.DEBUG) {
+				// added for testing purpose
+				if(pCache == null) {
+					NormalTasks.debugBoogie(context);
+				}else {
+					//TODO if is in incremental mode
+					IncrementalTasks.debugBoogie(context, aRule, pCache, cCache);
+				}
+				
+			} else {
+				throw new IllegalStateException("Unknown mode");
+			}		
+		} 
 
 		subMonitor.done();
 		System.out.println("Finished");
 	}
+	
+	
+	
+	private static String curCache(ArrayList<String> caches) {
+		return caches.get(caches.size()-1);
+	}
+	
+	private static String prevCache(ArrayList<String> caches) {
+		if(caches.size()<=1) {
+			return null;
+		}else {
+			return caches.get(caches.size()-2);
+		}
+	}
+	
 }

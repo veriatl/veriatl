@@ -1,28 +1,25 @@
 package fr.emn.atlanmod.veriatl.util;
 
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import static java.util.Objects.nonNull;
 
-import datastructure.Node;
-import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
-
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-import static java.util.Objects.nonNull;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+
+import datastructure.Node;
 
 /**
  * Utility methods for working with {@link URI}s.
@@ -133,4 +130,27 @@ public final class URIs {
 	}
 	
 
+	/**
+	 * find all file names without extension within given URI, not recurvie.
+	 * */
+	public static ArrayList<String> allNames(URI src) {
+		String folder = abs(src);
+		ArrayList<String> r = new ArrayList<String>();
+
+		File f = new File(folder);
+		for (final File file : f.listFiles()) {
+			r.add(getBaseName(file.getName()));
+		}
+		return r;
+
+	}
+	
+	private static String getBaseName(String fileName) {
+	    int index = fileName.lastIndexOf('.');
+	    if (index == -1) {
+	        return fileName;
+	    } else {
+	        return fileName.substring(0, index);
+	    }
+	}
 }
