@@ -171,18 +171,20 @@ public class NodeHelper {
 
 	
 	/**
-	 * populate the leafs of trg using the src
+	 * populate the leafs of trg using the src, or its subgoal's verification results
 	 * */
 	public static ArrayList<Node> populate(ArrayList<Node> oldTree, ArrayList<Node> curTree, String affectedRule) {
-		// copy leaf res from oldTree if any exists
+		// copy leaf res from oldTree if any exists, OR leaf already has veri. result.
 		for(Node curLeaf : findAllLeafs(curTree)) {
-			Node cache = NodeHelper.findSubInCache(oldTree, curLeaf);
-			
-			if(cache != null && !curLeaf.getTraces().contains(affectedRule)){
-				curLeaf.setResult(cache.getResult());
-			}else{
-				curLeaf.setResult(TriBoolean.UNKNOWN);
-			}
+			if(curLeaf.getResult() == TriBoolean.UNKNOWN) {
+				Node cache = NodeHelper.findSubInCache(oldTree, curLeaf);
+				
+				if(cache != null && !curLeaf.getTraces().contains(affectedRule)){
+					curLeaf.setResult(cache.getResult());
+				}else{
+					curLeaf.setResult(TriBoolean.UNKNOWN);
+				}
+			}		
 		}
 		
 		
