@@ -74,14 +74,14 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 			ocl2boogie.clean();
 		} else if (context.mode() == Mode.VERIFY) {
 			String aRule = "SM2SM";
-			String pCache = "2017-03-04-15-02-49";
+			String pCache = "2017-03-04-15-03-10";
 			String cCache = "2017-03-04-20-45-48";
 			IncrementalTasks.execBoogie(context, aRule, pCache, cCache);
 		} else if (context.mode() == Mode.DEBUG) {
 			// added for testing purpose
 			String aRule = "SM2SM";
-			String pCache = "2017-03-04-14-20-43";
-			String cCache = "2017-03-04-14-20-52";
+			String pCache = "2017-03-04-15-02-49";
+			String cCache = "2017-03-04-15-03-10";
 			IncrementalTasks.debugBoogie(context, aRule, pCache, cCache);
 		} else {
 			throw new IllegalStateException("Unknown mode");

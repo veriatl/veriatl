@@ -54,7 +54,6 @@ public final class IncrementalTasks {
 			
 			if(oldTrace.equals(curTrace) && !oldRoot.getResult().toString().equals("UNKNOWN") && !curTrace.contains(affectedRule)){
 				System.out.println(String.format("%s is cached with %s", postName, oldRoot.getResult().toString()));
-				curRoot.Check(true);
 				curRoot.setResult(oldRoot.getResult());
 			}else{
 				curTree = NodeHelper.populate(oldTree, curTree, affectedRule);
@@ -65,7 +64,7 @@ public final class IncrementalTasks {
 				if(simPost!=null){
 					// generate PO
 					HashSet<String> simTrace = NodeHelper.UnionTraces(simPost, NodeHelper.findDescendantLeafs(curTree, simPost));
-					System.out.println(simPost.getId());
+
 					simPost.setTraces(simTrace);
 					String boogie = simPost.toBoogie();
 					String sim = String.format("%s_sim",postName);
@@ -112,13 +111,17 @@ public final class IncrementalTasks {
 					// update result and repopulate verification result tree
 					simPost.setResult(r.getTriBooleanResult());
 					curTree = NodeHelper.repopulate(curTree);	
-					System.out.println(r.getTriBooleanResult().toString());
+					curRoot.setResult(r.getTriBooleanResult());
+					curRoot.setTime(r.getTime());
+					System.out.println(curRoot.getResult());
 				}
 				
+				// curRoot is now checked
+				curRoot.Check(true);
 				
 				// serialize curTree
-				
-				
+				URI output = context.basePath();
+				localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);
 			}
 		}
     	
@@ -214,8 +217,9 @@ public final class IncrementalTasks {
         	n.setTime(r.getTime());
         }
           
-        //TODO save to currentCache, do not append, clear first.
-    	//fr.emn.atlanmod.atl2boogie.xtend.lib.URIs.writeTree(TODO_PATH, postName, currentCache, curTree);	
+        // save to currentCache
+        URI output = context.basePath();
+		localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);	
         
         
     }

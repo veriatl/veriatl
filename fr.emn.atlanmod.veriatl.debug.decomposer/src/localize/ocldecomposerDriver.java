@@ -167,12 +167,12 @@ public class ocldecomposerDriver {
 	/**
 	 * write proof tree to a URI
 	 * TODO don't append
-	 * @param outputPath
+	 * @param outputPath basdURI
 	 * @param tree
 	 * @param append
 	 */
-	private static void writeTree(URI outputPath, String post, String surfix, ArrayList<Node> tree) {
-		String cache = String.format("%s", surfix);
+	public static void writeTree(URI outputPath, String post, String cacheName, ArrayList<Node> tree) {
+		String cache = String.format("%s", cacheName);
 		
 		URI cachePath = outputPath.appendSegment("Caches")
 				.appendSegment(post).appendSegment(cache).appendFileExtension("cache");

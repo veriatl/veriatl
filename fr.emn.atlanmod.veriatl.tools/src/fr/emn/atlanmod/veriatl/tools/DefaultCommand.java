@@ -91,7 +91,7 @@ public class DefaultCommand implements Command {
 
 				String line;
 				while ((line = input.readLine()) != null) {
-					System.out.println(line);
+					//System.out.println(line);
 					if(line.indexOf("Boogie program verifier finished") != -1){
 						if (line.indexOf("inconclusive") != -1) {
 							boogieRes = "inconclusive";
