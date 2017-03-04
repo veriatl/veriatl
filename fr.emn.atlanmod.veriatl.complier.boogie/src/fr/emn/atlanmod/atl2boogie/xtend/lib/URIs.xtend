@@ -8,6 +8,9 @@ import java.nio.charset.Charset
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.URIConverter
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl
+import java.nio.file.Paths
+import org.eclipse.core.resources.ResourcesPlugin
+import java.io.File
 
 /**
  * @author zcheng
@@ -42,19 +45,28 @@ class URIs {
 	
 	def public static void delete(URI target) throws RuntimeException{
 
-		val URIConverter uriConverter = new ExtensibleURIConverterImpl();
-
-		try {
-			if(uriConverter.exists(target, null)){
-				uriConverter.delete(target, null)
-			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-
-
+		val folder = Paths.get(
+                ResourcesPlugin.getWorkspace()
+                        .getRoot()
+                        .getFile(new org.eclipse.core.runtime.Path(target.toPlatformString(true)))
+                        .getRawLocation()
+                        .toOSString()).toString();
+                     
+        deleteFolder(new File(folder))
+	}
+	
+	def private static void deleteFolder(File folder) {
+	    val files = folder.listFiles();
+	    if(files !== null) { //some JVMs return null for empty dirs
+	        for(File f: files) {
+	            if(f.isDirectory()) {
+	                deleteFolder(f);
+	            } else {
+	                f.delete();
+	            }
+	        }
+	    }
+	    folder.delete();
 	}
 	
 

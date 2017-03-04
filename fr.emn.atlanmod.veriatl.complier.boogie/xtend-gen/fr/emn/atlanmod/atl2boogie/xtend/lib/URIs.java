@@ -1,8 +1,13 @@
 package fr.emn.atlanmod.atl2boogie.xtend.lib;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.nio.file.Paths;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
@@ -40,20 +45,27 @@ public class URIs {
   }
   
   public static void delete(final URI target) throws RuntimeException {
-    final URIConverter uriConverter = new ExtensibleURIConverterImpl();
-    try {
-      boolean _exists = uriConverter.exists(target, null);
-      if (_exists) {
-        uriConverter.delete(target, null);
-      }
-    } catch (final Throwable _t) {
-      if (_t instanceof IOException) {
-        final IOException e = (IOException)_t;
-        e.printStackTrace();
-        throw new RuntimeException(e);
-      } else {
-        throw Exceptions.sneakyThrow(_t);
+    IWorkspaceRoot _root = ResourcesPlugin.getWorkspace().getRoot();
+    String _platformString = target.toPlatformString(true);
+    Path _path = new Path(_platformString);
+    final String folder = Paths.get(
+      _root.getFile(_path).getRawLocation().toOSString()).toString();
+    File _file = new File(folder);
+    URIs.deleteFolder(_file);
+  }
+  
+  private static void deleteFolder(final File folder) {
+    final File[] files = folder.listFiles();
+    if ((files != null)) {
+      for (final File f : files) {
+        boolean _isDirectory = f.isDirectory();
+        if (_isDirectory) {
+          URIs.deleteFolder(f);
+        } else {
+          f.delete();
+        }
       }
     }
+    folder.delete();
   }
 }

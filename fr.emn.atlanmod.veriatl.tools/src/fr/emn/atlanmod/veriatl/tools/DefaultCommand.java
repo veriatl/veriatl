@@ -84,6 +84,13 @@ public class DefaultCommand implements Command {
             
             
             if (exitValue != 0) {
+            	BufferedReader input = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+				String line;
+				while ((line = input.readLine()) != null) {
+					System.out.println(line);				
+				}
+				
                 throw new RuntimeException("The execution ended with an error: " + exitValue + ". See the trace for more information");
             }else{
 				BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
