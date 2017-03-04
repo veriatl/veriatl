@@ -39,6 +39,7 @@ public class Node implements Comparable, Serializable {
 	String conclusion;
 	HashSet<String> traces;
 	boolean checked;
+	HashSet<String> bvs;
 	
 	public Node(int lv, OclExpression ct, Node pt, HashMap<EObject, ContextEntry> ctx, ProveOption rel, Tactic rule){
 		this.level = lv;
@@ -53,6 +54,7 @@ public class Node implements Comparable, Serializable {
 		
 		hypotheses = new HashSet<String>();
 		traces = new HashSet<String>();
+		bvs = new HashSet<String>();
 		conclusion = "";
 		checked = false;
 	}
@@ -249,6 +251,40 @@ public class Node implements Comparable, Serializable {
 	
 	
 
+	public String toBoogie(){
+		String rtn = Keyword.EMPTY_STRING;
+		
+		rtn += "implementation driver(){\n";
+		
+		for(String r : this.boundVars()){
+			rtn += String.format("var %s: ref;\n", r);
+		}
+		
+		rtn += "call init_tar_model();\n";
+	
+		
+		for(String r : traces){
+			rtn += String.format("call %s_matchAll();\n", r);
+		}
+		
+		for(String r : traces){
+			rtn += String.format("call %s_applyAll();\n", r);
+		}
+		
+		
+		for(String entry : this.hypotheses){
+			String assume = String.format("assume %s;\n",  entry);
+			rtn += assume ;
+		}
+		
+		
+		String ast = String.format("assert %s;\n",  this.conclusion);
+		rtn += ast;
+		
+		rtn+="}\n";
+		
+		return rtn;
+	}
 	
 	public String toBoogie(ExecEnv env){
 		String rtn = Keyword.EMPTY_STRING;
@@ -337,6 +373,12 @@ public class Node implements Comparable, Serializable {
 	
 	//TODO order the hypotheses
 	public void Stringlize(){
+		
+		for(EObject bv : this.getBVs()) {
+			String v = ocl2boogie.genOclExpression(bv, atl.genTrgHeap()).toString();
+			this.bvs.add(v);
+		}
+		
 		for(EObject entry : this.getAssumptions()){
 			String assume = ocl2boogie.genOclExpression(entry, atl.genTrgHeap()).toString();
 			this.hypotheses.add(assume);
@@ -362,6 +404,15 @@ public class Node implements Comparable, Serializable {
 	}
 
 
+	public HashSet<String> boundVars() {
+		return bvs;
+	}
+
+
+	public void setBoundVars(HashSet<String> bvs) {
+		this.bvs = bvs;
+	}
+	
 	public String getConclusion() {
 		return conclusion;
 	}

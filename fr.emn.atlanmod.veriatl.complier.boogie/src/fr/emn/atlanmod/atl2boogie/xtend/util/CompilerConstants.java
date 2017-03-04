@@ -31,7 +31,5 @@ public interface CompilerConstants {
 
 	String FULL = "fullDriver";
 
-	String CACHEEXT = "cache";
-
-	String CACHE = "Caches";
+	
 }

@@ -5,11 +5,13 @@ package fr.emn.atlanmod.veriatl.core;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.eclipse.emf.common.util.URI;
 
 import datastructure.Node;
 import datastructure.NodeHelper;
+import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.Commands;
@@ -33,33 +35,91 @@ public final class IncrementalTasks {
      *
      */
     public static void execBoogie(Context context, String affectedRule, String previousCache, String currentCache) {
-    	ArrayList<String> args = new ArrayList<String>();
-        String z3abs = z3Path.resolve("z3")+".exe";
-        
-        // add Boogie options
-        args.add("/nologo");
-        args.add("/z3exe:"+z3abs);
-        //args.add("/trace");
-        
-        // add prelude files
-        String veriatlabs = veriATLPath.toAbsolutePath().toString()+"\\Prelude\\";
-        args.addAll(getFiles(veriatlabs));
-        
-        // add auxu files
-        String auxu = URIs.abs(context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
-        args.addAll(getFiles(auxu));
-        
-        // add postcondition to be verified
-        String post = URIs.abs(context.basePath()
-        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-        		.appendSegment(context.postName())
-        		.appendSegment(CompilerConstants.ORG)
-        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
-        );
-        args.add(post);
-        
-        
-        Commands.boogie().exec().execute(args);
+    	String postName = context.postName();
+    	URI pCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(previousCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
+    	URI cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
+    	
+    	ArrayList<Node> oldTree = URIs.load(pCache);
+    	ArrayList<Node> curTree = URIs.load(cCache);
+    	
+    	Node curRoot = NodeHelper.findRoot(curTree);
+    	HashSet<String> curTrace = NodeHelper.UnionTraces(NodeHelper.findDescendantLeafs(curTree, curRoot));
+    	
+    	if(curRoot.isChecked()){
+			System.out.println(String.format("Checked: %s is %s", postName, curRoot.getResult().toString()));
+		}else{
+			Node oldRoot = NodeHelper.findRoot(oldTree);
+			HashSet<String> oldTrace = NodeHelper.UnionTraces(NodeHelper.findDescendantLeafs(oldTree, oldRoot));
+			
+			
+			if(oldTrace.equals(curTrace) && !oldRoot.getResult().toString().equals("UNKNOWN") && !curTrace.contains(affectedRule)){
+				System.out.println(String.format("%s is cached with %s", postName, oldRoot.getResult().toString()));
+				curRoot.Check(true);
+				curRoot.setResult(oldRoot.getResult());
+			}else{
+				curTree = NodeHelper.populate(oldTree, curTree, affectedRule);
+				
+				Node simPost = NodeHelper.findSimplifiedPost(curTree);
+
+				
+				if(simPost!=null){
+					// generate PO
+					HashSet<String> simTrace = NodeHelper.UnionTraces(NodeHelper.findDescendantLeafs(curTree, simPost));
+					simPost.setTraces(simTrace);
+					String boogie = simPost.toBoogie();
+					String sim = String.format("%s_sim",postName);
+					URI output = context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
+					driver.generateBoogieFile(output, sim, CompilerConstants.BOOGIE_EXT, boogie);
+					
+					
+					
+					// verify PO
+			    	ArrayList<String> args = new ArrayList<String>();
+			        String z3abs = z3Path.resolve("z3")+".exe";
+			        
+			        // add Boogie options
+			        args.add("/nologo");
+			        args.add("/z3exe:"+z3abs);
+			        //args.add("/trace");
+			        
+			        // add prelude files
+			        String veriatlabs = veriATLPath.toAbsolutePath().toString()+"\\Prelude\\";
+			        args.addAll(getFiles(veriatlabs));
+			        
+			        // add auxu files
+			        String auxu = URIs.abs(context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
+			        args.addAll(getFiles(auxu));
+			        
+			        // add postcondition to be verified
+			        String post = URIs.abs(context.basePath()
+			        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+			        		.appendSegment(context.postName())
+			        		.appendSegment(sim)
+			        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
+			        );
+			        args.add(post);
+			        VerificationResult r = Commands.boogie().exec().execute(args);
+					
+					// update result and repopulate verification result tree
+					simPost.setResult(r.getTriBooleanResult());
+					curTree = NodeHelper.repopulate(curTree);	
+					System.out.println(r.getTime());
+				}
+				
+				
+				// serialize curTree
+				
+				
+			}
+		}
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+
     }
     
 
@@ -72,8 +132,8 @@ public final class IncrementalTasks {
      */
     public static void debugBoogie(Context context, String affectedRule, String previousCache, String currentCache) {
     	String postName = context.postName();
-    	URI pCache = context.basePath().appendSegment(CompilerConstants.CACHE).appendSegment(postName).appendSegment(previousCache).appendFileExtension(CompilerConstants.CACHEEXT);
-    	URI cCache = context.basePath().appendSegment(CompilerConstants.CACHE).appendSegment(postName).appendSegment(currentCache).appendFileExtension(CompilerConstants.CACHEEXT);
+    	URI pCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(previousCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
+    	URI cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
     	
     	ArrayList<Node> oldTree = URIs.load(pCache);
     	ArrayList<Node> curTree = URIs.load(cCache);

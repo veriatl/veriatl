@@ -3,15 +3,11 @@
  */
 package fr.emn.atlanmod.veriatl.launcher;
 
-import java.util.Iterator;
-
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
-import org.eclipse.emf.common.util.URI;
 
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference;
@@ -21,7 +17,6 @@ import fr.emn.atlanmod.veriatl.core.IncrementalTasks;
 import fr.emn.atlanmod.veriatl.core.Mode;
 import fr.emn.atlanmod.veriatl.core.NormalTasks;
 import fr.emn.atlanmod.veriatl.util.Metamodels;
-import localize.experimentDriver;
 import localize.ocldecomposerDriver;
 
 /**
@@ -78,16 +73,15 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 			TypeInference.clean();
 			ocl2boogie.clean();
 		} else if (context.mode() == Mode.VERIFY) {
-			// added for testing purpose
 			String aRule = "SM2SM";
-			String pCache = "2017-03-03-14-46-43";
-			String cCache = "2017-03-03-14-46-43";
+			String pCache = "2017-03-04-15-02-49";
+			String cCache = "2017-03-04-15-03-10";
 			IncrementalTasks.execBoogie(context, aRule, pCache, cCache);
 		} else if (context.mode() == Mode.DEBUG) {
 			// added for testing purpose
 			String aRule = "SM2SM";
-			String pCache = "2017-03-03-14-46-42";
-			String cCache = "2017-03-03-14-46-48";
+			String pCache = "2017-03-04-14-20-43";
+			String cCache = "2017-03-04-14-20-52";
 			IncrementalTasks.debugBoogie(context, aRule, pCache, cCache);
 		} else {
 			throw new IllegalStateException("Unknown mode");

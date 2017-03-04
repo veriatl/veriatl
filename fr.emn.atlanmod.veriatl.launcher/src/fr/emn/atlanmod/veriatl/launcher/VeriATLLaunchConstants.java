@@ -23,4 +23,8 @@ public interface VeriATLLaunchConstants {
 	String SRC_PATH = "SOURCE MM PATH";
 	
 	String TRG_PATH = "TARGET MM PATH";
+	
+	String CACHE_EXT = "cache";
+
+	String CACHE_FOLDER_NAME = "Caches";
 }

@@ -33,7 +33,7 @@ public class NodeHelper {
 	 * */
 	public static HashSet<Node> findDescendantLeafs(ArrayList<Node> tree, Node trg){
 		
-		HashSet<Node> immediateDescendants = new HashSet<Node>(tree);
+		ArrayList<Node> immediateDescendants = findImmediateDescendants(tree, trg);
 		HashSet<Node> descendantLeafs = new HashSet<Node>();
 		
 		for(Node n : immediateDescendants){
@@ -167,18 +167,62 @@ public class NodeHelper {
 
 	}
 
-	public static TriBoolean repopulate(Node n, ArrayList<Node> vTree) {
-		normalizeTree(vTree);
-		Node r = findRoot(vTree);
-		
-		while(r.getResult() == TriBoolean.UNKNOWN){
-			Node s = findSimplifiedPost(vTree);	
-			TriBoolean res = TriBoolean.compute(findImmediateDescendants(vTree,r));
-			s.setResult(res);	
-			normalizeTree(vTree);
+	/**
+	 * populate the leafs of trg using the src
+	 * */
+	public static ArrayList<Node> populate(ArrayList<Node> oldTree, ArrayList<Node> curTree, String affectedRule) {
+		// copy leaf res from oldTree if any exists
+		for(Node curLeaf : findAllLeafs(curTree)) {
+			Node cache = NodeHelper.findSubInCache(oldTree, curLeaf);
+			
+			if(cache != null && !curLeaf.getTraces().contains(affectedRule)){
+				curLeaf.setResult(cache.getResult());
+			}else{
+				curLeaf.setResult(TriBoolean.UNKNOWN);
+			}
 		}
 		
-		return r.getResult();
+		
+		
+		//populate curTree bottom-up	
+		ArrayList<Node> temp = new ArrayList<Node>();
+		for (Node leaf : NodeHelper.findAllLeafs(curTree)) {
+			temp.add(leaf);
+			curTree.remove(leaf);
+		}
+
+		while (curTree.size() != 0) {
+			for (Node leaf : NodeHelper.findAllLeafs(curTree)) {
+				ArrayList<Node> childrenOfLeaf = NodeHelper.findImmediateDescendants(temp, leaf);
+				leaf.setResult(TriBoolean.compute(childrenOfLeaf));
+				temp.add(leaf);
+				curTree.remove(leaf);
+			}
+		}
+		
+		return temp;
+	}
+	
+	/**
+	 * self populate the tree using its leafs.
+	 * */
+	public static ArrayList<Node> repopulate(ArrayList<Node> curTree) {
+		ArrayList<Node> temp = new ArrayList<Node>();
+		for (Node leaf : NodeHelper.findAllLeafs(curTree)) {
+			temp.add(leaf);
+			curTree.remove(leaf);
+		}
+
+		while (curTree.size() != 0) {
+			for (Node leaf : NodeHelper.findAllLeafs(curTree)) {
+				ArrayList<Node> childrenOfLeaf = NodeHelper.findImmediateDescendants(temp, leaf);
+				leaf.setResult(TriBoolean.compute(childrenOfLeaf));
+				temp.add(leaf);
+				curTree.remove(leaf);
+			}
+		}
+		
+		return temp;
 	}
 
 	private static void normalizeTree(ArrayList<Node> tree) {
@@ -303,6 +347,22 @@ public class NodeHelper {
 		}
 		return null;
 	}
+	
+	
+	/**
+	 * union the traces of a list of node
+	 */
+	public static HashSet<String> UnionTraces(HashSet<Node> nodes){
+		HashSet<String> t = new HashSet<String>();
+		for(Node n : nodes) {
+			t.addAll(n.getTraces());
+		}
+		
+		return t;
+		
+	}
+	
+	
 	
 	
 
