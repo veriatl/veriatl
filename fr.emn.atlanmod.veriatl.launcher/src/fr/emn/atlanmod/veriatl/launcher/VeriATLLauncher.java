@@ -75,7 +75,7 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 		} else if (context.mode() == Mode.VERIFY) {
 			String aRule = "SM2SM";
 			String pCache = "2017-03-04-15-02-49";
-			String cCache = "2017-03-04-15-03-10";
+			String cCache = "2017-03-04-20-45-48";
 			IncrementalTasks.execBoogie(context, aRule, pCache, cCache);
 		} else if (context.mode() == Mode.DEBUG) {
 			// added for testing purpose

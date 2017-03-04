@@ -352,13 +352,16 @@ public class NodeHelper {
 	/**
 	 * union the traces of a list of node
 	 */
-	public static HashSet<String> UnionTraces(HashSet<Node> nodes){
-		HashSet<String> t = new HashSet<String>();
+	public static HashSet<String> UnionTraces(Node self, HashSet<Node> nodes){
+		HashSet<String> t = self.traces;
+		
 		for(Node n : nodes) {
 			t.addAll(n.getTraces());
 		}
 		
 		return t;
+		
+		
 		
 	}
 	

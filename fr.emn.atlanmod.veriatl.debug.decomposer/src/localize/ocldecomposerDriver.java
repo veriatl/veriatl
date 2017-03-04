@@ -34,6 +34,7 @@ import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
+
 import transformation.GenBy;
 import transformation.Trace;
 import transformation.TransformationLoader;
@@ -173,7 +174,8 @@ public class ocldecomposerDriver {
 	private static void writeTree(URI outputPath, String post, String surfix, ArrayList<Node> tree) {
 		String cache = String.format("%s", surfix);
 		
-		URI cachePath = outputPath.appendSegment(CompilerConstants.CACHE).appendSegment(post).appendSegment(cache).appendFileExtension(CompilerConstants.CACHEEXT);
+		URI cachePath = outputPath.appendSegment("Caches")
+				.appendSegment(post).appendSegment(cache).appendFileExtension("cache");
 		
 		URIConverter uriConverter = new ExtensibleURIConverterImpl();
 

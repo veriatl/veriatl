@@ -43,13 +43,13 @@ public final class IncrementalTasks {
     	ArrayList<Node> curTree = URIs.load(cCache);
     	
     	Node curRoot = NodeHelper.findRoot(curTree);
-    	HashSet<String> curTrace = NodeHelper.UnionTraces(NodeHelper.findDescendantLeafs(curTree, curRoot));
+    	HashSet<String> curTrace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
     	
     	if(curRoot.isChecked()){
 			System.out.println(String.format("Checked: %s is %s", postName, curRoot.getResult().toString()));
 		}else{
 			Node oldRoot = NodeHelper.findRoot(oldTree);
-			HashSet<String> oldTrace = NodeHelper.UnionTraces(NodeHelper.findDescendantLeafs(oldTree, oldRoot));
+			HashSet<String> oldTrace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(oldTree, oldRoot));
 			
 			
 			if(oldTrace.equals(curTrace) && !oldRoot.getResult().toString().equals("UNKNOWN") && !curTrace.contains(affectedRule)){
@@ -64,7 +64,8 @@ public final class IncrementalTasks {
 				
 				if(simPost!=null){
 					// generate PO
-					HashSet<String> simTrace = NodeHelper.UnionTraces(NodeHelper.findDescendantLeafs(curTree, simPost));
+					HashSet<String> simTrace = NodeHelper.UnionTraces(simPost, NodeHelper.findDescendantLeafs(curTree, simPost));
+					System.out.println(simPost.getId());
 					simPost.setTraces(simTrace);
 					String boogie = simPost.toBoogie();
 					String sim = String.format("%s_sim",postName);
@@ -98,12 +99,20 @@ public final class IncrementalTasks {
 			        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
 			        );
 			        args.add(post);
+			        
+			        String genBy = URIs.abs(context.basePath()
+		            		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+		            		.appendSegment(CompilerConstants.GENBY)
+		            		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
+		            );
+			        args.add(genBy);
+		        	
 			        VerificationResult r = Commands.boogie().exec().execute(args);
 					
 					// update result and repopulate verification result tree
 					simPost.setResult(r.getTriBooleanResult());
 					curTree = NodeHelper.repopulate(curTree);	
-					System.out.println(r.getTime());
+					System.out.println(r.getTriBooleanResult().toString());
 				}
 				
 				
