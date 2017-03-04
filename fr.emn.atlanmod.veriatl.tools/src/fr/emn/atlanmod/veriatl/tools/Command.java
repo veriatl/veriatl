@@ -2,6 +2,8 @@ package fr.emn.atlanmod.veriatl.tools;
 
 import java.util.ArrayList;
 
+import fr.emn.atlanmod.veriatl.core.VerificationResult;
+
 /**
  * A command-line that can be executed.
  */
@@ -15,5 +17,5 @@ public interface Command {
      *
      * @return the result of the execution ({@code 0 = success}
      */
-    int execute(ArrayList<String> args);
+    VerificationResult execute(ArrayList<String> args);
 }

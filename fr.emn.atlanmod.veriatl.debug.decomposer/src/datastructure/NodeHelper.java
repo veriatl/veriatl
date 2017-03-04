@@ -287,6 +287,22 @@ public class NodeHelper {
 		
 		//TODO delete all gv files.
 	}
+
+
+	/**
+	 * find a node with name {@code sub} in the given tree.
+	 * @param curTree
+	 * @param sub
+	 * @return
+	 */
+	public static Node findNode(ArrayList<Node> tree, String sub) {
+		for(Node n : tree){
+			if(n.getName().equals(sub)){
+				return n;
+			}
+		}
+		return null;
+	}
 	
 	
 

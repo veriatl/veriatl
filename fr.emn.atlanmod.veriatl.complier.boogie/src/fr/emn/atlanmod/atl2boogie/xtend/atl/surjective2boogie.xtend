@@ -14,8 +14,8 @@ import java.util.HashMap
 import org.eclipse.m2m.atl.common.ATL.MatchedRule
 
 class surjective2boogie {
-	static Set<String> isPrintedOutPatternElement = new HashSet<String>()
-	static int modDepth = 0;
+	public static Set<String> isPrintedOutPatternElement = new HashSet<String>()
+	public static int modDepth = 0;
 	
 	def static calDepth(Module mod){
 		for(ModuleElement e : mod.elements){

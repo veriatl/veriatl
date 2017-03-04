@@ -32,6 +32,7 @@ public class Node implements Comparable, Serializable {
 	transient ProveOption rel2Parent;
 	transient Tactic ruleApplied;
 	TriBoolean res;
+	long time;
 	
 	// for serialization;
 	HashSet<String> hypotheses;
@@ -380,6 +381,12 @@ public class Node implements Comparable, Serializable {
 		this.traces = traces;
 	}
 
+	public long getTime() {
+		return this.time;
+	}
 	
+	public void setTime(long v) {
+		this.time = v;
+	}
 	
 }

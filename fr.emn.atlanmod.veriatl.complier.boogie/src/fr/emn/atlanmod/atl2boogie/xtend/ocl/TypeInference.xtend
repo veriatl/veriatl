@@ -4,7 +4,6 @@ import fr.emn.atlanmod.atl2boogie.xtend.core.driver
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl
 import fr.emn.atlanmod.atl2boogie.xtend.lib.emf
 import fr.emn.atlanmod.atl2boogie.xtend.lib.myOclType
-import fr.emn.atlanmod.atl2boogie.xtend.atl.contract2boogie
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Map

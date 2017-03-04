@@ -91,6 +91,8 @@ public final class IncrementalTasks {
     			
     			if(cache != null && !cache.getResult().toString().equals("UNKNOWN") && !n.getTraces().contains(affectedRule)){
     				System.out.println(String.format("%s is %s", n.getName(), cache.getResult().toString()));
+    				n.Check(true);
+    				n.setResult(cache.getResult());
     			}else{
     				todo.add(n.getName());
     			}
@@ -134,10 +136,20 @@ public final class IncrementalTasks {
             );
         	argsClone.add(genBy);
         	
-        	Commands.boogie().exec().execute(argsClone);
+        	VerificationResult r = Commands.boogie().exec().execute(argsClone);
         	argsClone.clear();
+        	
+        	// process result
+        	Node n = NodeHelper.findNode(curTree, sub);
+        	n.Check(true);
+			n.setResult(r.getTriBooleanResult());
+        	n.setTime(r.getTime());
         }
           
+        //TODO save to currentCache, do not append, clear first.
+    	//fr.emn.atlanmod.atl2boogie.xtend.lib.URIs.writeTree(TODO_PATH, postName, currentCache, curTree);	
+        
+        
     }
     
     

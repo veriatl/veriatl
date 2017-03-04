@@ -1,24 +1,26 @@
-package runtime;
+package fr.emn.atlanmod.veriatl.core;
 
 import datastructure.TriBoolean;
+
 
 public class VerificationResult {
 	String result;
 	long time;
-	String id;
-	
-	public VerificationResult(String id, String r, long t){
-		this.id=id;
+	String status;
+
+	public VerificationResult(String s, String r, long t){
+		this.status=s;
 		this.result = r;
 		this.time = t;
 	}
 	
-	public String toString(){
-		return String.format("Id:%s, Time: %s, Result: %s", this.id, this.time, this.result);
-	}
 	
 	public String getResult(){
 		return result;
+	}
+	
+	public long getTime(){
+		return time;
 	}
 	
 	public TriBoolean getTriBooleanResult(){

@@ -80,14 +80,14 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 		} else if (context.mode() == Mode.VERIFY) {
 			// added for testing purpose
 			String aRule = "SM2SM";
-			String pCache = "2017-03-03-14-22-39";
-			String cCache = "2017-03-03-14-22-54";
+			String pCache = "2017-03-03-14-46-43";
+			String cCache = "2017-03-03-14-46-43";
 			IncrementalTasks.execBoogie(context, aRule, pCache, cCache);
 		} else if (context.mode() == Mode.DEBUG) {
 			// added for testing purpose
 			String aRule = "SM2SM";
-			String pCache = "2017-03-03-14-22-39";
-			String cCache = "2017-03-03-14-22-54";
+			String pCache = "2017-03-03-14-46-42";
+			String cCache = "2017-03-03-14-46-48";
 			IncrementalTasks.debugBoogie(context, aRule, pCache, cCache);
 		} else {
 			throw new IllegalStateException("Unknown mode");

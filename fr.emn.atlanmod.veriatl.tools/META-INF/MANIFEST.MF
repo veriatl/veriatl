@@ -5,5 +5,6 @@ Bundle-SymbolicName: fr.emn.atlanmod.veriatl.tools
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.osgi,
- org.eclipse.core.runtime;bundle-version="3.11.1"
+ org.eclipse.core.runtime;bundle-version="3.11.1",
+ fr.emn.atlanmod.veriatl.launcher
 Export-Package: fr.emn.atlanmod.veriatl.tools

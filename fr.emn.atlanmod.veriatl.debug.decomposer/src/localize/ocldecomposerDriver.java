@@ -147,7 +147,7 @@ public class ocldecomposerDriver {
 			//System.out.println(String.format("Debug: ocldecomposerDriver.java ln 120, goalName: %s end", goalName));
 			
 			// serialize proof tree
-			serialize(outputPath.trimSegments(1), goalName, tree);
+			URIs.writeTree(outputPath.trimSegments(1), goalName, new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()), tree);
 		}
 		
 		//String org = prtingFullDriver(env);
@@ -167,33 +167,7 @@ public class ocldecomposerDriver {
 	
 	
 	
-	/**
-	 * write proof tree to a URI,
-	 * TODO refactor to URIs
-	 * @param outputPath
-	 * @param tree
-	 */
-	private static void serialize(URI outputPath, String post, ArrayList<Node> tree) {
-		String timeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
-		String cache = String.format("%s", timeStamp);
-		
-		URI cachePath = outputPath.appendSegment(CompilerConstants.CACHE).appendSegment(post).appendSegment(cache).appendFileExtension(CompilerConstants.CACHEEXT);
-		
-		URIConverter uriConverter = new ExtensibleURIConverterImpl();
 
-		try {
-			OutputStream outputStream = uriConverter.createOutputStream(cachePath);
-			ObjectOutputStream out = new ObjectOutputStream(outputStream);
-			out.writeObject(tree);
-	        out.flush();
-	        out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-		
-		
-	}
 
 
 

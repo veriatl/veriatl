@@ -12,7 +12,7 @@ import org.eclipse.m2m.atl.common.ATL.MatchedRule
 
 //TODO the user should specify whether they want requires `free` or not. That is another option for VeriATL
 class matcher2boogie {
-	static int modDepth = 0;
+	public static int modDepth = 0;
 	
 	def static calDepth(Module mod){
 		for(ModuleElement e : mod.elements){
