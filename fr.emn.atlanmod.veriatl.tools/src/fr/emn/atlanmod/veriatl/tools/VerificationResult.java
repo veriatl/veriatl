@@ -1,7 +1,6 @@
-package fr.emn.atlanmod.veriatl.core;
+package fr.emn.atlanmod.veriatl.tools;
 
 import datastructure.TriBoolean;
-
 
 public class VerificationResult {
 	String result;

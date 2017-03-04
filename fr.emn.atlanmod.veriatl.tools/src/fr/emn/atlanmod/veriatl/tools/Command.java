@@ -2,7 +2,7 @@ package fr.emn.atlanmod.veriatl.tools;
 
 import java.util.ArrayList;
 
-import fr.emn.atlanmod.veriatl.core.VerificationResult;
+
 
 /**
  * A command-line that can be executed.

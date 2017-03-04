@@ -8,13 +8,6 @@ import java.nio.charset.Charset
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.URIConverter
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl
-import java.io.OutputStream
-import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants
-import java.util.Date
-import java.text.SimpleDateFormat
-import java.util.ArrayList
-import datastructure.Node
-import java.io.ObjectOutputStream
 
 /**
  * @author zcheng
@@ -64,31 +57,5 @@ class URIs {
 
 	}
 	
-	/**
-	 * write proof tree to a URI
-	 * TODO don't append
-	 * @param outputPath
-	 * @param tree
-	 * @param append
-	 */
-	def static void writeTree(URI outputPath, String post, String surfix, ArrayList<Node> tree) {
-		val cache = String.format("%s", surfix);
-		
-		val cachePath = outputPath.appendSegment(CompilerConstants.CACHE).appendSegment(post).appendSegment(cache).appendFileExtension(CompilerConstants.CACHEEXT);
-		
-		val URIConverter uriConverter = new ExtensibleURIConverterImpl();
 
-		try {
-			val OutputStream outputStream = uriConverter.createOutputStream(cachePath);
-			val ObjectOutputStream out = new ObjectOutputStream(outputStream);
-			out.writeObject(tree);
-	        out.flush();
-	        out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-		
-		
-	}
 }

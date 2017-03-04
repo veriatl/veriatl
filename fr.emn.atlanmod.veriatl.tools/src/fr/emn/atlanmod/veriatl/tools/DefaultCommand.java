@@ -1,18 +1,15 @@
 package fr.emn.atlanmod.veriatl.tools;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import fr.emn.atlanmod.veriatl.core.VerificationResult;
+
 
 /**
  * A default {@link Command} that executes a program using {@link ProcessBuilder}s and {@link Process}s.
