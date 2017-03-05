@@ -66,6 +66,5 @@ public class URIs {
         }
       }
     }
-    folder.delete();
   }
 }

@@ -66,7 +66,7 @@ class URIs {
 	            }
 	        }
 	    }
-	    folder.delete();
+	    //folder.delete();
 	}
 	
 

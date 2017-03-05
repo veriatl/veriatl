@@ -70,8 +70,11 @@ public class ocldecomposerDriver {
 		// clean sub-goals previously generated
 		URIs.delete(outputPath);
 		
-		// TODO create sub-goals folder with post name
-		
+		// create sub-goals folder with post name
+		for (OclExpression post : postconditions) {
+			String goalName = post.getCommentsBefore().get(0).replace("--", "");
+			URI output = outputPath.appendSegment(goalName);
+		}
 		
 		// proof strategy starts
 		for (OclExpression post : postconditions) {
