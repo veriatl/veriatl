@@ -156,9 +156,10 @@ public final class URIs {
 		File f = new File(folder);
 		for (final File file : f.listFiles()) {
 			if(file.isDirectory()) {
-				r.add(f.getName());
+				r.add(file.getName());
 			}	
 		}
+
 		return r;
 
 	}

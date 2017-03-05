@@ -92,7 +92,7 @@ public final class IncrementalTasks {
 				Node simPost = NodeHelper.findSimplifiedPost(curTree);
 				NodeHelper.restore(curTree);
 				
-				System.out.println(simPost.getId());
+				//System.out.println(simPost.getId());
 				
 				if(simPost!=null){
 					// generate PO
@@ -126,7 +126,7 @@ public final class IncrementalTasks {
 			        // add postcondition to be verified
 			        String post = URIs.abs(context.basePath()
 			        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-			        		.appendSegment(context.postName())
+			        		.appendSegment(postName)
 			        		.appendSegment(sim)
 			        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
 			        );
