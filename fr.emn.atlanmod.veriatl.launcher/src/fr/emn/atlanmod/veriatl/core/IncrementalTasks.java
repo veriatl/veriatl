@@ -190,7 +190,7 @@ public final class IncrementalTasks {
      * ???
      *
      */
-    public static void debugBoogieSingle(Context context, String postName, String affectedRule) {
+    private static void debugBoogieSingle(Context context, String postName, String affectedRule) {
 
     	ArrayList<String> caches = loadCaches(context, postName);
     	String previousCache = prevCache(caches);

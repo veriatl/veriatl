@@ -6,6 +6,8 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import org.eclipse.emf.common.util.URI;
+
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.Commands;
@@ -21,13 +23,29 @@ public final class NormalTasks {
         throw new IllegalStateException("This class should not be initialized");
     }
 
+    
+    public static void execBoogie(Context context) {
+
+		String postName = context.postName();
+
+		if (postName.toLowerCase().equals("all")) {
+			URI goals = context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME);
+			for (String goal : URIs.allFolders(goals)) {
+				execBoogieSingle(context, goal);
+			}
+		} else {
+			execBoogieSingle(context, postName);
+		}	
+
+    }
+    
     /**
      * Exec Boogie.
      * <p>
      * ???
      *
      */
-    public static void execBoogie(Context context) {
+    private static void execBoogieSingle(Context context, String postName) {
     	ArrayList<String> args = new ArrayList<String>();
         String z3abs = z3Path.resolve("z3")+".exe";
         
@@ -47,7 +65,7 @@ public final class NormalTasks {
         // add postcondition to be verified
         String post = URIs.abs(context.basePath()
         		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-        		.appendSegment(context.postName())
+        		.appendSegment(postName)
         		.appendSegment(CompilerConstants.ORG)
         		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
         );
@@ -58,13 +76,30 @@ public final class NormalTasks {
     }
     
     
+    public static void debugBoogie(Context context) {
+    	
+    	String postName = context.postName();
+    	
+
+		if (postName.toLowerCase().equals("all")) {
+			URI goals = context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME);
+			for (String goal : URIs.allFolders(goals)) {
+				debugBoogieSingle(context, goal);
+			}
+		} else {
+			debugBoogieSingle(context, postName);
+		}	
+    			 	
+
+    }
+    
     /**
      * Debug Boogie.
      * <p>
      * ???
      *
      */
-    public static void debugBoogie(Context context) {
+    private static void debugBoogieSingle(Context context, String postName) {
     	ArrayList<String> args = new ArrayList<String>();
         String z3abs = z3Path.resolve("z3")+".exe";
         
@@ -84,7 +119,7 @@ public final class NormalTasks {
         // retrieve sub-goals
         String post = URIs.abs(context.basePath()
         		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-        		.appendSegment(context.postName())
+        		.appendSegment(postName)
         );
         ArrayList<String> subs = getFiles(post);
         ArrayList<String> argsClone = new ArrayList<String>();
