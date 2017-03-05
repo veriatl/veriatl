@@ -35,7 +35,23 @@ public final class IncrementalTasks {
      *
      */
     public static void execBoogie(Context context, String affectedRule, String previousCache, String currentCache) {
+    	
     	String postName = context.postName();
+    	
+    	if(postName.equals("all")) {
+    		URI goals = context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME);
+    		for(String goal : URIs.allFolders(goals)) {
+    			execBoogieSingle(context, goal, affectedRule, previousCache, currentCache);
+    		}
+    	}else {
+    		execBoogieSingle(context, postName, affectedRule, previousCache, currentCache);
+    	} 	
+
+    }
+    
+
+    private static void execBoogieSingle(Context context, String postName, String affectedRule, String previousCache, String currentCache) {
+    	
     	URI pCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(previousCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
     	URI cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
     	
@@ -127,18 +143,9 @@ public final class IncrementalTasks {
 				localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);
 			}
 		}
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-
     }
-    
-
 	
+    
     /**
      * Debug Boogie.
      * <p>
@@ -146,7 +153,29 @@ public final class IncrementalTasks {
      *
      */
     public static void debugBoogie(Context context, String affectedRule, String previousCache, String currentCache) {
+    	
     	String postName = context.postName();
+    	
+    	if(postName.equals("all")) {
+    		URI goals = context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME);
+    		for(String goal : URIs.allFolders(goals)) {
+    			debugBoogieSingle(context, goal, affectedRule, previousCache, currentCache);
+    		}
+    	}else {
+    		debugBoogieSingle(context, postName, affectedRule, previousCache, currentCache);
+    	} 	
+
+    }
+    
+    
+    /**
+     * Debug Boogie.
+     * <p>
+     * ???
+     *
+     */
+    public static void debugBoogieSingle(Context context, String postName, String affectedRule, String previousCache, String currentCache) {
+
     	URI pCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(previousCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
     	URI cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
     	

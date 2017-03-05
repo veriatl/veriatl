@@ -145,6 +145,25 @@ public final class URIs {
 
 	}
 	
+	
+	/**
+	 * find all folder names within given URI, not recurvie.
+	 * */
+	public static ArrayList<String> allFolders(URI src) {
+		String folder = abs(src);
+		ArrayList<String> r = new ArrayList<String>();
+
+		File f = new File(folder);
+		for (final File file : f.listFiles()) {
+			if(file.isDirectory()) {
+				r.add(f.getName());
+			}	
+		}
+		return r;
+
+	}
+	
+	
 	private static String getBaseName(String fileName) {
 	    int index = fileName.lastIndexOf('.');
 	    if (index == -1) {
