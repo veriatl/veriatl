@@ -38,7 +38,7 @@ public final class IncrementalTasks {
     	
     	String postName = context.postName();
     	
-    	if(postName.equals("all")) {
+    	if(postName.toLowerCase().equals("all")) {
     		URI goals = context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME);
     		for(String goal : URIs.allFolders(goals)) {
     			execBoogieSingle(context, goal, affectedRule, previousCache, currentCache);
@@ -132,7 +132,7 @@ public final class IncrementalTasks {
 					curTree = NodeHelper.repopulate(curTree);	
 					curRoot.setResult(r.getTriBooleanResult());
 					curRoot.setTime(r.getTime());
-					System.out.println(curRoot.getResult());
+					System.out.println(String.format("id:%s\tres: %s\ttime:%s", postName, r.getTriBooleanResult(), r.getTime()));
 				}
 				
 				// curRoot is now checked
@@ -156,7 +156,7 @@ public final class IncrementalTasks {
     	
     	String postName = context.postName();
     	
-    	if(postName.equals("all")) {
+    	if(postName.toLowerCase().equals("all")) {
     		URI goals = context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME);
     		for(String goal : URIs.allFolders(goals)) {
     			debugBoogieSingle(context, goal, affectedRule, previousCache, currentCache);
@@ -247,6 +247,7 @@ public final class IncrementalTasks {
         	n.Check(true);
 			n.setResult(r.getTriBooleanResult());
         	n.setTime(r.getTime());
+        	System.out.println(String.format("id:%s-%s\tres: %s\ttime:%s", postName, n.getId(), r.getTriBooleanResult(), r.getTime()));
         }
           
         // save to currentCache
