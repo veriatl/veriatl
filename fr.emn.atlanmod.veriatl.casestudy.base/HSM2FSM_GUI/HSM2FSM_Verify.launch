@@ -22,7 +22,7 @@
 <mapAttribute key="Output Models">
 <mapEntry key="OUT" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI/Source/FSM.xmi"/>
 </mapAttribute>
-<stringAttribute key="POST NAME" value="fsm_transition_src_multi_lower"/>
+<stringAttribute key="POST NAME" value="all"/>
 <stringAttribute key="PROJ PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI"/>
 <stringAttribute key="SOURCE MM PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI/Source/HSM.ecore"/>
 <listAttribute key="Superimpose"/>

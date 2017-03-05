@@ -4,7 +4,13 @@ package fr.emn.atlanmod.veriatl.core;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 
 import org.eclipse.emf.common.util.URI;
@@ -34,23 +40,31 @@ public final class IncrementalTasks {
      *   
      *
      */
-    public static void execBoogie(Context context, String affectedRule, String previousCache, String currentCache) {
-    	
-    	String postName = context.postName();
-    	
-    	if(postName.toLowerCase().equals("all")) {
-    		URI goals = context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME);
-    		for(String goal : URIs.allFolders(goals)) {
-    			execBoogieSingle(context, goal, affectedRule, previousCache, currentCache);
-    		}
-    	}else {
-    		execBoogieSingle(context, postName, affectedRule, previousCache, currentCache);
-    	} 	
+    public static void execBoogie(Context context, String affectedRule) {
+
+		String postName = context.postName();
+
+		if (postName.toLowerCase().equals("all")) {
+			URI goals = context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME);
+			for (String goal : URIs.allFolders(goals)) {
+				execBoogieSingle(context, goal, affectedRule);
+			}
+		} else {
+			execBoogieSingle(context, postName, affectedRule);
+		}	
 
     }
     
 
-    private static void execBoogieSingle(Context context, String postName, String affectedRule, String previousCache, String currentCache) {
+    private static void execBoogieSingle(Context context, String postName, String affectedRule) {
+    	ArrayList<String> caches = loadCaches(context, postName);
+    	String previousCache = prevCache(caches);
+		String currentCache = curCache(caches);
+    	
+    	if(previousCache == null) {
+    		NormalTasks.execBoogie(context);
+    		return;
+    	}
     	
     	URI pCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(previousCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
     	URI cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
@@ -152,18 +166,20 @@ public final class IncrementalTasks {
      * ???
      *
      */
-    public static void debugBoogie(Context context, String affectedRule, String previousCache, String currentCache) {
+    public static void debugBoogie(Context context, String affectedRule) {
     	
     	String postName = context.postName();
     	
-    	if(postName.toLowerCase().equals("all")) {
-    		URI goals = context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME);
-    		for(String goal : URIs.allFolders(goals)) {
-    			debugBoogieSingle(context, goal, affectedRule, previousCache, currentCache);
-    		}
-    	}else {
-    		debugBoogieSingle(context, postName, affectedRule, previousCache, currentCache);
-    	} 	
+
+		if (postName.toLowerCase().equals("all")) {
+			URI goals = context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME);
+			for (String goal : URIs.allFolders(goals)) {
+				debugBoogieSingle(context, goal, affectedRule);
+			}
+		} else {
+			debugBoogieSingle(context, postName, affectedRule);
+		}	
+    			 	
 
     }
     
@@ -174,8 +190,17 @@ public final class IncrementalTasks {
      * ???
      *
      */
-    public static void debugBoogieSingle(Context context, String postName, String affectedRule, String previousCache, String currentCache) {
+    public static void debugBoogieSingle(Context context, String postName, String affectedRule) {
 
+    	ArrayList<String> caches = loadCaches(context, postName);
+    	String previousCache = prevCache(caches);
+		String currentCache = curCache(caches);
+    	
+    	if(previousCache == null) {
+    		NormalTasks.debugBoogie(context);
+    		return;
+    	}
+    	
     	URI pCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(previousCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
     	URI cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
     	
@@ -258,8 +283,41 @@ public final class IncrementalTasks {
     }
     
     
-    
-    
+    private static ArrayList<String> loadCaches(Context context, String postName) {
+		ArrayList<String> caches = URIs.allNames(context.basePath()
+				.appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName));
+		Collections.sort(caches, new Comparator<String>() {
+			public int compare(String s1, String s2) {
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+				Date d1;
+				Date d2;
+				try {
+					d1 = df.parse(s1);
+					d2 = df.parse(s2);
+					return d1.compareTo(d2);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
+				return 0;
+			}
+		});
+		
+		return caches;
+    }
+	
+	private static String curCache(ArrayList<String> caches) {
+		return caches.get(caches.size()-1);
+	}
+	
+	private static String prevCache(ArrayList<String> caches) {
+		if(caches.size()<=1) {
+			return null;
+		}else {
+			return caches.get(caches.size()-2);
+		}
+	}
+	
     private static ArrayList<String> getFiles(String folder){
     	ArrayList<String> r = new ArrayList<String>();
     	File f = new File(folder);

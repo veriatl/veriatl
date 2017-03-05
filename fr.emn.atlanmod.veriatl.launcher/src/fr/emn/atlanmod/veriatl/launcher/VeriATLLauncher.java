@@ -83,45 +83,21 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 			ocl2boogie.clean();
 		} else  {
 			String aRule = "SM2SM";
+			boolean incMode = true;
 			
-			// load caches, and sort in desc order.
-			ArrayList<String> caches = URIs.allNames(context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(context.postName()));
-			Collections.sort(caches, new Comparator<String>(){
-			    public int compare(String s1, String s2){
-			    	DateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-			    	Date d1;
-			    	Date d2 ;
-					try {
-						d1 = df.parse(s1);
-						d2 = df.parse(s2);
-						return d1.compareTo(d2);
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
-			    	
-			        return 0;
-			    }
-			});
-			
-
-			
-			String pCache = prevCache(caches);
-			String cCache = curCache(caches);
 			
 			if (context.mode() == Mode.VERIFY) {
-				if(pCache == null) {
+				if(!incMode) {
 					NormalTasks.execBoogie(context);
 				}else {
-					//TODO if is in incremental mode
-					IncrementalTasks.execBoogie(context, aRule, pCache, cCache);
+					IncrementalTasks.execBoogie(context, aRule);
 				}
 			}else if (context.mode() == Mode.DEBUG) {
 				// added for testing purpose
-				if(pCache == null) {
+				if(!incMode) {
 					NormalTasks.debugBoogie(context);
 				}else {
-					//TODO if is in incremental mode
-					IncrementalTasks.debugBoogie(context, aRule, pCache, cCache);
+					IncrementalTasks.debugBoogie(context, aRule);
 				}
 				
 			} else {
@@ -134,17 +110,5 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 	}
 	
 	
-	
-	private static String curCache(ArrayList<String> caches) {
-		return caches.get(caches.size()-1);
-	}
-	
-	private static String prevCache(ArrayList<String> caches) {
-		if(caches.size()<=1) {
-			return null;
-		}else {
-			return caches.get(caches.size()-2);
-		}
-	}
-	
+
 }
