@@ -59,7 +59,7 @@ public class NodeHelper {
 		for (Node curr : tree) {
 
 			boolean conclusion = n.conclusion.equals(curr.conclusion);
-			boolean hypotheses = n.hypotheses.containsAll(curr.hypotheses);
+			boolean hypotheses = n.hypotheses.containsAll(curr.hypotheses) && curr.hypotheses.containsAll(n.hypotheses);
 
 			if (conclusion && hypotheses) {
 				return curr;
