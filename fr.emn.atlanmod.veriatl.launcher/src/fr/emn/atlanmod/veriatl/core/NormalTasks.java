@@ -8,9 +8,12 @@ import java.util.ArrayList;
 
 import org.eclipse.emf.common.util.URI;
 
+import datastructure.Node;
+import datastructure.NodeHelper;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.Commands;
+import fr.emn.atlanmod.veriatl.tools.VerificationResult;
 import fr.emn.atlanmod.veriatl.util.URIs;
 
 
@@ -100,6 +103,11 @@ public final class NormalTasks {
      *
      */
     private static void debugBoogieSingle(Context context, String postName) {
+    	ArrayList<String> caches = Caches.loadCaches(context, postName);
+		String currentCache = Caches.curCache(caches);
+    	URI cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
+    	ArrayList<Node> curTree = URIs.load(cCache);
+    	
     	ArrayList<String> args = new ArrayList<String>();
         String z3abs = z3Path.resolve("z3")+".exe";
         
@@ -117,16 +125,21 @@ public final class NormalTasks {
         args.addAll(getFiles(auxu));
         
         // retrieve sub-goals
-        String post = URIs.abs(context.basePath()
-        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-        		.appendSegment(postName)
-        );
-        ArrayList<String> subs = getFiles(post);
         ArrayList<String> argsClone = new ArrayList<String>();
-        for(String sub : subs) {
-        	if(!sub.contains(CompilerConstants.ORG+"."+CompilerConstants.BOOGIE_EXT)) {
+        for(Node sub : NodeHelper.findAllLeafs(curTree)) {
+        	
+        	if(sub.isChecked()){
+        		System.out.println(String.format("Mode: Normal-checked\tChecked\tid:%s-%s\tres: %s\ttime:%s", postName, sub.getName(), sub.getResult(), sub.getTime()));
+        	}else{
+        		String subgoalAbsPath = URIs.abs(
+                		context.basePath()
+                		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+                		.appendSegment(postName)
+                		.appendSegment(sub.getName()).appendFileExtension(CompilerConstants.BOOGIE_EXT)
+                );
+            	
         		argsClone.addAll(args);
-            	argsClone.add(sub);
+            	argsClone.add(subgoalAbsPath);
             	
             	String genBy = URIs.abs(context.basePath()
                 		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
@@ -135,10 +148,26 @@ public final class NormalTasks {
                 );
             	argsClone.add(genBy);
             	
-            	Commands.boogie().exec().execute(argsClone);
+            	VerificationResult r = Commands.boogie().exec().execute(argsClone);
             	argsClone.clear();
-        	} 	
+            	
+            	// process result
+            	Node n = NodeHelper.findNode(curTree, sub.getName());
+            	n.Check(true);
+    			n.setResult(r.getTriBooleanResult());
+            	n.setTime(r.getTime());
+            	System.out.println(String.format("Mode: Normal-verify\tid:%s-%s\tres: %s\ttime:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        	}   		
         }
+        
+        // save to currentCache
+        URI output = context.basePath();
+		localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);	
+        
+        
+		// print proof tree
+		URI gvName = NodeHelper.printTreeBasic(context.basePath(), postName, curTree);
+		GraphVizTasks.execDot(gvName);
            
     }
     

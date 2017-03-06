@@ -60,9 +60,9 @@ public final class IncrementalTasks {
     
 
     private static void execBoogieSingle(Context context, String postName, String affectedRule) {
-    	ArrayList<String> caches = loadCaches(context, postName);
-    	String previousCache = prevCache(caches);
-		String currentCache = curCache(caches);
+    	ArrayList<String> caches = Caches.loadCaches(context, postName);
+    	String previousCache = Caches.prevCache(caches);
+		String currentCache = Caches.curCache(caches);
     	
     	if(previousCache == null) {
     		NormalTasks.execBoogie(context);
@@ -195,9 +195,9 @@ public final class IncrementalTasks {
      */
     private static void debugBoogieSingle(Context context, String postName, String affectedRule) {
 
-    	ArrayList<String> caches = loadCaches(context, postName);
-    	String previousCache = prevCache(caches);
-		String currentCache = curCache(caches);
+    	ArrayList<String> caches = Caches.loadCaches(context, postName);
+    	String previousCache = Caches.prevCache(caches);
+		String currentCache = Caches.curCache(caches);
     	
     	if(previousCache == null) {
     		NormalTasks.debugBoogie(context);
@@ -217,12 +217,12 @@ public final class IncrementalTasks {
     	for(Node n: NodeHelper.findAllLeafs(curTree)){
 
     		if(n.isChecked()){
-    			System.out.println(String.format("Checked: %s is %s", n.getName(), n.getResult().toString()));
+    			System.out.println(String.format("Mode: Inc-checked\t%s is %s", n.getName(), n.getResult().toString()));
     		}else{
     			Node cache = NodeHelper.findSubInCache(oldTree, n);
     			
     			if(cache != null && !cache.getResult().toString().equals("UNKNOWN") && !n.getTraces().contains(affectedRule)){
-    				System.out.println(String.format("%s is %s", n.getName(), cache.getResult().toString()));
+    				System.out.println(String.format("Mode: Inc-cached\t%s is %s", n.getName(), cache.getResult().toString()));
     				n.Check(true);
     				n.setResult(cache.getResult());
     			}else{
@@ -277,7 +277,7 @@ public final class IncrementalTasks {
         	n.Check(true);
 			n.setResult(r.getTriBooleanResult());
         	n.setTime(r.getTime());
-        	System.out.println(String.format("id:%s-%s\tres: %s\ttime:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        	System.out.println(String.format("Mode: Inc-verify\tid:%s-%s\tres: %s\ttime:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
         }
           
         // save to currentCache
@@ -292,40 +292,7 @@ public final class IncrementalTasks {
     }
     
     
-    private static ArrayList<String> loadCaches(Context context, String postName) {
-		ArrayList<String> caches = URIs.allNames(context.basePath()
-				.appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName));
-		Collections.sort(caches, new Comparator<String>() {
-			public int compare(String s1, String s2) {
-				DateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-				Date d1;
-				Date d2;
-				try {
-					d1 = df.parse(s1);
-					d2 = df.parse(s2);
-					return d1.compareTo(d2);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
 
-				return 0;
-			}
-		});
-		
-		return caches;
-    }
-	
-	private static String curCache(ArrayList<String> caches) {
-		return caches.get(caches.size()-1);
-	}
-	
-	private static String prevCache(ArrayList<String> caches) {
-		if(caches.size()<=1) {
-			return null;
-		}else {
-			return caches.get(caches.size()-2);
-		}
-	}
 	
     private static ArrayList<String> getFiles(String folder){
     	ArrayList<String> r = new ArrayList<String>();
