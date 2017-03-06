@@ -49,6 +49,11 @@ public final class NormalTasks {
      *
      */
     private static void execBoogieSingle(Context context, String postName) {
+    	ArrayList<String> caches = Caches.loadCaches(context, postName);
+		String currentCache = Caches.curCache(caches);
+		URI cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
+    	ArrayList<Node> curTree = URIs.load(cCache);
+    	
     	ArrayList<String> args = new ArrayList<String>();
         String z3abs = z3Path.resolve("z3")+".exe";
         
@@ -75,7 +80,16 @@ public final class NormalTasks {
         args.add(post);
         
         
-        Commands.boogie().exec().execute(args);
+        VerificationResult r =Commands.boogie().exec().execute(args);
+        System.out.println(String.format("Mode: Normal-verify-post\tid:%s\tres: %s\ttime:%s", postName, r.getTriBooleanResult(), r.getTime()));
+        Node curRoot = NodeHelper.findRoot(curTree);
+        curRoot.setResult(r.getTriBooleanResult());
+		curRoot.setTime(r.getTime());
+		curRoot.Check(true);
+		
+		// serialize curTree
+		URI output = context.basePath();
+		localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);
     }
     
     
@@ -129,7 +143,7 @@ public final class NormalTasks {
         for(Node sub : NodeHelper.findAllLeafs(curTree)) {
         	
         	if(sub.isChecked()){
-        		System.out.println(String.format("Mode: Normal-checked\tChecked\tid:%s-%s\tres: %s\ttime:%s", postName, sub.getName(), sub.getResult(), sub.getTime()));
+        		System.out.println(String.format("Mode: Normal-checked-sub\tid:%s-%s\tres: %s\ttime:%s", postName, sub.getName(), sub.getResult(), sub.getTime()));
         	}else{
         		String subgoalAbsPath = URIs.abs(
                 		context.basePath()
@@ -156,7 +170,7 @@ public final class NormalTasks {
             	n.Check(true);
     			n.setResult(r.getTriBooleanResult());
             	n.setTime(r.getTime());
-            	System.out.println(String.format("Mode: Normal-verify\tid:%s-%s\tres: %s\ttime:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+            	System.out.println(String.format("Mode: Normal-verify-sub\tid:%s-%s\tres: %s\ttime:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
         	}   		
         }
         
