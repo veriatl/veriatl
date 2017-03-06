@@ -88,6 +88,7 @@ public final class IncrementalTasks {
 			if(oldTrace.equals(curTrace) && !oldRoot.getResult().toString().equals("UNKNOWN") && !curTrace.contains(affectedRule)){
 				System.out.println(String.format("Mode: inc-cached-post\t%s is %s", postName, oldRoot.getResult().toString()));
 				curRoot.setResult(oldRoot.getResult());
+				curRoot.setTime(oldRoot.getTime());
 			}else{
 				curTree = NodeHelper.populate(oldTree, curTree, affectedRule);
 				
@@ -151,13 +152,15 @@ public final class IncrementalTasks {
 					System.out.println(String.format("Mode: inc-verify-post\tid:%s\tres: %s\ttime:%s", postName, r.getTriBooleanResult(), r.getTime()));
 				}
 				
-				// curRoot is now checked
-				curRoot.Check(true);
 				
-				// serialize curTree
-				URI output = context.basePath();
-				localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);
 			}
+			// curRoot is now checked
+			curRoot.Check(true);
+			
+			// serialize curTree
+			URI output = context.basePath();
+			localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);
+			
 		}
     }
 	

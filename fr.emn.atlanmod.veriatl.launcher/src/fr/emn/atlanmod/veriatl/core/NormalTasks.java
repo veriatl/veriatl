@@ -53,39 +53,45 @@ public final class NormalTasks {
 		String currentCache = Caches.curCache(caches);
 		URI cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
     	ArrayList<Node> curTree = URIs.load(cCache);
+    	Node curRoot = NodeHelper.findRoot(curTree);
     	
-    	ArrayList<String> args = new ArrayList<String>();
-        String z3abs = z3Path.resolve("z3")+".exe";
-        
-        // add Boogie options
-        args.add("/nologo");
-        args.add("/z3exe:"+z3abs);
-        //args.add("/trace");
-        
-        // add prelude files
-        String veriatlabs = veriATLPath.toAbsolutePath().toString()+"\\Prelude\\";
-        args.addAll(getFiles(veriatlabs));
-        
-        // add auxu files
-        String auxu = URIs.abs(context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
-        args.addAll(getFiles(auxu));
-        
-        // add postcondition to be verified
-        String post = URIs.abs(context.basePath()
-        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-        		.appendSegment(postName)
-        		.appendSegment(CompilerConstants.ORG)
-        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
-        );
-        args.add(post);
-        
-        
-        VerificationResult r =Commands.boogie().exec().execute(args);
-        System.out.println(String.format("Mode: Normal-verify-post\tid:%s\tres: %s\ttime:%s", postName, r.getTriBooleanResult(), r.getTime()));
-        Node curRoot = NodeHelper.findRoot(curTree);
-        curRoot.setResult(r.getTriBooleanResult());
-		curRoot.setTime(r.getTime());
-		curRoot.Check(true);
+    	if(curRoot.isChecked()){
+    		System.out.println(String.format("Mode: Normal-checked-post\tid:%s\tres: %s\ttime:%s", postName, curRoot.getResult(), curRoot.getTime()));
+    	}else{
+    		ArrayList<String> args = new ArrayList<String>();
+            String z3abs = z3Path.resolve("z3")+".exe";
+            
+            // add Boogie options
+            args.add("/nologo");
+            args.add("/z3exe:"+z3abs);
+            //args.add("/trace");
+            
+            // add prelude files
+            String veriatlabs = veriATLPath.toAbsolutePath().toString()+"\\Prelude\\";
+            args.addAll(getFiles(veriatlabs));
+            
+            // add auxu files
+            String auxu = URIs.abs(context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
+            args.addAll(getFiles(auxu));
+            
+            // add postcondition to be verified
+            String post = URIs.abs(context.basePath()
+            		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+            		.appendSegment(postName)
+            		.appendSegment(CompilerConstants.ORG)
+            		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
+            );
+            args.add(post);
+            
+            
+            VerificationResult r =Commands.boogie().exec().execute(args);
+            System.out.println(String.format("Mode: Normal-verify-post\tid:%s\tres: %s\ttime:%s", postName, r.getTriBooleanResult(), r.getTime()));
+            
+            curRoot.setResult(r.getTriBooleanResult());
+    		curRoot.setTime(r.getTime());
+    		curRoot.Check(true);
+    	}
+    	
 		
 		// serialize curTree
 		URI output = context.basePath();
