@@ -149,7 +149,7 @@ public class ocldecomposerDriver {
 			driver.generateBoogieFile(output, CompilerConstants.ORG, CompilerConstants.BOOGIE_EXT, org);	
 			
 			
-			NodeHelper.printTreeBasic(outputPath.trimSegments(1), goalName, tree);
+			
 			//System.out.println(String.format("Debug: ocldecomposerDriver.java ln 120, goalName: %s end", goalName));
 			
 			// serialize proof tree

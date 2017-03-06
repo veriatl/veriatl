@@ -165,7 +165,7 @@ public final class URIs {
 	}
 	
 	
-	private static String getBaseName(String fileName) {
+	public static String getBaseName(String fileName) {
 	    int index = fileName.lastIndexOf('.');
 	    if (index == -1) {
 	        return fileName;
@@ -173,4 +173,23 @@ public final class URIs {
 	        return fileName.substring(0, index);
 	    }
 	}
+
+	
+	public static void deleteFile(URI target) throws RuntimeException{
+
+		String folder = Paths.get(
+                ResourcesPlugin.getWorkspace()
+                        .getRoot()
+                        .getFile(new org.eclipse.core.runtime.Path(target.toPlatformString(true)))
+                        .getRawLocation()
+                        .toOSString()).toString();
+                     
+        File f = new File(folder);
+        if(f.exists()){
+        	if(f.isFile()){
+        		f.delete();
+        	}
+        }
+	}
+
 }

@@ -59,6 +59,7 @@ public class DefaultCommand implements Command {
     @Override
     public VerificationResult execute(ArrayList<String>  args) {
         List<String> command = new ArrayList<>();
+         
         command.add(path.resolve(executable).toString());
         command.addAll(args);
 
@@ -84,7 +85,7 @@ public class DefaultCommand implements Command {
             
             
             if (exitValue != 0) {
-            	BufferedReader input = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            	BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
 				String line;
 				while ((line = input.readLine()) != null) {

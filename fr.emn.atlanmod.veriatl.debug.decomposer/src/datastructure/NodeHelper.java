@@ -245,31 +245,8 @@ public class NodeHelper {
 
 
 
-	public static URI printTree(URI tarProj, String post, ArrayList<Node> tree) throws Exception {
-		URI output = tarProj.appendSegment(CompilerConstants.TREE).appendSegment(post).appendFileExtension(CompilerConstants.GVEXT);
-		
-		String content = "digraph G {\n";
-		
-		for(Node n : tree){
-			if(n.parent!=null){
-				content += String.format("\t%s_%s -> %s_%s;\n", 
-						n.getResult(), 
-						n.getId(), 
-						n.getParent().getResult(),
-						n.parent.getId());
-						
-			}	
-		}
-		
-		content += "}\n";
-		
-		URIs.write(output, content);
-		
-		return output;
 
-	}
-
-	public static void printTreeBasic(URI tarProj, String post, ArrayList<Node> tree) throws Exception {		
+	public static URI printTreeBasic(URI tarProj, String post, ArrayList<Node> tree) {		
 		URI output = tarProj.appendSegment(CompilerConstants.TREE).appendSegment(post).appendFileExtension(CompilerConstants.GVEXT);
 		
 		String content = "digraph G {\n";
@@ -288,57 +265,28 @@ public class NodeHelper {
 				}
 				
 				content += String.format("\t%s -> %s;\n", nName, pName);	
-			}	
+			}
+			
+
 		}
 		
-		content += "}\n";
-
-		URIs.write(output, content);
-		
-
-	}
-
-	public static void updateTreeBasic(URI tarProj, String post, Map<String, String> map) throws Exception {
-		URI file = tarProj.appendSegment(CompilerConstants.TREE).appendSegment(post).appendFileExtension(CompilerConstants.GVEXT);
-		
-		URIConverter uriConverter = new ExtensibleURIConverterImpl();
-		InputStream inputStream = uriConverter.createInputStream(file);
-				
-		// read in content
-		BufferedReader input = new BufferedReader (new InputStreamReader (inputStream));
-		String line;
-		String content = "";
-        while ((line = input.readLine()) != null) {
-           if(line.indexOf("}") != -1){
-        	   break;
-           }else if(line.indexOf("[shape=circle, style=filled, fillcolor=red]")!=-1){
-        	   continue;
-           }
-           else{
-        	   content += line+"\n";
-           }
-        }
-		
-        input.close();
-		
-        
-        // update content
-		for(String k : map.keySet()){
-			if(map.get(k).equals("false")){
-				content += String.format("%s[shape=circle, style=filled, fillcolor=red]\n", k);
+		for(Node n : tree){		
+			if(isLeaf(tree, n) && n.getResult() != TriBoolean.TRUE){
+				content += String.format("%s[shape=circle, style=filled, fillcolor=red]\n", n.getName());
 			}
 		}
+		
 		content += "}\n";
 
-		URI output = tarProj.appendSegment(CompilerConstants.TREE).appendSegment(post).appendFileExtension(CompilerConstants.GVEXT);
 		URIs.write(output, content);
+		
+		return output;
 
 	}
+
 	
-	public static void clean(String filePath, String ext) {
-		
-		//TODO delete all gv files.
-	}
+	
+
 
 
 	/**

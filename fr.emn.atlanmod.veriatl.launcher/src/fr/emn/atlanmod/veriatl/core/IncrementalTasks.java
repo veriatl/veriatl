@@ -3,6 +3,7 @@ package fr.emn.atlanmod.veriatl.core;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -12,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -21,6 +23,7 @@ import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.Commands;
+import fr.emn.atlanmod.veriatl.tools.DefaultCommand;
 import fr.emn.atlanmod.veriatl.tools.VerificationResult;
 import fr.emn.atlanmod.veriatl.util.URIs;
 
@@ -217,11 +220,13 @@ public final class IncrementalTasks {
     		}else{
     			Node cache = NodeHelper.findSubInCache(oldTree, n);
     			
+    			
     			if(cache != null && !cache.getResult().toString().equals("UNKNOWN") && !n.getTraces().contains(affectedRule)){
     				System.out.println(String.format("%s is %s", n.getName(), cache.getResult().toString()));
     				n.Check(true);
     				n.setResult(cache.getResult());
     			}else{
+    				
     				todo.add(n.getName());
     			}
     		}
@@ -272,7 +277,7 @@ public final class IncrementalTasks {
         	n.Check(true);
 			n.setResult(r.getTriBooleanResult());
         	n.setTime(r.getTime());
-        	System.out.println(String.format("id:%s-%s\tres: %s\ttime:%s", postName, n.getId(), r.getTriBooleanResult(), r.getTime()));
+        	System.out.println(String.format("id:%s-%s\tres: %s\ttime:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
         }
           
         // save to currentCache
@@ -280,6 +285,10 @@ public final class IncrementalTasks {
 		localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);	
         
         
+		// print proof tree
+		URI gvName = NodeHelper.printTreeBasic(context.basePath(), postName, curTree);
+		GraphVizTasks.execDot(gvName);
+		
     }
     
     
@@ -326,5 +335,5 @@ public final class IncrementalTasks {
     	}
     	return r;
     }
-    
+
 }
