@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.file.Paths;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -30,7 +33,9 @@ public class URIs {
     final URIConverter uriConverter = new ExtensibleURIConverterImpl();
     try {
       OutputStream outputStream = uriConverter.createOutputStream(target);
-      outputStream.write(content.getBytes(Charset.forName("UTF-8")));
+      Charset _forName = Charset.forName("UTF-8");
+      byte[] _bytes = content.getBytes(_forName);
+      outputStream.write(_bytes);
       outputStream.close();
     } catch (final Throwable _t) {
       if (_t instanceof IOException) {
@@ -45,13 +50,17 @@ public class URIs {
   }
   
   public static void delete(final URI target) throws RuntimeException {
-    IWorkspaceRoot _root = ResourcesPlugin.getWorkspace().getRoot();
+    IWorkspace _workspace = ResourcesPlugin.getWorkspace();
+    IWorkspaceRoot _root = _workspace.getRoot();
     String _platformString = target.toPlatformString(true);
     Path _path = new Path(_platformString);
-    final String folder = Paths.get(
-      _root.getFile(_path).getRawLocation().toOSString()).toString();
-    File _file = new File(folder);
-    URIs.deleteFolder(_file);
+    IFile _file = _root.getFile(_path);
+    IPath _rawLocation = _file.getRawLocation();
+    String _oSString = _rawLocation.toOSString();
+    java.nio.file.Path _get = Paths.get(_oSString);
+    final String folder = _get.toString();
+    File _file_1 = new File(folder);
+    URIs.deleteFolder(_file_1);
   }
   
   private static void deleteFolder(final File folder) {

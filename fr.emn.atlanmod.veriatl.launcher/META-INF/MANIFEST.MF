@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.ui,
  fr.emn.atlanmod.veriatl.complier.boogie,
  fr.emn.atlanmod.veriatl.debug.decomposer,
  fr.emn.atlanmod.veriatl.tools,
- javax.xml;bundle-version="1.3.4"
+ javax.xml;bundle-version="1.3.4",
+ fr.emn.atlanmod.veriatl.complier.boogie
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: fr.emn.atlanmod.veriatl.tools
