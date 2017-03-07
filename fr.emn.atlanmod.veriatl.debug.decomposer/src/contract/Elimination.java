@@ -1,7 +1,7 @@
 package contract;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -85,7 +85,7 @@ public class Elimination {
 			OclExpression src = expr.getSource();
 			EList<OclExpression> args = expr.getArguments();
 			
-			HashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(n.getContext());
+			LinkedHashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(n.getContext());
 			inferNextLv.put(src, new ContextEntry(ContextNature.INFER));		
 			for(OclExpression arg : args){
 				inferNextLv.put(arg, new ContextEntry(ContextNature.INFER));
@@ -98,14 +98,14 @@ public class Elimination {
 			OclExpression src = expr.getSource();
 			EList<OclExpression> args = expr.getArguments();
 			
-			HashMap<EObject, ContextEntry> inferNextLv =ContextHelper.cloneContext(n.getContext());
+			LinkedHashMap<EObject, ContextEntry> inferNextLv =ContextHelper.cloneContext(n.getContext());
 			inferNextLv.put(src, new ContextEntry(ContextNature.ASSUME));
 			
 			Node n1 = new Node(n.getLevel()+1, n.getContent(), n, inferNextLv, ProveOption.EACH, Tactic.OR_ELIM);
 			tree.add(n1);
 			
 			for(OclExpression arg : args){
-				HashMap<EObject, ContextEntry> inferNextLv2 = ContextHelper.cloneContext(n.getContext());
+				LinkedHashMap<EObject, ContextEntry> inferNextLv2 = ContextHelper.cloneContext(n.getContext());
 				inferNextLv2.put(arg, new ContextEntry(ContextNature.ASSUME));
 				
 				Node nn = new Node(n.getLevel()+1, n.getContent(), n, inferNextLv2, ProveOption.EACH, Tactic.OR_ELIM);
@@ -119,7 +119,7 @@ public class Elimination {
 			
 			for(EObject entry : n.getContext().keySet()){
 				if(OclHelper.Equal(lhs, entry)){
-					HashMap<EObject, ContextEntry> inferNextLv2 =  ContextHelper.cloneContext(n.getContext());
+					LinkedHashMap<EObject, ContextEntry> inferNextLv2 =  ContextHelper.cloneContext(n.getContext());
 					inferNextLv2.put(rhs, new ContextEntry(ContextNature.INFER));
 					
 					Node nn = new Node(n.getLevel()+1, n.getContent(), n, inferNextLv2, n.getRel2Parent(), Tactic.IMPLY_ELIM);
@@ -132,7 +132,7 @@ public class Elimination {
 			
 			for(EObject entry : n.getContext().keySet()){
 				if(OclHelper.Equal(src, entry)){
-					HashMap<EObject, ContextEntry> inferNextLv2 =  ContextHelper.cloneContext(n.getContext());
+					LinkedHashMap<EObject, ContextEntry> inferNextLv2 =  ContextHelper.cloneContext(n.getContext());
 					BooleanExp falseExpr = make.createBooleanExp();
 					falseExpr.setBooleanSymbol(false);
 					inferNextLv2.put(falseExpr, new ContextEntry(ContextNature.INFER));
@@ -226,7 +226,7 @@ public class Elimination {
 						forall.setBody(or);
 						
 						// continue elimination rules
-						HashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(n.getContext());
+						LinkedHashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(n.getContext());
 						inferNextLv.put(forall, new ContextEntry(ContextNature.INFER));
 						
 						Node newNode = new Node(n.getLevel() + 1, n.getContent(), n, inferNextLv, n.getRel2Parent(), Tactic.SIZE_ELIM_1);
@@ -307,7 +307,7 @@ public class Elimination {
 					or.getArguments().add(cn);
 				}
 				
-				HashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(n.getContext());
+				LinkedHashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(n.getContext());
 				inferNextLv.put(or, new ContextEntry(ContextNature.INFER));
 				
 				Node newNode = new Node(n.getLevel() + 1, n.getContent(), n, inferNextLv, n.getRel2Parent(), Tactic.INCLUDES_ELIM_2);
@@ -376,7 +376,7 @@ public class Elimination {
 				not.setOperationName("not");
 				not.setSource(or);
 				
-				HashMap<EObject, ContextEntry> inferNextLv = ContextHelper.cloneContext(n.getContext());
+				LinkedHashMap<EObject, ContextEntry> inferNextLv = ContextHelper.cloneContext(n.getContext());
 				inferNextLv.put(not, new ContextEntry(ContextNature.INFER));
 				
 				Node newNode = new Node(n.getLevel() + 1, n.getContent(), n, inferNextLv, n.getRel2Parent(), Tactic.EXCLUDES_ELIM_2);
@@ -415,12 +415,12 @@ public class Elimination {
 					
 					
 					if(!OclHelper.isMember(n.getContext().keySet(), includes) && !OclHelper.isMember(n.getContext().keySet(), excludes)){
-						HashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(n.getContext());
+						LinkedHashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(n.getContext());
 						inferNextLv.put(includes, new ContextEntry(ContextNature.ASSUME));
 						Node n1 = new Node(n.getLevel() + 1, n.getContent(), n, inferNextLv, ProveOption.EACH, Tactic.NAV_SINGLE_INTRO);
 						tree.add(n1);
 						
-						HashMap<EObject, ContextEntry> inferNextLv2 =  ContextHelper.cloneContext(n.getContext());
+						LinkedHashMap<EObject, ContextEntry> inferNextLv2 =  ContextHelper.cloneContext(n.getContext());
 						inferNextLv2.put(excludes, new ContextEntry(ContextNature.ASSUME));
 						Node n2 = new Node(n.getLevel() + 1, n.getContent(), n, inferNextLv2, ProveOption.EACH, Tactic.NAV_SINGLE_INTRO);
 						tree.add(n2);	

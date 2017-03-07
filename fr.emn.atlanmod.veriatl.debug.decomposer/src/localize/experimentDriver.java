@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -101,8 +102,8 @@ public class experimentDriver {
 			ArrayList<Node> tree = new ArrayList<Node>();
 			Introduction.init(env, trace, tree, driver.trgmm);
 			
-			HashMap<EObject, ContextEntry> emptyTrace = new HashMap<EObject, ContextEntry>();
-			Node root = new Node(0, post, null, emptyTrace, null, null);
+			LinkedHashMap<EObject, ContextEntry> emptyCtx = new LinkedHashMap<EObject, ContextEntry>();
+			Node root = new Node(0, post, null, emptyCtx, null, null);
 			tree.add(root);
 			
 			

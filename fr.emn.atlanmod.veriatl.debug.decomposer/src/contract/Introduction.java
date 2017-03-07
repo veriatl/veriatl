@@ -1,7 +1,7 @@
 package contract;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
@@ -57,7 +57,7 @@ public class Introduction  {
 	}
 
 
-	public static void introduction(Node n, OclExpression expr, HashMap<EObject, ContextEntry> Inferred, int depth, ProveOption op) {
+	public static void introduction(Node n, OclExpression expr, LinkedHashMap<EObject, ContextEntry> Inferred, int depth, ProveOption op) {
 		
 		if (expr instanceof IteratorExp) {
 			IteratorExp todo = (IteratorExp) expr;
@@ -73,7 +73,7 @@ public class Introduction  {
 		
 	}
 
-	static void _introduction(Node curr, IteratorExp expr, HashMap<EObject, ContextEntry> Inferred, int depth, ProveOption op) {
+	static void _introduction(Node curr, IteratorExp expr, LinkedHashMap<EObject, ContextEntry> Inferred, int depth, ProveOption op) {
 
 		Iterator bv = expr.getIterators().get(0);
 		OclExpression loopBody = expr.getBody();
@@ -83,7 +83,7 @@ public class Introduction  {
 
 		
 		if (expr.getName().toLowerCase().equals("forall")) {		
-			HashMap<EObject, ContextEntry> inferNextLv = ContextHelper.cloneContext(Inferred);
+			LinkedHashMap<EObject, ContextEntry> inferNextLv = ContextHelper.cloneContext(Inferred);
 			inferNextLv.put(bv, new ContextEntry(ContextNature.BV));
 
 			myOclType bvType = new myOclType("trgRef", TypeInference.infer(loopSrc).getType());
@@ -112,7 +112,7 @@ public class Introduction  {
 		
 	}
 	
-	static void _introduction(Node n, OperationCallExp expr, HashMap<EObject, ContextEntry> Inferred, int depth, ProveOption op){	
+	static void _introduction(Node n, OperationCallExp expr, LinkedHashMap<EObject, ContextEntry> Inferred, int depth, ProveOption op){	
 		
 		OclExpression src = expr.getSource();
 		
@@ -148,12 +148,12 @@ public class Introduction  {
 				
 				
 				if(!OclHelper.isMember(Inferred.keySet(), includes) && !OclHelper.isMember(Inferred.keySet(), excludes)){
-					HashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(Inferred);
+					LinkedHashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(Inferred);
 					inferNextLv.put(includes, new ContextEntry(ContextNature.ASSUME));
 					Node n1 = new Node(depth + 1, expr, n, inferNextLv, ProveOption.EACH, Tactic.NAV_SINGLE_INTRO);
 					tree.add(n1);
 					
-					HashMap<EObject, ContextEntry> inferNextLv2 =  ContextHelper.cloneContext(Inferred);
+					LinkedHashMap<EObject, ContextEntry> inferNextLv2 =  ContextHelper.cloneContext(Inferred);
 					inferNextLv2.put(excludes, new ContextEntry(ContextNature.ASSUME));
 					Node n2 = new Node(depth + 1, expr, n, inferNextLv2, ProveOption.EACH, Tactic.NAV_SINGLE_INTRO);
 					tree.add(n2);	
@@ -166,13 +166,13 @@ public class Introduction  {
 		
 	}
 	
-	static void _introduction(Node curr, OperatorCallExp expr, HashMap<EObject, ContextEntry> Inferred, int depth, ProveOption op){
+	static void _introduction(Node curr, OperatorCallExp expr, LinkedHashMap<EObject, ContextEntry> Inferred, int depth, ProveOption op){
 		
 		if(expr.getOperationName().equals("implies")){
 			
 			OclExpression rhs = expr.getArguments().get(0);
 			
-			HashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(Inferred);
+			LinkedHashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(Inferred);
 			inferNextLv.put(expr.getSource(), new ContextEntry(ContextNature.ASSUME));
 			
 			Node n = new Node(depth + 1, rhs, curr, inferNextLv, op, Tactic.IMPLY_INTRO);
@@ -183,8 +183,8 @@ public class Introduction  {
 			OclExpression lhs = expr.getSource();
 			OclExpression rhs = expr.getArguments().get(0);
 			
-			HashMap<EObject, ContextEntry> inferNextLvLhs =  ContextHelper.cloneContext(Inferred);
-			HashMap<EObject, ContextEntry> inferNextLvRhs =  ContextHelper.cloneContext(Inferred);
+			LinkedHashMap<EObject, ContextEntry> inferNextLvLhs =  ContextHelper.cloneContext(Inferred);
+			LinkedHashMap<EObject, ContextEntry> inferNextLvRhs =  ContextHelper.cloneContext(Inferred);
 			
 			Node n1 = new Node(depth + 1, lhs, curr, inferNextLvLhs, ProveOption.EACH, Tactic.SPLIT);
 			tree.add(n1);
@@ -215,7 +215,7 @@ public class Introduction  {
 			BooleanExp bFalse = make.createBooleanExp();
 			bFalse.setBooleanSymbol(false);
 			
-			HashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(Inferred);
+			LinkedHashMap<EObject, ContextEntry> inferNextLv =  ContextHelper.cloneContext(Inferred);
 			inferNextLv.put(src, new ContextEntry(ContextNature.ASSUME));
 			
 			Node n1 = new Node(depth + 1, bFalse, curr, inferNextLv, op, Tactic.NEG_INTRO);

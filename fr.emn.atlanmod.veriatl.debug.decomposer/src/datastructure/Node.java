@@ -2,8 +2,9 @@ package datastructure;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.atl.common.OCL.*;
@@ -28,7 +29,7 @@ public class Node implements Comparable, Serializable {
 	transient OclExpression content;
 	Node parent;
 	Node backUpParent;
-	transient HashMap<EObject, ContextEntry> context;
+	transient LinkedHashMap<EObject, ContextEntry> context;
 	transient ProveOption rel2Parent;
 	transient Tactic ruleApplied;
 	TriBoolean res;
@@ -41,7 +42,7 @@ public class Node implements Comparable, Serializable {
 	boolean checked;
 	HashSet<String> bvs;
 	
-	public Node(int lv, OclExpression ct, Node pt, HashMap<EObject, ContextEntry> ctx, ProveOption rel, Tactic rule){
+	public Node(int lv, OclExpression ct, Node pt, LinkedHashMap<EObject, ContextEntry> ctx, ProveOption rel, Tactic rule){
 		this.level = lv;
 		this.content = ct;
 		this.parent = pt;
@@ -109,11 +110,11 @@ public class Node implements Comparable, Serializable {
 		this.content = content;
 	}
 
-	public HashMap<EObject, ContextEntry> getContext() {
+	public LinkedHashMap<EObject, ContextEntry> getContext() {
 		return context;
 	}
 
-	public void setContext(HashMap<EObject, ContextEntry> context) {
+	public void setContext(LinkedHashMap<EObject, ContextEntry> context) {
 		this.context = context;
 	}
 	
