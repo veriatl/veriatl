@@ -1,7 +1,10 @@
 package datastructure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.m2m.atl.common.OCL.*;
@@ -15,20 +18,31 @@ import transformation.Trace;
 
 
 
-public class Node implements Comparable {
+public class Node implements Comparable, Serializable {
 
+	private static final long serialVersionUID = 6537298493984410475L;
+	
+	
 	String id;
 	String name;
 	int level;
-	OclExpression content;
+	transient OclExpression content;
 	Node parent;
 	Node backUpParent;
-	HashMap<EObject, ContextEntry> context;
-	ProveOption rel2Parent;
-	Tactic ruleApplied;
+	transient LinkedHashMap<EObject, ContextEntry> context;
+	transient ProveOption rel2Parent;
+	transient Tactic ruleApplied;
 	TriBoolean res;
+	long time;
 	
-	public Node(int lv, OclExpression ct, Node pt, HashMap<EObject, ContextEntry> ctx, ProveOption rel, Tactic rule){
+	// for serialization;
+	HashSet<String> hypotheses;
+	String conclusion;
+	HashSet<String> traces;
+	boolean checked;
+	HashSet<String> bvs;
+	
+	public Node(int lv, OclExpression ct, Node pt, LinkedHashMap<EObject, ContextEntry> ctx, ProveOption rel, Tactic rule){
 		this.level = lv;
 		this.content = ct;
 		this.parent = pt;
@@ -38,6 +52,12 @@ public class Node implements Comparable {
 		this.res = TriBoolean.UNKNOWN;
 		this.id = Integer.toHexString(this.hashCode());
 		this.name = "";
+		
+		hypotheses = new HashSet<String>();
+		traces = new HashSet<String>();
+		bvs = new HashSet<String>();
+		conclusion = "";
+		checked = false;
 	}
 
 	
@@ -90,11 +110,11 @@ public class Node implements Comparable {
 		this.content = content;
 	}
 
-	public HashMap<EObject, ContextEntry> getContext() {
+	public LinkedHashMap<EObject, ContextEntry> getContext() {
 		return context;
 	}
 
-	public void setContext(HashMap<EObject, ContextEntry> context) {
+	public void setContext(LinkedHashMap<EObject, ContextEntry> context) {
 		this.context = context;
 	}
 	
@@ -232,6 +252,40 @@ public class Node implements Comparable {
 	
 	
 
+	public String toBoogie(){
+		String rtn = Keyword.EMPTY_STRING;
+		
+		rtn += "implementation driver(){\n";
+		
+		for(String r : this.boundVars()){
+			rtn += String.format("var %s: ref;\n", r);
+		}
+		
+		rtn += "call init_tar_model();\n";
+	
+		
+		for(String r : traces){
+			rtn += String.format("call %s_matchAll();\n", r);
+		}
+		
+		for(String r : traces){
+			rtn += String.format("call %s_applyAll();\n", r);
+		}
+		
+		
+		for(String entry : this.hypotheses){
+			String assume = String.format("assume %s;\n",  entry);
+			rtn += assume ;
+		}
+		
+		
+		String ast = String.format("assert %s;\n",  this.conclusion);
+		rtn += ast;
+		
+		rtn+="}\n";
+		
+		return rtn;
+	}
 	
 	public String toBoogie(ExecEnv env){
 		String rtn = Keyword.EMPTY_STRING;
@@ -254,6 +308,9 @@ public class Node implements Comparable {
 			}	
 		}
 		
+		// to serialize traces of this node
+		this.traces.addAll(list);
+		
 		for(String r : list){
 			rtn += String.format("call %s_matchAll();\n", r);
 		}
@@ -263,16 +320,14 @@ public class Node implements Comparable {
 		}
 		
 		
-		for(EObject entry : this.getAssumptions()){
-			rtn += String.format("assume %s;\n",  ocl2boogie.genOclExpression(entry, atl.genTrgHeap()));
-		}
-		
-		for(EObject entry : this.getInfers()){
-			rtn += String.format("assume %s;\n",  ocl2boogie.genOclExpression(entry, atl.genTrgHeap()));
+		for(String entry : this.hypotheses){
+			String assume = String.format("assume %s;\n",  entry);
+			rtn += assume ;
 		}
 		
 		
-		rtn += String.format("assert %s;\n",  ocl2boogie.genOclExpression(this.content, atl.genTrgHeap()));
+		String ast = String.format("assert %s;\n",  this.conclusion);
+		rtn += ast;
 		
 		rtn+="}\n";
 		
@@ -309,6 +364,81 @@ public class Node implements Comparable {
 		this.name = name;
 	}
 
+	public boolean isChecked() {
+		return this.checked;
+	}
+	
+	public void Check(boolean v) {
+		this.checked = v;
+	}
+	
+	//TODO order the hypotheses
+	public void Stringlize(){
+		
+		for(EObject bv : this.getBVs()) {
+			String v = ocl2boogie.genOclExpression(bv, atl.genTrgHeap()).toString();
+			this.bvs.add(v);
+		}
+		
+		for(EObject entry : this.getAssumptions()){
+			String assume = ocl2boogie.genOclExpression(entry, atl.genTrgHeap()).toString();
+			this.hypotheses.add(assume);
+		}
+		
+		for(EObject entry : this.getInfers()){
+			String assume = ocl2boogie.genOclExpression(entry, atl.genTrgHeap()).toString();
+			this.hypotheses.add(assume);
+		}
+		
+		String conclusion = ocl2boogie.genOclExpression(this.content, atl.genTrgHeap()).toString();
+		this.conclusion = conclusion;
+	}
 
 
+	public HashSet<String> getHypotheses() {
+		return hypotheses;
+	}
+
+
+	public void setHypotheses(HashSet<String> hypotheses) {
+		this.hypotheses = hypotheses;
+	}
+
+
+	public HashSet<String> boundVars() {
+		return bvs;
+	}
+
+
+	public void setBoundVars(HashSet<String> bvs) {
+		this.bvs = bvs;
+	}
+	
+	public String getConclusion() {
+		return conclusion;
+	}
+
+
+	public void setConclusion(String conclusion) {
+		this.conclusion = conclusion;
+	}
+
+
+	public HashSet<String> getTraces() {
+		return traces;
+	}
+
+
+	public void setTraces(HashSet<String> traces) {
+		this.traces = traces;
+	}
+
+	public long getTime() {
+		return this.time;
+	}
+	
+	public void setTime(long v) {
+		this.time = v;
+	}
+	
 }

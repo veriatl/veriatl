@@ -1,14 +1,13 @@
 package fr.emn.atlanmod.veriatl.core;
 
+import java.util.Collections;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.m2m.atl.emftvm.launcher.EMFTVMLaunchConstants;
 
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
-
-import java.util.Collections;
-import java.util.stream.Collectors;
 
 /**
  * A class representing an execution context that manages and pre-processes the parameters from a

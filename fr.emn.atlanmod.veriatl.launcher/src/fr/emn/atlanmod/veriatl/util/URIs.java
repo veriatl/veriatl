@@ -1,20 +1,25 @@
 package fr.emn.atlanmod.veriatl.util;
 
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import static java.util.Objects.nonNull;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
-import static java.util.Objects.nonNull;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+
+import datastructure.Node;
 
 /**
  * Utility methods for working with {@link URI}s.
@@ -102,4 +107,89 @@ public final class URIs {
             throw new RuntimeException(e);
         }
     }
+    
+    
+	@SuppressWarnings("unchecked")
+	/**
+	 * load proof tree from the given URI, return {@code null} if no tree is found.
+	 * */
+	public static ArrayList<Node> load(URI src) {
+		URIConverter uriConverter = new ExtensibleURIConverterImpl();
+		ArrayList<Node> arr;
+
+		try {
+			InputStream inputStream = uriConverter.createInputStream(src);
+			ObjectInputStream in = new ObjectInputStream(inputStream);
+			arr = (ArrayList<Node>) in.readObject();
+			in.close();
+			return arr;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+
+	/**
+	 * find all file names without extension within given URI, not recurvie.
+	 * */
+	public static ArrayList<String> allNames(URI src) {
+		String folder = abs(src);
+		ArrayList<String> r = new ArrayList<String>();
+
+		File f = new File(folder);
+		for (final File file : f.listFiles()) {
+			r.add(getBaseName(file.getName()));
+		}
+		return r;
+
+	}
+	
+	
+	/**
+	 * find all folder names within given URI, not recurvie.
+	 * */
+	public static ArrayList<String> allFolders(URI src) {
+		String folder = abs(src);
+		ArrayList<String> r = new ArrayList<String>();
+
+		File f = new File(folder);
+		for (final File file : f.listFiles()) {
+			if(file.isDirectory()) {
+				r.add(file.getName());
+			}	
+		}
+
+		return r;
+
+	}
+	
+	
+	public static String getBaseName(String fileName) {
+	    int index = fileName.lastIndexOf('.');
+	    if (index == -1) {
+	        return fileName;
+	    } else {
+	        return fileName.substring(0, index);
+	    }
+	}
+
+	
+	public static void deleteFile(URI target) throws RuntimeException{
+
+		String folder = Paths.get(
+                ResourcesPlugin.getWorkspace()
+                        .getRoot()
+                        .getFile(new org.eclipse.core.runtime.Path(target.toPlatformString(true)))
+                        .getRawLocation()
+                        .toOSString()).toString();
+                     
+        File f = new File(folder);
+        if(f.exists()){
+        	if(f.isFile()){
+        		f.delete();
+        	}
+        }
+	}
+
 }

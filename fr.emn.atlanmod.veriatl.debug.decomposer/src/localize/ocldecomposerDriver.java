@@ -1,15 +1,23 @@
 package localize;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.m2m.atl.common.ATL.MatchedRule;
 import org.eclipse.m2m.atl.common.OCL.OclExpression;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
@@ -43,7 +51,7 @@ public class ocldecomposerDriver {
 	// the most difficulty part is type inference, and deep copy of objects.
 	@SuppressWarnings("unchecked")
 	public static void decompose(URI atl, URI emftvm, String moduleName, URI src, URI trg, URI contract, URI outputPath) throws Exception {
-		long start = System.currentTimeMillis();
+
 
 		
 
@@ -61,6 +69,7 @@ public class ocldecomposerDriver {
 		// clean sub-goals previously generated
 		URIs.delete(outputPath);
 		
+
 		
 		// proof strategy starts
 		for (OclExpression post : postconditions) {
@@ -68,8 +77,8 @@ public class ocldecomposerDriver {
 			ArrayList<Node> tree = new ArrayList<Node>();
 			Introduction.init(env, trace, tree, driver.trgmm);
 			
-			HashMap<EObject, ContextEntry> emptyTrace = new HashMap<EObject, ContextEntry>();
-			Node root = new Node(0, post, null, emptyTrace, null, null);
+			LinkedHashMap<EObject, ContextEntry> emptyCtx = new LinkedHashMap<EObject, ContextEntry>();
+			Node root = new Node(0, post, null, emptyCtx, null, null);
 			tree.add(root);
 			
 			
@@ -78,21 +87,21 @@ public class ocldecomposerDriver {
 			ArrayList<Node> newLeafs;
 			
 			do{
-				oldLeafs = NodeHelper.findLeafs(tree);
+				oldLeafs = NodeHelper.findAllLeafs(tree);
 				
 				for(Node n : oldLeafs){
 					//TODO, default prove option
 					Introduction.introduction(n, n.getContent(), n.getContext(), n.getLevel(), ProveOption.EACH);	
 				}
 				
-				newLeafs = NodeHelper.findLeafs(tree);
+				newLeafs = NodeHelper.findAllLeafs(tree);
 			}while(!oldLeafs.containsAll(newLeafs));
 			
 
 			//elimin
 			Elimination.init(env, trace, tree, driver.trgmm);
-			while(!Elimination.terminated(NodeHelper.findLeafs(tree))){
-				ArrayList<Node> leafs = NodeHelper.findLeafs(tree);
+			while(!Elimination.terminated(NodeHelper.findAllLeafs(tree))){
+				ArrayList<Node> leafs = NodeHelper.findAllLeafs(tree);
 				
 				for(Node n : leafs){
 					HashMap<EObject, ContextEntry> ctx = n.getContext();
@@ -111,31 +120,37 @@ public class ocldecomposerDriver {
 						
 			Collections.sort(tree);
 			
+			// make string representation of hypotheses and conclusion of each node
+			for(Node n : tree){
+				n.Stringlize();
+			}
+
 			// print Boogie file for each leafs of the generated Proof tree
 			String goalName = post.getCommentsBefore().get(0).replace("--", "");
 			URI output = outputPath.appendSegment(goalName);
 			//System.out.println(String.format("Debug: ocldecomposerDriver.java ln 120, goalName: %s start", goalName));
 			int i = 0;
-			for(Node n : NodeHelper.findLeafs(tree)){
+			for(Node n : NodeHelper.findAllLeafs(tree)){
 				String cse = String.format("case%04d",i);
 				n.setName(String.format("case%04d", i));
 				driver.generateBoogieFile(output, cse, CompilerConstants.BOOGIE_EXT, n.toBoogie(env));		
 				i++;
 			}
 			
-			//TODO This is the Boogie program with the full transformation trace, less efficient to verify
-			//String org = printDriver(env, post);
-			
-			String org = prtingFastDriver(env, post, NodeHelper.findLeafs(tree), goalName);
-			driver.generateBoogieFile(output, CompilerConstants.ORG, CompilerConstants.BOOGIE_EXT, org);	
+			//This is the Boogie program with the full transformation trace, less efficient to verify, only used in normal verification mode
+			String org = printDriver(env, post);
+			driver.generateBoogieFile(output, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);	
 			
 			
-			NodeHelper.printTreeBasic(outputPath.trimSegments(1), goalName, tree);
+			
 			//System.out.println(String.format("Debug: ocldecomposerDriver.java ln 120, goalName: %s end", goalName));
+			
+			// serialize proof tree
+			writeTree(outputPath.trimSegments(1), goalName, new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date()), tree);
 		}
 		
-		String org = prtingFullDriver(env);
-		driver.generateBoogieFile(outputPath, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);
+		//String org = prtingFullDriver(env);
+		//driver.generateBoogieFile(outputPath, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);
 		
 		// Print Genby predicate
 		GenBy.init(rules,driver.srcmm);
@@ -144,11 +159,46 @@ public class ocldecomposerDriver {
 		driver.generateBoogieFile(outputPath, CompilerConstants.GENBY, CompilerConstants.BOOGIE_EXT, genby);
 		
 
-		long end = System.currentTimeMillis();
-		System.out.println(end-start);
+	}
+
+	
+	/**
+	 * write proof tree to a URI
+	 * TODO don't append
+	 * @param outputPath basdURI
+	 * @param tree
+	 * @param append
+	 */
+	public static void writeTree(URI outputPath, String post, String cacheName, ArrayList<Node> tree) {
+		String cache = String.format("%s", cacheName);
+		
+		URI cachePath = outputPath.appendSegment("Caches")
+				.appendSegment(post).appendSegment(cache).appendFileExtension("cache");
+		
+		URIConverter uriConverter = new ExtensibleURIConverterImpl();
+
+		try {
+			OutputStream outputStream = uriConverter.createOutputStream(cachePath);
+			ObjectOutputStream out = new ObjectOutputStream(outputStream);
+			out.writeObject(tree);
+	        out.flush();
+	        out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 		
 		
 	}
+	
+	
+	
+
+
+
+
+
+
 
 	/**
 	 * @param env

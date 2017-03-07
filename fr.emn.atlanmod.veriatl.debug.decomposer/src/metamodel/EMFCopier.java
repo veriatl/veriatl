@@ -1,15 +1,16 @@
 package metamodel;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.m2m.atl.common.OCL.*;
+import org.eclipse.m2m.atl.common.OCL.Iterator;
+import org.eclipse.m2m.atl.common.OCL.NavigationOrAttributeCallExp;
+import org.eclipse.m2m.atl.common.OCL.OclExpression;
+import org.eclipse.m2m.atl.common.OCL.OclModel;
+import org.eclipse.m2m.atl.common.OCL.OclModelElement;
+import org.eclipse.m2m.atl.common.OCL.OclType;
+import org.eclipse.m2m.atl.common.OCL.OperationCallExp;
+import org.eclipse.m2m.atl.common.OCL.VariableDeclaration;
+import org.eclipse.m2m.atl.common.OCL.VariableExp;
 
 public class EMFCopier {
 

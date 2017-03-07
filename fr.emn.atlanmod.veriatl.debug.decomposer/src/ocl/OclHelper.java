@@ -1,12 +1,9 @@
 package ocl;
 
-import java.util.HashMap;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.m2m.atl.common.OCL.*;
 
-import datastructure.ContextEntry;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 

@@ -1,18 +1,18 @@
 package fr.emn.atlanmod.atl2boogie.xtend.atl
 
+import fr.emn.atlanmod.atl2boogie.xtend.core.driver
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie
-import fr.emn.atlanmod.atl2boogie.xtend.core.driver
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.m2m.atl.common.ATL.*
-import org.eclipse.m2m.atl.common.OCL.*
 import org.eclipse.m2m.atl.common.ATL.MatchedRule
-
-
+import org.eclipse.m2m.atl.common.ATL.Module
+import org.eclipse.m2m.atl.common.ATL.ModuleElement
+import org.eclipse.m2m.atl.common.ATL.Rule
+import org.eclipse.m2m.atl.common.OCL.OclModel
 
 //TODO the user should specify whether they want requires `free` or not. That is another option for VeriATL
 class matcher2boogie {
-	static int modDepth = 0;
+	public static int modDepth = 0;
 	
 	def static calDepth(Module mod){
 		for(ModuleElement e : mod.elements){
@@ -73,7 +73,7 @@ class matcher2boogie {
 	  
 	function printGuard_«r.name»(«atl.genHeapInGuardFun»: HeapType, «r.inPattern.elements.map(e | atl.genInPattern(e, "", ": ref")).join(',')»): bool
 	  { 
-	  	«if (r.inPattern.filter == null) "true" else ocl2boogie.genOclExpression(r.inPattern.filter, atl.genHeapInGuardFun)»
+	  	«if (r.inPattern.filter === null) "true" else ocl2boogie.genOclExpression(r.inPattern.filter, atl.genHeapInGuardFun)»
 	  }  
 	  
 	'''

@@ -98,13 +98,7 @@ public class executioner {
 		String[] args = params.toArray(new String[0]);		
         Process p = Runtime.getRuntime().exec(args);
         p.waitFor();
-        BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
-        
-        String line;
-        while ((line = input.readLine()) != null) {
-           System.out.println(line);
-        }
 	}
 	
 	

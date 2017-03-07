@@ -23,9 +23,7 @@ rule IS2IS {
 -- Initial states of composite states become regular states in the flattened SM
 rule IS2RS {
     from is1 : HSM!InitialState (not is1.compositeState.oclIsUndefined())
-    to   
-	is2 : FSM!RegularState  ( stateMachine <- is1.stateMachine, name <- is1.name ),
-	is3 : FSM!InitialState  ( stateMachine <- is1.stateMachine, name <- is1.name )
+    to   is2 : FSM!RegularState  ( stateMachine <- is1.stateMachine, name <- is1.name )
 }
 
 

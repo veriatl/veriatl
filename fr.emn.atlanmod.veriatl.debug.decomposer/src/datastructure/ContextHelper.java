@@ -1,12 +1,12 @@
 package datastructure;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.eclipse.emf.ecore.EObject;
 
 public class ContextHelper {
-	public static HashMap<EObject, ContextEntry> cloneContext(HashMap<EObject, ContextEntry> src){
-		HashMap<EObject, ContextEntry> rtn = new HashMap<EObject, ContextEntry>();
+	public static LinkedHashMap<EObject, ContextEntry> cloneContext(LinkedHashMap<EObject, ContextEntry> src){
+		LinkedHashMap<EObject, ContextEntry> rtn = new LinkedHashMap<EObject, ContextEntry>();
 		
 		for(EObject ocl : src.keySet()){
 			ContextEntry oldEntry = src.get(ocl);

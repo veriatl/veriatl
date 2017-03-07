@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -84,8 +85,8 @@ public class experimentDriver {
 		driver.doVeriATLSetup(atl, src, trg, contract);
 		ExecEnv env = Trace.moduleLoader(emftvm.trimFileExtension().trimSegments(1), moduleName, src, trg, driver.srcmm.getName(), driver.trgmm.getName());
 		Map<String, ArrayList<String>> trace = Trace.getTrace(driver.trgmm, env);
-		List<OclExpression> postconditions = ContractLoader.init(driver.contract_resource);
-		List<MatchedRule> rules = TransformationLoader.init(driver.atl_resource);
+		List<OclExpression> postconditions = ContractLoader.init(driver.contract_resource);//
+//		List<MatchedRule> rules = TransformationLoader.init(driver.atl_resource);
 		
 		
 		
@@ -101,8 +102,8 @@ public class experimentDriver {
 			ArrayList<Node> tree = new ArrayList<Node>();
 			Introduction.init(env, trace, tree, driver.trgmm);
 			
-			HashMap<EObject, ContextEntry> emptyTrace = new HashMap<EObject, ContextEntry>();
-			Node root = new Node(0, post, null, emptyTrace, null, null);
+			LinkedHashMap<EObject, ContextEntry> emptyCtx = new LinkedHashMap<EObject, ContextEntry>();
+			Node root = new Node(0, post, null, emptyCtx, null, null);
 			tree.add(root);
 			
 			
@@ -111,21 +112,21 @@ public class experimentDriver {
 			ArrayList<Node> newLeafs;
 			
 			do{
-				oldLeafs = NodeHelper.findLeafs(tree);
+				oldLeafs = NodeHelper.findAllLeafs(tree);
 				
 				for(Node n : oldLeafs){
 					//TODO, default prove option
 					Introduction.introduction(n, n.getContent(), n.getContext(), n.getLevel(), ProveOption.EACH);	
 				}
 				
-				newLeafs = NodeHelper.findLeafs(tree);
+				newLeafs = NodeHelper.findAllLeafs(tree);
 			}while(!oldLeafs.containsAll(newLeafs));
 			
 
 			//elimin
 			Elimination.init(env, trace, tree, driver.trgmm);
-			while(!Elimination.terminated(NodeHelper.findLeafs(tree))){
-				ArrayList<Node> leafs = NodeHelper.findLeafs(tree);
+			while(!Elimination.terminated(NodeHelper.findAllLeafs(tree))){
+				ArrayList<Node> leafs = NodeHelper.findAllLeafs(tree);
 				
 				for(Node n : leafs){
 					HashMap<EObject, ContextEntry> ctx = n.getContext();
@@ -162,7 +163,7 @@ public class experimentDriver {
 //			}
 			
 			// Print single postcondition in its consice presentation.
-			String org = prtingFastDriver(env, post, NodeHelper.findLeafs(tree), goalName);
+			String org = prtingFastDriver(env, post, NodeHelper.findAllLeafs(tree), goalName);
 			URI output = outputPath.appendSegment(experimentDriver.SINGLE);
 			driver.generateBoogieFile(output, String.format("%s-%d", goalName, postsTrace.get(goalName).size()), CompilerConstants.BOOGIE_EXT, org);	
 			
@@ -172,7 +173,7 @@ public class experimentDriver {
 
 		}
 		
-		String org = prtingFullDriver(env);
+//		String org = prtingFullDriver(env);
 //		driver.generateBoogieFile(outputPath, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);
 			
 		//combinePlusOne(outputPath);

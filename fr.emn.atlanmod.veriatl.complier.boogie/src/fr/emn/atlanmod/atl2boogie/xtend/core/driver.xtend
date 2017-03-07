@@ -8,6 +8,9 @@ import fr.emn.atlanmod.atl2boogie.xtend.emf.mm2boogie
 import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs
 import fr.emn.atlanmod.atl2boogie.xtend.lib.emf
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants
+import fr.emn.atlanmod.atl2boogie.xtend.lib.myOclType
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie
+import fr.emn.atlanmod.atl2boogie.xtend.lib.atl
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.HashSet
@@ -77,7 +80,7 @@ class driver {
 	def static generate(URI atl, URI src, URI trg, URI contract, URI outputPath) {
 		doEMFSetup
 		doVeriATLSetup(atl, src, trg, contract)
-		
+		doClean
 		
 		// gen matchers
 		var match = "";
@@ -154,8 +157,24 @@ class driver {
 	}
 
 
+	// clean static variable of templates	
+	def static void doClean(){
+		matcher2boogie.modDepth = 0
 		
-	
+		surjective2boogie.isPrintedOutPatternElement = new HashSet<String>()
+		surjective2boogie.modDepth = 0
+		
+		contract2boogie.debugPost = ""
+		
+		TypeInference.lookup = new HashMap<String, myOclType>();
+		
+		ocl2boogie.iteratorTyping = new HashMap<String, String>;
+		ocl2boogie.isReplacing = false
+		ocl2boogie.replaceMap = new HashMap<String, String>;
+		
+		atl.srcHeaps = new HashSet<String>;
+		atl.trgHeaps = new HashSet<String>;
+	}
 	
 	
 
