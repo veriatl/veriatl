@@ -54,18 +54,29 @@ public final class IncrementalTasks {
     	ArrayList<String> caches = Caches.loadCaches(context, postName);
     	String previousCache = Caches.prevCache(caches);
 		String currentCache = Caches.curCache(caches);
-    	
+		URI pCache;
+		URI cCache;
+		ArrayList<Node> oldTree;
+		ArrayList<Node> curTree;
+		
+		cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
+		curTree = URIs.load(cCache);
+		String cacheState = "";
+		
     	if(previousCache == null) {
-    		NormalTasks.execBoogie(context);
-    		return;
+    		pCache = cCache;
+    		oldTree = curTree;
+    		cacheState = "self";
+    	}else{
+    		pCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME)
+    				.appendSegment(postName).appendSegment(previousCache)
+    				.appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
+    		oldTree = URIs.load(pCache);
+    		
+    		cacheState = previousCache;
     	}
     	
-    	URI pCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(previousCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
-    	URI cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
-    	
-    	ArrayList<Node> oldTree = URIs.load(pCache);
-    	ArrayList<Node> curTree = URIs.load(cCache);
-    	
+
     	Node curRoot = NodeHelper.findRoot(curTree);
     	HashSet<String> curTrace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
     	
@@ -73,7 +84,7 @@ public final class IncrementalTasks {
 			System.out.println(String.format("Mode: inc-checked-post\t%s is %s", postName, curRoot.getResult().toString()));
 		}else{
 			Node oldRoot = NodeHelper.findRoot(oldTree);
-			HashSet<String> oldTrace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(oldTree, oldRoot));
+			HashSet<String> oldTrace = NodeHelper.UnionTraces(oldRoot, NodeHelper.findDescendantLeafs(oldTree, oldRoot));
 			
 			
 			if(oldTrace.equals(curTrace) && !oldRoot.getResult().toString().equals("UNKNOWN") && !curTrace.contains(affectedRule)){
@@ -140,7 +151,7 @@ public final class IncrementalTasks {
 					curTree = NodeHelper.repopulate(curTree);	
 					curRoot.setResult(r.getTriBooleanResult());
 					curRoot.setTime(r.getTime());
-					System.out.println(String.format("Mode: inc-verify-post\tid:%s\tres: %s\ttime:%s", postName, r.getTriBooleanResult(), r.getTime()));
+					System.out.println(String.format("Mode: inc-verify-post\tusing Cache:%s\tid:%s\tres: %s\ttime:%s", cacheState, postName, r.getTriBooleanResult(), r.getTime()));
 				}
 				
 				
@@ -192,16 +203,25 @@ public final class IncrementalTasks {
     	String previousCache = Caches.prevCache(caches);
 		String currentCache = Caches.curCache(caches);
     	
+		URI pCache;
+		URI cCache;
+		ArrayList<Node> oldTree;
+		ArrayList<Node> curTree;
+		
+		cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
+		curTree = URIs.load(cCache);
+		
     	if(previousCache == null) {
-    		NormalTasks.debugBoogie(context);
-    		return;
+    		pCache = cCache;
+    		oldTree = curTree;
+    	}else{
+    		pCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME)
+    				.appendSegment(postName).appendSegment(previousCache)
+    				.appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
+    		oldTree = URIs.load(pCache);
     	}
     	
-    	URI pCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(previousCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
-    	URI cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
     	
-    	ArrayList<Node> oldTree = URIs.load(pCache);
-    	ArrayList<Node> curTree = URIs.load(cCache);
     	
     	ArrayList<String> todo = new ArrayList<String>();
     	

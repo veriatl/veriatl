@@ -136,11 +136,9 @@ public class ocldecomposerDriver {
 				i++;
 			}
 			
-			//This is the Boogie program with the full transformation trace, less efficient to verify
-			//String org = printDriver(env, post);
-			
-			String org = prtingFastDriver(env, post, NodeHelper.findAllLeafs(tree), goalName);
-			driver.generateBoogieFile(output, CompilerConstants.ORG, CompilerConstants.BOOGIE_EXT, org);	
+			//This is the Boogie program with the full transformation trace, less efficient to verify, only used in normal verification mode
+			String org = printDriver(env, post);
+			driver.generateBoogieFile(output, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);	
 			
 			
 			
