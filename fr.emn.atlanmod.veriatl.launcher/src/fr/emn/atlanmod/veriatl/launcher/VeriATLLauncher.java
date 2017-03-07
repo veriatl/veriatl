@@ -73,7 +73,7 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 			TypeInference.clean();
 			ocl2boogie.clean();
 		} else  {
-			String aRule = "SM2SM";
+			String aRule = "T2TB";
 			boolean incMode = true;
 			
 			
