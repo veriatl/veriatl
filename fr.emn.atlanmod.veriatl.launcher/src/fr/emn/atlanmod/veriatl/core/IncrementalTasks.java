@@ -80,7 +80,7 @@ public final class IncrementalTasks {
     	Node curRoot = NodeHelper.findRoot(curTree);
     	HashSet<String> curTrace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
     	
-    	if(curRoot.isChecked()){
+    	if(curRoot.isChecked() && !curTrace.contains(affectedRule) && !curRoot.getResult().toString().equals("UNKNOWN")){
 			System.out.println(String.format("Mode: inc-checked-post\t%s is %s", postName, curRoot.getResult().toString()));
 		}else{
 			Node oldRoot = NodeHelper.findRoot(oldTree);
@@ -229,7 +229,7 @@ public final class IncrementalTasks {
     	
     	for(Node n: NodeHelper.findAllLeafs(curTree)){
 
-    		if(n.isChecked()){
+    		if(n.isChecked() && !n.getTraces().contains(affectedRule) && !n.getResult().toString().equals("UNKNOWN")){
     			System.out.println(String.format("Mode: Inc-checked-sub\t%s is %s", n.getName(), n.getResult().toString()));
     		}else{
     			Node cache = NodeHelper.findSubInCache(oldTree, n);
