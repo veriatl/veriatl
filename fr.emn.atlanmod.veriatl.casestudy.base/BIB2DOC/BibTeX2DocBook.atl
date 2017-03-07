@@ -19,21 +19,26 @@ helper def: articleSet : Sequence(BibTeX!Article) = BibTeX!Article.allInstances(
   else ret->including(e) endif
    )->sortedBy(e | e.journal);
 
+-- This helper builds a string containing all information on a given BibTeXEntry.
+-- Content of the generated string depends on the entry type.
+-- IN: BibTeX!BibTeXEntry
+-- RETURN: Sequence(BibTeX!Author)
 helper context BibTeX!BibTeXEntry def: buildEntryPara() : String =
- '[' + self.id + ']'
- + ' ' + self.oclType().name
- + (if self.oclIsKindOf(BibTeX!TitledEntry) then ' ' + self.title else  endif)
- + (if self.oclIsKindOf(BibTeX!AuthoredEntry) 
-    then self.authors->iterate(e; str : String =  | str + ' ' + e.author)
-    else 
-    endif)
- + (if self.oclIsKindOf(BibTeX!DatedEntry) then ' ' + self.year else  endif)
- + (if self.oclIsKindOf(BibTeX!BookTitledEntry) then ' ' + self.booktitle else  endif)
- + (if self.oclIsKindOf(BibTeX!ThesisEntry) then ' ' +  self.school else  endif)
- + (if self.oclIsKindOf(BibTeX!Article) then ' ' + self.journal else  endif)
- + (if self.oclIsKindOf(BibTeX!Unpublished) then ' ' + self.note else  endif)
- + (if self.oclIsKindOf(BibTeX!Book) then ' ' + self.publisher else  endif)
- + (if self.oclIsKindOf(BibTeX!InBook) then ' ' + self.chapter.toString() else  endif);
+	'[' + self.id + ']'
+	+ ' ' + self.oclType().name
+	+ (if self.oclIsKindOf(BibTeX!TitledEntry) then ' ' + self.title else '' endif)
+	+ (if self.oclIsKindOf(BibTeX!AuthoredEntry) 
+	   then self.authors->iterate(e; str : String = '' | str + ' ' + e.author)
+	   else ''
+	   endif)
+	+ (if self.oclIsKindOf(BibTeX!DatedEntry) then ' ' + self.year else '' endif)
+	+ (if self.oclIsKindOf(BibTeX!BookTitledEntry) then ' ' + self.booktitle else '' endif)
+	+ (if self.oclIsKindOf(BibTeX!ThesisEntry) then ' ' +  self.school else '' endif)
+	+ (if self.oclIsKindOf(BibTeX!Article) then ' ' + self.journal else '' endif)
+	+ (if self.oclIsKindOf(BibTeX!Unpublished) then ' ' + self.note else '' endif)
+	+ (if self.oclIsKindOf(BibTeX!Book) then ' ' + self.publisher else '' endif)
+	+ (if self.oclIsKindOf(BibTeX!InBook) then ' ' + self.chapter.toString() else '' endif)
+	;
 
 
 
