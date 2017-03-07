@@ -1,19 +1,22 @@
 package fr.emn.atlanmod.atl2boogie.xtend.atl
 
+import fr.emn.atlanmod.atl2boogie.xtend.core.driver
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl
 import fr.emn.atlanmod.atl2boogie.xtend.lib.emf
-
-import fr.emn.atlanmod.atl2boogie.xtend.ocl.*
-import fr.emn.atlanmod.atl2boogie.xtend.core.driver
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.m2m.atl.common.ATL.*
-import org.eclipse.m2m.atl.common.OCL.*
-import org.eclipse.m2m.atl.common.ATL.MatchedRule
-import org.eclipse.emf.common.util.EList
-import org.eclipse.m2m.atl.common.ATL.Binding
-import org.eclipse.m2m.atl.common.ATL.OutPatternElement
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie
 import java.util.List
-
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.m2m.atl.common.ATL.Binding
+import org.eclipse.m2m.atl.common.ATL.MatchedRule
+import org.eclipse.m2m.atl.common.ATL.Module
+import org.eclipse.m2m.atl.common.ATL.ModuleElement
+import org.eclipse.m2m.atl.common.ATL.OutPatternElement
+import org.eclipse.m2m.atl.common.ATL.Rule
+import org.eclipse.m2m.atl.common.OCL.NavigationOrAttributeCallExp
+import org.eclipse.m2m.atl.common.OCL.OclModel
+import org.eclipse.m2m.atl.common.OCL.OclModelElement
+import org.eclipse.m2m.atl.common.OCL.VariableExp
 
 //TODO the user should specify whether they want `free` or not. That is another option for VeriATL
 class applyer2boogie {

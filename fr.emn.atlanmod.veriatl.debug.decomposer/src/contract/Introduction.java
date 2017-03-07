@@ -196,7 +196,7 @@ public class Introduction  {
 				
 		}else if(expr.getOperationName().equals("or")){
 			OclExpression lhs = expr.getSource();
-			OclExpression rhs = expr.getArguments().get(0);
+			//OclExpression rhs = expr.getArguments().get(0);
 			
 			//TODO, Currently we do not branching, and always generate the left most expr into the proof tree.
 			Node n1 = new Node(depth + 1, lhs, curr, Inferred, ProveOption.EACH, Tactic.OR_LEFT);

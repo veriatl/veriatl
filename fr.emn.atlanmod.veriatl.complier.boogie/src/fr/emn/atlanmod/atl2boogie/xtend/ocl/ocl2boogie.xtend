@@ -1,18 +1,25 @@
 package fr.emn.atlanmod.atl2boogie.xtend.ocl
 
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.m2m.atl.common.OCL.*
+import fr.emn.atlanmod.atl2boogie.xtend.core.driver
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl
 import fr.emn.atlanmod.atl2boogie.xtend.lib.emf
-import fr.emn.atlanmod.atl2boogie.xtend.core.driver
+import java.util.ArrayList
 import java.util.HashMap
 import java.util.Map
-import org.eclipse.m2m.atl.common.ATL.*
-import org.eclipse.m2m.atl.common.OCL.TupleExp
-import java.util.ArrayList
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.m2m.atl.common.OCL.BooleanExp
+import org.eclipse.m2m.atl.common.OCL.IntegerExp
+import org.eclipse.m2m.atl.common.OCL.Iterator
 import org.eclipse.m2m.atl.common.OCL.IteratorExp
+import org.eclipse.m2m.atl.common.OCL.NavigationOrAttributeCallExp
+import org.eclipse.m2m.atl.common.OCL.OclExpression
+import org.eclipse.m2m.atl.common.OCL.OclModelElement
 import org.eclipse.m2m.atl.common.OCL.OperationCallExp
 import org.eclipse.m2m.atl.common.OCL.OperatorCallExp
+import org.eclipse.m2m.atl.common.OCL.StringExp
+import org.eclipse.m2m.atl.common.OCL.TupleExp
+import org.eclipse.m2m.atl.common.OCL.TuplePart
+import org.eclipse.m2m.atl.common.OCL.VariableExp
 
 class ocl2boogie {
 	
@@ -30,7 +37,6 @@ class ocl2boogie {
 	
 	def static dispatch CharSequence genOclExpression(OperationCallExp e, CharSequence heap) '''
 	«val src = genOclExpression(e.source, heap)»
-	«val srcTp = TypeInference.infer(e.source)»«val srcType = srcTp.type»«val srcKind = srcTp.kind»
 	«val op = e.operationName»
 	«val args = e.arguments.map(arg|genOclExpression(arg, heap)).join(" ")»
 	«if (op == "oclIsUndefined") String.format("(%s==null || !read(%s, %s, alloc))", src, heap, src)

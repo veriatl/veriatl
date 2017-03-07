@@ -3,17 +3,9 @@ package fr.emn.atlanmod.veriatl.core;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -23,7 +15,6 @@ import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.Commands;
-import fr.emn.atlanmod.veriatl.tools.DefaultCommand;
 import fr.emn.atlanmod.veriatl.tools.VerificationResult;
 import fr.emn.atlanmod.veriatl.util.URIs;
 

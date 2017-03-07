@@ -41,10 +41,10 @@ class TypeInference {
 		if(lookup.containsKey(expr.referredVariable.varName)){
 			return lookup.get(expr.referredVariable.varName)
 		}
-		else if (expr.referredVariable == null) {
+		else if (expr.referredVariable === null) {
 			return new myOclType
 		} else {
-			if (v == null) {
+			if (v === null) {
 				if (ocl2boogie.iteratorTyping.keySet.contains(expr.referredVariable.varName)) {
 					val tempTp = ocl2boogie.iteratorTyping.get(expr.referredVariable.varName).split("\\$")
 					mmName = tempTp.get(0)
@@ -161,14 +161,14 @@ class TypeInference {
 				return new myOclType("srcRefs", tp) 
 			}
 		} else if (op == "resolveTemp") {
-			val arg = args.get(0)
+			//val arg = args.get(0)
 			val arg1 = args.get(1)
 
 			if (arg1 instanceof StringExp) {
 				val s = (arg1 as StringExp).stringSymbol
 				val t = atl.findOutType(s)
 
-				if (t != null && t instanceof OclModelElement) {
+				if (t !== null && t instanceof OclModelElement) {
 					val mm = (t as OclModelElement).model.name
 					val tp = String.format("%s$%s", mm, t.name)
 					return new myOclType("trgRef", tp) 
@@ -258,7 +258,7 @@ class TypeInference {
 			if(p.initExpression instanceof VariableExp){
 				val v = (p.initExpression as VariableExp)
 				val t = v.referredVariable.type
-				if(t == null){
+				if(t === null){
 					if (ocl2boogie.iteratorTyping.keySet.contains(v.referredVariable.varName)) {
 						val tempTp = ocl2boogie.iteratorTyping.get(v.referredVariable.varName).split("\\$")
 						val mmName = tempTp.get(0)

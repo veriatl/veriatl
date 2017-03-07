@@ -84,8 +84,8 @@ public class experimentDriver {
 		driver.doVeriATLSetup(atl, src, trg, contract);
 		ExecEnv env = Trace.moduleLoader(emftvm.trimFileExtension().trimSegments(1), moduleName, src, trg, driver.srcmm.getName(), driver.trgmm.getName());
 		Map<String, ArrayList<String>> trace = Trace.getTrace(driver.trgmm, env);
-		List<OclExpression> postconditions = ContractLoader.init(driver.contract_resource);
-		List<MatchedRule> rules = TransformationLoader.init(driver.atl_resource);
+		List<OclExpression> postconditions = ContractLoader.init(driver.contract_resource);//
+//		List<MatchedRule> rules = TransformationLoader.init(driver.atl_resource);
 		
 		
 		
@@ -172,7 +172,7 @@ public class experimentDriver {
 
 		}
 		
-		String org = prtingFullDriver(env);
+//		String org = prtingFullDriver(env);
 //		driver.generateBoogieFile(outputPath, CompilerConstants.FULL, CompilerConstants.BOOGIE_EXT, org);
 			
 		//combinePlusOne(outputPath);

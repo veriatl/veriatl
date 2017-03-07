@@ -1,11 +1,14 @@
 package fr.emn.atlanmod.atl2boogie.xtend.atl
 
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.m2m.atl.common.ATL.*
-import org.eclipse.m2m.atl.common.OCL.*
-import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference
+import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.m2m.atl.common.ATL.Helper
+import org.eclipse.m2m.atl.common.ATL.Module
+import org.eclipse.m2m.atl.common.ATL.ModuleElement
+import org.eclipse.m2m.atl.common.OCL.OclFeature
+import org.eclipse.m2m.atl.common.OCL.Operation
 
 class contract2boogie {
 	public static String debugPost = ""

@@ -1,13 +1,16 @@
 package fr.emn.atlanmod.atl2boogie.xtend.lib
 
-import org.eclipse.m2m.atl.common.ATL.*
-import org.eclipse.m2m.atl.common.OCL.*
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver
-
-import org.eclipse.emf.common.util.EList
+import java.util.ArrayList
 import java.util.HashSet
 import java.util.List
-import java.util.ArrayList
+import org.eclipse.emf.common.util.EList
+import org.eclipse.m2m.atl.common.ATL.InPatternElement
+import org.eclipse.m2m.atl.common.ATL.MatchedRule
+import org.eclipse.m2m.atl.common.ATL.OutPatternElement
+import org.eclipse.m2m.atl.common.ATL.SimpleInPatternElement
+import org.eclipse.m2m.atl.common.ATL.SimpleOutPatternElement
+import org.eclipse.m2m.atl.common.OCL.OclModelElement
 
 class atl {
 	

@@ -3,14 +3,6 @@
  */
 package fr.emn.atlanmod.veriatl.launcher;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.debug.core.ILaunch;
@@ -25,7 +17,6 @@ import fr.emn.atlanmod.veriatl.core.IncrementalTasks;
 import fr.emn.atlanmod.veriatl.core.Mode;
 import fr.emn.atlanmod.veriatl.core.NormalTasks;
 import fr.emn.atlanmod.veriatl.util.Metamodels;
-import fr.emn.atlanmod.veriatl.util.URIs;
 import localize.ocldecomposerDriver;
 
 /**

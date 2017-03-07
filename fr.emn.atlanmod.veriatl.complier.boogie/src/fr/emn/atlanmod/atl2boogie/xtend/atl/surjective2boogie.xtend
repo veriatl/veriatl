@@ -1,17 +1,18 @@
 package fr.emn.atlanmod.atl2boogie.xtend.atl
 
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl
-import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.m2m.atl.common.ATL.*
-import org.eclipse.m2m.atl.common.OCL.*
-import java.util.HashSet
-import java.util.Set
-import org.eclipse.m2m.atl.common.ATL.Module
-import org.eclipse.m2m.atl.common.ATL.OutPatternElement
 import java.util.ArrayList
 import java.util.HashMap
+import java.util.HashSet
+import java.util.Set
+import org.eclipse.emf.ecore.EObject
 import org.eclipse.m2m.atl.common.ATL.MatchedRule
+import org.eclipse.m2m.atl.common.ATL.Module
+import org.eclipse.m2m.atl.common.ATL.ModuleElement
+import org.eclipse.m2m.atl.common.ATL.OutPatternElement
+import org.eclipse.m2m.atl.common.ATL.Rule
+import org.eclipse.m2m.atl.common.OCL.OclModel
+import org.eclipse.m2m.atl.common.OCL.OclModelElement
 
 class surjective2boogie {
 	public static Set<String> isPrintedOutPatternElement = new HashSet<String>()
@@ -121,7 +122,7 @@ class surjective2boogie {
 				var id = 0	
 				for(OutPatternElement out : r.outPattern.elements){
 					if(out.type.name == tp){
-						if(rtn.get(r)==null){
+						if(rtn.get(r)===null){
 							var a = new ArrayList<Integer>()
 							a.add(id)
 							rtn.put(r, a)

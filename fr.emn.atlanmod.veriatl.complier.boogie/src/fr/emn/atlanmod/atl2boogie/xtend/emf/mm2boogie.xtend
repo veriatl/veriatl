@@ -1,9 +1,13 @@
 package fr.emn.atlanmod.atl2boogie.xtend.emf
 
-import org.eclipse.emf.ecore.*
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver
 import fr.emn.atlanmod.atl2boogie.xtend.lib.emf
+import org.eclipse.emf.ecore.EAttribute
+import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EClassifier
+import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.emf.ecore.EStructuralFeature
 
 class mm2boogie {
 	

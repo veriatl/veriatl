@@ -1,16 +1,10 @@
 package datastructure;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 
 import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;

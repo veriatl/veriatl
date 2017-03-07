@@ -1,6 +1,5 @@
 package localize;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
@@ -34,7 +33,6 @@ import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
-
 import transformation.GenBy;
 import transformation.Trace;
 import transformation.TransformationLoader;
@@ -70,11 +68,7 @@ public class ocldecomposerDriver {
 		// clean sub-goals previously generated
 		URIs.delete(outputPath);
 		
-		// create sub-goals folder with post name
-		for (OclExpression post : postconditions) {
-			String goalName = post.getCommentsBefore().get(0).replace("--", "");
-			URI output = outputPath.appendSegment(goalName);
-		}
+
 		
 		// proof strategy starts
 		for (OclExpression post : postconditions) {
