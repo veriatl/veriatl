@@ -5,11 +5,13 @@ package fr.emn.atlanmod.veriatl.core;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.eclipse.emf.common.util.URI;
 
 import datastructure.Node;
 import datastructure.NodeHelper;
+import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.Commands;
@@ -43,59 +45,46 @@ public final class NormalTasks {
     }
     
     /**
-     * Exec Boogie.
+     * Exec Boogie in Normal mode: no cache system used.
      * <p>
      * ???
      *
      */
     private static void execBoogieSingle(Context context, String postName) {
-    	ArrayList<String> caches = Caches.loadCaches(context, postName);
-		String currentCache = Caches.curCache(caches);
-		URI cCache = context.basePath().appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
-    	ArrayList<Node> curTree = URIs.load(cCache);
-    	Node curRoot = NodeHelper.findRoot(curTree);
-    	
-    	if(curRoot.isChecked()){
-    		System.out.println(String.format("Mode: Normal-checked-post\tid:%s\tres: %s\ttime:%s", postName, curRoot.getResult(), curRoot.getTime()));
-    	}else{
-    		ArrayList<String> args = new ArrayList<String>();
-            String z3abs = z3Path.resolve("z3")+".exe";
-            
-            // add Boogie options
-            args.add("/nologo");
-            args.add("/z3exe:"+z3abs);
-            //args.add("/trace");
-            
-            // add prelude files
-            String veriatlabs = veriATLPath.toAbsolutePath().toString()+"\\Prelude\\";
-            args.addAll(getFiles(veriatlabs));
-            
-            // add auxu files
-            String auxu = URIs.abs(context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
-            args.addAll(getFiles(auxu));
-            
-            // add postcondition to be verified
-            String post = URIs.abs(context.basePath()
-            		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-            		.appendSegment(postName)
-            		.appendSegment(CompilerConstants.ORG)
-            		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
-            );
-            args.add(post);
-            
-            
-            VerificationResult r =Commands.boogie().exec().execute(args);
-            System.out.println(String.format("Mode: Normal-verify-post\tid:%s\tres: %s\ttime:%s", postName, r.getTriBooleanResult(), r.getTime()));
-            
-            curRoot.setResult(r.getTriBooleanResult());
-    		curRoot.setTime(r.getTime());
-    		curRoot.Check(true);
-    	}
-    	
+
+		ArrayList<String> args = new ArrayList<String>();
+        String z3abs = z3Path.resolve("z3")+".exe";
+        
+        // add Boogie options
+        args.add("/nologo");
+        args.add("/z3exe:"+z3abs);
+        //args.add("/trace");
+        
+        // add prelude files
+        String veriatlabs = veriATLPath.toAbsolutePath().toString()+"\\Prelude\\";
+        args.addAll(getFiles(veriatlabs));
+        
+        // add auxu files
+        String auxu = URIs.abs(context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
+        args.addAll(getFiles(auxu));
+        
 		
-		// serialize curTree
-		URI output = context.basePath();
-		localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);
+		// add PO
+		String post = URIs.abs(context.basePath()
+        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+        		.appendSegment(postName)
+        		.appendSegment(CompilerConstants.FULL)
+        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
+        );
+        args.add(post);
+        
+        
+        VerificationResult r =Commands.boogie().exec().execute(args);
+        System.out.println(String.format("Mode: Normal-verify-post\tid:%s\tres: %s\ttime:%s", postName, r.getTriBooleanResult(), r.getTime()));
+            
+
+    	
+
     }
     
     
@@ -117,7 +106,7 @@ public final class NormalTasks {
     }
     
     /**
-     * Debug Boogie.
+     * Debug Boogie in Normal mode: no cache system used.
      * <p>
      * ???
      *
@@ -148,42 +137,35 @@ public final class NormalTasks {
         ArrayList<String> argsClone = new ArrayList<String>();
         for(Node sub : NodeHelper.findAllLeafs(curTree)) {
         	
-        	if(sub.isChecked()){
-        		System.out.println(String.format("Mode: Normal-checked-sub\tid:%s-%s\tres: %s\ttime:%s", postName, sub.getName(), sub.getResult(), sub.getTime()));
-        	}else{
-        		String subgoalAbsPath = URIs.abs(
-                		context.basePath()
-                		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-                		.appendSegment(postName)
-                		.appendSegment(sub.getName()).appendFileExtension(CompilerConstants.BOOGIE_EXT)
-                );
-            	
-        		argsClone.addAll(args);
-            	argsClone.add(subgoalAbsPath);
-            	
-            	String genBy = URIs.abs(context.basePath()
-                		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-                		.appendSegment(CompilerConstants.GENBY)
-                		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
-                );
-            	argsClone.add(genBy);
-            	
-            	VerificationResult r = Commands.boogie().exec().execute(argsClone);
-            	argsClone.clear();
-            	
-            	// process result
-            	Node n = NodeHelper.findNode(curTree, sub.getName());
-            	n.Check(true);
-    			n.setResult(r.getTriBooleanResult());
-            	n.setTime(r.getTime());
-            	System.out.println(String.format("Mode: Normal-verify-sub\tid:%s-%s\tres: %s\ttime:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
-        	}   		
+    		String subgoalAbsPath = URIs.abs(
+            		context.basePath()
+            		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+            		.appendSegment(postName)
+            		.appendSegment(sub.getName()).appendFileExtension(CompilerConstants.BOOGIE_EXT)
+            );
+        	
+    		argsClone.addAll(args);
+        	argsClone.add(subgoalAbsPath);
+        	
+        	String genBy = URIs.abs(context.basePath()
+            		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+            		.appendSegment(CompilerConstants.GENBY)
+            		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
+            );
+        	argsClone.add(genBy);
+        	
+        	VerificationResult r = Commands.boogie().exec().execute(argsClone);
+        	argsClone.clear();
+        	
+        	// process result
+        	Node n = NodeHelper.findNode(curTree, sub.getName());
+        	n.Check(true);
+			n.setResult(r.getTriBooleanResult());
+        	n.setTime(r.getTime());
+        	System.out.println(String.format("Mode: Normal-verify-sub\tid:%s-%s\tres: %s\ttime:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+    			
         }
-        
-        // save to currentCache
-        URI output = context.basePath();
-		localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);	
-        
+    
         
 		// print proof tree
 		URI gvName = NodeHelper.printTreeBasic(context.basePath(), postName, curTree);
