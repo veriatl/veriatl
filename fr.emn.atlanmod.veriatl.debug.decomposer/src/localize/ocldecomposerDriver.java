@@ -136,7 +136,7 @@ public class ocldecomposerDriver {
 				i++;
 			}
 			
-			//TODO This is the Boogie program with the full transformation trace, less efficient to verify
+			//This is the Boogie program with the full transformation trace, less efficient to verify
 			//String org = printDriver(env, post);
 			
 			String org = prtingFastDriver(env, post, NodeHelper.findAllLeafs(tree), goalName);
