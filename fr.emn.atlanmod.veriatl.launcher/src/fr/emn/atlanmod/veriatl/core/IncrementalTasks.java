@@ -76,6 +76,7 @@ public final class IncrementalTasks {
     		cacheState = previousCache;
     	}
     	
+    	
 
     	Node curRoot = NodeHelper.findRoot(curTree);
     	HashSet<String> curTrace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
@@ -152,6 +153,8 @@ public final class IncrementalTasks {
 					curRoot.setResult(r.getTriBooleanResult());
 					curRoot.setTime(r.getTime());
 					System.out.println(String.format("Mode: inc-verify-post\tusing Cache:%s\tid:%s\tres: %s\ttime:%s", cacheState, postName, r.getTriBooleanResult(), r.getTime()));
+				}else{
+					System.out.println(String.format("Mode: inc-pop-post\tusing Cache:%s\tid:%s\tres: %s\ttime:%s", cacheState, postName, curRoot.getResult(), curRoot.getTime()));
 				}
 				
 				
