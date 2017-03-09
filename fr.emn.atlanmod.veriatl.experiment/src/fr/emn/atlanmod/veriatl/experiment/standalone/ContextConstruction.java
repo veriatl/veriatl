@@ -29,7 +29,7 @@ public class ContextConstruction {
     public URI inMetamodel;
     public URI outMetamodel;
     
-    private ContextConstruction(String moduleName, URI src, URI trg, URI inModel, URI outModel, Mode mode, 
+    public ContextConstruction(String moduleName, URI src, URI trg, URI inModel, URI outModel, Mode mode, 
     		URI contract, URI base, String post) {
 
         this.moduleName = moduleName;
