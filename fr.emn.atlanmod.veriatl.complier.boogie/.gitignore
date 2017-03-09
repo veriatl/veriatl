@@ -1,11 +1,3 @@
 /bin/
-/ATL_apply.bpl
-/ATL_match.bpl
-
-/Preconditions.bpl
-/model2/
-/FSM.bpl
-/HSM.bpl
-/constants.bpl
 /xtend-gen/
 
