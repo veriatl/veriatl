@@ -76,12 +76,16 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 //						context.outMetamodel(), 
 //						context.contractPath(),
 //						context.basePath().appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME));
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
 			TypeInference.clean();
 			ocl2boogie.clean();
+			
+			System.out.println("Code Generation Finished.");
+			System.out.println("=== === === === === === ===");
 		} else  {
 			String aRule = "T2TB";
 			boolean incMode = true;
@@ -93,6 +97,8 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 				}else {
 					IncrementalTasks.execBoogie(context, aRule);
 				}
+				System.out.println("Verification Finished.");
+				System.out.println("=== === === === === === ===");
 			}else if (context.mode() == Mode.DEBUG) {
 				// added for testing purpose
 				if(!incMode) {
@@ -100,14 +106,15 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 				}else {
 					IncrementalTasks.debugBoogie(context, aRule);
 				}
-				
+				System.out.println("Debugging Finished.");
+				System.out.println("=== === === === === === ===");
 			} else {
 				throw new IllegalStateException("Unknown mode");
 			}		
 		} 
 
 		subMonitor.done();
-		System.out.println("Finished");
+		
 	}
 	
 	private MessageConsole findConsole(String name) {

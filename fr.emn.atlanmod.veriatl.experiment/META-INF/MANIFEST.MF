@@ -4,3 +4,6 @@ Bundle-Name: Experiment
 Bundle-SymbolicName: fr.emn.atlanmod.veriatl.experiment
 Bundle-Version: 1.0.0.qualifier
 Export-Package: fr.emn.atlanmod.veriatl.experiment.standalone
+Import-Package: fr.emn.atlanmod.veriatl.core
+Require-Bundle: org.eclipse.emf.common,
+ org.eclipse.emf.ecore

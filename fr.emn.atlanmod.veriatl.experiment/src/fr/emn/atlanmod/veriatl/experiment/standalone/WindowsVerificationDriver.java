@@ -10,7 +10,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WindowsDriver implements Configure{
+public class WindowsVerificationDriver implements Configure{
 	static String proj;
 	static String preludePath;
 	static String auxuPath;

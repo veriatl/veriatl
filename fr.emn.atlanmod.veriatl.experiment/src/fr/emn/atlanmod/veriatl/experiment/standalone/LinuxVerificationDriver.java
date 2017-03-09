@@ -10,7 +10,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LinuxDriver implements Configure{
+public class LinuxVerificationDriver implements Configure{
 	static String proj;
 	static String preludePath;
 	static String auxuPath;
