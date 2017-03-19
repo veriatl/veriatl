@@ -19,9 +19,6 @@ public class ContextConstruction {
 
 
     public final String moduleName; 
-    public final URI inModel;
-    public final URI outModel;
-    public final Mode mode;
     public final URI contractPath;
     public final URI basePath;
     public final String postName;
@@ -29,15 +26,12 @@ public class ContextConstruction {
     public URI inMetamodel;
     public URI outMetamodel;
     
-    public ContextConstruction(String moduleName, URI src, URI trg, URI inModel, URI outModel, Mode mode, 
+    public ContextConstruction(String moduleName, URI src, URI trg,
     		URI contract, URI base, String post) {
 
         this.moduleName = moduleName;
         this.inMetamodel = src;
-        this.outMetamodel = trg;
-        this.inModel = inModel;
-        this.outModel = outModel;
-        this.mode = mode;     
+        this.outMetamodel = trg;   
         this.contractPath = contract;
         this.basePath = base;
         this.postName = post;

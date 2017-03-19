@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl
 import java.nio.file.Paths
 import org.eclipse.core.resources.ResourcesPlugin
 import java.io.File
+import org.eclipse.core.runtime.Platform
 
 /**
  * @author zcheng
@@ -44,7 +45,12 @@ class URIs {
 	}
 	
 	def public static void delete(URI target) throws RuntimeException{
-
+		
+		if(!Platform.isRunning()){
+			// do some standalone application del
+			return
+		}
+		
 		val folder = Paths.get(
                 ResourcesPlugin.getWorkspace()
                         .getRoot()
