@@ -8,8 +8,7 @@ package fr.emn.atlanmod.veriatl.experiment.standalone;
 
 
 import org.eclipse.emf.common.util.URI;
-
-import fr.emn.atlanmod.veriatl.core.Mode;
+import fr.emn.atlanmod.veriatl.core.Context;
 
 /**
  * @author zcheng
@@ -39,5 +38,10 @@ public class ContextConstruction {
     }
     
 
+    // TODO  for experiment, we change the context constructor to public, reverse it back!
+    public Context wrap(){
+    	return new Context(null, this.moduleName, this.inMetamodel, this.outMetamodel, null, null, null, 
+        		this.contractPath, this.basePath, this.postName, null);
+    }
 
 }

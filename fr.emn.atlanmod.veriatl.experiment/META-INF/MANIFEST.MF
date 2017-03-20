@@ -9,4 +9,5 @@ Import-Package: fr.emn.atlanmod.veriatl.core,
  localize
 Require-Bundle: org.eclipse.emf.common,
  org.eclipse.emf.ecore,
- fr.emn.atlanmod.veriatl.complier.boogie
+ fr.emn.atlanmod.veriatl.complier.boogie,
+ org.eclipse.equinox.registry

@@ -7,6 +7,7 @@ import org.eclipse.emf.common.util.URI;
 
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.veriatl.core.Context;
+import fr.emn.atlanmod.veriatl.core.IncrementalTasks;
 import fr.emn.atlanmod.veriatl.core.Mode;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import localize.ocldecomposerDriver;
@@ -25,10 +26,10 @@ public class WindowsStandalone {
 		URI base = URI.createFileURI(proj);		
 		URI src = URI.createFileURI(String.format("./%s/Source/%s.ecore", proj, s));
 		URI trg = URI.createFileURI(String.format("./%s/Source/%s.ecore", proj, t)); 
-		URI contract = URI.createFileURI(String.format("./%s/Source/%sContract.atl", proj, proj));	
+		URI contract = URI.createFileURI(String.format("./%s/Source/%sContract.atl", proj, moduleName));	
 		URI cache = URI.createFileURI(String.format("./%s/", proj)).appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME);
 		
-		String post = "";
+		String post = "all";
 		
 		return new ContextConstruction(moduleName, src, trg, contract, base, post);
 	}
@@ -57,7 +58,8 @@ public class WindowsStandalone {
 		ContextConstruction context = init("HSM2FSM_GUI");
 		gen(context);
 		decompose(context);
-		
+		Context ctxWrapper = context.wrap();
+		IncrementalTasks.execBoogie(ctxWrapper, "T2TA");
 		
 	}
 
