@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
@@ -38,6 +39,12 @@ public final class URIs {
      * @return the absolute path of the URI
      */
     public static String abs(URI uri) {
+    	
+    	if(!Platform.isRunning()){
+    		// for standalone application
+			return uri.toFileString();
+		}
+    	
         return Paths.get(
                 ResourcesPlugin.getWorkspace()
                         .getRoot()
