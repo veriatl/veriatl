@@ -6,9 +6,8 @@ package fr.emn.atlanmod.veriatl.experiment.standalone;
 import org.eclipse.emf.common.util.URI;
 
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
-import fr.emn.atlanmod.veriatl.core.Context;
-import fr.emn.atlanmod.veriatl.core.IncrementalTasks;
-import fr.emn.atlanmod.veriatl.core.Mode;
+import fr.emn.atlanmod.veriatl.experiment.exec.IncrementalTasks;
+import fr.emn.atlanmod.veriatl.experiment.exec.NormalTasks;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import localize.ocldecomposerDriver;
 
@@ -54,13 +53,17 @@ public class WindowsStandalone {
 				context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME));
 	}
 	
+	
+	
+	
+	
 	public static void main(String[] args) throws Exception {	
 		ContextConstruction context = init("HSM2FSM_GUI");
 		gen(context);
 		decompose(context);
-		Context ctxWrapper = context.wrap();
-		IncrementalTasks.execBoogie(ctxWrapper, "T2TA");
-		
+		String aRule = "T2TA";
+		IncrementalTasks.debugBoogie(context, aRule);
+		NormalTasks.debugBoogie(context);
 	}
 
 }
