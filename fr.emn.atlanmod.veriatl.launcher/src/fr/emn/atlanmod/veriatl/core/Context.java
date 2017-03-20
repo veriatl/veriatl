@@ -24,8 +24,7 @@ public class Context {
 
     private final Mode mode;
 
-    private final String transformationInstance;
-    private final URI tempDirectory;
+
 
     private final URI contractPath;
     private final URI basePath;
@@ -42,7 +41,7 @@ public class Context {
     /**
      * Constructs a new {@code Context} with the given parameters.
      */
-    private Context(URI pluginUri, String moduleName, URI src, URI trg, URI inModel, URI outModel, Mode mode, 
+    public Context(URI pluginUri, String moduleName, URI src, URI trg, URI inModel, URI outModel, Mode mode, 
     		URI contract, URI base, String post, IProgressMonitor monitor) {
         this.pluginUri = pluginUri;
         this.moduleName = moduleName;
@@ -63,8 +62,8 @@ public class Context {
         
         
         
-        transformationInstance = inModel.trimFileExtension().lastSegment() + "2" + outModel.trimFileExtension().lastSegment();
-        tempDirectory = outModel.trimFileExtension().trimSegments(1).appendSegment(transformationInstance + "-trace");
+       
+        
 
         initialized = false;
     }
@@ -163,23 +162,7 @@ public class Context {
         return mode;
     }
 
-    /**
-     * Returns the name of the current transformation instance.
-     *
-     * @return the name
-     */
-    public String transformationInstance() {
-        return transformationInstance;
-    }
 
-    /**
-     * Returns the {@link URI} of the output directory.
-     *
-     * @return the URI
-     */
-    public URI tempDirectory() {
-        return tempDirectory;
-    }
 
     /**
      * Returns the metamodel of the source model.
