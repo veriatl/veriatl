@@ -11,6 +11,7 @@ import org.eclipse.emf.common.util.URI;
 
 import datastructure.Node;
 import datastructure.NodeHelper;
+import datastructure.TriBoolean;
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.experiment.standalone.ContextConstruction;
@@ -165,6 +166,8 @@ public final class IncrementalTasks {
 			// curRoot is now checked
 			curRoot.Check(true);
 			
+			
+			
 			// serialize curTree
 			URI output = context.basePath;
 			localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);
@@ -231,24 +234,70 @@ public final class IncrementalTasks {
     	
     	ArrayList<String> todo = new ArrayList<String>();
     	
-
+    	// verify full post
+    	{
+    		
+    		ArrayList<String> args = new ArrayList<String>();
     	
-    	for(Node n: NodeHelper.findAllLeafs(curTree)){
-
-    		if(n.isChecked() && !n.getTraces().contains(affectedRule) && !n.getResult().toString().equals("UNKNOWN")){
-    			System.out.println(String.format("Inc-checked-sub:%s-%s:%s:0", postName, n.getName(), n.getResult().toString()));
-    		}else{
-    			Node cache = NodeHelper.findSubInCache(oldTree, n);
-    			
-    			if(cache != null && !cache.getResult().toString().equals("UNKNOWN") && !n.getTraces().contains(affectedRule)){
-    				System.out.println(String.format("Inc-cached-sub:%s-%s:%s:0", postName, n.getName(), cache.getResult().toString()));
-    				n.Check(true);
-    				n.setResult(cache.getResult());
-    			}else{
-    				
-    				todo.add(n.getName());
-    			}
-    		}
+	        String z3abs = z3;
+	        
+	        // add Boogie options
+	        args.add("/nologo");
+	        args.add("/z3exe:"+z3abs);
+	        //args.add("/trace");
+	        
+	        // add prelude files
+	        String veriatlabs = veriatl+"\\Prelude\\";
+	        args.addAll(getFiles(veriatlabs));
+	        
+	        // add auxu files
+	        String auxu = URIs.abs(context.basePath.appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
+	        args.addAll(getFiles(auxu));
+	        
+			
+			// add PO
+			String post = URIs.abs(context.basePath
+	        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+	        		.appendSegment(postName)
+	        		.appendSegment(CompilerConstants.FULL)
+	        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
+	        );
+	        args.add(post);
+	        
+	        
+	        VerificationResult r = DefaultCommand.execute(args);  
+	        
+	        
+			if(r.getResult().toString().equals("true")){
+				// optimization: if post is verified, mark its sub-goals as verified too
+				for(Node n : NodeHelper.findAllLeafs(curTree)){
+					n.Check(true);
+					n.setResult(TriBoolean.TRUE);
+					n.setTime(0);
+				}
+			}else{
+				// find sub-goals that need to be reverified
+				for(Node n: NodeHelper.findAllLeafs(curTree)){
+	
+		    		if(n.isChecked() && !n.getTraces().contains(affectedRule) && !n.getResult().toString().equals("UNKNOWN")){
+		    			System.out.println(String.format("Inc-checked-sub:%s-%s:%s:0", postName, n.getName(), n.getResult().toString()));
+		    		}else{
+		    			Node cache = NodeHelper.findSubInCache(oldTree, n);
+		    			
+		    			if(cache != null && !cache.getResult().toString().equals("UNKNOWN") && !n.getTraces().contains(affectedRule)){
+		    				System.out.println(String.format("Inc-cached-sub:%s-%s:%s:0", postName, n.getName(), cache.getResult().toString()));
+		    				n.Check(true);
+		    				n.setResult(cache.getResult());
+		    				n.setTime(0);
+		    			}else{
+		    				
+		    				todo.add(n.getName());
+		    			}
+		    		}
+		    	}
+			}
+    	
+    	
     	}
     	
     	

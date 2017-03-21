@@ -134,6 +134,7 @@ public class WindowsStandalone {
 	 * Prepare for 2nd column
 	 * */
 	public static void PreparePostNoCache(String p) throws Exception{
+		System.out.println(String.format("=================== %s-sub-prepare-nocache ===================", org));
 		// clean
 		String toDelete = String.format("%s/%s/%s/",p, org, "NoCached");
 		FileUtils.deleteDirectory(new File(toDelete));
@@ -159,6 +160,8 @@ public class WindowsStandalone {
 	 * Prepare for 3rd column
 	 * */
 	public static void PreparePostCache(String p) throws Exception{
+		System.out.println(String.format("=================== %s-post-prepare-cache ===================", org));
+		
 		String toDelete = String.format("%s/%s/%s/",p, org, "Cached");
 		FileUtils.deleteDirectory(new File(toDelete));
 		
@@ -300,8 +303,8 @@ public class WindowsStandalone {
 	
 	
 	public static void incPostInit(String p) throws Exception{
-		PreparePostNoCache(p);
-		IncrementalVeriATLPostNoCache(p);
+		//PreparePostNoCache(p);
+		//IncrementalVeriATLPostNoCache(p);
 		
 		PreparePostCache(p);
 		IncrementalVeriATLPostCache(p);
