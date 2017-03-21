@@ -84,14 +84,14 @@ public final class IncrementalTasks {
     	HashSet<String> curTrace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
     	
     	if(curRoot.isChecked() && !curTrace.contains(affectedRule) && !curRoot.getResult().toString().equals("UNKNOWN")){
-			System.out.println(String.format("Mode: inc-checked-post\t%s is %s", postName, curRoot.getResult().toString()));
+			System.out.println(String.format("inc-checked-post:%s:%s:0", postName, curRoot.getResult().toString()));
 		}else{
 			Node oldRoot = NodeHelper.findRoot(oldTree);
 			HashSet<String> oldTrace = NodeHelper.UnionTraces(oldRoot, NodeHelper.findDescendantLeafs(oldTree, oldRoot));
 			
 			
 			if(oldTrace.equals(curTrace) && !oldRoot.getResult().toString().equals("UNKNOWN") && !curTrace.contains(affectedRule)){
-				System.out.println(String.format("Mode: inc-cached-post\t%s is %s", postName, oldRoot.getResult().toString()));
+				System.out.println(String.format("inc-cached-post:%s:%s:0", postName, oldRoot.getResult().toString()));
 				curRoot.setResult(oldRoot.getResult());
 				curRoot.setTime(oldRoot.getTime());
 			}else{
@@ -155,9 +155,9 @@ public final class IncrementalTasks {
 					curTree = NodeHelper.repopulate(curTree);	
 					curRoot.setResult(r.getTriBooleanResult());
 					curRoot.setTime(r.getTime());
-					System.out.println(String.format("Mode: inc-verify-post\tusing Cache:%s\tid:%s\tres: %s\ttime:%s", cacheState, postName, r.getTriBooleanResult(), r.getTime()));
+					System.out.println(String.format("inc-verify-post:%s:%s:%s",  postName, r.getTriBooleanResult(), r.getTime()));
 				}else{
-					System.out.println(String.format("Mode: inc-pop-post\tusing Cache:%s\tid:%s\tres: %s\ttime:%s", cacheState, postName, curRoot.getResult(), curRoot.getTime()));
+					System.out.println(String.format("inc-pop-post:%s:%s:%s",  postName, curRoot.getResult(), curRoot.getTime()));
 				}
 				
 				
@@ -236,12 +236,12 @@ public final class IncrementalTasks {
     	for(Node n: NodeHelper.findAllLeafs(curTree)){
 
     		if(n.isChecked() && !n.getTraces().contains(affectedRule) && !n.getResult().toString().equals("UNKNOWN")){
-    			System.out.println(String.format("Mode: Inc-checked-sub\t%s is %s", n.getName(), n.getResult().toString()));
+    			System.out.println(String.format("Inc-checked-sub:%s:%s:0", n.getName(), n.getResult().toString()));
     		}else{
     			Node cache = NodeHelper.findSubInCache(oldTree, n);
     			
     			if(cache != null && !cache.getResult().toString().equals("UNKNOWN") && !n.getTraces().contains(affectedRule)){
-    				System.out.println(String.format("Mode: Inc-cached-sub\t%s is %s", n.getName(), cache.getResult().toString()));
+    				System.out.println(String.format("Inc-cached-sub:%s:%s:0", n.getName(), cache.getResult().toString()));
     				n.Check(true);
     				n.setResult(cache.getResult());
     			}else{
@@ -296,7 +296,7 @@ public final class IncrementalTasks {
         	n.Check(true);
 			n.setResult(r.getTriBooleanResult());
         	n.setTime(r.getTime());
-        	System.out.println(String.format("Mode: Inc-verify-sub\tid:%s-%s\tres: %s\ttime:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        	System.out.println(String.format("Inc-verify-sub\tid:%s-%s:%s:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
         }
         
         // repopulate the proof tree, to get root node verification result

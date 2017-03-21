@@ -81,7 +81,7 @@ public final class NormalTasks {
         
         
         VerificationResult r = DefaultCommand.execute(args);
-        System.out.println(String.format("Mode: Normal-verify-post\tid:%s\tres: %s\ttime:%s", postName, r.getTriBooleanResult(), r.getTime()));
+        System.out.println(String.format("Normal-verify-post:%s:%s:%s", postName, r.getTriBooleanResult(), r.getTime()));
             
 
     	
@@ -163,7 +163,7 @@ public final class NormalTasks {
         	n.Check(true);
 			n.setResult(r.getTriBooleanResult());
         	n.setTime(r.getTime());
-        	System.out.println(String.format("Mode: Normal-verify-sub\tid:%s-%s\tres: %s\ttime:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        	System.out.println(String.format("Normal-verify-sub:%s-%s:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
     			
         }
     
