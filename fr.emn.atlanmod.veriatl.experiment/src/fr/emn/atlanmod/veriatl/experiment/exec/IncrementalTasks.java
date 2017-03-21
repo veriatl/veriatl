@@ -298,7 +298,14 @@ public final class IncrementalTasks {
         	n.setTime(r.getTime());
         	System.out.println(String.format("Mode: Inc-verify-sub\tid:%s-%s\tres: %s\ttime:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
         }
-          
+        
+        // repopulate the proof tree, to get root node verification result
+        Node curRoot = NodeHelper.findRoot(curTree);
+        if(curRoot.getResult().toString().equals("UNKNOWN")){
+        	curTree = NodeHelper.repopulate(curTree);	
+        }
+        
+        
         // save to currentCache
         URI output = context.basePath;
 		localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);	
