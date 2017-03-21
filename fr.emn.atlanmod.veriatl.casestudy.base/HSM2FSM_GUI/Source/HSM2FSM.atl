@@ -45,7 +45,7 @@ rule T2TB {
     from t1 : HSM!Transition,
          src : HSM!CompositeState, 
          trg : HSM!AbstractState,
-         c : HSM!AbstractState ( t1.source = src and t1.target = trg and c.compositeState = src and not trg.oclIsTypeOf(HSM!CompositeState))
+         c : HSM!AbstractState ( not (c = src) and t1.source = src and t1.target = trg and c.compositeState = src and not trg.oclIsTypeOf(HSM!CompositeState))
     to   t2 : FSM!Transition ( label <- t1.label, stateMachine <- t1.stateMachine, source <- c, target <- trg )
 }
 
