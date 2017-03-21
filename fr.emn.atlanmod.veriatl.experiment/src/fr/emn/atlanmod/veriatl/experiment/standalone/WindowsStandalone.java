@@ -4,6 +4,7 @@
 package fr.emn.atlanmod.veriatl.experiment.standalone;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
 
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
+import fr.emn.atlanmod.veriatl.experiment.exec.BoogieTasks;
 import fr.emn.atlanmod.veriatl.experiment.exec.IncrementalTasks;
 import fr.emn.atlanmod.veriatl.experiment.exec.NormalTasks;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
@@ -320,7 +322,31 @@ public class WindowsStandalone {
 	}
 	
 	
-	
+	public static void BoogieIncPostInit(String p) throws Exception{
+		// gen v0
+		System.out.println(String.format("=================== %s-boogie-snapshot-v0 ===================", org));
+		String proj = String.format("%s/%s", p, org);
+		ContextConstruction context = init(proj);
+		ArrayList<String> posts = BoogieTasks.gen(context, "v0");
+		
+		for(String trg : mutants){
+			System.out.println(String.format("=================== %s-boogie-snapshot-v1 ===================", trg));
+			// copy v0
+			String srcCache = String.format("%s/%s/%s/",p, org, "Boogie");
+			String dstCache = String.format("%s/%s/%s/",p, trg, "Boogie");
+			FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
+			
+			// gen v1
+			proj = String.format("%s/%s", p, trg);
+			context = init(proj);
+			BoogieTasks.gen(context, "v1");
+			
+			// verify v1
+			BoogieTasks.exec(context, posts);
+		}
+		
+		
+	}
 	
 	public static void standardPostRegression(String p) throws Exception{
 		StandardVeriATLPost(p);
