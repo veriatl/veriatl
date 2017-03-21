@@ -303,8 +303,8 @@ public class WindowsStandalone {
 	
 	
 	public static void incPostInit(String p) throws Exception{
-		//PreparePostNoCache(p);
-		//IncrementalVeriATLPostNoCache(p);
+		PreparePostNoCache(p);
+		IncrementalVeriATLPostNoCache(p);
 		
 		PreparePostCache(p);
 		IncrementalVeriATLPostCache(p);
