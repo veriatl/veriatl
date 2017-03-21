@@ -3,10 +3,12 @@
  */
 package fr.emn.atlanmod.veriatl.experiment.standalone;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
 
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
@@ -20,36 +22,31 @@ import localize.ocldecomposerDriver;
  *
  */
 public class WindowsStandalone {
+	static String[] folders;
+	static String[] posts;
+	static String[] mutants;
+	static String org;
+	private static Map<String, String> changes;	
 
 	
-	static String[] mutants = new String[]{"AF2", "AR", "DB3", "DR1","MB6", "MF6"};
-	static String org = "ORG";
-	private static final Map<String, String> changes = createMap();
-
-    private static Map<String, String> createMap() {
-        Map<String, String> result = new HashMap<String, String>();
-        result.put("AF2", "RS2RS");
-        result.put("AR", "CS2RS");
-        result.put("DB3", "IS2IS");
-        result.put("DR1", "SM2SM");
-        result.put("MB6", "T2TB");
-        result.put("MF6", "T2TB");
-        
-        return Collections.unmodifiableMap(result);
+    public static void createTask(String[] f, String[] m, String o, Map<String, String> c){
+    	folders = f;
+    	mutants = m;
+    	org = o;
+    	changes = c;
     }
     
-	
-	
-	public static ContextConstruction init(String proj){
+    
+	public static ContextConstruction init(String p){
 		String moduleName = "HSM2FSM";
 		String s = "HSM";
 		String t = "FSM";
 		
-		URI base = URI.createFileURI(proj);		
-		URI src = URI.createFileURI(String.format("./%s/Source/%s.ecore", proj, s));
-		URI trg = URI.createFileURI(String.format("./%s/Source/%s.ecore", proj, t)); 
-		URI contract = URI.createFileURI(String.format("./%s/Source/%sContract.atl", proj, moduleName));	
-		URI cache = URI.createFileURI(String.format("./%s/", proj)).appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME);
+		URI base = URI.createFileURI(p);		
+		URI src = URI.createFileURI(String.format("./%s/Source/%s.ecore", p, s));
+		URI trg = URI.createFileURI(String.format("./%s/Source/%s.ecore", p, t)); 
+		URI contract = URI.createFileURI(String.format("./%s/Source/%sContract.atl", p, moduleName));	
+		URI cache = URI.createFileURI(String.format("./%s/", p)).appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME);
 		
 		String post = "all";
 		
@@ -76,58 +73,273 @@ public class WindowsStandalone {
 				context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME));
 	}
 	
+	public static void clean(ContextConstruction context) throws Exception{
+		String path = context.basePath.toFileString();
+		for(String f : folders){
+			String toDelete = String.format("%s/%s", path, f); 
+			FileUtils.deleteDirectory(new File(toDelete));
+		}	
+	}
+	
+	
+	public static void cleanAll(String p) throws Exception{
+		
+		for(String trg : mutants){
+			String proj = String.format("%s/%s", p, trg);
+			ContextConstruction context = init(proj);
+			clean(context);
+		}	
+	}
 	
 	public static void genAll(String p) throws Exception{
 		
-		String proj = String.format("%s/%s", p, org);
-		ContextConstruction context = init(proj);
-		gen(context);
-		decompose(context);
 		
 		for(String trg : mutants){
-			proj = String.format("%s/%s", p, trg);
-			context = init(proj);
+			String proj = String.format("%s/%s", p, trg);
+			ContextConstruction context = init(proj);
 			gen(context);
 			decompose(context);
 		}
 		
 	}
 	
-	public static void execNormal(String p) throws Exception{
+	
+	public static void prepareSubgoalNoCache(String p) throws Exception{
 		String proj = String.format("%s/%s", p, org);
 		ContextConstruction context = init(proj);
 		NormalTasks.execBoogie(context);
-		
-		for(String trg : mutants){
-			proj = String.format("%s/%s", p, trg);
-			context = init(proj);
-			NormalTasks.execBoogie(context);
-		}
 	}
 	
-	public static void execIncremental(String p) throws Exception{
+	public static void prepareSubgoalCache(String p) throws Exception{
 		// prepare cache
 		String proj = String.format("%s/%s", p, org);
 		ContextConstruction context = init(proj);
-		NormalTasks.execBoogie(context);
+		NormalTasks.debugBoogie(context);
 		
-		// copy cache
+	}
+	
+	/*
+	 * 1st column
+	 * */
+	public static void StandardVeriATLPost(String p) throws Exception{
+	
+		String proj = String.format("%s/%s", p, org);
+		ContextConstruction context = init(proj);
+		clean(context);
+		gen(context);
+		decompose(context);
+		NormalTasks.execBoogie(context);
 		
 		for(String trg : mutants){
 			proj = String.format("%s/%s", p, trg);
 			context = init(proj);
+			clean(context);
+			gen(context);
+			decompose(context);
+			NormalTasks.execBoogie(context);
+		}
+		
+	}
+	
+	/*
+	 * Prepare for 2nd column
+	 * */
+	public static void PreparePostNoCache(String p) throws Exception{
+		// clean
+		String toDelete = String.format("%s/%s/%s/",p, org, "NoCached");
+		FileUtils.deleteDirectory(new File(toDelete));
+
+		
+		// compute post result only
+		String proj = String.format("%s/%s", p, org);
+		ContextConstruction context = init(proj);
+		clean(context);
+		gen(context);
+		decompose(context);
+		IncrementalTasks.execBoogie(context, "");
+		
+		String srcCache = String.format("%s/%s/%s/",p, org, "Caches");
+		String dstCache = String.format("%s/%s/%s/",p, org, "NoCached");
+		
+		FileUtils.moveDirectory(new File(srcCache), new File(dstCache));
+		
+
+	}
+	
+	/*
+	 * Prepare for 3rd column
+	 * */
+	public static void PreparePostCache(String p) throws Exception{
+		String toDelete = String.format("%s/%s/%s/",p, org, "Cached");
+		FileUtils.deleteDirectory(new File(toDelete));
+		
+
+		
+		// compute sub-goals result
+		String proj = String.format("%s/%s", p, org);
+		ContextConstruction context = init(proj);
+		clean(context);
+		gen(context);
+		decompose(context);
+		IncrementalTasks.debugBoogie(context, "");
+		
+		String srcCache = String.format("%s/%s/%s/",p, org, "Caches");
+		String dstCache = String.format("%s/%s/%s/",p, org, "Cached");
+		
+		FileUtils.moveDirectory(new File(srcCache), new File(dstCache));
+	}
+	
+	/*
+	 * 2nd column: inc without cache
+	 * */
+	public static void IncrementalVeriATLPostNoCache(String p) throws Exception{
+		for(String trg : mutants){
+			String proj = String.format("%s/%s", p, trg);
+			ContextConstruction context = init(proj);
+			clean(context);
+		}
+		
+		for(String trg : mutants){
+			// copy cache
+			String srcCache = String.format("%s/%s/%s/",p, org, "NoCached");
+			String dstCache = String.format("%s/%s/%s/",p, trg, "Caches");
+			FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
+			
+			String proj = String.format("%s/%s", p, trg);
+			ContextConstruction context = init(proj);
+			gen(context);
+			decompose(context);
 			String aRule = changes.get(trg);
 			IncrementalTasks.execBoogie(context, aRule);
 		}
 		
 	}
 	
-	public static void main(String[] args) throws Exception {	
-		String p = "HSM2FSM";
-		genAll(p);
+	
+	/*
+	 * 3rd column: inc with cache
+	 * */
+	public static void IncrementalVeriATLPostCache(String p) throws Exception{
+
+		// clean previous cache
+		for(String trg : mutants){
+			String proj = String.format("%s/%s", p, trg);
+			ContextConstruction context = init(proj);
+			clean(context);
+		}
 		
-		//execNormal(p);
-		execIncremental(p);
+		for(String trg : mutants){
+			// copy cache
+			String srcCache = String.format("%s/%s/%s/",p, org, "Cached");
+			String dstCache = String.format("%s/%s/%s/",p, trg, "Caches");
+			FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
+			
+			String proj = String.format("%s/%s", p, trg);
+			ContextConstruction context = init(proj);
+			gen(context);
+			decompose(context);
+			String aRule = changes.get(trg);
+			IncrementalTasks.execBoogie(context, aRule);
+		}
+		
 	}
+	
+	
+	
+	/*
+	 * 4th column
+	 * */
+	public static void StandardVeriATLSub(String p) throws Exception{
+	
+		String proj = String.format("%s/%s", p, org);
+		ContextConstruction context = init(proj);
+		clean(context);
+		gen(context);
+		decompose(context);
+		NormalTasks.debugBoogie(context);
+		
+		for(String trg : mutants){
+			proj = String.format("%s/%s", p, trg);
+			context = init(proj);
+			clean(context);
+			gen(context);
+			decompose(context);
+			NormalTasks.debugBoogie(context);
+		}
+		
+	}
+	
+	
+
+	
+	/*
+	 * 5th column: inc with cache
+	 * */
+	public static void IncrementalVeriATLSubCache(String p) throws Exception{
+
+		// clean previous cache
+		for(String trg : mutants){
+			String proj = String.format("%s/%s", p, trg);
+			ContextConstruction context = init(proj);
+			clean(context);
+		}
+		
+		for(String trg : mutants){
+			// copy cache
+			String srcCache = String.format("%s/%s/%s/",p, org, "Cached");
+			String dstCache = String.format("%s/%s/%s/",p, trg, "Caches");
+			FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
+			
+			String proj = String.format("%s/%s", p, trg);
+			ContextConstruction context = init(proj);
+			gen(context);
+			decompose(context);
+			String aRule = changes.get(trg);
+			IncrementalTasks.debugBoogie(context, aRule);
+		}
+		
+	}
+	
+	
+	
+	public static void standardPostInit(String p) throws Exception{
+		StandardVeriATLPost(p);
+	}
+	
+	public static void standardPostRegression(String p) throws Exception{
+		StandardVeriATLPost(p);
+	}
+	
+	public static void incPostInit(String p) throws Exception{
+		PreparePostNoCache(p);
+		IncrementalVeriATLPostNoCache(p);
+		
+		PreparePostCache(p);
+		IncrementalVeriATLPostCache(p);
+	}
+	
+	public static void incPostRegression(String p) throws Exception{
+		IncrementalVeriATLPostNoCache(p);
+		IncrementalVeriATLPostCache(p);
+	}
+	
+	
+	public static void standardSubInit(String p) throws Exception{
+		StandardVeriATLSub(p);
+	}
+	
+	public static void standardSubRegression(String p) throws Exception{
+		StandardVeriATLSub(p);
+	}
+	
+	public static void incSubInit(String p) throws Exception{
+		IncrementalVeriATLSubCache(p);
+	}
+	
+	public static void incSubRegression(String p) throws Exception{
+		IncrementalVeriATLSubCache(p);
+	}
+	
+
 
 }
