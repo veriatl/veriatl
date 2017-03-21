@@ -253,6 +253,7 @@ public class WindowsStandalone {
 		NormalTasks.debugBoogie(context);
 		
 		for(String trg : mutants){
+			System.out.println(String.format("=================== %s-sub-standard ===================", trg));
 			proj = String.format("%s/%s", p, trg);
 			context = init(proj);
 			clean(context);

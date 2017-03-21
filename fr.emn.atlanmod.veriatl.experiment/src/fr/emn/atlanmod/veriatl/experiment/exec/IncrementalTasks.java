@@ -274,7 +274,9 @@ public final class IncrementalTasks {
 					n.Check(true);
 					n.setResult(TriBoolean.TRUE);
 					n.setTime(0);
+					
 				}
+				System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, "all", "TRUE", r.getTime()));
 			}else{
 				// find sub-goals that need to be reverified
 				for(Node n: NodeHelper.findAllLeafs(curTree)){
