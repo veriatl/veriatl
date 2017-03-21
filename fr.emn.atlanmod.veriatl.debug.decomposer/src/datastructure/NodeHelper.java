@@ -48,9 +48,9 @@ public class NodeHelper {
 	/**
 	 * find a sub-goal {@code n} in the given {@code tree} with exact hypotheses and conclusions
 	 * */
-	public static Node findSubInCache(List<Node> tree, Node n) {
+	public static Node findSubInCache(ArrayList<Node> tree, Node n) {
 		
-		for (Node curr : tree) {
+		for (Node curr : findAllLeafs(tree)) {
 
 			boolean conclusion = n.conclusion.equals(curr.conclusion);
 			boolean hypotheses = n.hypotheses.containsAll(curr.hypotheses) && curr.hypotheses.containsAll(n.hypotheses);
@@ -172,7 +172,7 @@ public class NodeHelper {
 		for(Node curLeaf : findAllLeafs(curTree)) {
 			if(curLeaf.getResult() == TriBoolean.UNKNOWN) {
 				Node cache = NodeHelper.findSubInCache(oldTree, curLeaf);
-				
+
 				if(cache != null && !curLeaf.getTraces().contains(affectedRule)){
 					curLeaf.setResult(cache.getResult());
 				}else{
