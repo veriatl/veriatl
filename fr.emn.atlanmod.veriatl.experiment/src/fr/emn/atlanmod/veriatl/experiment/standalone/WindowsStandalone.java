@@ -104,25 +104,13 @@ public class WindowsStandalone {
 	}
 	
 	
-	public static void prepareSubgoalNoCache(String p) throws Exception{
-		String proj = String.format("%s/%s", p, org);
-		ContextConstruction context = init(proj);
-		NormalTasks.execBoogie(context);
-	}
-	
-	public static void prepareSubgoalCache(String p) throws Exception{
-		// prepare cache
-		String proj = String.format("%s/%s", p, org);
-		ContextConstruction context = init(proj);
-		NormalTasks.debugBoogie(context);
-		
-	}
+
 	
 	/*
 	 * 1st column
 	 * */
 	public static void StandardVeriATLPost(String p) throws Exception{
-	
+		System.out.println(String.format("=================== %s-post-standard ===================", org));
 		String proj = String.format("%s/%s", p, org);
 		ContextConstruction context = init(proj);
 		clean(context);
@@ -131,6 +119,7 @@ public class WindowsStandalone {
 		NormalTasks.execBoogie(context);
 		
 		for(String trg : mutants){
+			System.out.println(String.format("=================== %s-post-standard ===================", trg));
 			proj = String.format("%s/%s", p, trg);
 			context = init(proj);
 			clean(context);
@@ -200,6 +189,7 @@ public class WindowsStandalone {
 		}
 		
 		for(String trg : mutants){
+			System.out.println(String.format("=================== %s-post-nocache ===================", trg));
 			// copy cache
 			String srcCache = String.format("%s/%s/%s/",p, org, "NoCached");
 			String dstCache = String.format("%s/%s/%s/",p, trg, "Caches");
@@ -229,6 +219,7 @@ public class WindowsStandalone {
 		}
 		
 		for(String trg : mutants){
+			System.out.println(String.format("=================== %s-post-cache ===================", trg));
 			// copy cache
 			String srcCache = String.format("%s/%s/%s/",p, org, "Cached");
 			String dstCache = String.format("%s/%s/%s/",p, trg, "Caches");
@@ -250,7 +241,7 @@ public class WindowsStandalone {
 	 * 4th column
 	 * */
 	public static void StandardVeriATLSub(String p) throws Exception{
-	
+		System.out.println(String.format("=================== %s-sub-standard ===================", org));
 		String proj = String.format("%s/%s", p, org);
 		ContextConstruction context = init(proj);
 		clean(context);
@@ -276,7 +267,7 @@ public class WindowsStandalone {
 	 * 5th column: inc with cache
 	 * */
 	public static void IncrementalVeriATLSubCache(String p) throws Exception{
-
+		
 		// clean previous cache
 		for(String trg : mutants){
 			String proj = String.format("%s/%s", p, trg);
@@ -285,6 +276,7 @@ public class WindowsStandalone {
 		}
 		
 		for(String trg : mutants){
+			System.out.println(String.format("=================== %s-sub-cache ===================", trg));
 			// copy cache
 			String srcCache = String.format("%s/%s/%s/",p, org, "Cached");
 			String dstCache = String.format("%s/%s/%s/",p, trg, "Caches");
@@ -306,9 +298,6 @@ public class WindowsStandalone {
 		StandardVeriATLPost(p);
 	}
 	
-	public static void standardPostRegression(String p) throws Exception{
-		StandardVeriATLPost(p);
-	}
 	
 	public static void incPostInit(String p) throws Exception{
 		PreparePostNoCache(p);
@@ -318,17 +307,7 @@ public class WindowsStandalone {
 		IncrementalVeriATLPostCache(p);
 	}
 	
-	public static void incPostRegression(String p) throws Exception{
-		IncrementalVeriATLPostNoCache(p);
-		IncrementalVeriATLPostCache(p);
-	}
-	
-	
 	public static void standardSubInit(String p) throws Exception{
-		StandardVeriATLSub(p);
-	}
-	
-	public static void standardSubRegression(String p) throws Exception{
 		StandardVeriATLSub(p);
 	}
 	
@@ -336,9 +315,29 @@ public class WindowsStandalone {
 		IncrementalVeriATLSubCache(p);
 	}
 	
+	
+	
+	
+	public static void standardPostRegression(String p) throws Exception{
+		StandardVeriATLPost(p);
+	}
+	
+	public static void incPostRegression(String p) throws Exception{
+		IncrementalVeriATLPostNoCache(p);
+		IncrementalVeriATLPostCache(p);
+	}
+	
+	public static void standardSubRegression(String p) throws Exception{
+		StandardVeriATLSub(p);
+	}
+	
 	public static void incSubRegression(String p) throws Exception{
 		IncrementalVeriATLSubCache(p);
 	}
+	
+
+	
+	
 	
 
 
