@@ -697,22 +697,9 @@ cn.input->size()>0 implies (
 	    )
 	); 
 	
-	--@post
-	helper context UMLs!ConsiderIgnoreFragment def: post_type(): Boolean = --ConsiderIgnoreFragment_type
-	  UMLs!ConsiderIgnoreFragment.allInstances()->forAll(cif |  
-cif.message->size()>0 implies (
-	    cif.message->forAll(nem|
-	      nem.oclIsKindOf(UMLs!Operation) or nem.oclIsKindOf(UMLs!Signal))
-	    )
-	); 
+
 	
-	--@post
-	helper context UMLs!Constraint def: post_not_apply_to_self(): Boolean = --Constraint_not_apply_to_self
-	  UMLs!Constraint.allInstances()->forAll(c |  
-c.constrainedElement->size()>0 implies (
-	    not(c.constrainedElement->includes(c))
-	    )
-	); 
+
 	
 	--@post
 	helper context UMLs!CreateObjectAction def: post_classifier_not_abstract(): Boolean = --CreateObjectAction_classifier_not_abstract
@@ -749,13 +736,7 @@ UMLs!ObjectFlow.allInstances()->includes(dn.decisionInputFlow) implies (
 	    ))
 	); 
 	
-	--@post
-	helper context UMLs!DurationConstraint def: post_has_one_or_two_constrainedElements(): Boolean = --DurationConstraint_has_one_or_two_constrainedElements
-	  UMLs!DurationConstraint.allInstances()->forAll(dc |  
-dc.constrainedElement->size()>0 implies (
-	    dc.constrainedElement->size() = 1 or dc.constrainedElement->size() = 2
-	    )
-	); 
+
 	
 	--@post
 	helper context UMLs!Enumeration def: post_immutable(): Boolean = --Enumeration_immutable
@@ -766,17 +747,7 @@ e.ownedAttribute->size()>0 implies (
 	    )
 	); 
 	
-	--@post
-	helper context UMLs!ExceptionHandler def: post_handler_body_edges(): Boolean = --ExceptionHandler_handler_body_edges
-	  UMLs!ExceptionHandler.allInstances()->forAll(eh |  
-eh.handlerBody.outgoing->size()>0 implies (
-eh.exceptionInput.incoming->size()>0 implies (
-UMLs!ExecutableNode.allInstances()->includes(eh.handlerBody) implies (
-UMLs!ObjectNode.allInstances()->includes(eh.exceptionInput) implies (
-eh.handlerBody.incoming->size()>0 implies (
-	    eh.handlerBody.incoming->isEmpty() and eh.handlerBody.outgoing->isEmpty() and eh.exceptionInput.incoming->isEmpty()
-	    )))))
-	); 
+
 	
 
 	
@@ -918,14 +889,7 @@ n.part->size()>0 implies (
 	    )
 	); 
 	
-	--@post
-	helper context UMLs!ObjectFlow def: post_no_executable_nodes(): Boolean = --ObjectFlow_no_executable_nodes
-	  UMLs!ObjectFlow.allInstances()->forAll(of |  
-UMLs!ActivityNode.allInstances()->includes(of.source) implies (
-UMLs!ActivityNode.allInstances()->includes(of.target) implies (
-	    not(of.source.oclIsKindOf(UMLs!ExecutableNode) or of.target.oclIsKindOf(UMLs!ExecutableNode))
-	    ))
-	); 
+
 	
 	--@post
 	helper context UMLs!ObjectFlow def: post_is_multicast_or_is_multireceive(): Boolean = --ObjectFlow_is_multicast_or_is_multireceive
@@ -1112,13 +1076,7 @@ tb.parameterSubstitution->size()>0 implies (
 	    )))
 	); 
 	
-	--@post
-	helper context UMLs!TimeConstraint def: post_has_one_constrainedElement(): Boolean = --TimeConstraint_has_one_constrainedElement
-	  UMLs!TimeConstraint.allInstances()->forAll(tc |  
-tc.constrainedElement->size()>0 implies (
-	    tc.constrainedElement->size() = 1
-	    )
-	); 
+
 	
 	--@post
 	helper context UMLs!ValuePin def: post_no_incoming_edges(): Boolean = --ValuePin_no_incoming_edges
@@ -1128,5 +1086,6 @@ vp.incoming->size()>0 implies (
 	    )
 	); 
 	
+
 
 
