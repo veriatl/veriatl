@@ -126,7 +126,7 @@ public final class IncrementalTasksEvo {
 			        args.add("/z3exe:"+z3abs);
 			        args.add("/traceTimes");
 			        args.add("/verifySnapshots:3");
-			       
+			        args.add("/timeLimit:300");
 			        
 			        
 			        // gen single boogie file
@@ -298,6 +298,7 @@ public final class IncrementalTasksEvo {
 	        args.add("/nologo");
 	        args.add("/z3exe:"+z3abs);
 	        args.add("/traceTimes");
+	        args.add("/timeLimit:300");
 	        
 	        // add prelude files
 	        String veriatlabs = veriatl+"\\Prelude\\";
@@ -371,7 +372,7 @@ public final class IncrementalTasksEvo {
         // add Boogie options
         args.add("/nologo");
         args.add("/z3exe:"+z3abs);
-
+        args.add("/timeLimit:300");
         
         // add prelude files
         String veriatlabs = veriatl +"\\Prelude\\";
