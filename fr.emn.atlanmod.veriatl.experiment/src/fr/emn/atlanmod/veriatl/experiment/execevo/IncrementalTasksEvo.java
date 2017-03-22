@@ -1,12 +1,13 @@
-package fr.emn.atlanmod.veriatl.experiment.exec;
+package fr.emn.atlanmod.veriatl.experiment.execevo;
 
 
 
 import java.io.File;
-import java.nio.file.Path;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
 
 import datastructure.Node;
@@ -14,30 +15,35 @@ import datastructure.NodeHelper;
 import datastructure.TriBoolean;
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
+import fr.emn.atlanmod.veriatl.experiment.exec.Caches;
+import fr.emn.atlanmod.veriatl.experiment.exec.DefaultCommand;
 import fr.emn.atlanmod.veriatl.experiment.standalone.ContextConstruction;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
-import fr.emn.atlanmod.veriatl.tools.Commands;
 import fr.emn.atlanmod.veriatl.tools.VerificationResult;
 import fr.emn.atlanmod.veriatl.util.URIs;
 
 
-public final class IncrementalTasks {
+public final class IncrementalTasksEvo {
 
 
 	private static String z3 = "../fr.emn.atlanmod.veriatl.tools/lib/Z3-4.5.1/win-64/z3.exe";
 	private static String veriatl = "../fr.emn.atlanmod.veriatl.tools/lib/VeriATL-1.0.0/win-64/";
 	
-    private IncrementalTasks() {
+	private static String OLD_VER = "v0";
+	private static String NEW_VER = "v1";
+	
+    private IncrementalTasksEvo() {
         throw new IllegalStateException("This class should not be initialized");
     }
 
     /**
      * Exec Boogie.
      * <p>
+     * @throws IOException 
      *   
      *
      */
-    public static void execBoogie(ContextConstruction context, String affectedRule) {
+    public static void execBoogie(ContextConstruction context, String affectedRule) throws IOException {
 
 		String postName = context.postName;
 
@@ -53,7 +59,7 @@ public final class IncrementalTasks {
     }
     
 
-    private static void execBoogieSingle(ContextConstruction context, String postName, String affectedRule) {
+    private static void execBoogieSingle(ContextConstruction context, String postName, String affectedRule) throws IOException {
     	ArrayList<String> caches = Caches.loadCaches(context, postName);
     	String previousCache = Caches.prevCache(caches);
 		String currentCache = Caches.curCache(caches);
@@ -104,14 +110,9 @@ public final class IncrementalTasks {
 				
 				
 				if(simPost!=null){
-					// generate PO
-					HashSet<String> simTrace = NodeHelper.UnionTraces(simPost, NodeHelper.findDescendantLeafs(curTree, simPost));
 					
-					simPost.setTraces(simTrace);
-					String boogie = simPost.toBoogie();
-					String sim = String.format("%s_sim",postName);
-					URI output = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
-					driver.generateBoogieFile(output, sim, CompilerConstants.BOOGIE_EXT, boogie);
+					
+					
 					
 					
 					
@@ -123,33 +124,85 @@ public final class IncrementalTasks {
 			        // add Boogie options
 			        args.add("/nologo");
 			        args.add("/z3exe:"+z3abs);
-			        //args.add("/traceTimes");
+			        args.add("/traceTimes");
+			        args.add("/verifySnapshots:3");
+			       
 			        
+			        
+			        // gen single boogie file
+			        ArrayList<String> todo = new ArrayList<String>();
+
 			        // add prelude files
 			        String veriatlabs = veriatl+"\\Prelude\\";
-			        args.addAll(getFiles(veriatlabs));
+			        todo.addAll(getFiles(veriatlabs));
 			        
 			        // add auxu files
 			        String auxu = URIs.abs(context.basePath.appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
-			        args.addAll(getFiles(auxu));
+			        todo.addAll(getFiles(auxu));
+			        
+			        String preludes = "";
+			        for(String f : todo) {
+			        	preludes += FileUtils.readFileToString(new File(f), "UTF-8");
+			        	preludes += "\n";
+			        }
+			        
+			        
+			        
+			        // add genby
+			        String genBy = FileUtils.readFileToString(new File(URIs.abs(context.basePath
+		            		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+		            		.appendSegment(CompilerConstants.GENBY)
+		            		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
+		            )), "UTF-8") + "\n";
+			        
+			        
+			        
+			        
+			        
+			        
+					if(!cacheState.equals("self")){
+						// gen new PO
+				        HashSet<String> simTrace = NodeHelper.UnionTraces(simPost, NodeHelper.findDescendantLeafs(curTree, simPost));
+						simPost.setTraces(simTrace);
+						String boogie = preludes + genBy + simPost.toBoogie();
+						String sim = String.format("%s.%s",postName, NEW_VER);
+						URI output = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
+						driver.generateBoogieFile(output, sim, CompilerConstants.BOOGIE_EXT, boogie);
+						
+						
+						// generate PO old
+						HashSet<String> TraceOld = NodeHelper.UnionTraces(oldRoot, NodeHelper.findDescendantLeafs(oldTree, oldRoot));
+						oldRoot.setTraces(TraceOld);
+						String boogieOld = preludes + oldRoot.toBoogie();
+						String nameOld = String.format("%s.%s",postName, OLD_VER);
+						URI pathOld = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
+						driver.generateBoogieFile(pathOld, nameOld, CompilerConstants.BOOGIE_EXT, boogieOld);
+					}else{
+						// gen new PO
+				        HashSet<String> simTrace = NodeHelper.UnionTraces(simPost, NodeHelper.findDescendantLeafs(curTree, simPost));
+						simPost.setTraces(simTrace);
+						String boogie = preludes + genBy + simPost.toBoogie();
+						String sim = String.format("%s.%s",postName, OLD_VER);
+						URI output = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
+						driver.generateBoogieFile(output, sim, CompilerConstants.BOOGIE_EXT, boogie);
+					}
+			        
+			        
+			        
+			        
 			        
 			        // add postcondition to be verified
 			        String post = URIs.abs(context.basePath
 			        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
 			        		.appendSegment(postName)
-			        		.appendSegment(sim)
+			        		.appendSegment(postName)
 			        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
 			        );
 			        args.add(post);
 			        
-			        String genBy = URIs.abs(context.basePath
-		            		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-		            		.appendSegment(CompilerConstants.GENBY)
-		            		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
-		            );
-			        args.add(genBy);
+
 		        	
-			        VerificationResult r = DefaultCommand.execute(args);
+			        VerificationResult r = DefaultCommandEvo.execute(args);
 					
 					// update result and repopulate verification result tree
 					simPost.setResult(r.getTriBooleanResult());
@@ -339,7 +392,7 @@ public final class IncrementalTasks {
             );
         	argsClone.add(genBy);
         	
-        	VerificationResult r = DefaultCommand.execute(argsClone);
+        	VerificationResult r = DefaultCommandEvo.execute(argsClone);
         	argsClone.clear();
         	
         	// process result

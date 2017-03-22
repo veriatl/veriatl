@@ -5,8 +5,6 @@ package fr.emn.atlanmod.veriatl.experiment.standalone;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -14,8 +12,8 @@ import org.eclipse.emf.common.util.URI;
 
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.veriatl.experiment.exec.BoogieTasks;
-import fr.emn.atlanmod.veriatl.experiment.exec.IncrementalTasks;
 import fr.emn.atlanmod.veriatl.experiment.exec.NormalTasks;
+import fr.emn.atlanmod.veriatl.experiment.execevo.IncrementalTasksEvo;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import localize.ocldecomposerDriver;
 
@@ -136,7 +134,7 @@ public class WindowsStandalone {
 	 * Prepare for 2nd column
 	 * */
 	public static void PreparePostNoCache(String p) throws Exception{
-		System.out.println(String.format("=================== %s-sub-prepare-nocache ===================", org));
+		System.out.println(String.format("=================== %s-post-prepare-nocache ===================", org));
 		// clean
 		String toDelete = String.format("%s/%s/%s/",p, org, "NoCached");
 		FileUtils.deleteDirectory(new File(toDelete));
@@ -148,7 +146,7 @@ public class WindowsStandalone {
 		clean(context);
 		gen(context);
 		decompose(context);
-		IncrementalTasks.execBoogie(context, "");
+		IncrementalTasksEvo.execBoogie(context, "");
 		
 		String srcCache = String.format("%s/%s/%s/",p, org, "Caches");
 		String dstCache = String.format("%s/%s/%s/",p, org, "NoCached");
@@ -175,7 +173,7 @@ public class WindowsStandalone {
 		clean(context);
 		gen(context);
 		decompose(context);
-		IncrementalTasks.debugBoogie(context, "");
+		IncrementalTasksEvo.debugBoogie(context, "");
 		
 		String srcCache = String.format("%s/%s/%s/",p, org, "Caches");
 		String dstCache = String.format("%s/%s/%s/",p, org, "Cached");
@@ -205,7 +203,7 @@ public class WindowsStandalone {
 			gen(context);
 			decompose(context);
 			String aRule = changes.get(trg);
-			IncrementalTasks.execBoogie(context, aRule);
+			IncrementalTasksEvo.execBoogie(context, aRule);
 		}
 		
 	}
@@ -235,7 +233,7 @@ public class WindowsStandalone {
 			gen(context);
 			decompose(context);
 			String aRule = changes.get(trg);
-			IncrementalTasks.execBoogie(context, aRule);
+			IncrementalTasksEvo.execBoogie(context, aRule);
 		}
 		
 	}
@@ -293,7 +291,7 @@ public class WindowsStandalone {
 			gen(context);
 			decompose(context);
 			String aRule = changes.get(trg);
-			IncrementalTasks.debugBoogie(context, aRule);
+			IncrementalTasksEvo.debugBoogie(context, aRule);
 		}
 		
 	}

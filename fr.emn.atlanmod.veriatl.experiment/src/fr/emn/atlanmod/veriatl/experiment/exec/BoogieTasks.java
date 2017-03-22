@@ -9,6 +9,7 @@ import org.eclipse.emf.common.util.URI;
 
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
+import fr.emn.atlanmod.veriatl.experiment.execevo.DefaultCommandEvo;
 import fr.emn.atlanmod.veriatl.experiment.standalone.ContextConstruction;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.VerificationResult;
@@ -83,20 +84,22 @@ public class BoogieTasks {
 	        args.add("/nologo");
 	        args.add("/z3exe:"+z3abs);
 	        args.add("/verifySnapshots:3");
-	        
+	        args.add("/traceTimes");
 	       
 	        
 	        // add postcondition to be verified
-	        String v0 = URIs.abs(context.basePath
+	        String postName = URIs.abs(context.basePath
 	        		.appendSegment("Boogie")
 	        		.appendSegment(post)
 	        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
 	        );
-	        args.add(v0);
+	        
+	        
+	        args.add(postName);
 
 	       
 	        
-	        VerificationResult r = DefaultCommand.execute(args);
+	        VerificationResult r = DefaultCommandEvo.execute(args);
 	        System.out.println(String.format("inc-boogie-post:%s:%s:%s",  post, r.getResult(), r.getTime()));
 		}
 

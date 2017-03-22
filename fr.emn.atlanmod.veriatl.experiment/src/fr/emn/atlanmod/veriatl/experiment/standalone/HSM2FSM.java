@@ -16,8 +16,8 @@ import java.util.Map;
 public class HSM2FSM {
 	static String[] folders = new String[]{"Auxu", "Caches", "Sub-goals"};
 	static String[] posts;
-	//static String[] mutants = new String[]{"AF2", "AR", "DB3", "DR1","MB6", "MF6"};
-	static String[] mutants = new String[]{"DR1"};
+	static String[] mutants = new String[]{"AF2", "AR", "DB3", "DR1","MB6", "MF6"};
+	//static String[] mutants = new String[]{"MB6"};
 	static String org = "ORG";
 	static String proj = "HSM2FSM";
 	private static final Map<String, String> changes = createMap();
@@ -39,10 +39,10 @@ public class HSM2FSM {
 		WindowsStandalone.createTask(folders, mutants, org, changes);
 		
 //		WindowsStandalone.standardPostInit(proj);
-//		WindowsStandalone.incPostInit(proj);
+		WindowsStandalone.incPostInit(proj);
 //		WindowsStandalone.standardSubInit(proj);
 //		WindowsStandalone.incSubInit(proj);
 
-		WindowsStandalone.BoogieIncPostInit(proj);
+//		WindowsStandalone.BoogieIncPostInit(proj);
 	}
 }
