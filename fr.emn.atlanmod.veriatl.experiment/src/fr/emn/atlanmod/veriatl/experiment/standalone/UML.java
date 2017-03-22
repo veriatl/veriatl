@@ -19,7 +19,7 @@ public class UML {
 	static String[] mutants = new String[]{"AF2", "AR", "DB3", "DR1","MB6", "MF6"};
 	//static String[] mutants = new String[]{"MB6"};
 	static String org = "ORG";
-	static String proj = "UML2UMLs";
+	static String proj = "UML";
 	private static final Map<String, String> changes = createMap();
 
     private static Map<String, String> createMap() {
@@ -43,6 +43,6 @@ public class UML {
 //		WindowsStandalone.standardSubInit(proj);
 //		WindowsStandalone.incSubInit(proj);
 
-		WindowsStandalone.BoogieIncPostInit(proj);
+//		WindowsStandalone.BoogieIncPostInit(proj);
 	}
 }
