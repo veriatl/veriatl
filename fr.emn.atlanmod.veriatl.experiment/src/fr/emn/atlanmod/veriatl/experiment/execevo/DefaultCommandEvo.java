@@ -72,6 +72,8 @@ public class DefaultCommandEvo {
 						} else{
 							if (line.indexOf(", 0 errors") != -1) {
 								boogieRes = "true";	
+							}else{
+								boogieRes = "false";	
 							}
 						}
 						//break;

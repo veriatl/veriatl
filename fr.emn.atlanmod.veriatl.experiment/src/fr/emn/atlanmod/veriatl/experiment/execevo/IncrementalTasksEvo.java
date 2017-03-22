@@ -297,7 +297,7 @@ public final class IncrementalTasksEvo {
 	        // add Boogie options
 	        args.add("/nologo");
 	        args.add("/z3exe:"+z3abs);
-	        //args.add("/trace");
+	        args.add("/traceTimes");
 	        
 	        // add prelude files
 	        String veriatlabs = veriatl+"\\Prelude\\";
@@ -309,16 +309,25 @@ public final class IncrementalTasksEvo {
 	        
 			
 			// add PO
+	        Node curRoot = NodeHelper.findRoot(curTree);
+	        HashSet<String> trace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
+			curRoot.setTraces(trace);
+			String boogie = curRoot.toBoogie();
+			String name = String.format("%s.igore",postName);
+			URI path = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
+			driver.generateBoogieFile(path, name, CompilerConstants.BOOGIE_EXT, boogie);
+			
+			
 			String post = URIs.abs(context.basePath
 	        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
 	        		.appendSegment(postName)
-	        		.appendSegment(CompilerConstants.FULL)
+	        		.appendSegment(name)
 	        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
 	        );
 	        args.add(post);
 	        
 	        
-	        VerificationResult r = DefaultCommand.execute(args);  
+	        VerificationResult r = DefaultCommandEvo.execute(args);  
 	        
 	        
 			if(r.getResult().toString().equals("true")){

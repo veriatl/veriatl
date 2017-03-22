@@ -100,7 +100,7 @@ public class BoogieTasks {
 	       
 	        
 	        VerificationResult r = DefaultCommandEvo.execute(args);
-	        System.out.println(String.format("inc-boogie-post:%s:%s:%s",  post, r.getResult(), r.getTime()));
+	        System.out.println(String.format("inc-boogie-post:%s:%s:%s",  post, r.getTriBooleanResult().toString(), r.getTime()));
 		}
 
     }

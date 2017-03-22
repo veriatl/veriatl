@@ -43,6 +43,6 @@ public class HSM2FSM {
 //		WindowsStandalone.standardSubInit(proj);
 //		WindowsStandalone.incSubInit(proj);
 
-//		WindowsStandalone.BoogieIncPostInit(proj);
+		WindowsStandalone.BoogieIncPostInit(proj);
 	}
 }
