@@ -27,20 +27,23 @@ public class WindowsStandalone {
 	static String[] mutants;
 	static String org;
 	private static Map<String, String> changes;	
-
+	static String moduleName ;
+	static String s;
+	static String t;
 	
-    public static void createTask(String[] f, String[] m, String o, Map<String, String> c){
+    public static void createTask(String[] f, String[] m, String o, Map<String, String> c, String module, String src, String trg){
     	folders = f;
     	mutants = m;
     	org = o;
     	changes = c;
+    	moduleName = module;
+    	s = src;
+    	t = trg;
     }
     
     
 	public static ContextConstruction init(String p){
-		String moduleName = "HSM2FSM";
-		String s = "HSM";
-		String t = "FSM";
+		
 		
 		URI base = URI.createFileURI(p);		
 		URI src = URI.createFileURI(String.format("./%s/Source/%s.ecore", p, s));

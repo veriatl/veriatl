@@ -13,13 +13,13 @@ import java.util.Map;
  * @author zcheng
  *
  */
-public class HSM2FSMi {
+public class UML {
 	static String[] folders = new String[]{"Auxu", "Caches", "Sub-goals"};
 	static String[] posts;
 	static String[] mutants = new String[]{"AF2", "AR", "DB3", "DR1","MB6", "MF6"};
-	
+	//static String[] mutants = new String[]{"MB6"};
 	static String org = "ORG";
-	static String proj = "HSM2FSMi";
+	static String proj = "UML2UMLs";
 	private static final Map<String, String> changes = createMap();
 
     private static Map<String, String> createMap() {
@@ -36,12 +36,13 @@ public class HSM2FSMi {
     
     
 	public static void main(String[] args) throws Exception {	
-		WindowsStandalone.createTask(folders, mutants, org, changes, "HSM2FSM", "HSM", "FSM");
+		WindowsStandalone.createTask(folders, mutants, org, changes, "UML2UMLs", "UML", "UMLs");
 		
-		WindowsStandalone.standardPostInit(proj);
+//		WindowsStandalone.standardPostInit(proj);
 		WindowsStandalone.incPostInit(proj);
-		WindowsStandalone.standardSubInit(proj);
-		WindowsStandalone.incSubInit(proj);
+//		WindowsStandalone.standardSubInit(proj);
+//		WindowsStandalone.incSubInit(proj);
 
+		WindowsStandalone.BoogieIncPostInit(proj);
 	}
 }
