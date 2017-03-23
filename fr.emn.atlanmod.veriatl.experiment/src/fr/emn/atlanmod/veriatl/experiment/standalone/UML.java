@@ -16,20 +16,16 @@ import java.util.Map;
 public class UML {
 	static String[] folders = new String[]{"Auxu", "Caches", "Sub-goals"};
 	static String[] posts;
-	static String[] mutants = new String[]{"AF2", "AR", "DB3", "DR1","MB6", "MF6"};
-	//static String[] mutants = new String[]{"MB6"};
+	//static String[] mutants = new String[]{"AF2", "AR", "DB3", "DR1","MB6", "MF6"};
+	static String[] mutants = new String[]{"DR1"};
 	static String org = "ORG";
 	static String proj = "UML";
 	private static final Map<String, String> changes = createMap();
 
     private static Map<String, String> createMap() {
         Map<String, String> result = new HashMap<String, String>();
-        result.put("AF2", "RS2RS");
-        result.put("AR", "CS2RS");
-        result.put("DB3", "IS2IS");
-        result.put("DR1", "SM2SM");
-        result.put("MB6", "T2TB");
-        result.put("MF6", "T2TB");
+        result.put("DR1", "CopyAbstraction");
+
         
         return Collections.unmodifiableMap(result);
     }
