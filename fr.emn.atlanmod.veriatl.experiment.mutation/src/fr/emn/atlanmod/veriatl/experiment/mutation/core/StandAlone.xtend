@@ -25,8 +25,12 @@ import org.eclipse.m2m.atl.common.ATL.ATLPackage
 import org.eclipse.m2m.atl.common.ATL.MatchedRule
 import org.eclipse.m2m.atl.common.OCL.OCLPackage
 import org.eclipse.m2m.atl.emftvm.compiler.AtlResourceFactoryImpl
-
-
+import fr.emn.atlanmod.veriatl.experiment.mutation.generator.ATL
+import fr.emn.atlanmod.veriatl.experiment.mutation.util.URIs
+import org.eclipse.m2m.atl.common.ATL.Module
+import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.m2m.atl.common.ATL.SimpleInPatternElement
+import org.eclipse.m2m.atl.common.ATL.SimpleOutPatternElement
 
 class StandAlone{
 	
@@ -34,25 +38,52 @@ class StandAlone{
 
 	
 	def static void main(String[] args) {
-		val inputURI = URI.createFileURI("./resources/UML2UMLs.atl")
-		doEMFSetup(inputURI)
 		
-		var String res = "";
-		val outputURI = URI.createFileURI("./resources/UML.normalize.ocl.atl")
+		doEMFSetup()
 		
-		res+="module UMLCopierContract;\n";
-		res+="create OUT : UMLs from IN : UML;\n";
+		val rs = new ResourceSetImpl
+		val atl = URI.createFileURI("./resources/UML2UMLsTest.atl")
+		val atl_resource = rs.getResource(atl, true)
 
-		for (EObject eobject : ocl_resource.getContents()) {
-			res += ATL.print(eobject);
+		// get matched rules
+		var rules = new ArrayList
+		var Module module;
+		for (e : atl_resource.contents) {
+			if(e instanceof Module){
+				module = e
+				for(o : e.elements){
+					if(o instanceof MatchedRule){
+						rules.add(o)
+					}
+				}
+			}
+		}
+		
+		for(r : rules){
+			val mutate =  copy(r) as MatchedRule
+			val elem1 = (r.outPattern.elements.get(0) as SimpleOutPatternElement)
+			val elem2 = (mutate.outPattern.elements.get(0) as SimpleOutPatternElement) 
+			elem2.varName = "abc"
+			println(elem1.varName)
+			println(elem2.varName)
+			//println(ATL.gen(module, r, mutate) )
+			println("===")
 		}
 		
 		
-		URIs.write(outputURI, res); 
+		
 		
 	}
 	
-	def static doEMFSetup(URI oclPath) {
+	def static EObject copy(EObject eObject) 
+  { 
+    val  EcoreUtil.Copier copier = new  EcoreUtil.Copier(); 
+    val EObject result = copier.copy(eObject); 
+    copier.copyReferences(); 
+    return result; 
+  } 
+  
+	def static doEMFSetup() {
 		// load metamodels	
 		EPackage.Registry.INSTANCE.put(ATLPackage.eNS_URI, ATLPackage.eINSTANCE);
 
@@ -61,38 +92,10 @@ class StandAlone{
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("xmi", new XMIResourceFactoryImpl);
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("atl", new AtlResourceFactoryImpl);
 		//Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl;
-		
-		
-		// get resource from input URI
-		val rs = new ResourceSetImpl		
-		ocl_resource = rs.getResource(oclPath, true)
-
-		// initialize uri mapping
-		val ecore_resource = rs.getResource(URI.createFileURI("./resources/UML.ecore.oclas"), true)
-		val lib_resource = rs.getResource(URI.createFileURI("./resources/OCL-2.5.oclas"), true)
-		
-		ecore_resource.setURI(URI.createURI("UML.ecore.oclas"));
-		lib_resource.setURI(URI.createURI("http://www.eclipse.org/ocl/2015/Library.oclas"));
-		
-	
 
 	}
 	
-	def public static EPackage loadEcore(String metamodelPath) throws Exception {
-		// Load metamodels
 
-		val rs = new ResourceSetImpl();
-		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-		val r = rs.getResource(URI.createFileURI(metamodelPath), true);
-		val eObject = r.getContents().get(0);
-		if (eObject instanceof EPackage) {
-			val p =  eObject as EPackage;
-			return p;
-		}
-
-		throw new Exception("reading metamodel fails hard! abort...");
-
-	}
 	
 
 	
