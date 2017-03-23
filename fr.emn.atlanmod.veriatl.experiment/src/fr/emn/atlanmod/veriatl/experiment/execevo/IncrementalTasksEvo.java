@@ -90,14 +90,14 @@ public final class IncrementalTasksEvo {
     	Node curRoot = NodeHelper.findRoot(curTree);
     	HashSet<String> curTrace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
     	
-    	if(curRoot.isChecked() && !curTrace.contains(affectedRule) && !curRoot.getResult().toString().equals("UNKNOWN")){
+    	if(curRoot.isChecked() && !curTrace.contains(affectedRule) /*&& !curRoot.getResult().toString().equals("UNKNOWN") */){
 			System.out.println(String.format("inc-checked-post:%s:%s:0", postName, curRoot.getResult().toString()));
 		}else{
 			Node oldRoot = NodeHelper.findRoot(oldTree);
 			HashSet<String> oldTrace = NodeHelper.UnionTraces(oldRoot, NodeHelper.findDescendantLeafs(oldTree, oldRoot));
 			
 			
-			if(oldTrace.equals(curTrace) && !oldRoot.getResult().toString().equals("UNKNOWN") && !curTrace.contains(affectedRule)){
+			if(oldTrace.equals(curTrace) && !curTrace.contains(affectedRule) && oldRoot.isChecked()/*&& !oldRoot.getResult().toString().equals("UNKNOWN")*/){
 				System.out.println(String.format("inc-cached-post:%s:%s:0", postName, oldRoot.getResult().toString()));
 				curRoot.setResult(oldRoot.getResult());
 				curRoot.setTime(oldRoot.getTime());
@@ -106,6 +106,7 @@ public final class IncrementalTasksEvo {
 				
 				
 				Node simPost = NodeHelper.findSimplifiedPost(curTree);
+				//Node simPost = NodeHelper.findRoot(curTree);
 				NodeHelper.restore(curTree);
 				
 				
@@ -126,7 +127,7 @@ public final class IncrementalTasksEvo {
 			        args.add("/z3exe:"+z3abs);
 			        args.add("/traceTimes");
 			        args.add("/verifySnapshots:3");
-			        args.add("/timeLimit:300");
+			        args.add("/timeLimit:60");
 			        
 			        
 			        // gen single boogie file
@@ -344,12 +345,12 @@ public final class IncrementalTasksEvo {
 				// find sub-goals that need to be reverified
 				for(Node n: NodeHelper.findAllLeafs(curTree)){
 	
-		    		if(n.isChecked() && !n.getTraces().contains(affectedRule) && !n.getResult().toString().equals("UNKNOWN")){
+		    		if(n.isChecked() && !n.getTraces().contains(affectedRule) /*&& !n.getResult().toString().equals("UNKNOWN")*/){
 		    			System.out.println(String.format("Inc-checked-sub:%s-%s:%s:0", postName, n.getName(), n.getResult().toString()));
 		    		}else{
 		    			Node cache = NodeHelper.findSubInCache(oldTree, n);
 		    			
-		    			if(cache != null && !cache.getResult().toString().equals("UNKNOWN") && !n.getTraces().contains(affectedRule)){
+		    			if(cache != null && !n.getTraces().contains(affectedRule) && cache.isChecked()/* && !cache.getResult().toString().equals("UNKNOWN") */){
 		    				System.out.println(String.format("Inc-cached-sub:%s-%s:%s:0", postName, n.getName(), cache.getResult().toString()));
 		    				n.Check(true);
 		    				n.setResult(cache.getResult());

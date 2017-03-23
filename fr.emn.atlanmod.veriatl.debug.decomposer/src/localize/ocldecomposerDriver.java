@@ -131,14 +131,16 @@ public class ocldecomposerDriver {
 			//System.out.println(String.format("Debug: ocldecomposerDriver.java ln 120, goalName: %s start", goalName));
 			int i = 0;
 			
-			
-			for(Node n : NodeHelper.findAllLeafs(tree)){
-				String cse = String.format("case%04d",i);
-				n.setName(String.format("case%04d", i));
-				driver.generateBoogieFile(output, cse, CompilerConstants.BOOGIE_EXT, n.toBoogie(env));		
-				i++;
+			if(NodeHelper.findAllLeafs(tree).size()>200) {
+				System.out.println(String.format("Debug: ocldecomposerDriver.java ln 135, goalName: %s sub-goals: %s", goalName, NodeHelper.findAllLeafs(tree).size()));
+			}else {
+				for(Node n : NodeHelper.findAllLeafs(tree)){
+					String cse = String.format("case%04d",i);
+					n.setName(String.format("case%04d", i));
+					driver.generateBoogieFile(output, cse, CompilerConstants.BOOGIE_EXT, n.toBoogie(env));		
+					i++;
+				}
 			}
-			
 			
 			
 			//This is the Boogie program with the full transformation trace, less efficient to verify, only used in normal verification mode
