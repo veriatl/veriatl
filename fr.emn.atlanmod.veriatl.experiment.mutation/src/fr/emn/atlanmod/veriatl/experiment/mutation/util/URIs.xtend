@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.emn.atlanmod.uml.casestudy.util
+package fr.emn.atlanmod.veriatl.experiment.mutation.util
 
 import java.io.IOException
 import java.nio.charset.Charset

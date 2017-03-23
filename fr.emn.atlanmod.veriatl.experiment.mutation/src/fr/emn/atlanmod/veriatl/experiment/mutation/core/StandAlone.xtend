@@ -1,8 +1,8 @@
 
-package fr.emn.atlanmod.uml.casestudy.core
+package fr.emn.atlanmod.veriatl.experiment.mutation.core
 
-import fr.emn.atlanmod.uml.casestudy.rewrite.OCL2ATL
-import fr.emn.atlanmod.uml.casestudy.util.URIs
+
+
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EPackage
@@ -12,6 +12,21 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 
 
+import java.util.ArrayList
+import java.util.HashMap
+import java.util.HashSet
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EPackage
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
+import org.eclipse.m2m.atl.common.ATL.ATLPackage
+import org.eclipse.m2m.atl.common.ATL.MatchedRule
+import org.eclipse.m2m.atl.common.OCL.OCLPackage
+import org.eclipse.m2m.atl.emftvm.compiler.AtlResourceFactoryImpl
+
+
 
 class StandAlone{
 	
@@ -19,7 +34,7 @@ class StandAlone{
 
 	
 	def static void main(String[] args) {
-		val inputURI = URI.createFileURI("./resources/UML.normalize.ocl.oclas")
+		val inputURI = URI.createFileURI("./resources/UML2UMLs.atl")
 		doEMFSetup(inputURI)
 		
 		var String res = "";
@@ -29,7 +44,7 @@ class StandAlone{
 		res+="create OUT : UMLs from IN : UML;\n";
 
 		for (EObject eobject : ocl_resource.getContents()) {
-			res += OCL2ATL.rewrite(eobject);
+			res += ATL.print(eobject);
 		}
 		
 		
@@ -44,7 +59,7 @@ class StandAlone{
 		
 		// register resource processors
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("xmi", new XMIResourceFactoryImpl);
-		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("oclas", ATLResourceFactory.getInstance());
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("atl", new AtlResourceFactoryImpl);
 		//Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl;
 		
 		

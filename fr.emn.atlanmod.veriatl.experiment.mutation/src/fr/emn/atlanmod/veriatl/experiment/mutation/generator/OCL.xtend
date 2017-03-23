@@ -1,4 +1,4 @@
-package fr.emn.atlanmod.uml.casestudy.rewrite
+package fr.emn.atlanmod.veriatl.experiment.mutation.ocl
 
 import java.util.HashMap
 import java.util.HashSet
@@ -38,11 +38,11 @@ class OCL {
 
 	// dispatcher
 	def static dispatch String gen(EObject e) '''
-		// We dont understand «e.eClass.name»'''
+	// We dont understand «e.eClass.name»'''
 	
 	// dispatcher
 	def static dispatch String gen(OCLExpression e) '''
-		// We dont understand ocl expression «e.eClass.name»'''
+	// We dont understand ocl expression «e.eClass.name»'''
 	
 	// TODO size, tostring, =(isocltype) some operation depends on type print differently
 	// TODO some collection is not printing properly, e.g. union
@@ -95,15 +95,15 @@ class OCL {
 		IF bvMap.keySet.contains(itName)
 		»«val candidate = bvMap.get(itName)»«
 			IF candidate == null»
-				«itName»
-				«{bvMap.put(itName, ref);null}»«
+					«itName»
+			«{bvMap.put(itName, ref);null}»«
 			ELSEIF candidate == ref»
-				«itName»«
+			«itName»«
 			ELSE»
-				«ref.name»«
+			«ref.name»«
 			ENDIF»«
 		ELSE»
-			«itName»
+				«itName»
 			«{bvMap.put(itName, e);null}»«
 		ENDIF»«
 	ENDIF»'''
@@ -141,7 +141,6 @@ class OCL {
 	
 	def static dispatch String gen(NullLiteralExp e) '''OclUndefined'''
 	
-	def static dispatch String gen(TypeExp e) '''«if (OCL2ATL.postMode) e.referredType.toString().replace("::", "!").replace(OCL2ATL.model+"!", OCL2ATL.modelReplacer+"!") else e.referredType.toString().replace("::", "!")»'''
 	
 
 	
@@ -152,29 +151,9 @@ class OCL {
 	// TODO dont know what is this means, put it to *. since sometimes is set to 1, see `multiplicity_of_output`
 	def static dispatch String gen(UnlimitedNaturalLiteralExp e) '''*'''
 	
-	def static dispatch String gen(LetExp e) '''let «e.ownedVariable.name» : «if (OCL2ATL.postMode) e.ownedVariable.type.toString().replace("::", "!").replace(OCL2ATL.model+"!", OCL2ATL.modelReplacer+"!") else e.ownedVariable.type.toString().replace("::", "!")» = 
-  «gen(e.ownedVariable.ownedInit)» in 
-    «gen(e.ownedIn)»'''
 
-	def static dispatch String gen(IteratorExp e) '''
-	«val args_dot = if(e.ownedIterators.size!=0) e.ownedIterators.map(arg |  gen(arg) ).join(',') else ""»
-	«val wdExprs = OCLWDGenerator.wd(e.ownedBody)»
-	«gen(e.ownedSource)»->«e.referredIteration.name»(«if (e.ownedIterators.size!=0) args_dot + "|" else ""»
-	«FOR expr: wdExprs»
-		«FOR itor : e.ownedIterators»
-		  	«IF printAtHere(expr, gen(itor)) && !wdSetInner.contains(OCL.gen(expr))»«
-		  		{wdSetInner.add(gen(expr));null}»«
-		  		IF !OCL.isPrimtive(expr)»«
-		  			IF !isCollection(expr)»
-		  			«if (OCL2ATL.postMode) expr.type.toString().replace("::", "!").replace(OCL2ATL.model+"!", OCL2ATL.modelReplacer+"!") else expr.type.toString().replace("::", "!")».allInstances()->includes(«OCL.gen(expr)») implies 
-		  			«ELSE»
-		  			«gen(expr)»->size()>0 implies 
-		  			«ENDIF»«
-		  		ENDIF»«
-		  	ENDIF»«
-	  	ENDFOR»«
-  	ENDFOR»«{wdSetInner.clear();null}» 
-  «gen(e.ownedBody)»)'''
+
+
   
     def static dispatch String gen(IfExp e) '''
 if («gen(e.ownedCondition)») then 
