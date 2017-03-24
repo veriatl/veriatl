@@ -15,13 +15,16 @@ import fr.emn.atlanmod.veriatl.experiment.mutation.datastructure.Add
 import fr.emn.atlanmod.veriatl.experiment.mutation.util.URIs
 import org.apache.commons.io.FileUtils
 import java.io.File
+import fr.emn.atlanmod.veriatl.experiment.mutation.datastructure.SetGuard
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 
 class StandAlone {
 
 	final static String basePath = "./resources/"
 	final static String proj = "UML2UMLsTest.atl"
+	final static String src = "UML.ecore"
+	static var EPackage srcmm 
 	
-
 	def static void main(String[] args) {
 
 		doEMFSetup()
@@ -35,7 +38,12 @@ class StandAlone {
 		var Module module;
 		for (e : atl_resource.contents) {
 			if (e instanceof Module) {
+				// setup module 
 				module = e
+				Mutation.src = e.inModels.get(0).metamodel.name
+				Mutation.trg = e.outModels.get(0).metamodel.name
+				
+				// add matched rules to be processed
 				for (o : e.elements) {
 					if (o instanceof MatchedRule) {
 						rules.add(o)
@@ -44,12 +52,13 @@ class StandAlone {
 			}
 		}
 
+		// gen mutations
 		for (r : rules) {
 			val pos = rules.indexOf(r)
 			
-			add(module, r, pos)
-			del(module, r, pos)
-			
+			//add(module, r, pos)
+			//del(module, r, pos)
+			filter(module, r, pos)
 		}
 
 	}
@@ -82,6 +91,27 @@ class StandAlone {
 	}
 	
 	
+	def static filter(Module module, MatchedRule r, int pos){
+		
+		val mutants = new SetGuard(r).apply(srcmm)
+		for(mutant : mutants){
+			//  mutant of REDUCE FILTER rule
+			val mpos = mutants.indexOf(mutant)
+			val id = String.format("MF%03d_%03d", pos, mpos)
+			val URI outPath = URI.createFileURI(String.format("%s/%s/Source/%s", basePath, id, proj));
+			URIs.write(outPath, Mutation.SetGuard(module, r, mutant))
+			
+				// copy contracts/metamodels/etc
+			val srcCache = String.format("%s/UML2UMLs/Source/", basePath);
+			val dstCache = String.format("%s/%s/Source/", basePath, id);
+			FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
+				// gen identification
+			println(String.format("result.put('%s', '%s');", id, r.name))
+		}
+		
+
+	}
+	
 
 	def static doEMFSetup() {
 		// load metamodels	
@@ -89,7 +119,9 @@ class StandAlone {
 
 		// register resource processors
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("atl", new AtlResourceFactoryImpl);
-
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl());
+		
+		srcmm = EMFUtil.getEPackage(URI.createFileURI(String.format("%s/%s",basePath, src)))
 	}
 
 

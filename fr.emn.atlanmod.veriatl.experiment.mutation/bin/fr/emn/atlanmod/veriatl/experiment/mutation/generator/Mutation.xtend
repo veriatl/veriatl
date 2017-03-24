@@ -9,8 +9,16 @@ import org.eclipse.m2m.atl.common.ATL.Binding
 
 class Mutation {
 	
-	static String src = ""
-	static String trg = ""
+	public static String src = ""
+	public static String trg = ""
+	
+	def static String SetGuard(Module m, MatchedRule src, MatchedRule mutant) '''
+	«header(m)»
+
+	«FOR e : m.elements»
+		«IF e !== src»«rule(e)»«ELSE»«rule(mutant)»«ENDIF»
+	«ENDFOR»
+	'''
 	
 	def static String Del(Module m, MatchedRule src) '''
 	«header(m)»
@@ -30,7 +38,6 @@ class Mutation {
 	'''
 	
 	def static header(Module m)'''
-	«{trg = m.outModels.get(0).metamodel.name;src = m.inModels.get(0).metamodel.name;""}»
 	-- @atlcompiler emftvm
 	
 	module «m.name»;
