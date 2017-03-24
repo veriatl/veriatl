@@ -18,7 +18,7 @@ import java.io.File
 
 class StandAlone {
 
-	final static String basePath = "./resources/UML2UMLs/"
+	final static String basePath = "./resources/"
 	final static String proj = "UML2UMLsTest.atl"
 	
 
@@ -47,22 +47,40 @@ class StandAlone {
 		for (r : rules) {
 			val pos = rules.indexOf(r)
 			
-			// ADD mutant
-			val mutant = new Add(r).apply()
-			val id = String.format("AR%03d", pos)
-			val URI outPath = URI.createFileURI(String.format("%s/%s/Source/%s", basePath, id, proj));
-			URIs.write(outPath, Mutation.Add(module, r, mutant))
-			String srcCache = String.format("%s/%s/%s/",p, org, "NoCached");
-			String dstCache = String.format("%s/%s/%s/",p, trg, "Caches");
-			FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
-			println(String.format("result.put('%s', '%s');", id, mutant.name))
-
-			
+			add(module, r, pos)
+			del(module, r, pos)
 			
 		}
 
 	}
 
+	def static add(Module module, MatchedRule r, int pos){
+		//  mutant of ADD RULE
+		val mutant = new Add(r).apply()
+		val id = String.format("AR%03d", pos)
+		val URI outPath = URI.createFileURI(String.format("%s/%s/Source/%s", basePath, id, proj));
+		URIs.write(outPath, Mutation.Add(module, r, mutant))
+			// copy contracts/metamodels/etc
+		val srcCache = String.format("%s/UML2UMLs/Source/", basePath);
+		val dstCache = String.format("%s/%s/Source/", basePath, id);
+		FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
+			// gen identification
+		println(String.format("result.put('%s', '%s');", id, mutant.name))
+	}
+	
+	def static del(Module module, MatchedRule r, int pos){
+		//  mutant of DEL RULE
+		val id = String.format("DR%03d", pos)
+		val URI outPath = URI.createFileURI(String.format("%s/%s/Source/%s", basePath, id, proj));
+		URIs.write(outPath, Mutation.Del(module, r))
+			// copy contracts/metamodels/etc
+		val srcCache = String.format("%s/UML2UMLs/Source/", basePath);
+		val dstCache = String.format("%s/%s/Source/", basePath, id);
+		FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
+			// gen identification
+		println(String.format("result.put('%s', '%s');", id, r.name))
+	}
+	
 	
 
 	def static doEMFSetup() {

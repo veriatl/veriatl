@@ -12,6 +12,14 @@ class Mutation {
 	static String src = ""
 	static String trg = ""
 	
+	def static String Del(Module m, MatchedRule src) '''
+	«header(m)»
+
+	«FOR e : m.elements»
+		«IF e !== src»«rule(e)»«ENDIF»
+	«ENDFOR»
+	'''
+	
 	
 	def static String Add(Module m, MatchedRule src, MatchedRule mutant) '''
 	«header(m)»
@@ -23,7 +31,9 @@ class Mutation {
 	
 	def static header(Module m)'''
 	«{trg = m.outModels.get(0).metamodel.name;src = m.inModels.get(0).metamodel.name;""}»
-	module «m.name»
+	-- @atlcompiler emftvm
+	
+	module «m.name»;
 	create «m.outModels.get(0).name»: «m.outModels.get(0).metamodel.name» from «m.inModels.get(0).name»: «m.inModels.get(0).metamodel.name»;
 		
 	'''
