@@ -139,16 +139,18 @@ public class WindowsStandalone {
 	public static void PreparePostNoCache(String p) throws Exception{
 		System.out.println(String.format("=================== %s-post-prepare-nocache ===================", org));
 		// clean
-		String toDelete = String.format("%s/%s/%s/",p, org, "NoCached");
-		FileUtils.deleteDirectory(new File(toDelete));
+		//TODO
+		//String toDelete = String.format("%s/%s/%s/",p, org, "NoCached");
+		//FileUtils.deleteDirectory(new File(toDelete));
 
 		
 		// compute post result only
 		String proj = String.format("%s/%s", p, org);
 		ContextConstruction context = init(proj);
-		clean(context);
-		gen(context);
-		decompose(context);
+		//TODO
+		//clean(context);
+		//gen(context);
+		//decompose(context);
 		IncrementalTasksEvo.execBoogie(context, "");
 		
 		String srcCache = String.format("%s/%s/%s/",p, org, "Caches");
@@ -165,17 +167,19 @@ public class WindowsStandalone {
 	public static void PreparePostCache(String p) throws Exception{
 		System.out.println(String.format("=================== %s-post-prepare-cache ===================", org));
 		
-		String toDelete = String.format("%s/%s/%s/",p, org, "Cached");
-		FileUtils.deleteDirectory(new File(toDelete));
+		//TODO
+		//String toDelete = String.format("%s/%s/%s/",p, org, "Cached");
+		//FileUtils.deleteDirectory(new File(toDelete));
 		
 
 		
 		// compute sub-goals result
 		String proj = String.format("%s/%s", p, org);
 		ContextConstruction context = init(proj);
-		clean(context);
-		gen(context);
-		decompose(context);
+		//TODO
+		//clean(context);
+		//gen(context);
+		//decompose(context);
 		IncrementalTasksEvo.debugBoogie(context, "");
 		
 		String srcCache = String.format("%s/%s/%s/",p, org, "Caches");
@@ -307,11 +311,9 @@ public class WindowsStandalone {
 	
 	
 	public static void incPostInit(String p) throws Exception{
-		PreparePostNoCache(p);
-		IncrementalVeriATLPostNoCache(p);
-		
+		//TODO
+		//PreparePostNoCache(p);	
 		PreparePostCache(p);
-		IncrementalVeriATLPostCache(p);
 	}
 	
 	public static void standardSubInit(String p) throws Exception{

@@ -28,7 +28,7 @@ class Bind extends Mutator {
 			val trgId = trgs.indexOf(trg)
 			for(Binding b : sTrg.bindings){
 				var clone = EMFUtil.copy(this.appliedOn) as MatchedRule
-				clone.name = clone.name + "_mutated"
+
 				
 				val bid = sTrg.bindings.indexOf(b)
 				clone.outPattern.elements.get(trgId).bindings.remove(bid)

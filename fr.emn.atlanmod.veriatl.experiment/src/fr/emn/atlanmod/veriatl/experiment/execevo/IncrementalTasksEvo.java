@@ -299,7 +299,7 @@ public final class IncrementalTasksEvo {
 	        args.add("/nologo");
 	        args.add("/z3exe:"+z3abs);
 	        args.add("/traceTimes");
-	        args.add("/timeLimit:300");
+	        args.add("/timeLimit:60");
 	        
 	        // add prelude files
 	        String veriatlabs = veriatl+"\\Prelude\\";
@@ -310,7 +310,7 @@ public final class IncrementalTasksEvo {
 	        args.addAll(getFiles(auxu));
 	        
 			
-			// add PO
+			// add PO: trace with full post, differ from simplified post
 	        Node curRoot = NodeHelper.findRoot(curTree);
 	        HashSet<String> trace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
 			curRoot.setTraces(trace);
@@ -333,20 +333,23 @@ public final class IncrementalTasksEvo {
 	        
 	        
 			if(r.getResult().toString().equals("true")){
-				// optimization: if post is verified, mark its sub-goals as verified too
+				// optimization: if post is verified, mark its sub-goals as verified too, consider top-down population(TODO)
 				for(Node n : NodeHelper.findAllLeafs(curTree)){
 					n.Check(true);
 					n.setResult(TriBoolean.TRUE);
 					n.setTime(0);
 					
 				}
-				System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, "all", "TRUE", r.getTime()));
+				System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, "all", r.getTriBooleanResult().toString(), r.getTime()));
 			}else{
+				System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, "all", r.getTriBooleanResult().toString(), r.getTime()));
 				// find sub-goals that need to be reverified
 				for(Node n: NodeHelper.findAllLeafs(curTree)){
 	
 		    		if(n.isChecked() && !n.getTraces().contains(affectedRule) /*&& !n.getResult().toString().equals("UNKNOWN")*/){
-		    			System.out.println(String.format("Inc-checked-sub:%s-%s:%s:0", postName, n.getName(), n.getResult().toString()));
+		    			//TODO
+		    			//System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, n.getName(), n.getResult().toString(), 0));
+		    			System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, n.getName(), n.getResult().toString(), n.getTime()));
 		    		}else{
 		    			Node cache = NodeHelper.findSubInCache(oldTree, n);
 		    			
@@ -373,7 +376,8 @@ public final class IncrementalTasksEvo {
         // add Boogie options
         args.add("/nologo");
         args.add("/z3exe:"+z3abs);
-        args.add("/timeLimit:300");
+        args.add("/traceTimes");
+        args.add("/timeLimit:60");
         
         // add prelude files
         String veriatlabs = veriatl +"\\Prelude\\";
@@ -406,12 +410,22 @@ public final class IncrementalTasksEvo {
         	VerificationResult r = DefaultCommandEvo.execute(argsClone);
         	argsClone.clear();
         	
+        	
+        	
         	// process result
         	Node n = NodeHelper.findNode(curTree, sub);
         	n.Check(true);
 			n.setResult(r.getTriBooleanResult());
         	n.setTime(r.getTime());
-        	System.out.println(String.format("Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        	
+        	// Optimization: we assume siblings of an unknown sub-goals will also be unknown, don't waste time to verify them, left to the developer to investigate
+        	if(r.getTriBooleanResult().toString().equals("UNKNOWN")) {
+        		System.out.println(String.format("Inc-verify-sub:%s-%s-abort:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        		return;
+        	}else {
+        		System.out.println(String.format("Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        	}
+        	
         }
         
         // repopulate the proof tree, to get root node verification result

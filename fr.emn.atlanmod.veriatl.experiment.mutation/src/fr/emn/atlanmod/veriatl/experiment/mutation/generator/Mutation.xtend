@@ -6,6 +6,8 @@ import org.eclipse.m2m.atl.common.OCL.OclType
 import org.eclipse.m2m.atl.common.OCL.OclModelElement
 import org.eclipse.m2m.atl.common.OCL.OclExpression
 import org.eclipse.m2m.atl.common.ATL.Binding
+import org.eclipse.m2m.atl.common.ATL.Module
+import org.eclipse.m2m.atl.common.ATL.MatchedRule
 
 class Mutation {
 	
@@ -27,6 +29,15 @@ class Mutation {
 		«IF e !== src»«rule(e)»«ENDIF»
 	«ENDFOR»
 	'''
+	
+	def static String Bind(Module m, MatchedRule src, MatchedRule mutant) '''
+	«header(m)»
+	
+	«FOR e : m.elements»
+		«IF e !== src»«rule(e)»«ELSE»«rule(mutant)»«ENDIF»
+	«ENDFOR»
+	'''
+	
 	
 	
 	def static String Add(Module m, MatchedRule src, MatchedRule mutant) '''
@@ -78,5 +89,7 @@ class Mutation {
 	
 	def static bind(Binding b) '''
 	 «b.propertyName» <- «OCL.gen(b.value)»'''
+	
+	
 	
 }

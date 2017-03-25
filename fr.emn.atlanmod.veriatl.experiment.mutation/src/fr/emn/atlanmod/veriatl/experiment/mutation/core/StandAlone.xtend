@@ -24,9 +24,10 @@ import static fr.emn.atlanmod.veriatl.experiment.mutation.generator.Mutation.*
 class StandAlone {
 
 	final static String basePath = "./resources/"
-	final static String proj = "UML2UMLsTest.atl"
+	final static String proj = "UML2UMLs.atl"
 	final static String src = "UML.ecore"
 	static var EPackage srcmm 
+	static ArrayList<String> ids = new ArrayList<String>
 	
 	def static void main(String[] args) {
 
@@ -60,11 +61,16 @@ class StandAlone {
 			val pos = rules.indexOf(r)
 			
 			//add(module, r, pos)
-			//del(module, r, pos)
+			del(module, r, pos)
 			//filter(module, r, pos)
-			bind(module, r, pos)
+			//bind(module, r, pos)
 		}
 
+
+
+		// print identity
+		val s = ids.map(id | String.format("\"%s\"", id)).join(",")
+		println(s)
 	}
 
 	def static add(Module module, MatchedRule r, int pos){
@@ -78,7 +84,8 @@ class StandAlone {
 		val dstCache = String.format("%s/%s/Source/", basePath, id);
 		FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
 			// gen identification
-		println(String.format("result.put('%s', '%s');", id, mutant.name))
+		println(String.format("result.put(\"%s\", \"%s\");", id, mutant.name))
+		ids.add(id)
 	}
 	
 	def static del(Module module, MatchedRule r, int pos){
@@ -91,7 +98,8 @@ class StandAlone {
 		val dstCache = String.format("%s/%s/Source/", basePath, id);
 		FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
 			// gen identification
-		println(String.format("result.put('%s', '%s');", id, r.name))
+		println(String.format("result.put(\"%s\", \"%s\");", id, r.name))
+		ids.add(id)
 	}
 	
 	
@@ -114,7 +122,8 @@ class StandAlone {
 				val dstCache = String.format("%s/%s/Source/", basePath, id);
 				FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
 					// gen identification
-				println(String.format("result.put('%s', '%s');", id, r.name))
+				println(String.format("result.put(\"%s\", \"%s\");", id, r.name))
+				ids.add(id)
 			}
 			i++
 		}
@@ -134,14 +143,15 @@ class StandAlone {
 				val mpos = mutants.indexOf(mutant)
 				val id = String.format("MB%03d_%03d", pos, mpos)
 				val URI outPath = URI.createFileURI(String.format("%s/%s/Source/%s", basePath, id, proj));
-				URIs.write(outPath, Mutation.SetGuard(module, r, mutant))
+				URIs.write(outPath, Mutation.Bind(module, r, mutant))
 				
 					// copy contracts/metamodels/etc
 				val srcCache = String.format("%s/UML2UMLs/Source/", basePath);
 				val dstCache = String.format("%s/%s/Source/", basePath, id);
 				FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
 					// gen identification
-				println(String.format("result.put('%s', '%s');", id, r.name))
+				println(String.format("result.put(\"%s\", \"%s\");", id, r.name))
+				ids.add(id)
 			}
 			i++
 		}

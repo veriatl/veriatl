@@ -56,8 +56,7 @@ class SetGuard extends Mutator {
 			and.arguments.add(eq)
 			clone.inPattern.filter = and
 			
-			// rename rule
-			clone.name = clone.name + "_mutated"
+
 			res.add(clone)
 		}
 		return res
