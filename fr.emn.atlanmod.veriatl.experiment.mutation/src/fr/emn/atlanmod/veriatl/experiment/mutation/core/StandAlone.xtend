@@ -1,22 +1,25 @@
 package fr.emn.atlanmod.veriatl.experiment.mutation.core
 
-import fr.emn.atlanmod.veriatl.experiment.mutation.generator.*
+import fr.emn.atlanmod.veriatl.experiment.mutation.datastructure.Add
+import fr.emn.atlanmod.veriatl.experiment.mutation.datastructure.Bind
+import fr.emn.atlanmod.veriatl.experiment.mutation.datastructure.SetGuard
+import fr.emn.atlanmod.veriatl.experiment.mutation.generator.Mutation
+import fr.emn.atlanmod.veriatl.experiment.mutation.util.EMFUtil
+import fr.emn.atlanmod.veriatl.experiment.mutation.util.URIs
+import java.io.File
 import java.util.ArrayList
+import org.apache.commons.io.FileUtils
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import org.eclipse.m2m.atl.common.ATL.ATLPackage
 import org.eclipse.m2m.atl.common.ATL.MatchedRule
 import org.eclipse.m2m.atl.common.ATL.Module
 import org.eclipse.m2m.atl.emftvm.compiler.AtlResourceFactoryImpl
-import fr.emn.atlanmod.veriatl.experiment.mutation.util.EMFUtil
-import fr.emn.atlanmod.veriatl.experiment.mutation.datastructure.Add
-import fr.emn.atlanmod.veriatl.experiment.mutation.util.URIs
-import org.apache.commons.io.FileUtils
-import java.io.File
-import fr.emn.atlanmod.veriatl.experiment.mutation.datastructure.SetGuard
-import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
+
+import static fr.emn.atlanmod.veriatl.experiment.mutation.generator.Mutation.*
 
 class StandAlone {
 
@@ -58,7 +61,8 @@ class StandAlone {
 			
 			//add(module, r, pos)
 			//del(module, r, pos)
-			filter(module, r, pos)
+			//filter(module, r, pos)
+			bind(module, r, pos)
 		}
 
 	}
@@ -94,25 +98,56 @@ class StandAlone {
 	def static filter(Module module, MatchedRule r, int pos){
 		
 		val mutants = new SetGuard(r).apply(srcmm)
+		
+		var i = 0
 		for(mutant : mutants){
-			//  mutant of REDUCE FILTER rule
-			val mpos = mutants.indexOf(mutant)
-			val id = String.format("MF%03d_%03d", pos, mpos)
-			val URI outPath = URI.createFileURI(String.format("%s/%s/Source/%s", basePath, id, proj));
-			URIs.write(outPath, Mutation.SetGuard(module, r, mutant))
-			
-				// copy contracts/metamodels/etc
-			val srcCache = String.format("%s/UML2UMLs/Source/", basePath);
-			val dstCache = String.format("%s/%s/Source/", basePath, id);
-			FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
-				// gen identification
-			println(String.format("result.put('%s', '%s');", id, r.name))
+			// gen first filter mutant only
+			if(i == 0){
+				//  mutant of REDUCE FILTER rule
+				val mpos = mutants.indexOf(mutant)
+				val id = String.format("MF%03d_%03d", pos, mpos)
+				val URI outPath = URI.createFileURI(String.format("%s/%s/Source/%s", basePath, id, proj));
+				URIs.write(outPath, Mutation.SetGuard(module, r, mutant))
+				
+					// copy contracts/metamodels/etc
+				val srcCache = String.format("%s/UML2UMLs/Source/", basePath);
+				val dstCache = String.format("%s/%s/Source/", basePath, id);
+				FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
+					// gen identification
+				println(String.format("result.put('%s', '%s');", id, r.name))
+			}
+			i++
 		}
 		
 
 	}
 	
+	def static bind(Module module, MatchedRule r, int pos){
+		
+		val mutants = new Bind(r).apply()
+		
+		var i = 0
+		for(mutant : mutants){
+			// gen first BIND mutant only
+			if(i == 0){
+				//  mutant of REDUCE FILTER rule
+				val mpos = mutants.indexOf(mutant)
+				val id = String.format("MB%03d_%03d", pos, mpos)
+				val URI outPath = URI.createFileURI(String.format("%s/%s/Source/%s", basePath, id, proj));
+				URIs.write(outPath, Mutation.SetGuard(module, r, mutant))
+				
+					// copy contracts/metamodels/etc
+				val srcCache = String.format("%s/UML2UMLs/Source/", basePath);
+				val dstCache = String.format("%s/%s/Source/", basePath, id);
+				FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
+					// gen identification
+				println(String.format("result.put('%s', '%s');", id, r.name))
+			}
+			i++
+		}
+		
 
+	}
 	def static doEMFSetup() {
 		// load metamodels	
 		EPackage.Registry.INSTANCE.put(ATLPackage.eNS_URI, ATLPackage.eINSTANCE);

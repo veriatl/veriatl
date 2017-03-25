@@ -63,8 +63,6 @@ class SetGuard extends Mutator {
 		return res
 	}
 	
-	def setVarName(VariableExp exp) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-	}
+
 	
 }
