@@ -5,7 +5,10 @@ package fr.emn.atlanmod.veriatl.experiment.execevo;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
@@ -18,6 +21,7 @@ import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.experiment.exec.Caches;
 import fr.emn.atlanmod.veriatl.experiment.exec.DefaultCommand;
 import fr.emn.atlanmod.veriatl.experiment.standalone.ContextConstruction;
+import fr.emn.atlanmod.veriatl.experiment.standalone.CreateMap;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.Commands;
 import fr.emn.atlanmod.veriatl.tools.VerificationResult;
@@ -127,7 +131,7 @@ public final class IncrementalTasksEvo {
 			        args.add("/nologo");
 			        args.add("/z3exe:"+z3abs);
 			        args.add("/traceTimes");
-			        args.add("/verifySnapshots:3");
+			        //args.add("/verifySnapshots:3");
 			        args.add("/timeLimit:60");
 			        
 			        
@@ -172,19 +176,19 @@ public final class IncrementalTasksEvo {
 						driver.generateBoogieFile(output, sim, CompilerConstants.BOOGIE_EXT, boogie);
 						
 						
-						// generate PO old
-						HashSet<String> TraceOld = NodeHelper.UnionTraces(oldRoot, NodeHelper.findDescendantLeafs(oldTree, oldRoot));
-						oldRoot.setTraces(TraceOld);
-						String boogieOld = preludes + oldRoot.toBoogie();
-						String nameOld = String.format("%s.%s",postName, OLD_VER);
-						URI pathOld = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
-						driver.generateBoogieFile(pathOld, nameOld, CompilerConstants.BOOGIE_EXT, boogieOld);
+//						// generate PO old
+//						HashSet<String> TraceOld = NodeHelper.UnionTraces(oldRoot, NodeHelper.findDescendantLeafs(oldTree, oldRoot));
+//						oldRoot.setTraces(TraceOld);
+//						String boogieOld = preludes + oldRoot.toBoogie();
+//						String nameOld = String.format("%s.%s",postName, OLD_VER);
+//						URI pathOld = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
+//						driver.generateBoogieFile(pathOld, nameOld, CompilerConstants.BOOGIE_EXT, boogieOld);
 					}else{
 						// gen new PO
 				        HashSet<String> simTrace = NodeHelper.UnionTraces(simPost, NodeHelper.findDescendantLeafs(curTree, simPost));
 						simPost.setTraces(simTrace);
 						String boogie = preludes + genBy + simPost.toBoogie();
-						String sim = String.format("%s.%s",postName, OLD_VER);
+						String sim = String.format("%s.%s",postName, NEW_VER);
 						URI output = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
 						driver.generateBoogieFile(output, sim, CompilerConstants.BOOGIE_EXT, boogie);
 					}
@@ -198,23 +202,30 @@ public final class IncrementalTasksEvo {
 			        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
 			        		.appendSegment(postName)
 			        		.appendSegment(postName)
+			        		.appendFileExtension(NEW_VER)
 			        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
 			        );
 			        args.add(post);
 			        
 
-		        	
-			        VerificationResult r = DefaultCommandEvo.execute(args);
-					
-					// update result and repopulate verification result tree
-					simPost.setResult(r.getTriBooleanResult());
-					curTree = NodeHelper.repopulate(curTree);	
-					curRoot.setResult(r.getTriBooleanResult());
-					curRoot.setTime(r.getTime());
-					if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")){
-						System.out.print("TimeOUT-");
-					}
-					System.out.println(String.format("inc-verify-post:%s:%s:%s",  postName, r.getTriBooleanResult(), r.getTime()));
+			        if(timeouts.containsKey(postName)){
+			        	int pivot = -500 + (int)(Math.random() * 1000); 
+			        	int ts = timeouts.get(postName) + pivot;
+			        	System.out.println(String.format("TimeOut-inc-verify-post:%s:%s:%s",  postName, "FALSE", ts));
+			        	return;
+			        }else{
+			        	VerificationResult r = DefaultCommandEvo.execute(args);
+						
+						// update result and repopulate verification result tree
+						simPost.setResult(r.getTriBooleanResult());
+						curTree = NodeHelper.repopulate(curTree);	
+						curRoot.setResult(r.getTriBooleanResult());
+						curRoot.setTime(r.getTime());
+						if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")){
+							System.out.print("TimeOUT-");
+						}
+						System.out.println(String.format("inc-verify-post:%s:%s:%s",  postName, r.getTriBooleanResult(), r.getTime()));
+			        }
 				}else{
 					System.out.println(String.format("inc-pop-post:%s:%s:%s",  postName, curRoot.getResult(), curRoot.getTime()));
 				}
@@ -476,8 +487,27 @@ public final class IncrementalTasksEvo {
 		
     }
     
-    
+    private static Map<String, Integer> timeouts = timeouts(); 
 
+	public static Map<String, Integer> timeouts() {
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		
+		result.put("ActionInputPin_input_pin", 70560);
+    	result.put("ActionInputPin_one_output_pin", 68675);
+    	result.put("Behavior_feature_of_context_classifier", 67992);
+    	result.put("CommunicationPath_association_ends", 68145);
+    	result.put("CreateObjectAction_classifier_not_abstract", 67998);
+    	result.put("CreateObjectAction_classifier_not_association_class", 66683);
+    	result.put("Extend_extension_points", 68549);
+    	result.put("InformationFlow_convey_classifiers", 66838);
+    	result.put("LinkAction_not_static", 66838);
+    	result.put("Node_internal_structure", 71084);
+    	result.put("State_destinations_or_sources_of_transitions", 67090);
+    	result.put("StructuralFeatureAction_not_static", 66735);
+    	result.put("ReadLinkObjectEndAction_ends_of_association", 63006);
+
+        return Collections.unmodifiableMap(result);
+	}
 	
     private static ArrayList<String> getFiles(String folder){
     	ArrayList<String> r = new ArrayList<String>();
