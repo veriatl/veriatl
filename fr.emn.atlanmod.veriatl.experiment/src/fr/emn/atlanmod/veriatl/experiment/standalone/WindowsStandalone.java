@@ -185,7 +185,7 @@ public class WindowsStandalone {
 		String srcCache = String.format("%s/%s/%s/",p, org, "Caches");
 		String dstCache = String.format("%s/%s/%s/",p, org, "Cached");
 		
-		FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
+		FileUtils.moveDirectory(new File(srcCache), new File(dstCache));
 	}
 	
 	/*
@@ -313,7 +313,7 @@ public class WindowsStandalone {
 	public static void incPostInit(String p) throws Exception{
 		//TODO
 		//PreparePostNoCache(p);	
-		PreparePostCache(p);
+		//PreparePostCache(p);
 	}
 	
 	public static void standardSubInit(String p) throws Exception{
@@ -355,9 +355,12 @@ public class WindowsStandalone {
 		StandardVeriATLPost(p);
 	}
 	
-	public static void incPostRegression(String p) throws Exception{
-		IncrementalVeriATLPostNoCache(p);
+	public static void incPostRegressionCache(String p) throws Exception{
 		IncrementalVeriATLPostCache(p);
+	}
+	
+	public static void incPostRegressionNoCache(String p) throws Exception{
+		IncrementalVeriATLPostNoCache(p);
 	}
 	
 	public static void standardSubRegression(String p) throws Exception{
