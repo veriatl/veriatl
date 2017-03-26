@@ -24,12 +24,18 @@ public class VerificationResult {
 	
 	public TriBoolean getTriBooleanResult(){
 		if(this.result.equals("true")){
-			return TriBoolean.TRUE;
-		}else if(this.result.equals("false")){
-			return TriBoolean.FALSE;
-		}else{
-			return TriBoolean.UNKNOWN;
-		}
+		return TriBoolean.TRUE;
+	}else {
+		return TriBoolean.FALSE;
+	}
+		
+//		if(this.result.equals("true")){
+//			return TriBoolean.TRUE;
+//		}else if(this.result.equals("false")){
+//			return TriBoolean.FALSE;
+//		}else{
+//			return TriBoolean.UNKNOWN;
+//		}
 		
 	}
 }

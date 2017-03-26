@@ -211,6 +211,9 @@ public final class IncrementalTasksEvo {
 					curTree = NodeHelper.repopulate(curTree);	
 					curRoot.setResult(r.getTriBooleanResult());
 					curRoot.setTime(r.getTime());
+					if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")){
+						System.out.print("TimeOUT:");
+					}
 					System.out.println(String.format("inc-verify-post:%s:%s:%s",  postName, r.getTriBooleanResult(), r.getTime()));
 				}else{
 					System.out.println(String.format("inc-pop-post:%s:%s:%s",  postName, curRoot.getResult(), curRoot.getTime()));
@@ -289,13 +292,16 @@ public final class IncrementalTasksEvo {
     	
     	ArrayList<String> todo = new ArrayList<String>();
     	
-    	// verify full post
+       	// verify full post
     	{
     		
     		// Optimization: do not reverify if curRoot is checked
     		String res = "UNKNOWN";
     		long time = 0;
     		Node curRoot = NodeHelper.findRoot(curTree);
+    		
+    		
+    		
     		if(curRoot.isChecked()){
     			res = curRoot.getResult().toString();
     			time = curRoot.getTime();
@@ -307,7 +313,8 @@ public final class IncrementalTasksEvo {
     	        // add Boogie options
     	        args.add("/nologo");
     	        args.add("/z3exe:"+z3abs);
-    	        //args.add("/trace");
+    	        args.add("/traceTimes");
+    	        args.add("/timeLimit:60");
     	        
     	        // add prelude files
     	        String veriatlabs = veriatl+"\\Prelude\\";
@@ -328,9 +335,12 @@ public final class IncrementalTasksEvo {
     	        args.add(post);
     	        
     	        
-    	        VerificationResult r = Commands.boogie().exec().execute(args); 
-    	        res = r.getResult().toString().toUpperCase();
+    	        VerificationResult r = DefaultCommand.execute(args); 
+    	        res = r.getTriBooleanResult().toString();
     	        time = r.getTime();
+    	        if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")){
+					System.out.print("TimeOUT:");
+				}
     		}
 	        
 	        
@@ -421,8 +431,22 @@ public final class IncrementalTasksEvo {
         	n.setTime(r.getTime());
         	
         	// Optimization: we assume siblings of an unknown sub-goals will also be unknown, don't waste time to verify them, left to the developer to investigate
-        	if(r.getTriBooleanResult().toString().equals("UNKNOWN")) {
-        		System.out.println(String.format("Inc-verify-sub:%s-%s-abort:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        	if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")) {
+        		for(String s : todo){
+        			Node aSub = NodeHelper.findNode(curTree, s);
+        			aSub.Check(true);
+        			aSub.setResult(r.getTriBooleanResult());
+        			aSub.setTime(r.getTime()); 	
+        		}
+        		System.out.println(String.format("TimeOUT:Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        		Node curRoot = NodeHelper.findRoot(curTree);
+        		curRoot.setResult(r.getTriBooleanResult());
+        		curRoot.Check(true);
+        		
+        		// save to currentCache
+                URI output = context.basePath;
+        		localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);
+        		
         		return;
         	}else {
         		System.out.println(String.format("Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
@@ -435,7 +459,7 @@ public final class IncrementalTasksEvo {
         if(curRoot.getResult().toString().equals("UNKNOWN")){
         	curTree = NodeHelper.repopulate(curTree);	
         }
-        
+        curRoot.Check(true);
         
         // save to currentCache
         URI output = context.basePath;
