@@ -83,6 +83,7 @@ public class BoogieTasks {
 	        // add Boogie options
 	        args.add("/nologo");
 	        args.add("/z3exe:"+z3abs);
+	        args.add("/timeLimit:60");
 	        args.add("/verifySnapshots:3");
 	        args.add("/traceTimes");
 	       
