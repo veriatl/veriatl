@@ -19,6 +19,7 @@ import fr.emn.atlanmod.veriatl.experiment.exec.Caches;
 import fr.emn.atlanmod.veriatl.experiment.exec.DefaultCommand;
 import fr.emn.atlanmod.veriatl.experiment.standalone.ContextConstruction;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
+import fr.emn.atlanmod.veriatl.tools.Commands;
 import fr.emn.atlanmod.veriatl.tools.VerificationResult;
 import fr.emn.atlanmod.veriatl.util.URIs;
 
@@ -291,48 +292,49 @@ public final class IncrementalTasksEvo {
     	// verify full post
     	{
     		
-    		ArrayList<String> args = new ArrayList<String>();
-    	
-	        String z3abs = z3;
+    		// Optimization: do not reverify if curRoot is checked
+    		String res = "UNKNOWN";
+    		long time = 0;
+    		Node curRoot = NodeHelper.findRoot(curTree);
+    		if(curRoot.isChecked()){
+    			res = curRoot.getResult().toString();
+    			time = curRoot.getTime();
+    		}else{
+    			ArrayList<String> args = new ArrayList<String>();
+    	    	
+    	        String z3abs = z3;
+    	        
+    	        // add Boogie options
+    	        args.add("/nologo");
+    	        args.add("/z3exe:"+z3abs);
+    	        //args.add("/trace");
+    	        
+    	        // add prelude files
+    	        String veriatlabs = veriatl+"\\Prelude\\";
+    	        args.addAll(getFiles(veriatlabs));
+    	        
+    	        // add auxu files
+    	        String auxu = URIs.abs(context.basePath.appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
+    	        args.addAll(getFiles(auxu));
+    	        
+    			
+    			// add PO
+    			String post = URIs.abs(context.basePath
+    	        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+    	        		.appendSegment(postName)
+    	        		.appendSegment(CompilerConstants.FULL)
+    	        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
+    	        );
+    	        args.add(post);
+    	        
+    	        
+    	        VerificationResult r = Commands.boogie().exec().execute(args); 
+    	        res = r.getResult().toString().toUpperCase();
+    	        time = r.getTime();
+    		}
 	        
-	        // add Boogie options
-	        args.add("/nologo");
-	        args.add("/z3exe:"+z3abs);
-	        args.add("/traceTimes");
-	        args.add("/timeLimit:60");
 	        
-	        // add prelude files
-	        String veriatlabs = veriatl+"\\Prelude\\";
-	        args.addAll(getFiles(veriatlabs));
-	        
-	        // add auxu files
-	        String auxu = URIs.abs(context.basePath.appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
-	        args.addAll(getFiles(auxu));
-	        
-			
-			// add PO: trace with full post, differ from simplified post
-	        Node curRoot = NodeHelper.findRoot(curTree);
-	        HashSet<String> trace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
-			curRoot.setTraces(trace);
-			String boogie = curRoot.toBoogie();
-			String name = String.format("%s.igore",postName);
-			URI path = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
-			driver.generateBoogieFile(path, name, CompilerConstants.BOOGIE_EXT, boogie);
-			
-			
-			String post = URIs.abs(context.basePath
-	        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-	        		.appendSegment(postName)
-	        		.appendSegment(name)
-	        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
-	        );
-	        args.add(post);
-	        
-	        
-	        VerificationResult r = DefaultCommandEvo.execute(args);  
-	        
-	        
-			if(r.getResult().toString().equals("true")){
+			if(res.equals("TRUE")){
 				// optimization: if post is verified, mark its sub-goals as verified too, consider top-down population(TODO)
 				for(Node n : NodeHelper.findAllLeafs(curTree)){
 					n.Check(true);
@@ -340,9 +342,9 @@ public final class IncrementalTasksEvo {
 					n.setTime(0);
 					
 				}
-				System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, "all", r.getTriBooleanResult().toString(), r.getTime()));
+				System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, "all", res, time));
 			}else{
-				System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, "all", r.getTriBooleanResult().toString(), r.getTime()));
+				System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, "all", res, time));
 				// find sub-goals that need to be reverified
 				for(Node n: NodeHelper.findAllLeafs(curTree)){
 	
