@@ -185,7 +185,7 @@ public class WindowsStandalone {
 		String srcCache = String.format("%s/%s/%s/",p, org, "Caches");
 		String dstCache = String.format("%s/%s/%s/",p, org, "Cached");
 		
-		FileUtils.moveDirectory(new File(srcCache), new File(dstCache));
+		FileUtils.copyDirectory(new File(srcCache), new File(dstCache));
 	}
 	
 	/*

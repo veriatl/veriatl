@@ -38,16 +38,16 @@ public class UML {
 		
 		WindowsStandalone.createTask(folders, mutantsAdd, org, changesAdd, "UML2UMLs", "UML", "UMLs");
 		// prepare cache
-//		WindowsStandalone.incPostInit(proj);
+		WindowsStandalone.incPostInit(proj);
 		
 		
 		
 
 		
-		WindowsStandalone.incPostRegression(proj);
+//		WindowsStandalone.incPostRegression(proj);
 //		WindowsStandalone.standardSubInit(proj);
 //		WindowsStandalone.incSubInit(proj);
 
-		WindowsStandalone.BoogieIncPostInit(proj);
+//		WindowsStandalone.BoogieIncPostInit(proj);
 	}
 }
