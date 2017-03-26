@@ -16,35 +16,39 @@ import java.util.Map;
 public class UML {
 	static String[] folders = new String[]{"Auxu", "Caches", "Sub-goals"};
 	static String[] posts;
-	//static String[] mutantsAdd = CreateMap.AddMutants();
-	//private static final Map<String, String> changesAdd = CreateMap.Add();
+	static String[] mutantsAdd = CreateMap.AddMutants();
+	private static final Map<String, String> changesAdd = CreateMap.Add();
 	
-	static String[] mutantsAdd = new String[]{"AR000"};
-	private static final Map<String, String> changesAdd = add();
+	static String[] mutantsDel = CreateMap.DelMutants();
+	private static final Map<String, String> changesDel = CreateMap.Del();
+	static String[] mutantsFilter = CreateMap.FilterMutants();
+	
+	private static final Map<String, String> changesFilter = CreateMap.Filter();
+	
+	static String[] mutantsBind = CreateMap.BindMutants();
+	private static final Map<String, String> changesBind = CreateMap.Bind();
+	
 	static String org = "ORG";
 	static String proj = "UML";
 	
 
-	public static Map<String, String> add() {
-    	Map<String, String> result = new HashMap<String, String>();
-        result.put("AR000", "CopyAbstraction_mutated");
 
-        
-        return Collections.unmodifiableMap(result);
-    }
     
     
 	public static void main(String[] args) throws Exception {	
 		
-		WindowsStandalone.createTask(folders, mutantsAdd, org, changesAdd, "UML2UMLs", "UML", "UMLs");
+//		WindowsStandalone.createTask(folders, mutantsAdd, org, changesAdd, "UML2UMLs", "UML", "UMLs");
+		
+//		WindowsStandalone.createTask(folders, mutantsDel, org, changesDel, "UML2UMLs", "UML", "UMLs");
+		WindowsStandalone.createTask(folders, mutantsFilter, org, changesFilter, "UML2UMLs", "UML", "UMLs");
+//		WindowsStandalone.createTask(folders, mutantsBind, org, changesBind, "UML2UMLs", "UML", "UMLs");
+		
+		
 		// prepare cache
-		WindowsStandalone.incPostInit(proj);
+//		WindowsStandalone.incPostInit(proj);
+		WindowsStandalone.incPostRegressionNoCache(proj);
+//		WindowsStandalone.incPostRegressionCache(proj);
 		
-		
-		
-
-		
-//		WindowsStandalone.incPostRegression(proj);
 //		WindowsStandalone.standardSubInit(proj);
 //		WindowsStandalone.incSubInit(proj);
 

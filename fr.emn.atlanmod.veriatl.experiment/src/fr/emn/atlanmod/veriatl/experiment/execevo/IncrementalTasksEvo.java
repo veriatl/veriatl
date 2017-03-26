@@ -212,7 +212,7 @@ public final class IncrementalTasksEvo {
 					curRoot.setResult(r.getTriBooleanResult());
 					curRoot.setTime(r.getTime());
 					if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")){
-						System.out.print("TimeOUT:");
+						System.out.print("TimeOUT-");
 					}
 					System.out.println(String.format("inc-verify-post:%s:%s:%s",  postName, r.getTriBooleanResult(), r.getTime()));
 				}else{
@@ -278,6 +278,12 @@ public final class IncrementalTasksEvo {
 		cCache = context.basePath.appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME).appendSegment(postName).appendSegment(currentCache).appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
 		curTree = URIs.load(cCache);
 		
+		// Optimization, don't reverify sub-goals if there are too many
+		if(NodeHelper.findAllLeafs(curTree).size()>200){
+			return;
+		}
+		
+		
     	if(previousCache == null) {
     		pCache = cCache;
     		oldTree = curTree;
@@ -339,7 +345,7 @@ public final class IncrementalTasksEvo {
     	        res = r.getTriBooleanResult().toString();
     	        time = r.getTime();
     	        if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")){
-					System.out.print("TimeOUT:");
+					System.out.print("TimeOUT-");
 				}
     		}
 	        
@@ -438,7 +444,7 @@ public final class IncrementalTasksEvo {
         			aSub.setResult(r.getTriBooleanResult());
         			aSub.setTime(r.getTime()); 	
         		}
-        		System.out.println(String.format("TimeOUT:Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        		System.out.println(String.format("TimeOUT-Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
         		Node curRoot = NodeHelper.findRoot(curTree);
         		curRoot.setResult(r.getTriBooleanResult());
         		curRoot.Check(true);

@@ -61,9 +61,9 @@ class StandAlone {
 			val pos = rules.indexOf(r)
 			
 			//add(module, r, pos)
-			del(module, r, pos)
+			//del(module, r, pos)
 			//filter(module, r, pos)
-			//bind(module, r, pos)
+			bind(module, r, pos)
 		}
 
 
