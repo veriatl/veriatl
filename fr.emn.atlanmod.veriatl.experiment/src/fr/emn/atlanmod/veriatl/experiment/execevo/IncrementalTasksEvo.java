@@ -343,11 +343,19 @@ public final class IncrementalTasksEvo {
     	        args.addAll(getFiles(auxu));
     	        
     			
-    			// add PO
+    	        // add PO
+    	        HashSet<String> trace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
+    			curRoot.setTraces(trace);
+    			String boogie = curRoot.toBoogie();
+    			String name = String.format("%s.igore",postName);
+    			URI path = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
+    			driver.generateBoogieFile(path, name, CompilerConstants.BOOGIE_EXT, boogie);
+    			
+    			
     			String post = URIs.abs(context.basePath
     	        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
     	        		.appendSegment(postName)
-    	        		.appendSegment(CompilerConstants.FULL)
+    	        		.appendSegment(name)
     	        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
     	        );
     	        args.add(post);

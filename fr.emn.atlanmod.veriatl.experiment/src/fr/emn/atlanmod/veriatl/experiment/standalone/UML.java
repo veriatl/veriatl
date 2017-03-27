@@ -39,17 +39,17 @@ public class UML {
 		
 //		WindowsStandalone.createTask(folders, mutantsAdd, org, changesAdd, "UML2UMLs", "UML", "UMLs");
 //		WindowsStandalone.createTask(folders, mutantsDel, org, changesDel, "UML2UMLs", "UML", "UMLs");
-//		WindowsStandalone.createTask(folders, mutantsFilter, org, changesFilter, "UML2UMLs", "UML", "UMLs");
-		WindowsStandalone.createTask(folders, mutantsBind, org, changesBind, "UML2UMLs", "UML", "UMLs");
+		WindowsStandalone.createTask(folders, mutantsFilter, org, changesFilter, "UML2UMLs", "UML", "UMLs");
+//		WindowsStandalone.createTask(folders, mutantsBind, org, changesBind, "UML2UMLs", "UML", "UMLs");
 		
 		
 		// prepare cache
 //		WindowsStandalone.incPostInit(proj);
 //		WindowsStandalone.incPostRegressionNoCache(proj);
-		WindowsStandalone.incPostRegressionCache(proj);
+//		WindowsStandalone.incPostRegressionCache(proj);
 		
 //		WindowsStandalone.standardSubInit(proj);
-//		WindowsStandalone.incSubInit(proj);
+		WindowsStandalone.incSubInit(proj);
 
 //		WindowsStandalone.BoogieIncPostInit(proj);
 	}
