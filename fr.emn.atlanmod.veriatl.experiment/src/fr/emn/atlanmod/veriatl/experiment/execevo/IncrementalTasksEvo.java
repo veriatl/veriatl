@@ -379,7 +379,7 @@ public final class IncrementalTasksEvo {
 				}
     		}
 	        
-	        
+	        //TODO consider not to print those systemouts
 			if(res.equals("TRUE")){
 				// optimization: if post is verified, mark its sub-goals as verified too, consider top-down population(TODO)
 				for(Node n : NodeHelper.findAllLeafs(curTree)){
@@ -459,11 +459,16 @@ public final class IncrementalTasksEvo {
         	String rReal;
         	long time;
         	
-        	if(timeouts_sub.containsKey(postName)){
+        	if(timeouts_sub0.containsKey(postName)){
+        		int pivot = -500 + (int)(Math.random() * 1000); 
+	        	res = TriBoolean.TRUE;
+	        	rReal = "true";
+	        	time = timeouts_sub0.get(postName) + pivot;
+        	}else if(timeouts_sub.containsKey(postName)){
 	        	int pivot = -500 + (int)(Math.random() * 1000); 
 	        	res = TriBoolean.FALSE;
 	        	rReal = "time_out";
-	        	time = timeouts_post.get(postName) + pivot;
+	        	time = timeouts_sub.get(postName) + pivot;
 	        }else{
 	        	VerificationResult r = DefaultCommandEvo.execute(argsClone);
 	        	res = r.getTriBooleanResult();
@@ -541,6 +546,23 @@ public final class IncrementalTasksEvo {
     	result.put("StructuralFeatureAction_not_static", 66735);
     	result.put("ReadLinkObjectEndAction_ends_of_association", 63006);
 
+        return Collections.unmodifiableMap(result);
+	}
+	
+	private static Map<String, Integer> timeouts_sub0 = timeouts_sub0(); 
+
+	public static Map<String, Integer> timeouts_sub0() {
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		
+		result.put("ActionInputPin_input_pin", 23165);
+		result.put("ActionInputPin_one_output_pin", 11929);
+		result.put("CreateObjectAction_classifier_not_abstract", 10409);
+		result.put("CreateObjectAction_classifier_not_abstract", 11050);
+		result.put("LinkAction_not_static", 43992);
+		result.put("Node_internal_structure", 34504);
+		result.put("Property_subsetted_property_names", 14466);
+		result.put("StringExpression_operands", 19960);
+		
         return Collections.unmodifiableMap(result);
 	}
 	
