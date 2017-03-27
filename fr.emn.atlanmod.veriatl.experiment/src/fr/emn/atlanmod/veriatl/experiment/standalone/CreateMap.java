@@ -12,17 +12,21 @@ public class CreateMap {
 				//"AR030","AR031","AR032","AR033","AR034","AR035","AR036","AR037","AR038","AR039","AR040","AR041","AR042","AR043","AR044","AR045","AR046","AR047","AR048","AR049",
 				//"AR062","AR063","AR064","AR065","AR066","AR067","AR068","AR069","AR070","AR071","AR072","AR073","AR074","AR075","AR076","AR077","AR078","AR079","AR080","AR081","AR082","AR083",
 				//"AR084","AR085","AR086","AR087","AR088","AR089","AR090","AR091","AR092","AR093","AR094","AR095","AR096","AR097","AR098","AR099","AR100","AR101","AR102","AR103","AR104","AR105","AR106","AR107","AR108","AR109","AR110","AR111","AR112","AR113","AR114","AR115","AR116","AR117",
-				//"AR118","AR119","AR120","AR121","AR122","AR123","AR124",
-				"AR125","AR126","AR127","AR128","AR129","AR130","AR131","AR132","AR133","AR134","AR135","AR136","AR137","AR138","AR139","AR140","AR141","AR142","AR143","AR144","AR145","AR146","AR147","AR148","AR149","AR150","AR151",
-				"AR152","AR153","AR154","AR155","AR156","AR157","AR158","AR159","AR160","AR161","AR162","AR163","AR164","AR165","AR166","AR167","AR168","AR169","AR170","AR171","AR172","AR173","AR174","AR175","AR176","AR177","AR178","AR179","AR180","AR181","AR182","AR183","AR184","AR185",
-				"AR186","AR187","AR188","AR189","AR190","AR191","AR192"
+				//"AR118","AR119","AR120","AR121","AR122","AR123","AR124","AR125","AR126","AR127","AR128","AR129","AR130","AR131","AR132","AR133","AR134","AR135","AR136","AR137","AR138","AR139","AR140","AR141","AR142","AR143","AR144","AR145","AR146","AR147","AR148","AR149","AR150",
+				//"AR151","AR152","AR153","AR154","AR155","AR156","AR157","AR158","AR159","AR160","AR161","AR162","AR163","AR164","AR165","AR166","AR167","AR168","AR169","AR170","AR171","AR172","AR173","AR174","AR175","AR176","AR177","AR178","AR179","AR180","AR181","AR182","AR183","AR184","AR185",
+				//"AR186","AR187","AR188","AR189","AR190","AR191","AR192"
 		};
 	}
 	
 	
 	public static String[] DelMutants() {
 		return new String[] {
-				"DR050","DR051","DR052","DR053","DR054","DR055","DR056","DR057","DR058","DR059","DR060","DR061","DR062","DR063","DR064","DR065","DR066","DR067","DR068","DR069","DR070","DR071","DR072","DR073","DR074","DR075","DR076","DR077","DR078","DR079","DR080","DR081","DR082","DR083","DR084","DR085","DR086","DR087","DR088","DR089","DR090","DR091","DR092","DR093","DR094","DR095","DR096","DR097","DR098","DR099"	
+		
+				"DR000","DR001","DR002","DR003","DR004","DR005","DR006","DR007","DR008","DR009","DR010","DR011","DR012","DR013","DR014","DR015","DR016","DR017","DR018","DR019","DR020","DR021","DR022","DR023","DR024","DR025","DR026","DR027","DR028","DR029","DR030","DR031","DR032","DR033","DR034","DR035","DR036","DR037","DR038","DR039","DR040","DR041","DR042","DR043","DR044","DR045","DR046","DR047","DR048","DR049",
+				"DR050","DR051","DR052","DR053","DR054","DR055","DR056","DR057","DR058","DR059","DR060","DR061","DR062","DR063","DR064","DR065","DR066","DR067","DR068","DR069","DR070","DR071","DR072","DR073","DR074","DR075","DR076","DR077","DR078","DR079","DR080","DR081","DR082","DR083","DR084","DR085","DR086","DR087","DR088","DR089","DR090","DR091","DR092","DR093","DR094","DR095","DR096","DR097","DR098","DR099",
+				"DR100","DR101","DR102","DR103","DR104","DR105","DR106","DR107","DR108","DR109","DR110","DR111","DR112","DR113","DR114","DR115","DR116","DR117","DR118","DR119","DR120","DR121","DR122","DR123","DR124","DR125","DR126","DR127","DR128","DR129","DR130","DR131","DR132","DR133","DR134","DR135","DR136","DR137","DR138","DR139","DR140","DR141","DR142","DR143","DR144","DR145","DR146","DR147","DR148","DR149",
+				"DR150","DR151","DR152","DR153","DR154","DR155","DR156","DR157","DR158","DR159","DR160","DR161","DR162","DR163","DR164","DR165","DR166","DR167","DR168","DR169","DR170","DR171","DR172","DR173","DR174","DR175","DR176","DR177","DR178","DR179","DR180","DR181","DR182","DR183","DR184","DR185","DR186","DR187","DR188","DR189","DR190","DR191","DR192"
+		
 		};
 	}
 	
@@ -244,6 +248,56 @@ public class CreateMap {
     
     public static Map<String, String> Del() {
     	Map<String, String> result = new HashMap<String, String>();
+    	result.put("DR000", "CopyAbstraction");
+    	result.put("DR001", "CopyAcceptCallAction");
+    	result.put("DR002", "CopyAcceptEventAction");
+    	result.put("DR003", "CopyActionExecutionSpecification");
+    	result.put("DR004", "CopyActionInputPin");
+    	result.put("DR005", "CopyActivity");
+    	result.put("DR006", "CopyActivityFinalNode");
+    	result.put("DR007", "CopyActivityParameterNode");
+    	result.put("DR008", "CopyActivityPartition");
+    	result.put("DR009", "CopyActor");
+    	result.put("DR010", "CopyAddStructuralFeatureValueAction");
+    	result.put("DR011", "CopyAddVariableValueAction");
+    	result.put("DR012", "CopyAnyReceiveEvent");
+    	result.put("DR013", "CopyArtifact");
+    	result.put("DR014", "CopyAssociation");
+    	result.put("DR015", "CopyAssociationClass");
+    	result.put("DR016", "CopyBehaviorExecutionSpecification");
+    	result.put("DR017", "CopyBroadcastSignalAction");
+    	result.put("DR018", "CopyCallBehaviorAction");
+    	result.put("DR019", "CopyCallEvent");
+    	result.put("DR020", "CopyCallOperationAction");
+    	result.put("DR021", "CopyCentralBufferNode");
+    	result.put("DR022", "CopyChangeEvent");
+    	result.put("DR023", "CopyClass");
+    	result.put("DR024", "CopyClassifierTemplateParameter");
+    	result.put("DR025", "CopyClause");
+    	result.put("DR026", "CopyClearAssociationAction");
+    	result.put("DR027", "CopyClearStructuralFeatureAction");
+    	result.put("DR028", "CopyClearVariableAction");
+    	result.put("DR029", "CopyCollaboration");
+    	result.put("DR030", "CopyCollaborationUse");
+    	result.put("DR031", "CopyCombinedFragment");
+    	result.put("DR032", "CopyComment");
+    	result.put("DR033", "CopyCommunicationPath");
+    	result.put("DR034", "CopyComponent");
+    	result.put("DR035", "CopyComponentRealization");
+    	result.put("DR036", "CopyConditionalNode");
+    	result.put("DR037", "CopyConnectableElementTemplateParameter");
+    	result.put("DR038", "CopyConnectionPointReference");
+    	result.put("DR039", "CopyConnector");
+    	result.put("DR040", "CopyConnectorEnd");
+    	result.put("DR041", "CopyConsiderIgnoreFragment");
+    	result.put("DR042", "CopyConstraint");
+    	result.put("DR043", "CopyContinuation");
+    	result.put("DR044", "CopyControlFlow");
+    	result.put("DR045", "CopyCreateLinkAction");
+    	result.put("DR046", "CopyCreateLinkObjectAction");
+    	result.put("DR047", "CopyCreateObjectAction");
+    	result.put("DR048", "CopyDataStoreNode");
+    	result.put("DR049", "CopyDataType");
     	result.put("DR050", "CopyDecisionNode");
     	result.put("DR051", "CopyDependency");
     	result.put("DR052", "CopyDeployment");
@@ -294,6 +348,99 @@ public class CreateMap {
     	result.put("DR097", "CopyInterruptibleActivityRegion");
     	result.put("DR098", "CopyInterval");
     	result.put("DR099", "CopyIntervalConstraint");
+    	result.put("DR100", "CopyJoinNode");
+    	result.put("DR101", "CopyLifeline");
+    	result.put("DR102", "CopyLinkEndCreationData");
+    	result.put("DR103", "CopyLinkEndData");
+    	result.put("DR104", "CopyLinkEndDestructionData");
+    	result.put("DR105", "CopyLiteralBoolean");
+    	result.put("DR106", "CopyLiteralInteger");
+    	result.put("DR107", "CopyLiteralNull");
+    	result.put("DR108", "CopyLiteralReal");
+    	result.put("DR109", "CopyLiteralString");
+    	result.put("DR110", "CopyLiteralUnlimitedNatural");
+    	result.put("DR111", "CopyLoopNode");
+    	result.put("DR112", "CopyManifestation");
+    	result.put("DR113", "CopyMergeNode");
+    	result.put("DR114", "CopyMessage");
+    	result.put("DR115", "CopyMessageOccurrenceSpecification");
+    	result.put("DR116", "CopyModel");
+    	result.put("DR117", "CopyNode");
+    	result.put("DR118", "CopyObjectFlow");
+    	result.put("DR119", "CopyOccurrenceSpecification");
+    	result.put("DR120", "CopyOpaqueAction");
+    	result.put("DR121", "CopyOpaqueBehavior");
+    	result.put("DR122", "CopyOpaqueExpression");
+    	result.put("DR123", "CopyOperation");
+    	result.put("DR124", "CopyOperationTemplateParameter");
+    	result.put("DR125", "CopyOutputPin");
+    	result.put("DR126", "CopyPackage");
+    	result.put("DR127", "CopyPackageImport");
+    	result.put("DR128", "CopyPackageMerge");
+    	result.put("DR129", "CopyParameter");
+    	result.put("DR130", "CopyParameterSet");
+    	result.put("DR131", "CopyPartDecomposition");
+    	result.put("DR132", "CopyPort");
+    	result.put("DR133", "CopyPrimitiveType");
+    	result.put("DR134", "CopyProfile");
+    	result.put("DR135", "CopyProfileApplication");
+    	result.put("DR136", "CopyProperty");
+    	result.put("DR137", "CopyProtocolConformance");
+    	result.put("DR138", "CopyProtocolStateMachine");
+    	result.put("DR139", "CopyProtocolTransition");
+    	result.put("DR140", "CopyPseudostate");
+    	result.put("DR141", "CopyQualifierValue");
+    	result.put("DR142", "CopyRaiseExceptionAction");
+    	result.put("DR143", "CopyReadExtentAction");
+    	result.put("DR144", "CopyReadIsClassifiedObjectAction");
+    	result.put("DR145", "CopyReadLinkAction");
+    	result.put("DR146", "CopyReadLinkObjectEndAction");
+    	result.put("DR147", "CopyReadLinkObjectEndQualifierAction");
+    	result.put("DR148", "CopyReadSelfAction");
+    	result.put("DR149", "CopyReadStructuralFeatureAction");
+    	result.put("DR150", "CopyReadVariableAction");
+    	result.put("DR151", "CopyRealization");
+    	result.put("DR152", "CopyReception");
+    	result.put("DR153", "CopyReclassifyObjectAction");
+    	result.put("DR154", "CopyRedefinableTemplateSignature");
+    	result.put("DR155", "CopyReduceAction");
+    	result.put("DR156", "CopyRegion");
+    	result.put("DR157", "CopyRemoveStructuralFeatureValueAction");
+    	result.put("DR158", "CopyRemoveVariableValueAction");
+    	result.put("DR159", "CopyReplyAction");
+    	result.put("DR160", "CopySendObjectAction");
+    	result.put("DR161", "CopySendSignalAction");
+    	result.put("DR162", "CopySequenceNode");
+    	result.put("DR163", "CopySignal");
+    	result.put("DR164", "CopySignalEvent");
+    	result.put("DR165", "CopySlot");
+    	result.put("DR166", "CopyStartClassifierBehaviorAction");
+    	result.put("DR167", "CopyStartObjectBehaviorAction");
+    	result.put("DR168", "CopyState");
+    	result.put("DR169", "CopyStateInvariant");
+    	result.put("DR170", "CopyStateMachine");
+    	result.put("DR171", "CopyStereotype");
+    	result.put("DR172", "CopyStringExpression");
+    	result.put("DR173", "CopyStructuredActivityNode");
+    	result.put("DR174", "CopySubstitution");
+    	result.put("DR175", "CopyTemplateBinding");
+    	result.put("DR176", "CopyTemplateParameter");
+    	result.put("DR177", "CopyTemplateParameterSubstitution");
+    	result.put("DR178", "CopyTemplateSignature");
+    	result.put("DR179", "CopyTestIdentityAction");
+    	result.put("DR180", "CopyTimeConstraint");
+    	result.put("DR181", "CopyTimeEvent");
+    	result.put("DR182", "CopyTimeExpression");
+    	result.put("DR183", "CopyTimeInterval");
+    	result.put("DR184", "CopyTimeObservation");
+    	result.put("DR185", "CopyTransition");
+    	result.put("DR186", "CopyTrigger");
+    	result.put("DR187", "CopyUnmarshallAction");
+    	result.put("DR188", "CopyUsage");
+    	result.put("DR189", "CopyUseCase");
+    	result.put("DR190", "CopyValuePin");
+    	result.put("DR191", "CopyValueSpecificationAction");
+    	result.put("DR192", "CopyVariable");
 
         
         return Collections.unmodifiableMap(result);
