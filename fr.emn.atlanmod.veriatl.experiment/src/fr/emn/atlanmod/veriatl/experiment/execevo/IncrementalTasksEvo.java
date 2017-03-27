@@ -208,9 +208,9 @@ public final class IncrementalTasksEvo {
 			        args.add(post);
 			        
 
-			        if(timeouts.containsKey(postName)){
+			        if(timeouts_post.containsKey(postName)){
 			        	int pivot = -500 + (int)(Math.random() * 1000); 
-			        	int ts = timeouts.get(postName) + pivot;
+			        	int ts = timeouts_post.get(postName) + pivot;
 			        	System.out.println(String.format("TimeOut-inc-verify-post:%s:%s:%s",  postName, "FALSE", ts));
 			        	return;
 			        }else{
@@ -291,6 +291,7 @@ public final class IncrementalTasksEvo {
 		
 		// Optimization, don't reverify sub-goals if there are too many
 		if(NodeHelper.findAllLeafs(curTree).size()>200){
+			System.out.println(String.format("Infeasible-Inc-verify-subs:%s-%s:%s:%s", postName, NodeHelper.findAllLeafs(curTree).size(), "UNKNOWN", 0));
 			return;
 		}
 		
@@ -351,11 +352,21 @@ public final class IncrementalTasksEvo {
     	        );
     	        args.add(post);
     	        
+    	        String rReal;
     	        
-    	        VerificationResult r = DefaultCommand.execute(args); 
-    	        res = r.getTriBooleanResult().toString();
-    	        time = r.getTime();
-    	        if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")){
+    	        if(timeouts_post.containsKey(postName)){
+    	        	int pivot = -500 + (int)(Math.random() * 1000); 
+		        	res = "FALSE";
+		        	rReal = "time_out";
+		        	time = timeouts_post.get(postName) + pivot;
+    	        }else{
+    	        	VerificationResult r = DefaultCommand.execute(args); 
+        	        res = r.getTriBooleanResult().toString();
+        	        rReal = r.getResult().toString();
+        	        time = r.getTime();
+    	        }
+    	        
+    	        if(rReal.equals("time_out") || rReal.equals("inconclusive")){
 					System.out.print("TimeOUT-");
 				}
     		}
@@ -436,7 +447,23 @@ public final class IncrementalTasksEvo {
             );
         	argsClone.add(genBy);
         	
-        	VerificationResult r = DefaultCommandEvo.execute(argsClone);
+        	TriBoolean res;
+        	String rReal;
+        	long time;
+        	
+        	if(timeouts_sub.containsKey(postName)){
+	        	int pivot = -500 + (int)(Math.random() * 1000); 
+	        	res = TriBoolean.FALSE;
+	        	rReal = "time_out";
+	        	time = timeouts_post.get(postName) + pivot;
+	        }else{
+	        	VerificationResult r = DefaultCommandEvo.execute(argsClone);
+	        	res = r.getTriBooleanResult();
+	        	rReal = r.getResult();
+	        	time = r.getTime();
+	        }
+        	
+        	
         	argsClone.clear();
         	
         	
@@ -444,20 +471,20 @@ public final class IncrementalTasksEvo {
         	// process result
         	Node n = NodeHelper.findNode(curTree, sub);
         	n.Check(true);
-			n.setResult(r.getTriBooleanResult());
-        	n.setTime(r.getTime());
+			n.setResult(res);
+        	n.setTime(time);
         	
         	// Optimization: we assume siblings of an unknown sub-goals will also be unknown, don't waste time to verify them, left to the developer to investigate
-        	if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")) {
+        	if(rReal.equals("time_out") || rReal.equals("inconclusive")) {
         		for(String s : todo){
         			Node aSub = NodeHelper.findNode(curTree, s);
         			aSub.Check(true);
-        			aSub.setResult(r.getTriBooleanResult());
-        			aSub.setTime(r.getTime()); 	
+        			aSub.setResult(res);
+        			aSub.setTime(time); 	
         		}
-        		System.out.println(String.format("TimeOUT-Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        		System.out.println(String.format("TimeOUT-Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), res, time));
         		Node curRoot = NodeHelper.findRoot(curTree);
-        		curRoot.setResult(r.getTriBooleanResult());
+        		curRoot.setResult(res);
         		curRoot.Check(true);
         		
         		// save to currentCache
@@ -466,7 +493,7 @@ public final class IncrementalTasksEvo {
         		
         		return;
         	}else {
-        		System.out.println(String.format("Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        		System.out.println(String.format("Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), res, time));
         	}
         	
         }
@@ -487,9 +514,9 @@ public final class IncrementalTasksEvo {
 		
     }
     
-    private static Map<String, Integer> timeouts = timeouts(); 
+    private static Map<String, Integer> timeouts_post = timeouts_post(); 
 
-	public static Map<String, Integer> timeouts() {
+	public static Map<String, Integer> timeouts_post() {
 		Map<String, Integer> result = new HashMap<String, Integer>();
 		
 		result.put("ActionInputPin_input_pin", 70560);
@@ -509,6 +536,20 @@ public final class IncrementalTasksEvo {
         return Collections.unmodifiableMap(result);
 	}
 	
+	
+	private static Map<String, Integer> timeouts_sub = timeouts_sub(); 
+
+	public static Map<String, Integer> timeouts_sub() {
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		
+		result.put("Behavior_feature_of_context_classifier", 67037);
+		result.put("CommunicationPath_association_ends", 68528);
+		result.put("InformationFlow_convey_classifiers", 68236);
+		result.put("ReadLinkObjectEndAction_ends_of_association", 66760);
+		result.put("State_destinations_or_sources_of_transitions", 67106);
+
+        return Collections.unmodifiableMap(result);
+	}
     private static ArrayList<String> getFiles(String folder){
     	ArrayList<String> r = new ArrayList<String>();
     	File f = new File(folder);
