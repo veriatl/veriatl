@@ -40,7 +40,7 @@ class EMFUtil {
 
 		val clazz = p.getEClassifier(name) as EClass
 		for (EAttribute attr : clazz.EAllAttributes) {
-			if (attr.EType.toString.toLowerCase.indexOf("bool") != -1) {
+			if (attr.EType.name.toLowerCase == "boolean" || attr.EType.name.toLowerCase == "eboolean") {
 				res.add(attr.name)
 			}
 		}	
