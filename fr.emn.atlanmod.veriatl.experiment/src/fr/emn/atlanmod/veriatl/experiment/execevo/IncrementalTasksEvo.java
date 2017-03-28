@@ -324,9 +324,8 @@ public final class IncrementalTasksEvo {
     			res = curRoot.getResult().toString();
     			time = curRoot.getTime();
     		}else if(oldTrace.equals(curTrace) && !curTrace.contains(affectedRule)){
-    			oldTree = NodeHelper.repopulate(oldTree);
     			res = oldRoot.getResult().toString();
-    			time = oldRoot.getTime();
+    			time = posts_time.get(postName);
     			System.out.println(String.format("Inc-cached-post:%s-%s:%s:%s", postName, "#"+NodeHelper.findAllLeafs(curTree).size(), res, time));
     			return;
     		}else{
@@ -552,6 +551,65 @@ public final class IncrementalTasksEvo {
     	result.put("StructuralFeatureAction_not_static", 66735);
     	result.put("ReadLinkObjectEndAction_ends_of_association", 63006);
 
+        return Collections.unmodifiableMap(result);
+	}
+	
+	
+	private static Map<String, Integer> posts_time = posts_time(); 
+
+	public static Map<String, Integer> posts_time() {
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		
+		result.put("AcceptCallAction_unmarshall",8226);
+		result.put("AcceptEventAction_no_input_pins",13417);
+		result.put("AcceptEventAction_no_output_pins",29898);
+		result.put("ActionInputPin_input_pin",70560);
+		result.put("ActionInputPin_one_output_pin",68675);
+		result.put("ActivityParameterNode_has_parameters",17090);
+		result.put("ActivityParameterNode_no_edges",8710);
+		result.put("Behavior_feature_of_context_classifier",68491);
+		result.put("BehavioralFeature_abstract_no_method",48571);
+		result.put("CallAction_synchronous_call",13812);
+		result.put("ClassifierTemplateParameter_has_constraining_classifier",10029);
+		result.put("CommunicationPath_association_ends",67992);
+		result.put("Component_no_nested_classifiers",19074);
+		result.put("ConditionalNode_no_input_pins",9593);
+		result.put("CreateObjectAction_classifier_not_abstract",68145);
+		result.put("CreateObjectAction_classifier_not_association_class",67998);
+		result.put("DecisionNode_decision_input_flow_incoming",12670);
+		result.put("Enumeration_immutable",35885);
+		result.put("ExecutionSpecification_same_lifeline",29505);
+		result.put("Extend_extension_points",66683);
+		result.put("Extension_is_binary",8511);
+		result.put("FinalNode_no_outgoing_edges",9064);
+		result.put("FinalState_no_outgoing_transitions",8425);
+		result.put("FinalState_no_regions",7401);
+		result.put("ForkNode_one_incoming_edge",8118);
+		result.put("InformationFlow_convey_classifiers",68549);
+		result.put("InformationItem_has_no",9519);
+		result.put("InformationItem_not_instantiable",7164);
+		result.put("InitialNode_no_incoming_edges",7609);
+		result.put("InitialNode_control_edges",9802);
+		result.put("JoinNode_one_outgoing_edge",7728);
+		result.put("LinkAction_not_static",63589);
+		result.put("MergeNode_one_outgoing_edge",7561);
+		result.put("Node_internal_structure",71084);
+		result.put("ObjectFlow_is_multicast_or_is_multireceive",6998);
+		result.put("Parameter_stream_and_exception",6752);
+		result.put("Pin_control_pins",13657);
+		result.put("Pin_not_unique",13251);
+		result.put("Property_derived_union_is_read_only",10726);
+		result.put("Property_derived_union_is_derived",10947);
+		result.put("Property_subsetted_property_names",23684);
+		result.put("ReadLinkObjectEndAction_ends_of_association",63006);
+		result.put("Reception_same_name_as_signal",8921);
+		result.put("State_submachine_states",6950);
+		result.put("State_composite_states",9350);
+		result.put("State_destinations_or_sources_of_transitions",67090);
+		result.put("State_submachine_or_regions",9255);
+		result.put("StringExpression_operands",39834);
+		result.put("StructuralFeatureAction_not_static",66735);
+		result.put("ValuePin_no_incoming_edges",7595);
         return Collections.unmodifiableMap(result);
 	}
 	
