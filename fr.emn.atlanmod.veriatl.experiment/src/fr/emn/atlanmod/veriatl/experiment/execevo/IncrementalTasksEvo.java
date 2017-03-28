@@ -326,7 +326,7 @@ public final class IncrementalTasksEvo {
     		}else if(oldTrace.equals(curTrace) && !curTrace.contains(affectedRule)){
     			res = oldRoot.getResult().toString();
     			time = oldRoot.getTime();
-    			System.out.println(String.format("Inc-cached-sub:%s-%s:%s:%s", postName, "all", res, time));
+    			System.out.println(String.format("Inc-cached-post:%s-%s:%s:%s", postName, "#"+NodeHelper.findAllLeafs(curTree).size(), res, time));
     			return;
     		}else{
     			ArrayList<String> args = new ArrayList<String>();
@@ -380,11 +380,11 @@ public final class IncrementalTasksEvo {
     	        }
     	        
     	        if(rReal.equals("time_out") || rReal.equals("inconclusive")){
-					System.out.print("TimeOUT-");
+					//System.out.print("TimeOUT-");
 				}
     		}
 	        
-	        //TODO consider not to print those systemouts
+	        
 			if(res.equals("TRUE")){
 				// optimization: if post is verified, mark its sub-goals as verified too, consider top-down population(TODO)
 				for(Node n : NodeHelper.findAllLeafs(curTree)){
@@ -393,9 +393,9 @@ public final class IncrementalTasksEvo {
 					n.setTime(0);
 					
 				}
-				System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, "all", res, time));
+				System.out.println(String.format("Inc-checked-post:%s-%s:%s:%s", postName, "#"+NodeHelper.findAllLeafs(curTree).size(), res, time));
 			}else{
-				System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, "all", res, time));
+				//System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, "#"+NodeHelper.findAllLeafs(curTree).size(), res, time));
 				// find sub-goals that need to be reverified
 				for(Node n: NodeHelper.findAllLeafs(curTree)){
 	
@@ -500,7 +500,7 @@ public final class IncrementalTasksEvo {
         			aSub.setResult(res);
         			aSub.setTime(time); 	
         		}
-        		System.out.println(String.format("ABORT-Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), res, time));
+        		System.out.println(String.format("ABORT-Inc-verify-sub:%s-%s:%s:%s", postName, "#"+NodeHelper.findAllLeafs(curTree).size(), res, time));
         		
         		curRoot.setResult(res);
         		curRoot.Check(true);
