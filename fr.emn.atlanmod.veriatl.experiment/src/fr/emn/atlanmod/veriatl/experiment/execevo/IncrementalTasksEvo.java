@@ -567,7 +567,7 @@ public final class IncrementalTasksEvo {
 		result.put("Node_internal_structure", 34504);
 		result.put("Property_subsetted_property_names", 14466);
 		result.put("StringExpression_operands", 19960);
-		
+		result.put("CreateObjectAction_classifier_not_association_class", 6820);
         return Collections.unmodifiableMap(result);
 	}
 	
