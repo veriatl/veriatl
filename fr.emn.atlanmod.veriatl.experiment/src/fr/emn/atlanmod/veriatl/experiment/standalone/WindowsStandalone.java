@@ -299,6 +299,7 @@ public class WindowsStandalone {
 			decompose(context);
 			String aRule = changes.get(trg);
 			IncrementalTasksEvo.debugBoogie(context, aRule);
+			clean(context);
 		}
 		
 	}
