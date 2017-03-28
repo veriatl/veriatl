@@ -324,6 +324,7 @@ public final class IncrementalTasksEvo {
     			res = curRoot.getResult().toString();
     			time = curRoot.getTime();
     		}else if(oldTrace.equals(curTrace) && !curTrace.contains(affectedRule)){
+    			oldTree = NodeHelper.repopulate(oldTree);
     			res = oldRoot.getResult().toString();
     			time = oldRoot.getTime();
     			System.out.println(String.format("Inc-cached-post:%s-%s:%s:%s", postName, "#"+NodeHelper.findAllLeafs(curTree).size(), res, time));
@@ -407,7 +408,7 @@ public final class IncrementalTasksEvo {
 		    			Node cache = NodeHelper.findSubInCache(oldTree, n);
 		    			
 		    			if(cache != null && !n.getTraces().contains(affectedRule) && cache.isChecked()/* && !cache.getResult().toString().equals("UNKNOWN") */){
-		    				System.out.println(String.format("Inc-cached-sub:%s-%s:%s:0", postName, n.getName(), cache.getResult().toString()));
+		    				System.out.println(String.format("Inc-cached-sub:%s-%s:%s:%s", postName, n.getName(), cache.getResult().toString(), cache.getTime()));
 		    				n.Check(true);
 		    				n.setResult(cache.getResult());
 		    				n.setTime(0);
