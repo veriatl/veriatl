@@ -21,9 +21,7 @@ import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.experiment.exec.Caches;
 import fr.emn.atlanmod.veriatl.experiment.exec.DefaultCommand;
 import fr.emn.atlanmod.veriatl.experiment.standalone.ContextConstruction;
-import fr.emn.atlanmod.veriatl.experiment.standalone.CreateMap;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
-import fr.emn.atlanmod.veriatl.tools.Commands;
 import fr.emn.atlanmod.veriatl.tools.VerificationResult;
 import fr.emn.atlanmod.veriatl.util.URIs;
 
@@ -306,23 +304,30 @@ public final class IncrementalTasksEvo {
     		oldTree = URIs.load(pCache);
     	}
     	
-    	
-    	
+    	Node curRoot = NodeHelper.findRoot(curTree);
+    	HashSet<String> curTrace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
     	ArrayList<String> todo = new ArrayList<String>();
-    	
+    	Node oldRoot = NodeHelper.findRoot(oldTree);
+		HashSet<String> oldTrace = NodeHelper.UnionTraces(oldRoot, NodeHelper.findDescendantLeafs(oldTree, oldRoot));
+		
        	// verify full post
     	{
     		
     		// Optimization: do not reverify if curRoot is checked
     		String res = "UNKNOWN";
     		long time = 0;
-    		Node curRoot = NodeHelper.findRoot(curTree);
+    		
     		
     		
     		
     		if(curRoot.isChecked()){
     			res = curRoot.getResult().toString();
     			time = curRoot.getTime();
+    		}else if(oldTrace.equals(curTrace) && !curTrace.contains(affectedRule)){
+    			res = oldRoot.getResult().toString();
+    			time = oldRoot.getTime();
+    			System.out.println(String.format("Inc-cached-sub:%s-%s:%s:%s", postName, "all", res, time));
+    			return;
     		}else{
     			ArrayList<String> args = new ArrayList<String>();
     	    	
@@ -495,8 +500,8 @@ public final class IncrementalTasksEvo {
         			aSub.setResult(res);
         			aSub.setTime(time); 	
         		}
-        		System.out.println(String.format("TimeOUT-Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), res, time));
-        		Node curRoot = NodeHelper.findRoot(curTree);
+        		System.out.println(String.format("ABORT-Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), res, time));
+        		
         		curRoot.setResult(res);
         		curRoot.Check(true);
         		
@@ -512,7 +517,7 @@ public final class IncrementalTasksEvo {
         }
         
         // repopulate the proof tree, to get root node verification result
-        Node curRoot = NodeHelper.findRoot(curTree);
+       
         if(curRoot.getResult().toString().equals("UNKNOWN")){
         	curTree = NodeHelper.repopulate(curTree);	
         }
