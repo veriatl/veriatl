@@ -237,9 +237,10 @@ public final class IncrementalTasksEvo {
      * Debug Boogie.
      * <p>
      * ???
+     * @throws IOException 
      *
      */
-    public static void debugBoogie(ContextConstruction context, String affectedRule) {
+    public static void debugBoogie(ContextConstruction context, String affectedRule) throws IOException {
     	
     	String postName = context.postName;
     	
@@ -260,10 +261,11 @@ public final class IncrementalTasksEvo {
     /**
      * Debug Boogie.
      * <p>
-     * ???
+     * ???s
+     * @throws IOException 
      *
      */
-    private static void debugBoogieSingle(ContextConstruction context, String postName, String affectedRule) {
+    private static void debugBoogieSingle(ContextConstruction context, String postName, String affectedRule) throws IOException {
 
     	ArrayList<String> caches = Caches.loadCaches(context, postName);
     	String previousCache = Caches.prevCache(caches);
@@ -283,14 +285,19 @@ public final class IncrementalTasksEvo {
 		}
 		
 		
+		String cacheState = "";
+		
     	if(previousCache == null) {
     		pCache = cCache;
     		oldTree = curTree;
+    		cacheState = "self";
     	}else{
     		pCache = context.basePath.appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME)
     				.appendSegment(postName).appendSegment(previousCache)
     				.appendFileExtension(VeriATLLaunchConstants.CACHE_EXT);
     		oldTree = URIs.load(pCache);
+    		
+    		cacheState = previousCache;
     	}
     	
     	ArrayList<String> todo = new ArrayList<String>();
@@ -405,34 +412,82 @@ public final class IncrementalTasksEvo {
         args.add("/z3exe:"+z3abs);
         args.add("/traceTimes");
         args.add("/timeLimit:60");
+        args.add("/verifySnapshots:3");
         
+        // gen single boogie file
+        ArrayList<String> boo = new ArrayList<String>();
+
         // add prelude files
-        String veriatlabs = veriatl +"\\Prelude\\";
-        args.addAll(getFiles(veriatlabs));
+        String veriatlabs = veriatl+"\\Prelude\\";
+        boo.addAll(getFiles(veriatlabs));
         
         // add auxu files
         String auxu = URIs.abs(context.basePath.appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
-        args.addAll(getFiles(auxu));
+        boo.addAll(getFiles(auxu));
+        
+        String preludes = "";
+        for(String f : boo) {
+        	preludes += FileUtils.readFileToString(new File(f), "UTF-8");
+        	preludes += "\n";
+        }
+        
+        
+        
+        // add genby
+        String genBy = FileUtils.readFileToString(new File(URIs.abs(context.basePath
+        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+        		.appendSegment(CompilerConstants.GENBY)
+        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
+        )), "UTF-8") + "\n";
         
         // verify subs in todo
         ArrayList<String> argsClone = new ArrayList<String>();
         for(String sub : todo) {
+        	
+			if(!cacheState.equals("self")){
+				Node n = NodeHelper.findNode(curTree, sub);
+	        	Node cache = NodeHelper.findSubInCache(oldTree, n);
+	        	
+	        	// gen new PO
+				String boogie = preludes + genBy + n.toBoogie();
+				String sim = String.format("%s.%s.%s",postName, n.getName(), NEW_VER);
+				URI output = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
+				driver.generateBoogieFile(output, sim, CompilerConstants.BOOGIE_EXT, boogie);
+				
+				
+				// generate PO old
+				String boogieOld = preludes + cache.toBoogie();
+				String nameOld = String.format("%s.%s.%s",postName, n.getName(), OLD_VER);
+				URI pathOld = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
+				driver.generateBoogieFile(pathOld, nameOld, CompilerConstants.BOOGIE_EXT, boogieOld);
+			}else{
+				Node n = NodeHelper.findNode(curTree, sub);
+				// gen new PO
+
+				String boogie = preludes + genBy + n.toBoogie();
+				String sim = String.format("%s.%s.%s",postName, n.getName(), OLD_VER);
+				URI output = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
+				driver.generateBoogieFile(output, sim, CompilerConstants.BOOGIE_EXT, boogie);
+			}
+			
+        	
+        	
+        	
+        	
             String subgoalAbsPath = URIs.abs(
             		context.basePath
             		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
             		.appendSegment(postName)
-            		.appendSegment(sub).appendFileExtension(CompilerConstants.BOOGIE_EXT)
-            );
-            
-            argsClone.addAll(args);
-        	argsClone.add(subgoalAbsPath);
-        	
-        	String genBy = URIs.abs(context.basePath
-            		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-            		.appendSegment(CompilerConstants.GENBY)
+            		.appendSegment(postName)
+            		.appendFileExtension(sub)
             		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
             );
-        	argsClone.add(genBy);
+            
+            
+        	argsClone.add(subgoalAbsPath);
+        	
+
+        	
         	
         	VerificationResult r = DefaultCommandEvo.execute(argsClone);
         	argsClone.clear();
