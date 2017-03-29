@@ -443,11 +443,9 @@ public final class IncrementalTasksEvo {
         // verify subs in todo
         ArrayList<String> argsClone = new ArrayList<String>();
         for(String sub : todo) {
-        	
-			if(!cacheState.equals("self")){
-				Node n = NodeHelper.findNode(curTree, sub);
-	        	Node cache = NodeHelper.findSubInCache(oldTree, n);
-	        	
+        	Node n = NodeHelper.findNode(curTree, sub);
+        	Node cache = NodeHelper.findSubInCache(oldTree, n);
+			if(!cacheState.equals("self") && cache != null){
 	        	// gen new PO
 				String boogie = preludes + genBy + n.toBoogie();
 				String sim = String.format("%s.%s.%s",postName, n.getName(), NEW_VER);
@@ -456,14 +454,12 @@ public final class IncrementalTasksEvo {
 				
 				
 				// generate PO old
-				String boogieOld = preludes + cache.toBoogie();
+				String boogieOld = preludes + genBy+ cache.toBoogie();
 				String nameOld = String.format("%s.%s.%s",postName, n.getName(), OLD_VER);
 				URI pathOld = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
 				driver.generateBoogieFile(pathOld, nameOld, CompilerConstants.BOOGIE_EXT, boogieOld);
 			}else{
-				Node n = NodeHelper.findNode(curTree, sub);
 				// gen new PO
-
 				String boogie = preludes + genBy + n.toBoogie();
 				String sim = String.format("%s.%s.%s",postName, n.getName(), OLD_VER);
 				URI output = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
@@ -483,7 +479,7 @@ public final class IncrementalTasksEvo {
             		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
             );
             
-            
+            argsClone.addAll(args);
         	argsClone.add(subgoalAbsPath);
         	
 
@@ -495,7 +491,6 @@ public final class IncrementalTasksEvo {
         	
         	
         	// process result
-        	Node n = NodeHelper.findNode(curTree, sub);
         	n.Check(true);
 			n.setResult(r.getTriBooleanResult());
         	n.setTime(r.getTime());

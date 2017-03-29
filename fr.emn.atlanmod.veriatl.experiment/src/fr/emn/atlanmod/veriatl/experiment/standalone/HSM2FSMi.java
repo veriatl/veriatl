@@ -38,10 +38,18 @@ public class HSM2FSMi {
 	public static void main(String[] args) throws Exception {	
 		WindowsStandalone.createTask(folders, mutants, org, changes, "HSM2FSM", "HSM", "FSM");
 		
-		WindowsStandalone.standardPostInit(proj);
-		WindowsStandalone.incPostInit(proj);
+
+//		WindowsStandalone.StandardVeriATLPost(proj);
 		WindowsStandalone.standardSubInit(proj);
-		WindowsStandalone.incSubInit(proj);
+//		WindowsStandalone.BoogieIncPostInit(proj);
+		
+		
+//		WindowsStandalone.incPostInit(proj);
+//		WindowsStandalone.incPostRegressionNoCache(proj);
+//		WindowsStandalone.incPostRegressionCache(proj);
+	
+
+//		WindowsStandalone.incSubInit(proj);
 
 	}
 }
