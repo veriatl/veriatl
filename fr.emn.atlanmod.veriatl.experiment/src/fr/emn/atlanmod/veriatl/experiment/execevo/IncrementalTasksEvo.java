@@ -5,10 +5,7 @@ package fr.emn.atlanmod.veriatl.experiment.execevo;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
@@ -129,7 +126,7 @@ public final class IncrementalTasksEvo {
 			        args.add("/nologo");
 			        args.add("/z3exe:"+z3abs);
 			        args.add("/traceTimes");
-			        //args.add("/verifySnapshots:3");
+			        args.add("/verifySnapshots:3");
 			        args.add("/timeLimit:60");
 			        
 			        
@@ -174,19 +171,19 @@ public final class IncrementalTasksEvo {
 						driver.generateBoogieFile(output, sim, CompilerConstants.BOOGIE_EXT, boogie);
 						
 						
-//						// generate PO old
-//						HashSet<String> TraceOld = NodeHelper.UnionTraces(oldRoot, NodeHelper.findDescendantLeafs(oldTree, oldRoot));
-//						oldRoot.setTraces(TraceOld);
-//						String boogieOld = preludes + oldRoot.toBoogie();
-//						String nameOld = String.format("%s.%s",postName, OLD_VER);
-//						URI pathOld = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
-//						driver.generateBoogieFile(pathOld, nameOld, CompilerConstants.BOOGIE_EXT, boogieOld);
+						// generate PO old
+						HashSet<String> TraceOld = NodeHelper.UnionTraces(oldRoot, NodeHelper.findDescendantLeafs(oldTree, oldRoot));
+						oldRoot.setTraces(TraceOld);
+						String boogieOld = preludes + oldRoot.toBoogie();
+						String nameOld = String.format("%s.%s",postName, OLD_VER);
+						URI pathOld = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
+						driver.generateBoogieFile(pathOld, nameOld, CompilerConstants.BOOGIE_EXT, boogieOld);
 					}else{
 						// gen new PO
 				        HashSet<String> simTrace = NodeHelper.UnionTraces(simPost, NodeHelper.findDescendantLeafs(curTree, simPost));
 						simPost.setTraces(simTrace);
 						String boogie = preludes + genBy + simPost.toBoogie();
-						String sim = String.format("%s.%s",postName, NEW_VER);
+						String sim = String.format("%s.%s",postName, OLD_VER);
 						URI output = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
 						driver.generateBoogieFile(output, sim, CompilerConstants.BOOGIE_EXT, boogie);
 					}
@@ -200,30 +197,23 @@ public final class IncrementalTasksEvo {
 			        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
 			        		.appendSegment(postName)
 			        		.appendSegment(postName)
-			        		.appendFileExtension(NEW_VER)
 			        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
 			        );
 			        args.add(post);
 			        
 
-			        if(timeouts_post.containsKey(postName)){
-			        	int pivot = -500 + (int)(Math.random() * 1000); 
-			        	int ts = timeouts_post.get(postName) + pivot;
-			        	System.out.println(String.format("TimeOut-inc-verify-post:%s:%s:%s",  postName, "FALSE", ts));
-			        	return;
-			        }else{
-			        	VerificationResult r = DefaultCommandEvo.execute(args);
-						
-						// update result and repopulate verification result tree
-						simPost.setResult(r.getTriBooleanResult());
-						curTree = NodeHelper.repopulate(curTree);	
-						curRoot.setResult(r.getTriBooleanResult());
-						curRoot.setTime(r.getTime());
-						if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")){
-							System.out.print("TimeOUT-");
-						}
-						System.out.println(String.format("inc-verify-post:%s:%s:%s",  postName, r.getTriBooleanResult(), r.getTime()));
-			        }
+		        	
+			        VerificationResult r = DefaultCommandEvo.execute(args);
+					
+					// update result and repopulate verification result tree
+					simPost.setResult(r.getTriBooleanResult());
+					curTree = NodeHelper.repopulate(curTree);	
+					curRoot.setResult(r.getTriBooleanResult());
+					curRoot.setTime(r.getTime());
+					if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")){
+						System.out.print("TimeOUT-");
+					}
+					System.out.println(String.format("inc-verify-post:%s:%s:%s",  postName, r.getTriBooleanResult(), r.getTime()));
 				}else{
 					System.out.println(String.format("inc-pop-post:%s:%s:%s",  postName, curRoot.getResult(), curRoot.getTime()));
 				}
@@ -289,7 +279,6 @@ public final class IncrementalTasksEvo {
 		
 		// Optimization, don't reverify sub-goals if there are too many
 		if(NodeHelper.findAllLeafs(curTree).size()>200){
-			System.out.println(String.format("Infeasible-Inc-verify-subs:%s-%s:%s:%s", postName, NodeHelper.findAllLeafs(curTree).size(), "UNKNOWN", 0));
 			return;
 		}
 		
@@ -304,31 +293,34 @@ public final class IncrementalTasksEvo {
     		oldTree = URIs.load(pCache);
     	}
     	
+    	ArrayList<String> todo = new ArrayList<String>();
+    	
     	Node curRoot = NodeHelper.findRoot(curTree);
     	HashSet<String> curTrace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
-    	ArrayList<String> todo = new ArrayList<String>();
+    	
     	Node oldRoot = NodeHelper.findRoot(oldTree);
 		HashSet<String> oldTrace = NodeHelper.UnionTraces(oldRoot, NodeHelper.findDescendantLeafs(oldTree, oldRoot));
-		
+    	String nature = "";
        	// verify full post
     	{
     		
     		// Optimization: do not reverify if curRoot is checked
     		String res = "UNKNOWN";
     		long time = 0;
-    		
+    		//Node curRoot = NodeHelper.findRoot(curTree);
     		
     		
     		
     		if(curRoot.isChecked()){
     			res = curRoot.getResult().toString();
     			time = curRoot.getTime();
+    			nature = "checked";
     		}else if(oldTrace.equals(curTrace) && !curTrace.contains(affectedRule)){
     			res = oldRoot.getResult().toString();
-    			time = posts_time.get(postName);
-    			System.out.println(String.format("Inc-cached-post:%s-%s:%s:%s", postName, "#"+NodeHelper.findAllLeafs(curTree).size(), res, time));
-    			return;
+    			time = oldRoot.getTime();
+    			nature = "cached";
     		}else{
+    			nature = "verify";
     			ArrayList<String> args = new ArrayList<String>();
     	    	
     	        String z3abs = z3;
@@ -348,39 +340,21 @@ public final class IncrementalTasksEvo {
     	        args.addAll(getFiles(auxu));
     	        
     			
-    	        // add PO
-    	        HashSet<String> trace = NodeHelper.UnionTraces(curRoot, NodeHelper.findDescendantLeafs(curTree, curRoot));
-    			curRoot.setTraces(trace);
-    			String boogie = curRoot.toBoogie();
-    			String name = String.format("%s.igore",postName);
-    			URI path = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME).appendSegment(postName);
-    			driver.generateBoogieFile(path, name, CompilerConstants.BOOGIE_EXT, boogie);
-    			
-    			
+    			// add PO
     			String post = URIs.abs(context.basePath
     	        		.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
     	        		.appendSegment(postName)
-    	        		.appendSegment(name)
+    	        		.appendSegment(CompilerConstants.FULL)
     	        		.appendFileExtension(CompilerConstants.BOOGIE_EXT)
     	        );
     	        args.add(post);
     	        
-    	        String rReal;
     	        
-    	        if(timeouts_post.containsKey(postName)){
-    	        	int pivot = -500 + (int)(Math.random() * 1000); 
-		        	res = "FALSE";
-		        	rReal = "time_out";
-		        	time = timeouts_post.get(postName) + pivot;
-    	        }else{
-    	        	VerificationResult r = DefaultCommand.execute(args); 
-        	        res = r.getTriBooleanResult().toString();
-        	        rReal = r.getResult().toString();
-        	        time = r.getTime();
-    	        }
-    	        
-    	        if(rReal.equals("time_out") || rReal.equals("inconclusive")){
-					//System.out.print("TimeOUT-");
+    	        VerificationResult r = DefaultCommand.execute(args); 
+    	        res = r.getTriBooleanResult().toString();
+    	        time = r.getTime();
+    	        if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")){
+					System.out.print("TimeOUT-");
 				}
     		}
 	        
@@ -393,9 +367,9 @@ public final class IncrementalTasksEvo {
 					n.setTime(0);
 					
 				}
-				System.out.println(String.format("Inc-checked-post:%s-%s:%s:%s", postName, "#"+NodeHelper.findAllLeafs(curTree).size(), res, time));
+				System.out.println(String.format("Inc-%s-sub:%s-%s:%s:%s", nature, postName, "all", res, time));
 			}else{
-				//System.out.println(String.format("Inc-checked-sub:%s-%s:%s:%s", postName, "#"+NodeHelper.findAllLeafs(curTree).size(), res, time));
+				System.out.println(String.format("Inc-%s-sub:%s-%s:%s:%s", nature, postName, "all", res, time));
 				// find sub-goals that need to be reverified
 				for(Node n: NodeHelper.findAllLeafs(curTree)){
 	
@@ -407,7 +381,7 @@ public final class IncrementalTasksEvo {
 		    			Node cache = NodeHelper.findSubInCache(oldTree, n);
 		    			
 		    			if(cache != null && !n.getTraces().contains(affectedRule) && cache.isChecked()/* && !cache.getResult().toString().equals("UNKNOWN") */){
-		    				System.out.println(String.format("Inc-cached-sub:%s-%s:%s:%s", postName, n.getName(), cache.getResult().toString(), cache.getTime()));
+		    				System.out.println(String.format("Inc-cached-sub:%s-%s:%s:0", postName, n.getName(), cache.getResult().toString()));
 		    				n.Check(true);
 		    				n.setResult(cache.getResult());
 		    				n.setTime(0);
@@ -460,28 +434,7 @@ public final class IncrementalTasksEvo {
             );
         	argsClone.add(genBy);
         	
-        	TriBoolean res;
-        	String rReal;
-        	long time;
-        	
-        	if(timeouts_sub0.containsKey(postName)){
-        		int pivot = -500 + (int)(Math.random() * 1000); 
-	        	res = TriBoolean.TRUE;
-	        	rReal = "true";
-	        	time = timeouts_sub0.get(postName) + pivot;
-        	}else if(timeouts_sub.containsKey(postName)){
-	        	int pivot = -500 + (int)(Math.random() * 1000); 
-	        	res = TriBoolean.FALSE;
-	        	rReal = "time_out";
-	        	time = timeouts_sub.get(postName) + pivot;
-	        }else{
-	        	VerificationResult r = DefaultCommandEvo.execute(argsClone);
-	        	res = r.getTriBooleanResult();
-	        	rReal = r.getResult();
-	        	time = r.getTime();
-	        }
-        	
-        	
+        	VerificationResult r = DefaultCommandEvo.execute(argsClone);
         	argsClone.clear();
         	
         	
@@ -489,20 +442,20 @@ public final class IncrementalTasksEvo {
         	// process result
         	Node n = NodeHelper.findNode(curTree, sub);
         	n.Check(true);
-			n.setResult(res);
-        	n.setTime(time);
+			n.setResult(r.getTriBooleanResult());
+        	n.setTime(r.getTime());
         	
         	// Optimization: we assume siblings of an unknown sub-goals will also be unknown, don't waste time to verify them, left to the developer to investigate
-        	if(rReal.equals("time_out") || rReal.equals("inconclusive")) {
+        	if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")) {
         		for(String s : todo){
         			Node aSub = NodeHelper.findNode(curTree, s);
         			aSub.Check(true);
-        			aSub.setResult(res);
-        			aSub.setTime(time); 	
+        			aSub.setResult(r.getTriBooleanResult());
+        			aSub.setTime(r.getTime()); 	
         		}
-        		System.out.println(String.format("ABORT-Inc-verify-sub:%s-%s:%s:%s", postName, "#"+NodeHelper.findAllLeafs(curTree).size(), res, time));
-        		
-        		curRoot.setResult(res);
+        		System.out.println(String.format("TimeOUT-Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
+        		//Node curRoot = NodeHelper.findRoot(curTree);
+        		curRoot.setResult(r.getTriBooleanResult());
         		curRoot.Check(true);
         		
         		// save to currentCache
@@ -511,13 +464,13 @@ public final class IncrementalTasksEvo {
         		
         		return;
         	}else {
-        		System.out.println(String.format("Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), res, time));
+        		System.out.println(String.format("Inc-verify-sub:%s-%s:%s:%s", postName, n.getName(), r.getTriBooleanResult(), r.getTime()));
         	}
         	
         }
         
         // repopulate the proof tree, to get root node verification result
-       
+        //Node curRoot = NodeHelper.findRoot(curTree);
         if(curRoot.getResult().toString().equals("UNKNOWN")){
         	curTree = NodeHelper.repopulate(curTree);	
         }
@@ -532,119 +485,9 @@ public final class IncrementalTasksEvo {
 		
     }
     
-    private static Map<String, Integer> timeouts_post = timeouts_post(); 
+    
 
-	public static Map<String, Integer> timeouts_post() {
-		Map<String, Integer> result = new HashMap<String, Integer>();
-		
-		result.put("ActionInputPin_input_pin", 70560);
-    	result.put("ActionInputPin_one_output_pin", 68675);
-    	result.put("Behavior_feature_of_context_classifier", 67992);
-    	result.put("CommunicationPath_association_ends", 68145);
-    	result.put("CreateObjectAction_classifier_not_abstract", 67998);
-    	result.put("CreateObjectAction_classifier_not_association_class", 66683);
-    	result.put("Extend_extension_points", 68549);
-    	result.put("InformationFlow_convey_classifiers", 66838);
-    	result.put("LinkAction_not_static", 66838);
-    	result.put("Node_internal_structure", 71084);
-    	result.put("State_destinations_or_sources_of_transitions", 67090);
-    	result.put("StructuralFeatureAction_not_static", 66735);
-    	result.put("ReadLinkObjectEndAction_ends_of_association", 63006);
-
-        return Collections.unmodifiableMap(result);
-	}
 	
-	
-	private static Map<String, Integer> posts_time = posts_time(); 
-
-	public static Map<String, Integer> posts_time() {
-		Map<String, Integer> result = new HashMap<String, Integer>();
-		
-		result.put("AcceptCallAction_unmarshall",8226);
-		result.put("AcceptEventAction_no_input_pins",13417);
-		result.put("AcceptEventAction_no_output_pins",29898);
-		result.put("ActionInputPin_input_pin",70560);
-		result.put("ActionInputPin_one_output_pin",68675);
-		result.put("ActivityParameterNode_has_parameters",17090);
-		result.put("ActivityParameterNode_no_edges",8710);
-		result.put("Behavior_feature_of_context_classifier",68491);
-		result.put("BehavioralFeature_abstract_no_method",48571);
-		result.put("CallAction_synchronous_call",13812);
-		result.put("ClassifierTemplateParameter_has_constraining_classifier",10029);
-		result.put("CommunicationPath_association_ends",67992);
-		result.put("Component_no_nested_classifiers",19074);
-		result.put("ConditionalNode_no_input_pins",9593);
-		result.put("CreateObjectAction_classifier_not_abstract",68145);
-		result.put("CreateObjectAction_classifier_not_association_class",67998);
-		result.put("DecisionNode_decision_input_flow_incoming",12670);
-		result.put("Enumeration_immutable",35885);
-		result.put("ExecutionSpecification_same_lifeline",29505);
-		result.put("Extend_extension_points",66683);
-		result.put("Extension_is_binary",8511);
-		result.put("FinalNode_no_outgoing_edges",9064);
-		result.put("FinalState_no_outgoing_transitions",8425);
-		result.put("FinalState_no_regions",7401);
-		result.put("ForkNode_one_incoming_edge",8118);
-		result.put("InformationFlow_convey_classifiers",68549);
-		result.put("InformationItem_has_no",9519);
-		result.put("InformationItem_not_instantiable",7164);
-		result.put("InitialNode_no_incoming_edges",7609);
-		result.put("InitialNode_control_edges",9802);
-		result.put("JoinNode_one_outgoing_edge",7728);
-		result.put("LinkAction_not_static",63589);
-		result.put("MergeNode_one_outgoing_edge",7561);
-		result.put("Node_internal_structure",71084);
-		result.put("ObjectFlow_is_multicast_or_is_multireceive",6998);
-		result.put("Parameter_stream_and_exception",6752);
-		result.put("Pin_control_pins",13657);
-		result.put("Pin_not_unique",13251);
-		result.put("Property_derived_union_is_read_only",10726);
-		result.put("Property_derived_union_is_derived",10947);
-		result.put("Property_subsetted_property_names",23684);
-		result.put("ReadLinkObjectEndAction_ends_of_association",63006);
-		result.put("Reception_same_name_as_signal",8921);
-		result.put("State_submachine_states",6950);
-		result.put("State_composite_states",9350);
-		result.put("State_destinations_or_sources_of_transitions",67090);
-		result.put("State_submachine_or_regions",9255);
-		result.put("StringExpression_operands",39834);
-		result.put("StructuralFeatureAction_not_static",66735);
-		result.put("ValuePin_no_incoming_edges",7595);
-        return Collections.unmodifiableMap(result);
-	}
-	
-	private static Map<String, Integer> timeouts_sub0 = timeouts_sub0(); 
-
-	public static Map<String, Integer> timeouts_sub0() {
-		Map<String, Integer> result = new HashMap<String, Integer>();
-		
-		result.put("ActionInputPin_input_pin", 23165);
-		result.put("ActionInputPin_one_output_pin", 11929);
-		result.put("CreateObjectAction_classifier_not_abstract", 10409);
-		result.put("CreateObjectAction_classifier_not_abstract", 11050);
-		result.put("LinkAction_not_static", 43992);
-		result.put("Node_internal_structure", 34504);
-		result.put("Property_subsetted_property_names", 14466);
-		result.put("StringExpression_operands", 19960);
-		result.put("CreateObjectAction_classifier_not_association_class", 6820);
-		result.put("StructuralFeatureAction_not_static", 9634);
-        return Collections.unmodifiableMap(result);
-	}
-	
-	
-	private static Map<String, Integer> timeouts_sub = timeouts_sub(); 
-
-	public static Map<String, Integer> timeouts_sub() {
-		Map<String, Integer> result = new HashMap<String, Integer>();
-		
-		result.put("Behavior_feature_of_context_classifier", 67037);
-		result.put("CommunicationPath_association_ends", 68528);
-		result.put("InformationFlow_convey_classifiers", 68236);
-		result.put("ReadLinkObjectEndAction_ends_of_association", 66760);
-		result.put("State_destinations_or_sources_of_transitions", 67106);
-
-        return Collections.unmodifiableMap(result);
-	}
     private static ArrayList<String> getFiles(String folder){
     	ArrayList<String> r = new ArrayList<String>();
     	File f = new File(folder);
