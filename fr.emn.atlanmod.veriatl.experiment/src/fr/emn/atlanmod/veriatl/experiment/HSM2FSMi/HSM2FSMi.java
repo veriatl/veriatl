@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.emn.atlanmod.veriatl.experiment.standalone.WindowsStandalone;
+
 
 
 /**
@@ -14,7 +16,7 @@ import java.util.Map;
  *
  */
 public class HSM2FSMi {
-	static String[] folders = new String[]{"Auxu", "Caches", "Sub-goals"};
+	static String[] folders = new String[]{"Auxu", "Caches", "Sub-goals", "Boogie"};
 	static String[] posts;
 	static String[] mutants = new String[]{"AF2", "AR", "DB3", "DR1","MB6", "MF6"};
 	
@@ -39,17 +41,19 @@ public class HSM2FSMi {
 		WindowsStandalone.createTask(folders, mutants, org, changes, "HSM2FSM", "HSM", "FSM");
 		
 
-//		WindowsStandalone.StandardVeriATLPost(proj);
+		WindowsStandalone.cleanAll(proj);
+		
+		// fine-grained incremental verification mode
+		WindowsStandalone.incPostInit(proj);
+		WindowsStandalone.incPostRegressionNoCache(proj);
+		WindowsStandalone.incPostRegressionCache(proj);
+		
+		// sub-goal verification mode
 		WindowsStandalone.standardSubInit(proj);
-//		WindowsStandalone.BoogieIncPostInit(proj);
-		
-		
-//		WindowsStandalone.incPostInit(proj);
-//		WindowsStandalone.incPostRegressionNoCache(proj);
-//		WindowsStandalone.incPostRegressionCache(proj);
-	
+		WindowsStandalone.incSubInit(proj);
 
-//		WindowsStandalone.incSubInit(proj);
+		// Boogie inc verification mode
+		WindowsStandalone.BoogieIncPostInit(proj);
 
 	}
 }

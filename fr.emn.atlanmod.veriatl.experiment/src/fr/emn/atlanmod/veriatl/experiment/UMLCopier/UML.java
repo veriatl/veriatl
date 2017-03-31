@@ -5,6 +5,8 @@ package fr.emn.atlanmod.veriatl.experiment.UMLCopier;
 
 import java.util.Map;
 
+import fr.emn.atlanmod.veriatl.experiment.standalone.WindowsStandalone;
+
 
 
 /**
@@ -12,7 +14,7 @@ import java.util.Map;
  *
  */
 public class UML {
-	static String[] folders = new String[]{"Auxu", "Caches", "Sub-goals"};
+	static String[] folders = new String[]{"Auxu", "Caches", "Sub-goals", "Boogie"};
 	static String[] posts;
 	static String[] mutantsAdd = CreateMap.AddMutants();
 	private static final Map<String, String> changesAdd = CreateMap.Add();

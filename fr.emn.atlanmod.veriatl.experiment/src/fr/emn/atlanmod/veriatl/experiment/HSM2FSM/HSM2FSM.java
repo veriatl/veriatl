@@ -16,7 +16,7 @@ import fr.emn.atlanmod.veriatl.experiment.standalone.WindowsStandalone;
  *
  */
 public class HSM2FSM {
-	static String[] folders = new String[]{"Auxu", "Caches", "Sub-goals"};
+	static String[] folders = new String[]{"Auxu", "Caches", "Sub-goals", "Boogie"};
 	static String[] posts;
 	
 	static String[] mutants = new String[]{"AF2", "AR", "DB3", "DR1","MB6", "MF6"};
@@ -39,6 +39,8 @@ public class HSM2FSM {
     
 	public static void main(String[] args) throws Exception {	
 		WindowsStandalone.createTask(folders, mutants, org, changes, "HSM2FSM", "HSM", "FSM");
+		
+		WindowsStandalone.cleanAll(proj);
 		
 		// fine-grained incremental verification mode
 		WindowsStandalone.incPostInit(proj);
