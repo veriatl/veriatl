@@ -1,5 +1,7 @@
 module UML2UMLsContract;
 create OUT : UMLs from IN : UML;
+
+
 	--@pre
 	helper context UML!AcceptCallAction def: pre_unmarshall(): Boolean = --unmarshall
 	  UML!AcceptCallAction.allInstances()->forAll(aca |  
@@ -54,15 +56,8 @@ UML!Parameter.allInstances()->includes(apn.parameter) implies (
 	    )))
 	); 
 	
-	--@pre
-	helper context UML!ActivityParameterNode def: pre_same_type(): Boolean = --same_type
-	  UML!ActivityParameterNode.allInstances()->forAll(apn |  
-UML!Type.allInstances()->includes(apn.type) implies (
-UML!Type.allInstances()->includes(apn.parameter.type) implies (
-UML!Parameter.allInstances()->includes(apn.parameter) implies (
-	    apn.type = apn.parameter.type
-	    )))
-	); 
+
+
 	
 	--@pre
 	helper context UML!ActivityParameterNode def: pre_no_edges(): Boolean = --no_edges
@@ -132,22 +127,8 @@ cn.input->size()>0 implies (
 	    )
 	); 
 	
-	--@pre
-	helper context UML!ConsiderIgnoreFragment def: pre_type(): Boolean = --type
-	  UML!ConsiderIgnoreFragment.allInstances()->forAll(cif |  
-cif.message->size()>0 implies (
-	    cif.message->forAll(nem|
-	      nem.oclIsKindOf(UML!Operation) or nem.oclIsKindOf(UML!Signal))
-	    )
-	); 
-	
-	--@pre
-	helper context UML!Constraint def: pre_not_apply_to_self(): Boolean = --not_apply_to_self
-	  UML!Constraint.allInstances()->forAll(c |  
-c.constrainedElement->size()>0 implies (
-	    not(c.constrainedElement->includes(c))
-	    )
-	); 
+
+
 	
 	--@pre
 	helper context UML!CreateObjectAction def: pre_classifier_not_abstract(): Boolean = --classifier_not_abstract
@@ -165,15 +146,7 @@ UML!Classifier.allInstances()->includes(coa.classifier) implies (
 	    )
 	); 
 	
-	--@pre
-	helper context UML!CreateObjectAction def: pre_same_type(): Boolean = --same_type
-	  UML!CreateObjectAction.allInstances()->forAll(coa |  
-UML!Classifier.allInstances()->includes(coa.classifier) implies (
-UML!OutputPin.allInstances()->includes(coa.result) implies (
-UML!Type.allInstances()->includes(coa.result.type) implies (
-	    coa.result.type = coa.classifier
-	    )))
-	); 
+
 	
 	--@pre
 	helper context UML!DecisionNode def: pre_decision_input_flow_incoming(): Boolean = --decision_input_flow_incoming
@@ -184,13 +157,8 @@ UML!ObjectFlow.allInstances()->includes(dn.decisionInputFlow) implies (
 	    ))
 	); 
 	
-	--@pre
-	helper context UML!DurationConstraint def: pre_has_one_or_two_constrainedElements(): Boolean = --has_one_or_two_constrainedElements
-	  UML!DurationConstraint.allInstances()->forAll(dc |  
-dc.constrainedElement->size()>0 implies (
-	    dc.constrainedElement->size() = 1 or dc.constrainedElement->size() = 2
-	    )
-	); 
+
+
 	
 	--@pre
 	helper context UML!Enumeration def: pre_immutable(): Boolean = --immutable
@@ -201,17 +169,8 @@ e.ownedAttribute->size()>0 implies (
 	    )
 	); 
 	
-	--@pre
-	helper context UML!ExceptionHandler def: pre_handler_body_edges(): Boolean = --handler_body_edges
-	  UML!ExceptionHandler.allInstances()->forAll(eh |  
-eh.handlerBody.outgoing->size()>0 implies (
-eh.exceptionInput.incoming->size()>0 implies (
-UML!ExecutableNode.allInstances()->includes(eh.handlerBody) implies (
-UML!ObjectNode.allInstances()->includes(eh.exceptionInput) implies (
-eh.handlerBody.incoming->size()>0 implies (
-	    eh.handlerBody.incoming->isEmpty() and eh.handlerBody.outgoing->isEmpty() and eh.exceptionInput.incoming->isEmpty()
-	    )))))
-	); 
+
+
 	
 
 	
@@ -353,14 +312,8 @@ n.part->size()>0 implies (
 	    )
 	); 
 	
-	--@pre
-	helper context UML!ObjectFlow def: pre_no_executable_nodes(): Boolean = --no_executable_nodes
-	  UML!ObjectFlow.allInstances()->forAll(of |  
-UML!ActivityNode.allInstances()->includes(of.source) implies (
-UML!ActivityNode.allInstances()->includes(of.target) implies (
-	    not(of.source.oclIsKindOf(UML!ExecutableNode) or of.target.oclIsKindOf(UML!ExecutableNode))
-	    ))
-	); 
+
+
 	
 	--@pre
 	helper context UML!ObjectFlow def: pre_is_multicast_or_is_multireceive(): Boolean = --is_multicast_or_is_multireceive
@@ -407,26 +360,8 @@ p.subsettedProperty->size()>0 implies (
 	    )
 	); 
 	
-	--@pre
-	helper context UML!ProtocolStateMachine def: pre_protocol_transitions(): Boolean = --protocol_transitions
-	  UML!ProtocolStateMachine.allInstances()->forAll(psm |  
-psm.region->size()>0 implies (
-	    psm.region->forAll(rr|
-	    rr.transition->size()>0 implies (
-	      rr.transition->forAll(tt|
-	        tt.oclIsTypeOf(UML!ProtocolTransition))))
-	    )
-	); 
-	
-	--@pre
-	helper context UML!ReadExtentAction def: pre_type_is_classifier(): Boolean = --type_is_classifier
-	  UML!ReadExtentAction.allInstances()->forAll(rea |  
-UML!Classifier.allInstances()->includes(rea.classifier) implies (
-UML!Type.allInstances()->includes(rea.result.type) implies (
-UML!OutputPin.allInstances()->includes(rea.result) implies (
-	    rea.result.type = rea.classifier
-	    )))
-	); 
+
+
 	
 	--@pre
 	helper context UML!ReadLinkObjectEndAction def: pre_ends_of_association(): Boolean = --ends_of_association
@@ -439,38 +374,8 @@ UML!Property.allInstances()->includes(rloea.end) implies (
 	    )))
 	); 
 	
-	--@pre
-	helper context UML!ReadLinkObjectEndAction def: pre_type_of_result(): Boolean = --type_of_result
-	  UML!ReadLinkObjectEndAction.allInstances()->forAll(rloea |  
-UML!Type.allInstances()->includes(rloea.end.type) implies (
-UML!OutputPin.allInstances()->includes(rloea.result) implies (
-UML!Type.allInstances()->includes(rloea.result.type) implies (
-UML!Property.allInstances()->includes(rloea.end) implies (
-	    rloea.result.type = rloea.end.type
-	    ))))
-	); 
-	
-	--@pre
-	helper context UML!ReadLinkObjectEndAction def: pre_type_of_object(): Boolean = --type_of_object
-	  UML!ReadLinkObjectEndAction.allInstances()->forAll(rloea |  
-UML!Type.allInstances()->includes(rloea.object.type) implies (
-UML!Association.allInstances()->includes(rloea.end.association) implies (
-UML!InputPin.allInstances()->includes(rloea.object) implies (
-UML!Property.allInstances()->includes(rloea.end) implies (
-	    rloea.object.type = rloea.end.association
-	    ))))
-	); 
-	
-	--@pre
-	helper context UML!ReadLinkObjectEndQualifierAction def: pre_same_type(): Boolean = --same_type
-	  UML!ReadLinkObjectEndQualifierAction.allInstances()->forAll(rloeqa |  
-UML!Type.allInstances()->includes(rloeqa.qualifier.type) implies (
-UML!Property.allInstances()->includes(rloeqa.qualifier) implies (
-UML!OutputPin.allInstances()->includes(rloeqa.result) implies (
-UML!Type.allInstances()->includes(rloeqa.result.type) implies (
-	    rloeqa.result.type = rloeqa.qualifier.type
-	    ))))
-	); 
+
+
 	
 	--@pre
 	helper context UML!Reception def: pre_same_name_as_signal(): Boolean = --same_name_as_signal
@@ -535,25 +440,8 @@ UML!StructuralFeature.allInstances()->includes(sfa.structuralFeature) implies (
 	    )
 	); 
 	
-	--@pre
-	helper context UML!TemplateBinding def: pre_parameter_substitution_formal(): Boolean = --parameter_substitution_formal
-	  UML!TemplateBinding.allInstances()->forAll(tb |  
-tb.signature.parameter->size()>0 implies (
-UML!TemplateSignature.allInstances()->includes(tb.signature) implies (
-tb.parameterSubstitution->size()>0 implies (
-	    tb.parameterSubstitution->forAll(tpsb|
-	    UML!TemplateParameter.allInstances()->includes(tpsb.formal) implies (
-	      tb.signature.parameter->includes(tpsb.formal)))
-	    )))
-	); 
-	
-	--@pre
-	helper context UML!TimeConstraint def: pre_has_one_constrainedElement(): Boolean = --has_one_constrainedElement
-	  UML!TimeConstraint.allInstances()->forAll(tc |  
-tc.constrainedElement->size()>0 implies (
-	    tc.constrainedElement->size() = 1
-	    )
-	); 
+
+
 	
 	--@pre
 	helper context UML!ValuePin def: pre_no_incoming_edges(): Boolean = --no_incoming_edges
@@ -562,6 +450,13 @@ vp.incoming->size()>0 implies (
 	    vp.incoming->isEmpty()
 	    )
 	); 
+	
+
+
+
+
+
+
 	
 
 
