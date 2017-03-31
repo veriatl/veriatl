@@ -16,7 +16,6 @@ import datastructure.TriBoolean;
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.experiment.exec.Caches;
-import fr.emn.atlanmod.veriatl.experiment.exec.DefaultCommand;
 import fr.emn.atlanmod.veriatl.experiment.standalone.ContextConstruction;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.VerificationResult;
@@ -357,7 +356,7 @@ public final class IncrementalTasksEvo {
     	        args.add(post);
     	        
     	        
-    	        VerificationResult r = DefaultCommand.execute(args); 
+    	        VerificationResult r = DefaultCommandEvo.execute(args); 
     	        res = r.getTriBooleanResult().toString();
     	        time = r.getTime();
     	        if(r.getResult().toString().equals("time_out") || r.getResult().toString().equals("inconclusive")){

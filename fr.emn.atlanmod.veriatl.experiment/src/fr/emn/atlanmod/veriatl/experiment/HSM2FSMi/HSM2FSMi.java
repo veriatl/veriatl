@@ -43,13 +43,12 @@ public class HSM2FSMi {
 
 		WindowsStandalone.cleanAll(proj);
 		
-		// fine-grained incremental verification mode
+		// post fine-grained incremental verification mode
 		WindowsStandalone.incPostInit(proj);
 		WindowsStandalone.incPostRegressionNoCache(proj);
 		WindowsStandalone.incPostRegressionCache(proj);
 		
-		// sub-goal verification mode
-		WindowsStandalone.standardSubInit(proj);
+		// sub-goal fine-grained incremental verification mode
 		WindowsStandalone.incSubInit(proj);
 
 		// Boogie inc verification mode

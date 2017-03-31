@@ -47,13 +47,14 @@ public class UML {
 	public static void testAdd() throws Exception{
 		WindowsStandalone.createTask(folders, mutantsAdd, org, changesAdd, "UML2UMLs", "UML", "UMLs");
 	
-		// fine-grained incremental verification mode
+		WindowsStandalone.cleanAll(proj);
+		
+		// post fine-grained incremental verification mode
 		WindowsStandalone.incPostInit(proj);
 		WindowsStandalone.incPostRegressionNoCache(proj);
 		WindowsStandalone.incPostRegressionCache(proj);
 		
-		// sub-goal verification mode
-		WindowsStandalone.standardSubInit(proj);
+		// sub-goal fine-grained incremental verification mode
 		WindowsStandalone.incSubInit(proj);
 
 		// Boogie inc verification mode
@@ -64,13 +65,14 @@ public class UML {
 	public static void testDel() throws Exception{
 		WindowsStandalone.createTask(folders, mutantsDel, org, changesDel, "UML2UMLs", "UML", "UMLs");
 	
-		// fine-grained incremental verification mode
+		WindowsStandalone.cleanAll(proj);
+		
+		// post fine-grained incremental verification mode
 		WindowsStandalone.incPostInit(proj);
 		WindowsStandalone.incPostRegressionNoCache(proj);
 		WindowsStandalone.incPostRegressionCache(proj);
 		
-		// sub-goal verification mode
-		WindowsStandalone.standardSubInit(proj);
+		// sub-goal fine-grained incremental verification mode
 		WindowsStandalone.incSubInit(proj);
 
 		// Boogie inc verification mode
@@ -80,13 +82,14 @@ public class UML {
 	public static void testGuard() throws Exception{
 		WindowsStandalone.createTask(folders, mutantsFilter, org, changesFilter, "UML2UMLs", "UML", "UMLs");
 	
-		// fine-grained incremental verification mode
+		WindowsStandalone.cleanAll(proj);
+		
+		// post fine-grained incremental verification mode
 		WindowsStandalone.incPostInit(proj);
 		WindowsStandalone.incPostRegressionNoCache(proj);
 		WindowsStandalone.incPostRegressionCache(proj);
 		
-		// sub-goal verification mode
-		WindowsStandalone.standardSubInit(proj);
+		// sub-goal fine-grained incremental verification mode
 		WindowsStandalone.incSubInit(proj);
 
 		// Boogie inc verification mode
@@ -96,13 +99,14 @@ public class UML {
 	public static void testBind() throws Exception{
 		WindowsStandalone.createTask(folders, mutantsBind, org, changesBind, "UML2UMLs", "UML", "UMLs");
 	
-		// fine-grained incremental verification mode
+		WindowsStandalone.cleanAll(proj);
+		
+		// post fine-grained incremental verification mode
 		WindowsStandalone.incPostInit(proj);
 		WindowsStandalone.incPostRegressionNoCache(proj);
 		WindowsStandalone.incPostRegressionCache(proj);
 		
-		// sub-goal verification mode
-		WindowsStandalone.standardSubInit(proj);
+		// sub-goal fine-grained incremental verification mode
 		WindowsStandalone.incSubInit(proj);
 
 		// Boogie inc verification mode

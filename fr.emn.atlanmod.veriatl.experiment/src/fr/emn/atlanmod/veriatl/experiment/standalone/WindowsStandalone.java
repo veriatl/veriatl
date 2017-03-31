@@ -12,7 +12,6 @@ import org.eclipse.emf.common.util.URI;
 
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.veriatl.experiment.exec.BoogieTasks;
-import fr.emn.atlanmod.veriatl.experiment.exec.NormalTasks;
 import fr.emn.atlanmod.veriatl.experiment.execevo.IncrementalTasksEvo;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import localize.ocldecomposerDriver;
@@ -109,29 +108,7 @@ public class WindowsStandalone {
 	
 
 	
-	/*
-	 * 1st column
-	 * */
-	public static void StandardVeriATLPost(String p) throws Exception{
-		System.out.println(String.format("=================== %s-post-standard ===================", org));
-		String proj = String.format("%s/%s", p, org);
-		ContextConstruction context = init(proj);
-		clean(context);
-		gen(context);
-		decompose(context);
-		NormalTasks.execBoogie(context);
-		
-		for(String trg : mutants){
-			System.out.println(String.format("=================== %s-post-standard ===================", trg));
-			proj = String.format("%s/%s", p, trg);
-			context = init(proj);
-			clean(context);
-			gen(context);
-			decompose(context);
-			NormalTasks.execBoogie(context);
-		}
-		
-	}
+
 	
 	/*
 	 * Prepare for 2nd column
@@ -247,29 +224,7 @@ public class WindowsStandalone {
 	
 	
 	
-	/*
-	 * 4th column
-	 * */
-	public static void StandardVeriATLSub(String p) throws Exception{
-		System.out.println(String.format("=================== %s-sub-standard ===================", org));
-		String proj = String.format("%s/%s", p, org);
-		ContextConstruction context = init(proj);
-		clean(context);
-		gen(context);
-		decompose(context);
-		NormalTasks.debugBoogie(context);
-		
-		for(String trg : mutants){
-			System.out.println(String.format("=================== %s-sub-standard ===================", trg));
-			proj = String.format("%s/%s", p, trg);
-			context = init(proj);
-			clean(context);
-			gen(context);
-			decompose(context);
-			NormalTasks.debugBoogie(context);
-		}
-		
-	}
+
 	
 	
 
@@ -305,10 +260,7 @@ public class WindowsStandalone {
 	}
 	
 	
-	
-	public static void standardPostInit(String p) throws Exception{
-		StandardVeriATLPost(p);
-	}
+
 	
 	
 	public static void incPostInit(String p) throws Exception{
@@ -317,9 +269,7 @@ public class WindowsStandalone {
 		//PreparePostCache(p);
 	}
 	
-	public static void standardSubInit(String p) throws Exception{
-		StandardVeriATLSub(p);
-	}
+
 	
 	public static void incSubInit(String p) throws Exception{
 		IncrementalVeriATLSubCache(p);
@@ -352,9 +302,7 @@ public class WindowsStandalone {
 		
 	}
 	
-	public static void standardPostRegression(String p) throws Exception{
-		StandardVeriATLPost(p);
-	}
+
 	
 	public static void incPostRegressionCache(String p) throws Exception{
 		IncrementalVeriATLPostCache(p);
@@ -364,9 +312,7 @@ public class WindowsStandalone {
 		IncrementalVeriATLPostNoCache(p);
 	}
 	
-	public static void standardSubRegression(String p) throws Exception{
-		StandardVeriATLSub(p);
-	}
+
 	
 	public static void incSubRegression(String p) throws Exception{
 		IncrementalVeriATLSubCache(p);
