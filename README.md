@@ -14,7 +14,7 @@ Interest in VeriATL, but do not have time to install? Worry not! Quick demo of V
 
 Impacts
 ------
-Our tool is built on top of a state-of-the-art incremental verification tool *Boogie* for imperative languages [cite](). Through evaluation, we show that:
+Our tool is built on top of a state-of-the-art incremental verification tool *Boogie* for imperative languages [cite](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/krml245.pdf). Through evaluation, we show that:
 
 * Our tool speeds up re-verifications by at least 70\%. 
 * Because of using fine-grained verification (notably enabling program slicing and impact analysis), our tool is consistently faster than the state-of-the-art incremental verification tool by 16\% to 45\%.
