@@ -8,5 +8,5 @@ package fr.emn.atlanmod.veriatl.experiment.standalone;
  *
  */
 public interface Configure {
-	public static int TIMELIMIT = 600;
+	public static int TIMELIMIT = 60;
 }

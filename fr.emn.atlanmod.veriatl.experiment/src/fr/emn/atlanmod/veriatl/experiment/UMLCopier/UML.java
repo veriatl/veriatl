@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.emn.atlanmod.veriatl.experiment.standalone;
+package fr.emn.atlanmod.veriatl.experiment.UMLCopier;
 
 import java.util.Map;
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.emn.atlanmod.veriatl.experiment.standalone;
+package fr.emn.atlanmod.veriatl.experiment.HSM2FSMi;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,13 +13,13 @@ import java.util.Map;
  * @author zcheng
  *
  */
-public class HSM2FSM {
+public class HSM2FSMi {
 	static String[] folders = new String[]{"Auxu", "Caches", "Sub-goals"};
 	static String[] posts;
-	
 	static String[] mutants = new String[]{"AF2", "AR", "DB3", "DR1","MB6", "MF6"};
+	
 	static String org = "ORG";
-	static String proj = "HSM2FSM";
+	static String proj = "HSM2FSMi";
 	private static final Map<String, String> changes = createMap();
 
     private static Map<String, String> createMap() {
@@ -38,6 +38,7 @@ public class HSM2FSM {
 	public static void main(String[] args) throws Exception {	
 		WindowsStandalone.createTask(folders, mutants, org, changes, "HSM2FSM", "HSM", "FSM");
 		
+
 //		WindowsStandalone.StandardVeriATLPost(proj);
 		WindowsStandalone.standardSubInit(proj);
 //		WindowsStandalone.BoogieIncPostInit(proj);
@@ -46,10 +47,9 @@ public class HSM2FSM {
 //		WindowsStandalone.incPostInit(proj);
 //		WindowsStandalone.incPostRegressionNoCache(proj);
 //		WindowsStandalone.incPostRegressionCache(proj);
-//		
-//		WindowsStandalone.standardSubInit(proj);
-		WindowsStandalone.incSubInit(proj);
-		
-		
+	
+
+//		WindowsStandalone.incSubInit(proj);
+
 	}
 }
