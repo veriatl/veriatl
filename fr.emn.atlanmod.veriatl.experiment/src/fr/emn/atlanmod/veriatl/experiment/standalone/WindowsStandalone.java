@@ -48,7 +48,7 @@ public class WindowsStandalone {
 		URI src = URI.createFileURI(String.format("./%s/Source/%s.ecore", p, s));
 		URI trg = URI.createFileURI(String.format("./%s/Source/%s.ecore", p, t)); 
 		URI contract = URI.createFileURI(String.format("./%s/Source/%sContract.atl", p, moduleName));	
-		URI cache = URI.createFileURI(String.format("./%s/", p)).appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME);
+		//URI cache = URI.createFileURI(String.format("./%s/", p)).appendSegment(VeriATLLaunchConstants.CACHE_FOLDER_NAME);
 		
 		String post = "all";
 		

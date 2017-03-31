@@ -21,7 +21,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
-import org.eclipse.m2m.atl.common.ATL.MatchedRule;
 import org.eclipse.m2m.atl.common.OCL.OclExpression;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 
@@ -38,7 +37,6 @@ import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import transformation.Trace;
-import transformation.TransformationLoader;
 
 public class experimentDriver {
 	

@@ -5,13 +5,11 @@ package fr.emn.atlanmod.veriatl.core;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import org.eclipse.emf.common.util.URI;
 
 import datastructure.Node;
 import datastructure.NodeHelper;
-import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.Commands;
