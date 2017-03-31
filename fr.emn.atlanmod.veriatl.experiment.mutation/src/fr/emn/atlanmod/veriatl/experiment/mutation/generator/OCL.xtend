@@ -1,10 +1,12 @@
 package fr.emn.atlanmod.veriatl.experiment.mutation.generator
 
-import java.util.HashMap
-import java.util.HashSet
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.m2m.atl.common.OCL.*
-
+import org.eclipse.m2m.atl.common.OCL.BooleanExp
+import org.eclipse.m2m.atl.common.OCL.NavigationOrAttributeCallExp
+import org.eclipse.m2m.atl.common.OCL.OclModelElement
+import org.eclipse.m2m.atl.common.OCL.OperationCallExp
+import org.eclipse.m2m.atl.common.OCL.OperatorCallExp
+import org.eclipse.m2m.atl.common.OCL.VariableExp
 
 class OCL {
 

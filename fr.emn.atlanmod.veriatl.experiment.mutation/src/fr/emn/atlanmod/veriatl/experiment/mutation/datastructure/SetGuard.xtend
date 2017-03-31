@@ -3,12 +3,11 @@
  */
 package fr.emn.atlanmod.veriatl.experiment.mutation.datastructure
 
-import org.eclipse.m2m.atl.common.ATL.MatchedRule
-import org.eclipse.emf.ecore.EPackage
 import fr.emn.atlanmod.veriatl.experiment.mutation.util.EMFUtil
 import fr.emn.atlanmod.veriatl.experiment.mutation.util.OCLUtil
-import org.eclipse.m2m.atl.common.OCL.VariableExp
 import java.util.ArrayList
+import org.eclipse.emf.ecore.EPackage
+import org.eclipse.m2m.atl.common.ATL.MatchedRule
 
 /**
  * @author zcheng

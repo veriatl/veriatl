@@ -1,13 +1,13 @@
 package fr.emn.atlanmod.veriatl.experiment.mutation.generator
 
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.m2m.atl.common.ATL.*
-import org.eclipse.m2m.atl.common.OCL.OclType
-import org.eclipse.m2m.atl.common.OCL.OclModelElement
-import org.eclipse.m2m.atl.common.OCL.OclExpression
 import org.eclipse.m2m.atl.common.ATL.Binding
-import org.eclipse.m2m.atl.common.ATL.Module
 import org.eclipse.m2m.atl.common.ATL.MatchedRule
+import org.eclipse.m2m.atl.common.ATL.Module
+import org.eclipse.m2m.atl.common.ATL.ModuleElement
+import org.eclipse.m2m.atl.common.ATL.SimpleInPatternElement
+import org.eclipse.m2m.atl.common.ATL.SimpleOutPatternElement
+import org.eclipse.m2m.atl.common.OCL.OclExpression
+import org.eclipse.m2m.atl.common.OCL.OclModelElement
 
 class Mutation {
 	

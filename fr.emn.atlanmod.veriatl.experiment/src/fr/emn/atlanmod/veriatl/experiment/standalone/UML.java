@@ -3,8 +3,6 @@
  */
 package fr.emn.atlanmod.veriatl.experiment.standalone;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -35,22 +33,77 @@ public class UML {
 
     
     
-	public static void main(String[] args) throws Exception {	
-		
+	public static void main(String[] args) throws Exception {		
+		testAdd();
+		testDel();
+		testGuard();
+		testBind();
+	}
+	
+	
+	
+	public static void testAdd() throws Exception{
 		WindowsStandalone.createTask(folders, mutantsAdd, org, changesAdd, "UML2UMLs", "UML", "UMLs");
-//		WindowsStandalone.createTask(folders, mutantsDel, org, changesDel, "UML2UMLs", "UML", "UMLs");
-//		WindowsStandalone.createTask(folders, mutantsFilter, org, changesFilter, "UML2UMLs", "UML", "UMLs");
-//		WindowsStandalone.createTask(folders, mutantsBind, org, changesBind, "UML2UMLs", "UML", "UMLs");
-		
-		
-		// prepare cache
-//		WindowsStandalone.incPostInit(proj);
-//		WindowsStandalone.incPostRegressionNoCache(proj);
+	
+		// fine-grained incremental verification mode
+		WindowsStandalone.incPostInit(proj);
+		WindowsStandalone.incPostRegressionNoCache(proj);
 		WindowsStandalone.incPostRegressionCache(proj);
 		
-//		WindowsStandalone.standardSubInit(proj);
-//		WindowsStandalone.incSubInit(proj);
+		// sub-goal verification mode
+		WindowsStandalone.standardSubInit(proj);
+		WindowsStandalone.incSubInit(proj);
 
-//		WindowsStandalone.BoogieIncPostInit(proj);
+		// Boogie inc verification mode
+		WindowsStandalone.BoogieIncPostInit(proj);
+	}
+	
+	
+	public static void testDel() throws Exception{
+		WindowsStandalone.createTask(folders, mutantsDel, org, changesDel, "UML2UMLs", "UML", "UMLs");
+	
+		// fine-grained incremental verification mode
+		WindowsStandalone.incPostInit(proj);
+		WindowsStandalone.incPostRegressionNoCache(proj);
+		WindowsStandalone.incPostRegressionCache(proj);
+		
+		// sub-goal verification mode
+		WindowsStandalone.standardSubInit(proj);
+		WindowsStandalone.incSubInit(proj);
+
+		// Boogie inc verification mode
+		WindowsStandalone.BoogieIncPostInit(proj);
+	}
+	
+	public static void testGuard() throws Exception{
+		WindowsStandalone.createTask(folders, mutantsFilter, org, changesFilter, "UML2UMLs", "UML", "UMLs");
+	
+		// fine-grained incremental verification mode
+		WindowsStandalone.incPostInit(proj);
+		WindowsStandalone.incPostRegressionNoCache(proj);
+		WindowsStandalone.incPostRegressionCache(proj);
+		
+		// sub-goal verification mode
+		WindowsStandalone.standardSubInit(proj);
+		WindowsStandalone.incSubInit(proj);
+
+		// Boogie inc verification mode
+		WindowsStandalone.BoogieIncPostInit(proj);
+	}
+	
+	public static void testBind() throws Exception{
+		WindowsStandalone.createTask(folders, mutantsBind, org, changesBind, "UML2UMLs", "UML", "UMLs");
+	
+		// fine-grained incremental verification mode
+		WindowsStandalone.incPostInit(proj);
+		WindowsStandalone.incPostRegressionNoCache(proj);
+		WindowsStandalone.incPostRegressionCache(proj);
+		
+		// sub-goal verification mode
+		WindowsStandalone.standardSubInit(proj);
+		WindowsStandalone.incSubInit(proj);
+
+		// Boogie inc verification mode
+		WindowsStandalone.BoogieIncPostInit(proj);
 	}
 }
