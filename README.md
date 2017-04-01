@@ -23,7 +23,18 @@ Our tool is built on top of a state-of-the-art incremental verification tool *Bo
 
 Evaluation
 ------
-* Please check out the *Experiment* Branch of this project for how to reproduce the evaluation.
+The source code of the 3 case studies are under **fr.emn.atlanmod.veriatl.experiment** project:
+* HSM2FSM
+* HSM2FSMi
+* UMLCopier (UML)
+   * The source code of UMLCopier are too big to host on github, so we invite you to automatically generate it yourself by using the **fr.emn.atlanmod.veriatl.experiment.mutation.core** package in the **fr.emn.atlanmod.veriatl.experiment.mutation** project.
+
+Standalone Java applications are provided to automatically and incrementally verify each case study. They are under the following package respectively:
+* fr.emn.atlanmod.veriatl.experiment.HSM2FSM
+* fr.emn.atlanmod.veriatl.experiment.HSM2FSMi
+* fr.emn.atlanmod.veriatl.experiment.UMLCopier
+
+The result we obtained from this evaluation is under the **fr.emn.atlanmod.veriatl.experiment.res** package.
 
 
 Requirements
