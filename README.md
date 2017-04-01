@@ -27,14 +27,14 @@ The source code of the 3 case studies are under **fr.emn.atlanmod.veriatl.experi
 * HSM2FSM
 * HSM2FSMi
 * UMLCopier (UML)
-   * The source code of UMLCopier are too big to host on github, so we invite you to automatically generate it yourself by using the **fr.emn.atlanmod.veriatl.experiment.mutation.core** package in the **fr.emn.atlanmod.veriatl.experiment.mutation** project.
+   * The source code of UMLCopier is impractical to maintain on github, so we invite you to automatically generate it by yourself using the **fr.emn.atlanmod.veriatl.experiment.mutation.core** package in the **fr.emn.atlanmod.veriatl.experiment.mutation** project (no configuration needed). 
 
 Standalone Java applications are provided to automatically and incrementally verify each case study. They are under the following package respectively:
 * fr.emn.atlanmod.veriatl.experiment.HSM2FSM
 * fr.emn.atlanmod.veriatl.experiment.HSM2FSMi
 * fr.emn.atlanmod.veriatl.experiment.UMLCopier
 
-The result we obtained from this evaluation is under the **fr.emn.atlanmod.veriatl.experiment.res** package.
+The result we obtained from this evaluation is under the **Result** of the **fr.emn.atlanmod.veriatl.experiment** project.
 
 
 Requirements
