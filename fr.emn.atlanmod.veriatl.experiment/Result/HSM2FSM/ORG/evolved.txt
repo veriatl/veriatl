@@ -1,0 +1,42 @@
+=================== AF2-boogie-snapshot-v1 ===================
+inc-boogie-post:fsm_state_multi_lower:TRUE:638
+inc-boogie-post:fsm_transition_multi_lower:TRUE:484
+inc-boogie-post:fsm_transition_src_multi_lower:FALSE:660
+inc-boogie-post:fsm_transition_trg_multi_lower:FALSE:677
+inc-boogie-post:unique_fsm_sm_names:TRUE:463
+inc-boogie-post:unique_fsm_state_names:TRUE:570
+=================== AR-boogie-snapshot-v1 ===================
+inc-boogie-post:fsm_state_multi_lower:FALSE:541
+inc-boogie-post:fsm_transition_multi_lower:TRUE:481
+inc-boogie-post:fsm_transition_src_multi_lower:TRUE:506
+inc-boogie-post:fsm_transition_trg_multi_lower:TRUE:487
+inc-boogie-post:unique_fsm_sm_names:TRUE:469
+inc-boogie-post:unique_fsm_state_names:FALSE:599
+=================== DB3-boogie-snapshot-v1 ===================
+inc-boogie-post:fsm_state_multi_lower:TRUE:469
+inc-boogie-post:fsm_transition_multi_lower:TRUE:464
+inc-boogie-post:fsm_transition_src_multi_lower:TRUE:518
+inc-boogie-post:fsm_transition_trg_multi_lower:TRUE:462
+inc-boogie-post:unique_fsm_sm_names:TRUE:465
+inc-boogie-post:unique_fsm_state_names:FALSE:462
+=================== DR1-boogie-snapshot-v1 ===================
+inc-boogie-post:fsm_state_multi_lower:FALSE:389
+inc-boogie-post:fsm_transition_multi_lower:FALSE:600
+inc-boogie-post:fsm_transition_src_multi_lower:TRUE:467
+inc-boogie-post:fsm_transition_trg_multi_lower:TRUE:444
+inc-boogie-post:unique_fsm_sm_names:TRUE:399
+inc-boogie-post:unique_fsm_state_names:TRUE:486
+=================== MB6-boogie-snapshot-v1 ===================
+inc-boogie-post:fsm_state_multi_lower:TRUE:470
+inc-boogie-post:fsm_transition_multi_lower:TRUE:467
+inc-boogie-post:fsm_transition_src_multi_lower:TRUE:540
+inc-boogie-post:fsm_transition_trg_multi_lower:FALSE:751
+inc-boogie-post:unique_fsm_sm_names:TRUE:460
+inc-boogie-post:unique_fsm_state_names:TRUE:570
+=================== MF6-boogie-snapshot-v1 ===================
+inc-boogie-post:fsm_state_multi_lower:TRUE:489
+inc-boogie-post:fsm_transition_multi_lower:TRUE:489
+inc-boogie-post:fsm_transition_src_multi_lower:TRUE:591
+inc-boogie-post:fsm_transition_trg_multi_lower:FALSE:582
+inc-boogie-post:unique_fsm_sm_names:TRUE:448
+inc-boogie-post:unique_fsm_state_names:TRUE:561
