@@ -134,6 +134,11 @@ public class ocldecomposerDriver {
 			if(NodeHelper.findAllLeafs(tree).size()>200) {
 				System.out.println(String.format("Debug: ocldecomposerDriver.java ln 135, goalName: %s sub-goals: %s", goalName, NodeHelper.findAllLeafs(tree).size()));
 			}else {
+				
+				if(!NodeHelper.isComplete(post, NodeHelper.findAllLeafs(tree), goalName)){
+					System.out.println(String.format("Decompose of %s is not complete", goalName));
+				}
+
 				for(Node n : NodeHelper.findAllLeafs(tree)){
 					String cse = String.format("case%04d",i);
 					n.setName(String.format("case%04d", i));

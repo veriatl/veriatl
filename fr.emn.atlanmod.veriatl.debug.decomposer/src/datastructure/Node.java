@@ -250,6 +250,87 @@ public class Node implements Comparable, Serializable {
 	}
 	
 	
+	public HashSet<String> getExprOfGenby(){
+		HashSet<String> rtn = new HashSet<String>();
+		for(EObject e : this.context.keySet()){
+			if(this.context.get(e).getNature().equals(ContextNature.ASSUME)){
+				if(e instanceof OperationCallExp){
+					OperationCallExp call = ((OperationCallExp) e);
+					if(call.getOperationName().equals("genBy")){
+						OclExpression src = call.getSource();
+						String srcExpr = ocl2boogie.genOclExpression(src, atl.genTrgHeap()).toString();
+						rtn.add(srcExpr);		
+					}
+				}
+			}else if(this.context.get(e).getNature().equals(ContextNature.INFER)){
+				if(e instanceof OperatorCallExp){
+					OperatorCallExp not = ((OperatorCallExp) e);
+					if(not.getOperationName().equals("not")){
+						if(not.getSource() instanceof OperatorCallExp){
+							OperatorCallExp or = (OperatorCallExp) not.getSource() ;
+							if(or.getOperationName().equals("or")){
+								if(or.getSource() instanceof OperationCallExp){
+									OperationCallExp call = ((OperationCallExp) or.getSource());
+									if(call.getOperationName().equals("genBy")){
+										OclExpression src = call.getSource();
+										String srcExpr = ocl2boogie.genOclExpression(src, atl.genTrgHeap()).toString();
+										rtn.add(srcExpr);		
+									}
+								}
+								
+								for(OclExpression arg :or.getArguments()){
+									if(arg instanceof OperationCallExp){
+										OperationCallExp call = ((OperationCallExp) arg);
+										if(call.getOperationName().equals("genBy")){
+											OclExpression src = call.getSource();
+											String srcExpr = ocl2boogie.genOclExpression(src, atl.genTrgHeap()).toString();
+											rtn.add(srcExpr);		
+										}
+									}
+								}
+							}
+						}		
+					}
+				}else if(e instanceof IteratorExp){
+					IteratorExp forall = (IteratorExp) e;
+					
+					if(forall.getIterators().size()>0){
+						Iterator it = forall.getIterators().get(0);
+						OclExpression body = forall.getBody();
+						if(it.getVarName().startsWith("____bv") && body instanceof OperatorCallExp){
+							OperatorCallExp or = (OperatorCallExp) body ;
+							if(or.getOperationName().equals("or")){
+								if(or.getSource() instanceof OperationCallExp){
+									OperationCallExp call = ((OperationCallExp) or.getSource());
+									if(call.getOperationName().equals("genBy")){
+										OclExpression src = call.getSource();
+										String srcExpr = ocl2boogie.genOclExpression(src, atl.genTrgHeap()).toString();
+										rtn.add(srcExpr);			
+									}
+								}
+								
+								for(OclExpression arg :or.getArguments()){
+									if(arg instanceof OperationCallExp){
+										OperationCallExp call = ((OperationCallExp) arg);
+										if(call.getOperationName().equals("genBy")){
+											if(call.getArguments().get(0) instanceof StringExp){
+												StringExp s = (StringExp) call.getArguments().get(0);
+												rtn.add(s.getStringSymbol());
+											}			
+										}
+									}
+								}
+							}
+						}
+					}
+					
+					
+				}
+			}
+		}
+		return rtn;
+		
+	}
 	
 
 	public String toBoogie(){

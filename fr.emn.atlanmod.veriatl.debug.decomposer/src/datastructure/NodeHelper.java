@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.m2m.atl.common.OCL.OclExpression;
 
 import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
+import ocl.OclHelper;
 
 public class NodeHelper {
 
@@ -312,6 +314,27 @@ public class NodeHelper {
 		
 		
 		
+	}
+
+	/**
+	 * find all bound var/navigations in post, to see whether each of them are accompanied by a genby predicate
+	 */
+	public static boolean isComplete(OclExpression post, ArrayList<Node> nodes, String postName) {
+		HashSet<String> exprsOfGenby = new HashSet<String>();
+		for(Node n : nodes){
+			exprsOfGenby.addAll(n.getExprOfGenby());
+		}
+		
+		
+		HashSet<String> exprsOfPost = OclHelper.traverse(post);
+		
+		for(String expr : exprsOfPost){
+			if(!exprsOfGenby.contains(expr)){
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	
