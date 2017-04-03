@@ -303,7 +303,7 @@ public class Node implements Comparable, Serializable {
 								if(or.getSource() instanceof OperationCallExp){
 									OperationCallExp call = ((OperationCallExp) or.getSource());
 									if(call.getOperationName().equals("genBy")){
-										OclExpression src = call.getSource();
+										OclExpression src = forall.getSource();
 										String srcExpr = ocl2boogie.genOclExpression(src, atl.genTrgHeap()).toString();
 										rtn.add(srcExpr);			
 									}
@@ -313,10 +313,9 @@ public class Node implements Comparable, Serializable {
 									if(arg instanceof OperationCallExp){
 										OperationCallExp call = ((OperationCallExp) arg);
 										if(call.getOperationName().equals("genBy")){
-											if(call.getArguments().get(0) instanceof StringExp){
-												StringExp s = (StringExp) call.getArguments().get(0);
-												rtn.add(s.getStringSymbol());
-											}			
+											OclExpression src = forall.getSource();
+											String srcExpr = ocl2boogie.genOclExpression(src, atl.genTrgHeap()).toString();
+											rtn.add(srcExpr);			
 										}
 									}
 								}

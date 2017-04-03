@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="fr.emn.atlanmod.veriatl.launcher">
 <stringAttribute key="ATL File Name" value="//fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UMLCopier.atl"/>
-<stringAttribute key="CONTRACT PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UML.normalize.ocl.atl"/>
+<stringAttribute key="Affected Rule" value=""/>
+<stringAttribute key="CONTRACT PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UML2UMLsContract.atl"/>
 <mapAttribute key="Inout Model Options"/>
 <mapAttribute key="Inout Models"/>
 <mapAttribute key="Inout Models Output Locations"/>
@@ -16,17 +17,19 @@
 </mapAttribute>
 <stringAttribute key="Module Name" value="UMLCopier"/>
 <stringAttribute key="Module Path" value="/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/"/>
+<booleanAttribute key="No" value="true"/>
 <mapAttribute key="Output Model Options">
 <mapEntry key="OUT" value="allowIntermodelReferences derivedFile"/>
 </mapAttribute>
 <mapAttribute key="Output Models">
 <mapEntry key="OUT" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI/Source/HSM.xmi"/>
 </mapAttribute>
-<stringAttribute key="POST NAME" value=""/>
+<stringAttribute key="POST NAME" value="all"/>
 <stringAttribute key="PROJ PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML"/>
 <stringAttribute key="SOURCE MM PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UML.ecore"/>
 <listAttribute key="Superimpose"/>
 <stringAttribute key="TARGET MM PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UMLs.ecore"/>
+<booleanAttribute key="Yes" value="false"/>
 <booleanAttribute key="debug" value="false"/>
 <booleanAttribute key="genBoogie" value="true"/>
 <booleanAttribute key="test" value="false"/>
