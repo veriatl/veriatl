@@ -33,17 +33,20 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
     private Button verify;
     private Button debug;
     
+    private Text srcMMPath;
+    private Text trgMMPath;
+    
     private Text location;
     private Text post;
     private Text proj;
     
-    private Text srcMMPath;
-    private Text trgMMPath;
+    private Text rule;
     
     private Group basicGroup;
     private Group modeGroup;
-    private Group contractGroup;
     private Group metamodelGroup;
+    private Group contractGroup;   
+    private Group incGroup;
     
     @Override
     public void createControl(Composite parent) {
@@ -75,10 +78,17 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
         contractGroup.setLayout(new GridLayout(8, false));
         contractGroup.setText("Contract");
         
+        incGroup = new Group(rootContainer, SWT.NULL);
+        incGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        incGroup.setLayout(new GridLayout(4, false));
+        incGroup.setText("Incremental Mode Options");
+        
         buildBasicGroup();
         buildModeGroup();
         buildMetamodels();
         buildContractControls();
+        buildIncMode();
+        
         
         setControl(scrollContainer);
     }
@@ -118,8 +128,9 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
 	}
 
 	/**
-	 * Add 4 buttons for modes in {@code modeGroup}} 
-	 */
+	 * fields to be added for control metamodels
+	 * - a radio options to specify which mode veriatl is running in
+	 * */
 	private void buildModeGroup() {
 		exec = new Button(modeGroup, SWT.RADIO);
         exec.setText(Mode.EXEC.getName());
@@ -159,7 +170,11 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
 		
 	}
 
-	
+	/**
+	 * fields to be added for control metamodels
+	 * - a text field for src metamodel path
+	 * - a text field for trg metamodel path
+	 * */
 	private void buildMetamodels() {
 
 		final Label srcLabel = new Label(metamodelGroup, SWT.LEFT);
@@ -217,7 +232,11 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
 		
 	}
 	
-	
+	/**
+	 * fields to be added for control contracts
+	 * - a text field to locate contract
+	 * - a text field to specify which post to verify, `all` specialize in verify all posts
+	 * */
 	private void buildContractControls() {
 
 		final Label pathLabel = new Label(contractGroup, SWT.LEFT);
@@ -265,7 +284,29 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
 		
 	}
 	
+	/**
+	 * fields to be added for incremental mode
+	 * - a text field to specify which rules has been changed, multi rules should seperated by `,`
+	 * */
+	private void buildIncMode() {
+
+		final Label affectedRule = new Label(incGroup, SWT.LEFT);
+		affectedRule.setText("Affected Rule(s):	seperated by `,`"); //$NON-NLS-1$
+
+		rule = new Text(incGroup, SWT.BORDER);
+		rule.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
+		rule.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent  e) {
+                updateLaunchConfigurationDialog();
+            }
+        });
+
+		final Label filler = new Label(incGroup, SWT.NULL);
+		filler.setLayoutData(new GridData(SWT.NULL, SWT.NULL, false, false, 3, 1));
 	
+		
+	}
 	
 	@Override
     public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
@@ -290,6 +331,7 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
             srcMMPath.setText(configuration.getAttribute(VeriATLLaunchConstants.SRC_PATH, VeriATLLaunchConstants.STRING_DEFAULT));
             trgMMPath.setText(configuration.getAttribute(VeriATLLaunchConstants.TRG_PATH, VeriATLLaunchConstants.STRING_DEFAULT));
             
+            rule.setText(configuration.getAttribute(VeriATLLaunchConstants.AFFECTED_RULE, VeriATLLaunchConstants.STRING_DEFAULT));
         }
         catch (CoreException e) {
             e.printStackTrace();
@@ -310,6 +352,7 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
         configuration.setAttribute(VeriATLLaunchConstants.SRC_PATH, srcMMPath.getText());
         configuration.setAttribute(VeriATLLaunchConstants.TRG_PATH, trgMMPath.getText());
         
+        configuration.setAttribute(VeriATLLaunchConstants.AFFECTED_RULE, rule.getText());
     }
 
     @Override
