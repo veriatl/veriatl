@@ -1,6 +1,20 @@
 module UMLCopierContract;
 create OUT : UMLs from IN : UML;
 
+
+-- # Bug in decomposition, need to add forall elimination rule
+--@post
+	helper context UMLs!AcceptEventAction def: post_no_output_pins(): Boolean = --AcceptEventAction_no_output_pins
+	  UMLs!AcceptEventAction.allInstances()->forAll(aea |  
+aea.output->size()>0 implies (
+aea.trigger->size()>0 implies (
+	    aea.oclIsTypeOf(UMLs!AcceptEventAction) and aea.trigger->forAll(t1_|
+	    UMLs!Event.allInstances()->includes(t1_.event) implies (
+	      t1_.event.oclIsKindOf(UMLs!ChangeEvent) or t1_.event.oclIsKindOf(UMLs!CallEvent))) implies aea.output->size() = 0
+	    ))
+	);
+
+
 -- # Boogie printing
 --@pre
 helper context UML!Port def: pre_encapsulated_owner(): Boolean = --encapsulated_owner
