@@ -38,10 +38,6 @@ public class ContextConstruction {
     }
     
 
-    // TODO  for experiment, we change the context constructor to public, reverse it back!
-    public Context wrap(){
-    	return new Context(null, this.moduleName, this.inMetamodel, this.outMetamodel, null, null, null, 
-        		this.contractPath, this.basePath, this.postName, null);
-    }
+
 
 }
