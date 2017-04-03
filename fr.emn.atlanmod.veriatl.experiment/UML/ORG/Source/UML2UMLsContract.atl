@@ -474,14 +474,17 @@ aea.input->size()>0 implies (
 	    )
 	); 
 	
+	
 	--@post
 	helper context UMLs!AcceptEventAction def: post_no_output_pins(): Boolean = --AcceptEventAction_no_output_pins
 	  UMLs!AcceptEventAction.allInstances()->forAll(aea |  
 aea.output->size()>0 implies (
 aea.trigger->size()>0 implies (
-	    aea.oclIsTypeOf(UMLs!AcceptEventAction) implies aea.output->size() = 0
+	    aea.oclIsTypeOf(UMLs!AcceptEventAction) and aea.trigger->forAll(t1_|
+	    UMLs!Event.allInstances()->includes(t1_.event) implies (
+	      t1_.event.oclIsKindOf(UMLs!ChangeEvent) or t1_.event.oclIsKindOf(UMLs!CallEvent))) implies aea.output->size() = 0
 	    ))
-	);  
+	);
 	
 	--@post
 	helper context UMLs!ActionInputPin def: post_input_pin(): Boolean = --ActionInputPin_input_pin
