@@ -41,6 +41,8 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
     private Text proj;
     
     private Text rule;
+    private Button enableInc;
+    private Button disableInc;
     
     private Group basicGroup;
     private Group modeGroup;
@@ -80,7 +82,7 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
         
         incGroup = new Group(rootContainer, SWT.NULL);
         incGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        incGroup.setLayout(new GridLayout(4, false));
+        incGroup.setLayout(new GridLayout(8, false));
         incGroup.setText("Incremental Mode Options");
         
         buildBasicGroup();
@@ -290,21 +292,46 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
 	 * */
 	private void buildIncMode() {
 
-		final Label affectedRule = new Label(incGroup, SWT.LEFT);
-		affectedRule.setText("Affected Rule(s):	seperated by `,`"); //$NON-NLS-1$
 
+		final Label incMode = new Label(incGroup, SWT.LEFT);
+		incMode.setText("Enable Inc Mode:"); //$NON-NLS-1$
+		
+		
+		enableInc = new Button(incGroup, SWT.RADIO);
+		enableInc.setText(VeriATLLaunchConstants.ENABLE_INC);
+		enableInc.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                updateLaunchConfigurationDialog();
+                rule.setEnabled(true);
+            }
+        });
+        
+        disableInc = new Button(incGroup, SWT.RADIO);
+        disableInc.setText(VeriATLLaunchConstants.DISABLE_INC);
+        disableInc.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                updateLaunchConfigurationDialog();
+                rule.setEnabled(false);
+            }
+        });
+
+
+	
+		final Label affectedRule = new Label(incGroup, SWT.LEFT);
+		affectedRule.setText("Transformation is affected by rules (seperated by `,`):"); //$NON-NLS-1$
+
+		
+		
 		rule = new Text(incGroup, SWT.BORDER);
-		rule.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
+		rule.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		rule.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(ModifyEvent  e) {
                 updateLaunchConfigurationDialog();
             }
         });
-
-		final Label filler = new Label(incGroup, SWT.NULL);
-		filler.setLayoutData(new GridData(SWT.NULL, SWT.NULL, false, false, 3, 1));
-	
 		
 	}
 	
@@ -332,6 +359,15 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
             trgMMPath.setText(configuration.getAttribute(VeriATLLaunchConstants.TRG_PATH, VeriATLLaunchConstants.STRING_DEFAULT));
             
             rule.setText(configuration.getAttribute(VeriATLLaunchConstants.AFFECTED_RULE, VeriATLLaunchConstants.STRING_DEFAULT));
+            enableInc.setSelection(configuration.getAttribute(VeriATLLaunchConstants.ENABLE_INC, true));
+            disableInc.setSelection(configuration.getAttribute(VeriATLLaunchConstants.DISABLE_INC, false));
+            
+            if(configuration.getAttribute(VeriATLLaunchConstants.ENABLE_INC,true)){
+            	rule.setEnabled(true);
+            }else{
+            	rule.setEnabled(false);
+            }
+            
         }
         catch (CoreException e) {
             e.printStackTrace();
@@ -353,6 +389,8 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
         configuration.setAttribute(VeriATLLaunchConstants.TRG_PATH, trgMMPath.getText());
         
         configuration.setAttribute(VeriATLLaunchConstants.AFFECTED_RULE, rule.getText());
+        configuration.setAttribute(VeriATLLaunchConstants.ENABLE_INC, enableInc.getSelection());
+        configuration.setAttribute(VeriATLLaunchConstants.DISABLE_INC, disableInc.getSelection());
     }
 
     @Override

@@ -30,6 +30,8 @@ public class Context {
     private final URI basePath;
     private final String postName;
     
+    private final String affectedRule;
+    private final boolean enableInc;
     
     private final IProgressMonitor monitor;
 
@@ -42,7 +44,7 @@ public class Context {
      * Constructs a new {@code Context} with the given parameters.
      */
     public Context(URI pluginUri, String moduleName, URI src, URI trg, URI inModel, URI outModel, Mode mode, 
-    		URI contract, URI base, String post, IProgressMonitor monitor) {
+    		URI contract, URI base, String post, String aRule, boolean inc, IProgressMonitor monitor) {
         this.pluginUri = pluginUri;
         this.moduleName = moduleName;
 
@@ -60,8 +62,8 @@ public class Context {
         this.basePath = base;
         this.postName = post;
         
-        
-        
+        this.affectedRule = aRule;
+        this.enableInc = inc;
        
         
 
@@ -100,12 +102,17 @@ public class Context {
             	m = Mode.DEBUG;
             }
 
+            boolean inc = true;
+            if(configuration.getAttribute(VeriATLLaunchConstants.DISABLE_INC, false)){
+            	inc = false;
+            }
+            
             URI contract = URI.createURI(configuration.getAttribute(VeriATLLaunchConstants.CONTRACT_PATH, ""));
             URI base = URI.createURI(configuration.getAttribute(VeriATLLaunchConstants.PROJ_PATH, ""));
             String post = configuration.getAttribute(VeriATLLaunchConstants.POST_NAME, "");
+            String affectRule = configuration.getAttribute(VeriATLLaunchConstants.AFFECTED_RULE, "");
             
-            
-            return new Context(pluginUri, moduleName, src, trg, inModel, outModel, m, contract, base, post, monitor);
+            return new Context(pluginUri, moduleName, src, trg, inModel, outModel, m, contract, base, post, affectRule, inc, monitor);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -244,6 +251,25 @@ public class Context {
     public String postName() {
         return postName;
     }
+    
+    /**
+     * Returns the name of the affectedRule.
+     *
+     * @return the affectedRule
+     */
+    public String affectedRule() {
+        return affectedRule;
+    }
+    
+    /**
+     * Returns the name of the affectedRule.
+     *
+     * @return the affectedRule
+     */
+    public boolean enableInc() {
+        return enableInc;
+    }
+    
     /**
      * Returns the progress monitor of this context.
      *

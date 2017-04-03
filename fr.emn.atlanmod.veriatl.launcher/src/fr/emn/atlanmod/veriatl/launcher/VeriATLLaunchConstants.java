@@ -29,4 +29,8 @@ public interface VeriATLLaunchConstants {
 	String CACHE_FOLDER_NAME = "Caches";
 	
 	String AFFECTED_RULE = "Affected Rule";
+
+	String ENABLE_INC = "Yes";
+	
+	String DISABLE_INC = "No";
 }
