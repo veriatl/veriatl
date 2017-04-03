@@ -481,7 +481,7 @@ aea.output->size()>0 implies (
 aea.trigger->size()>0 implies (
 	    aea.oclIsTypeOf(UMLs!AcceptEventAction) implies aea.output->size() = 0
 	    ))
-	);  
+	); 
 	
 	--@post
 	helper context UMLs!ActionInputPin def: post_input_pin(): Boolean = --ActionInputPin_input_pin
