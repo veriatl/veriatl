@@ -1,6 +1,157 @@
 module UMLCopierContract;
 create OUT : UMLs from IN : UML;
 
+--# complex hypothesis
+
+	--@post
+	helper context UMLs!ProtocolStateMachine def: post_protocol_transitions(): Boolean = --ProtocolStateMachine_protocol_transitions
+	  UMLs!ProtocolStateMachine.allInstances()->forAll(psm |  
+psm.region->size()>0 implies (
+	    psm.region->forAll(rr|
+	    rr.transition->size()>0 implies (
+	      rr.transition->forAll(tt|
+	        tt.oclIsTypeOf(UMLs!ProtocolTransition))))
+	    )
+	); 
+
+
+	--@post
+	helper context UMLs!TemplateBinding def: post_parameter_substitution_formal(): Boolean = --TemplateBinding_parameter_substitution_formal
+	  UMLs!TemplateBinding.allInstances()->forAll(tb |  
+tb.signature.parameter->size()>0 implies (
+UMLs!TemplateSignature.allInstances()->includes(tb.signature) implies (
+tb.parameterSubstitution->size()>0 implies (
+	    tb.parameterSubstitution->forAll(tpsb|
+	    UMLs!TemplateParameter.allInstances()->includes(tpsb.formal) implies (
+	      tb.signature.parameter->includes(tpsb.formal)))
+	    )))
+	); 
+
+
+--# too much sub-goals generated
+
+	--@post
+	helper context UMLs!ReadLinkObjectEndQualifierAction def: post_same_type(): Boolean = --ReadLinkObjectEndQualifierAction_same_type
+	  UMLs!ReadLinkObjectEndQualifierAction.allInstances()->forAll(rloeqa |  
+UMLs!Type.allInstances()->includes(rloeqa.qualifier.type) implies (
+UMLs!Property.allInstances()->includes(rloeqa.qualifier) implies (
+UMLs!OutputPin.allInstances()->includes(rloeqa.result) implies (
+UMLs!Type.allInstances()->includes(rloeqa.result.type) implies (
+	    rloeqa.result.type = rloeqa.qualifier.type
+	    ))))
+	); 
+	
+	
+	--@post
+	helper context UMLs!ReadLinkObjectEndAction def: post_type_of_object(): Boolean = --ReadLinkObjectEndAction_type_of_object
+	  UMLs!ReadLinkObjectEndAction.allInstances()->forAll(rloea |  
+UMLs!Type.allInstances()->includes(rloea.object.type) implies (
+UMLs!Association.allInstances()->includes(rloea.end.association) implies (
+UMLs!InputPin.allInstances()->includes(rloea.object) implies (
+UMLs!Property.allInstances()->includes(rloea.end) implies (
+	    rloea.object.type = rloea.end.association
+	    ))))
+	); 
+	
+	--@post
+	helper context UMLs!ReadLinkObjectEndAction def: post_type_of_result(): Boolean = --ReadLinkObjectEndAction_type_of_result
+	  UMLs!ReadLinkObjectEndAction.allInstances()->forAll(rloea |  
+UMLs!Type.allInstances()->includes(rloea.end.type) implies (
+UMLs!OutputPin.allInstances()->includes(rloea.result) implies (
+UMLs!Type.allInstances()->includes(rloea.result.type) implies (
+UMLs!Property.allInstances()->includes(rloea.end) implies (
+	    rloea.result.type = rloea.end.type
+	    ))))
+	); 
+	
+	--@post
+	helper context UMLs!ReadExtentAction def: post_type_is_classifier(): Boolean = --ReadExtentAction_type_is_classifier
+	  UMLs!ReadExtentAction.allInstances()->forAll(rea |  
+UMLs!Classifier.allInstances()->includes(rea.classifier) implies (
+UMLs!Type.allInstances()->includes(rea.result.type) implies (
+UMLs!OutputPin.allInstances()->includes(rea.result) implies (
+	    rea.result.type = rea.classifier
+	    )))
+	); 
+	
+	
+	--@post
+	helper context UMLs!CreateObjectAction def: post_same_type(): Boolean = --CreateObjectAction_same_type
+	  UMLs!CreateObjectAction.allInstances()->forAll(coa |  
+UMLs!Classifier.allInstances()->includes(coa.classifier) implies (
+UMLs!OutputPin.allInstances()->includes(coa.result) implies (
+UMLs!Type.allInstances()->includes(coa.result.type) implies (
+	    coa.result.type = coa.classifier
+	    )))
+	); 
+	
+	
+	--@post
+	helper context UMLs!ActivityParameterNode def: post_same_type(): Boolean = --ActivityParameterNode_same_type
+	  UMLs!ActivityParameterNode.allInstances()->forAll(apn |  
+UMLs!Type.allInstances()->includes(apn.type) implies (
+UMLs!Type.allInstances()->includes(apn.parameter.type) implies (
+UMLs!Parameter.allInstances()->includes(apn.parameter) implies (
+	    apn.type = apn.parameter.type
+	    )))
+	); 
+	
+
+	--@post
+	helper context UMLs!ExceptionHandler def: post_handler_body_edges(): Boolean = --ExceptionHandler_handler_body_edges
+	  UMLs!ExceptionHandler.allInstances()->forAll(eh |  
+eh.handlerBody.outgoing->size()>0 implies (
+eh.exceptionInput.incoming->size()>0 implies (
+UMLs!ExecutableNode.allInstances()->includes(eh.handlerBody) implies (
+UMLs!ObjectNode.allInstances()->includes(eh.exceptionInput) implies (
+eh.handlerBody.incoming->size()>0 implies (
+	    eh.handlerBody.incoming->isEmpty() and eh.handlerBody.outgoing->isEmpty() and eh.exceptionInput.incoming->isEmpty()
+	    )))))
+	); 
+	
+	--@post
+	helper context UMLs!ObjectFlow def: post_no_executable_nodes(): Boolean = --ObjectFlow_no_executable_nodes
+	  UMLs!ObjectFlow.allInstances()->forAll(of |  
+UMLs!ActivityNode.allInstances()->includes(of.source) implies (
+UMLs!ActivityNode.allInstances()->includes(of.target) implies (
+	    not(of.source.oclIsKindOf(UMLs!ExecutableNode) or of.target.oclIsKindOf(UMLs!ExecutableNode))
+	    ))
+	); 
+
+	--@post
+	helper context UMLs!ConsiderIgnoreFragment def: post_type(): Boolean = --ConsiderIgnoreFragment_type
+	  UMLs!ConsiderIgnoreFragment.allInstances()->forAll(cif |  
+cif.message->size()>0 implies (
+	    cif.message->forAll(nem|
+	      nem.oclIsKindOf(UMLs!Operation) or nem.oclIsKindOf(UMLs!Signal))
+	    )
+	); 
+	
+	--@post
+	helper context UMLs!DurationConstraint def: post_has_one_or_two_constrainedElements(): Boolean = --DurationConstraint_has_one_or_two_constrainedElements
+	  UMLs!DurationConstraint.allInstances()->forAll(dc |  
+dc.constrainedElement->size()>0 implies (
+	    dc.constrainedElement->size() = 1 or dc.constrainedElement->size() = 2
+	    )
+	); 
+	
+	
+	--@post
+	helper context UMLs!TimeConstraint def: post_has_one_constrainedElement(): Boolean = --TimeConstraint_has_one_constrainedElement
+	  UMLs!TimeConstraint.allInstances()->forAll(tc |  
+tc.constrainedElement->size()>0 implies (
+	    tc.constrainedElement->size() = 1
+	    )
+	); 
+	
+	--@post
+	helper context UMLs!Constraint def: post_not_apply_to_self(): Boolean = --Constraint_not_apply_to_self
+	  UMLs!Constraint.allInstances()->forAll(c |  
+c.constrainedElement->size()>0 implies (
+	    not(c.constrainedElement->includes(c))
+	    )
+	); 
+	
 -- # Bug in decomposition, need to add forall elimination rule
 --@post
 	helper context UMLs!AcceptEventAction def: post_no_output_pins(): Boolean = --AcceptEventAction_no_output_pins

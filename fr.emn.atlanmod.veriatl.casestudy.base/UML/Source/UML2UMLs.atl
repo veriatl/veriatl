@@ -1,6 +1,6 @@
 -- @atlcompiler emftvm
 
-module UMLCopier;
+module UML2UMLs;
 create OUT : UMLs from IN : UML;
 
 rule CopyAbstraction {
