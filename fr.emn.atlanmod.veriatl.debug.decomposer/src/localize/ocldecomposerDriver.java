@@ -137,14 +137,16 @@ public class ocldecomposerDriver {
 				
 				if(!NodeHelper.isComplete(post, NodeHelper.findAllLeafs(tree), goalName)){
 					System.out.println(String.format("Decompose of %s is not complete", goalName));
+				}else{
+					for(Node n : NodeHelper.findAllLeafs(tree)){
+						String cse = String.format("case%04d",i);
+						n.setName(String.format("case%04d", i));
+						driver.generateBoogieFile(output, cse, CompilerConstants.BOOGIE_EXT, n.toBoogie(env));		
+						i++;
+					}
 				}
 
-				for(Node n : NodeHelper.findAllLeafs(tree)){
-					String cse = String.format("case%04d",i);
-					n.setName(String.format("case%04d", i));
-					driver.generateBoogieFile(output, cse, CompilerConstants.BOOGIE_EXT, n.toBoogie(env));		
-					i++;
-				}
+				
 			}
 			
 			
