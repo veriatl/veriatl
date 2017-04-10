@@ -117,17 +117,17 @@ public class WindowsStandalone {
 		System.out.println(String.format("=================== %s-post-prepare-nocache ===================", org));
 		// clean
 		//TODO
-		//String toDelete = String.format("%s/%s/%s/",p, org, "NoCached");
-		//FileUtils.deleteDirectory(new File(toDelete));
+		String toDelete = String.format("%s/%s/%s/",p, org, "NoCached");
+		FileUtils.deleteDirectory(new File(toDelete));
 
 		
 		// compute post result only
 		String proj = String.format("%s/%s", p, org);
 		ContextConstruction context = init(proj);
 		//TODO
-		//clean(context);
-		//gen(context);
-		//decompose(context);
+		clean(context);
+		gen(context);
+		decompose(context);
 		IncrementalTasksEvo.execBoogie(context, "");
 		
 		String srcCache = String.format("%s/%s/%s/",p, org, "Caches");
@@ -145,8 +145,8 @@ public class WindowsStandalone {
 		System.out.println(String.format("=================== %s-post-prepare-cache ===================", org));
 		
 		//TODO
-		//String toDelete = String.format("%s/%s/%s/",p, org, "Cached");
-		//FileUtils.deleteDirectory(new File(toDelete));
+		String toDelete = String.format("%s/%s/%s/",p, org, "Cached");
+		FileUtils.deleteDirectory(new File(toDelete));
 		
 
 		
@@ -154,9 +154,9 @@ public class WindowsStandalone {
 		String proj = String.format("%s/%s", p, org);
 		ContextConstruction context = init(proj);
 		//TODO
-		//clean(context);
-		//gen(context);
-		//decompose(context);
+		clean(context);
+		gen(context);
+		decompose(context);
 		IncrementalTasksEvo.debugBoogie(context, "");
 		
 		String srcCache = String.format("%s/%s/%s/",p, org, "Caches");
@@ -265,8 +265,8 @@ public class WindowsStandalone {
 	
 	public static void incPostInit(String p) throws Exception{
 		//TODO
-		//PreparePostNoCache(p);	
-		//PreparePostCache(p);
+		PreparePostNoCache(p);	
+		PreparePostCache(p);
 	}
 	
 
