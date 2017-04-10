@@ -3,9 +3,24 @@ create OUT : UMLs from IN : UML;
 
 
 
+-- # Boogie printing: yield boolean type 
+--@pre
+helper context UML!TestIdentityAction def: pre_result_is_boolean(): Boolean = --result_is_boolean
+  UML!TestIdentityAction.allInstances()->forAll(tia |  
+UML!Type.allInstances()->includes(tia.result.type) implies 
+UML!OutputPin.allInstances()->includes(tia.result) implies 
+    tia.result.type.name = 'Boolean'
+); 
 
+--@pre
+helper context UML!ReadIsClassifiedObjectAction def: pre_boolean_result(): Boolean = --boolean_result
+  UML!ReadIsClassifiedObjectAction.allInstances()->forAll(ricoa |  
+UML!Type.allInstances()->includes(ricoa.result.type) implies 
+UML!OutputPin.allInstances()->includes(ricoa.result) implies 
+    ricoa.result.type.name = 'Boolean'
+); 
 
--- # Boogie printing
+-- # Boogie printing: yield unknown type 
 --@pre
 helper context UML!Port def: pre_encapsulated_owner(): Boolean = --encapsulated_owner
   UML!Port.allInstances()->forAll(p |  
@@ -21,6 +36,14 @@ UML!Property.allInstances()->includes(qv.qualifier) implies
     qv.qualifier.end.qualifier->includes(qv.qualifier)
 ); 
 
+--@pre
+helper context UML!Parameter def: pre_connector_end(): Boolean = --connector_end
+  UML!Parameter.allInstances()->forAll(p |  
+p.end->size()>0 implies 
+    p.end->notEmpty() implies p.collaborationRole->notEmpty()
+); 
+
+-- # Boogie printing: array?
 --@pre
 helper context UML!TemplateBinding def: pre_one_parameter_substitution(): Boolean = --one_parameter_substitution
   UML!TemplateBinding.allInstances()->forAll(tb |  
@@ -42,13 +65,6 @@ helper context UML!DecisionNode def: pre_incoming_outgoing_edges(): Boolean = --
 dn.outgoing->size()>0 implies 
 dn.incoming->size()>0 implies 
     dn.incoming->size() = 1 or dn.incoming->size() = 2 and dn.outgoing->size() > 0
-); 
-
---@pre
-helper context UML!Parameter def: pre_connector_end(): Boolean = --connector_end
-  UML!Parameter.allInstances()->forAll(p |  
-p.end->size()>0 implies 
-    p.end->notEmpty() implies p.collaborationRole->notEmpty()
 ); 
 
 
