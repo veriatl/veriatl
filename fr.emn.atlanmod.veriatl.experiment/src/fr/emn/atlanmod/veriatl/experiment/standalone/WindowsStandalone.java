@@ -4,6 +4,7 @@
 package fr.emn.atlanmod.veriatl.experiment.standalone;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -321,7 +322,30 @@ public class WindowsStandalone {
 
 	
 	
-	
+	public static void codeGen(String p) throws Exception {
+
+		System.out.println(String.format("=================== %s-code-gen ===================", org));
+		// clean
+		// TODO
+		String toDelete = String.format("%s/%s/%s/", p, org, "NoCached");
+		FileUtils.deleteDirectory(new File(toDelete));
+
+		// compute post result only
+		String proj = String.format("%s/%s", p, org);
+		ContextConstruction context = init(proj);
+		// TODO
+		clean(context);
+		gen(context);
+		decompose(context);
+		// TODO
+		//IncrementalTasksEvo.execBoogie(context, "");
+
+		String srcCache = String.format("%s/%s/%s/", p, org, "Caches");
+		String dstCache = String.format("%s/%s/%s/", p, org, "NoCached");
+
+		FileUtils.moveDirectory(new File(srcCache), new File(dstCache));
+
+	}
 
 
 }
