@@ -3,13 +3,6 @@
  */
 package fr.emn.atlanmod.veriatl.experiment.UMLCopierMutant;
 
-import java.io.File;
-import java.util.Map;
-
-import org.apache.commons.io.FileUtils;
-
-import fr.emn.atlanmod.veriatl.experiment.execevo.IncrementalTasksEvo;
-import fr.emn.atlanmod.veriatl.experiment.standalone.ContextConstruction;
 import fr.emn.atlanmod.veriatl.experiment.standalone.WindowsStandalone;
 
 
