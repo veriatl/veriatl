@@ -1,7 +1,7 @@
 module UMLCopierContract;
 create OUT : UMLs from IN : UML;
 
-
+--# FIXED
 
 -- # Boogie printing: yield boolean type 
 --@pre
@@ -20,12 +20,12 @@ UML!OutputPin.allInstances()->includes(ricoa.result) implies
     ricoa.result.type.name = 'Boolean'
 ); 
 
--- # Boogie printing: yield unknown type 
+-- # Boogie printing: yield unknown type , caused by the source printing, 
 --@pre
 helper context UML!Port def: pre_encapsulated_owner(): Boolean = --encapsulated_owner
   UML!Port.allInstances()->forAll(p |  
 UML!Element.allInstances()->includes(p.owner) implies 
-    p.owner = p.ownedPort
+    p.owner = p.ownedPort --# right printing: owner = encapsulatedClassifier
 ); 
 
 
@@ -33,7 +33,7 @@ UML!Element.allInstances()->includes(p.owner) implies
 helper context UML!QualifierValue def: pre_qualifier_attribute(): Boolean = --qualifier_attribute
   UML!QualifierValue.allInstances()->forAll(qv |  
 UML!Property.allInstances()->includes(qv.qualifier) implies 
-    qv.qualifier.end.qualifier->includes(qv.qualifier)
+    qv.qualifier.end.qualifier->includes(qv.qualifier) --# right printing: qv.linkEndData.end.qualifier->includes(qv.qualifier)
 ); 
 
 --@pre
@@ -42,6 +42,10 @@ helper context UML!Parameter def: pre_connector_end(): Boolean = --connector_end
 p.end->size()>0 implies 
     p.end->notEmpty() implies p.collaborationRole->notEmpty()
 ); 
+
+
+
+
 
 -- # Boogie printing: array?
 --@pre
