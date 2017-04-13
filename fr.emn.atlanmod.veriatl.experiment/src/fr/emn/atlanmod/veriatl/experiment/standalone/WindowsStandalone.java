@@ -11,6 +11,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
 
+import experiment.experimentDriver;
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.veriatl.experiment.exec.BoogieTasks;
 import fr.emn.atlanmod.veriatl.experiment.execevo.IncrementalTasksEvo;
@@ -320,7 +321,16 @@ public class WindowsStandalone {
 	}
 	
 
-	
+	public static void decomposeNew(ContextConstruction context) throws Exception{
+		experimentDriver.decompose(
+				context.basePath.appendSegment("Source").appendSegment(context.moduleName).appendFileExtension("atl"), 
+				context.basePath.appendSegment("Source").appendSegment(context.moduleName).appendFileExtension("emftvm"), 
+				context.moduleName, 
+				context.inMetamodel,
+				context.outMetamodel, 
+				context.contractPath,
+				context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME));
+	}
 	
 	public static void codeGen(String p) throws Exception {
 
@@ -336,14 +346,11 @@ public class WindowsStandalone {
 		// TODO
 		clean(context);
 		gen(context);
-		decompose(context);
+		decomposeNew(context);
 		// TODO
 		//IncrementalTasksEvo.execBoogie(context, "");
 
-		String srcCache = String.format("%s/%s/%s/", p, org, "Caches");
-		String dstCache = String.format("%s/%s/%s/", p, org, "NoCached");
-
-		FileUtils.moveDirectory(new File(srcCache), new File(dstCache));
+		
 
 	}
 

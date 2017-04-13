@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -58,7 +59,7 @@ public class VCGenerator {
 	 * Naming convention of tasks: 01/x.bpl means there should be 5 posts in this folder.
 	 * */
 	public static void incrementalByTimeNoSlicingSeparated(URI outputPath){
-		URI output = outputPath.appendSegment(VCGenerator.INCSep);
+		URI newOutput = outputPath.appendSegment(VCGenerator.INCSep);
 		
 		// get a copy of posts list, ordered by their verification time (see PreloadData.initPostTime)
 		ArrayList<String> postsCopy = new ArrayList<String>(posts);
@@ -74,7 +75,7 @@ public class VCGenerator {
 			incCase.add(post);
 			ArrayList<String> contents = genContents(incCase);
 			for(String content : contents){
-				output = outputPath.appendSegment(String.format("%03d", incCase.size()));
+				URI output = newOutput.appendSegment(String.format("%03d", incCase.size()));
 				String fileName = String.format("%03d", contents.indexOf(content));
 				driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, content);
 			}
@@ -527,9 +528,10 @@ public class VCGenerator {
 
 		res += "\n";
 		
+		
 		// print postconditions
-		String posts = String.join(" \n&& ", incCase);
-		res += String.format("assert %s;\n", posts);
+		ArrayList<String> posts = incCase.stream().map(elem -> postsStrings.get(elem)).collect(Collectors.toCollection(ArrayList::new));
+		res += String.format("assert %s;\n", String.join(" \n&& ", posts));
 		
 		res += BoogiePrinter.printDriverFooter();
 		
@@ -569,7 +571,7 @@ public class VCGenerator {
 		
 		for(String post : incCase){
 			String vc = res;
-			vc += String.format("assert %s;\n", post);
+			vc += String.format("assert %s;\n", postsStrings.get(post));
 			vc += BoogiePrinter.printDriverFooter();
 			results.add(vc);
 		}

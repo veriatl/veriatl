@@ -12,7 +12,7 @@ import fr.emn.atlanmod.veriatl.experiment.standalone.WindowsStandalone;
  *
  */
 public class UML {
-	static String[] folders = new String[]{"Auxu", "Caches", "Sub-goals", "Boogie"};
+	static String[] folders = new String[]{"Auxu", "Sub-goals"};
 	static String[] posts;
 	static String org = "ORG";
 	static String proj = "UMLTest";

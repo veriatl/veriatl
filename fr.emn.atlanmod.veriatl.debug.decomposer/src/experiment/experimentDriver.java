@@ -124,7 +124,8 @@ public class experimentDriver {
 			
 		}
 		
-
+		VCGenerator.incrementalByTimeNoSlicingCombined(outputPath);
+		VCGenerator.incrementalByTimeNoSlicingSeparated(outputPath);
 		
 		long end = System.currentTimeMillis();
 		System.out.println(end-start);
