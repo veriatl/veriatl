@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -123,10 +124,12 @@ public final class IncrementalTasksEvo {
 		ArrayList<String> r = new ArrayList<String>();
 		File f = new File(folder);
 		File[] files = f.listFiles();
-		Arrays.sort(files);
+		
 		for (final File file : files) {
 			r.add(file.getAbsolutePath());
 		}
+		
+		Collections.sort(r);
 		return r;
 	}
 
