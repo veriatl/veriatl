@@ -18,12 +18,13 @@ import fr.emn.atlanmod.veriatl.tools.VerificationResult;
  */
 public class DefaultCommandEvo {
 
-	private static String boogie = "../fr.emn.atlanmod.veriatl.tools/lib/Boogie-2.3.0/win-64/boogie.exe";
+	private static String boogie = "../fr.emn.atlanmod.veriatl.tools/lib/Boogie-2.3.0/win-64/Boogie.exe";
 	
 
     public static VerificationResult execute(ArrayList<String>  args) {
         List<String> command = new ArrayList<>();
          
+        command.add("mono");
         command.add(boogie);
         command.addAll(args);
 

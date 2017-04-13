@@ -14,8 +14,7 @@ import fr.emn.atlanmod.veriatl.util.URIs;
 
 public final class IncrementalTasksEvo {
 
-	// private static String z3 = "../fr.emn.atlanmod.veriatl.experiment/z3";
-	private static String z3 = "../fr.emn.atlanmod.veriatl.tools/lib/Z3-4.5.1/win-64/z3.exe";
+	private static String z3 = "./z3";
 	private static String veriatl = "../fr.emn.atlanmod.veriatl.experiment/lib/VeriATL-1.0.0/win-64/";
 
 	private IncrementalTasksEvo() {
@@ -67,7 +66,7 @@ public final class IncrementalTasksEvo {
 		args.addAll(initBoogie());
 
 		// add prelude files
-		String veriatlabs = veriatl + "\\Prelude\\";
+		String veriatlabs = veriatl + "/Prelude/";
 		args.addAll(getFiles(veriatlabs));
 
 		// add auxu files
