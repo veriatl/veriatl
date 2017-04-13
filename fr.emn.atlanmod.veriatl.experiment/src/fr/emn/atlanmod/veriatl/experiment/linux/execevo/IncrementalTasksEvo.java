@@ -3,6 +3,7 @@ package fr.emn.atlanmod.veriatl.experiment.linux.execevo;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -121,7 +122,9 @@ public final class IncrementalTasksEvo {
 	private static ArrayList<String> getFiles(String folder) {
 		ArrayList<String> r = new ArrayList<String>();
 		File f = new File(folder);
-		for (final File file : f.listFiles()) {
+		File[] files = f.listFiles();
+		Arrays.sort(files);
+		for (final File file : files) {
 			r.add(file.getAbsolutePath());
 		}
 		return r;
