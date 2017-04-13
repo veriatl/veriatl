@@ -26,7 +26,8 @@ public class UML {
 	
 	public static void testCodeGen() throws Exception{
 		WindowsStandalone.createTask(folders, null, org, null, "UML2UMLs", "UML", "UMLs");
-		WindowsStandalone.codeGen(proj);
+		WindowsStandalone.doExperiment(proj);
+
 	}
 	
 	

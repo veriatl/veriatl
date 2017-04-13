@@ -11,6 +11,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
 
+import experiment.VCGenerator;
 import experiment.experimentDriver;
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.veriatl.experiment.exec.BoogieTasks;
@@ -332,23 +333,24 @@ public class WindowsStandalone {
 				context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME));
 	}
 	
-	public static void codeGen(String p) throws Exception {
+	public static void doExperiment(String p) throws Exception {
 
 		System.out.println(String.format("=================== %s-code-gen ===================", org));
 		// clean
 		// TODO
-		String toDelete = String.format("%s/%s/%s/", p, org, "NoCached");
-		FileUtils.deleteDirectory(new File(toDelete));
+//		String toDelete = String.format("%s/%s/%s/", p, org, "NoCached");
+//		FileUtils.deleteDirectory(new File(toDelete));
 
 		// compute post result only
 		String proj = String.format("%s/%s", p, org);
 		ContextConstruction context = init(proj);
 		// TODO
-		clean(context);
-		gen(context);
-		decomposeNew(context);
+//		clean(context);
+//		gen(context);
+//		decomposeNew(context);
 		// TODO
-		//IncrementalTasksEvo.execBoogie(context, "");
+		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCCombine);
+		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCSep);
 
 		
 
