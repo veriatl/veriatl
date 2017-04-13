@@ -97,7 +97,7 @@ public final class IncrementalTasksEvo {
 		args.addAll(initBoogie());
 
 		// add prelude files
-		String veriatlabs = veriatl + "\\Prelude\\";
+		String veriatlabs = veriatl + "/Prelude/";
 		args.addAll(getFiles(veriatlabs));
 
 		// add auxu files
