@@ -10,7 +10,7 @@ Video
 ------
 Interest in VeriATL, but do not have time to install? Worry not! Quick demo of VeriATL on youtube: 
 
-[Click to watch](https://youtu.be/DUH2yTnaSv0)
+[Click to watch](https://youtu.be/zFqbcK4jd9I)
 
 Impacts
 ------
