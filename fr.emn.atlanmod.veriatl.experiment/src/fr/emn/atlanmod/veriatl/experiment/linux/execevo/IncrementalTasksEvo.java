@@ -56,6 +56,10 @@ public final class IncrementalTasksEvo {
 			for (String goal : URIs.allFolders(goals)) {
 				execBoogieSep(context, goals.appendSegment(goal));
 			}
+		} else if (mode.equals("single")){
+			URI goal = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+					.appendSegment("single");
+			execBoogieCom(context, goal);
 		}
 
 	}
@@ -119,7 +123,6 @@ public final class IncrementalTasksEvo {
 			argClone.clear();
 			if(r.getTime() > max) {max = r.getTime();}
 			if(r.getTime() < min){min = r.getTime();}
-			System.out.println(String.format("\tMode: Normal-verify-post\tid:%s\ttime:%s", file, r.getTime()));
 		}
 
 		System.out.println(String.format("Mode: Normal-verify-post\tid:%s\ttime:%s", folder, time));
