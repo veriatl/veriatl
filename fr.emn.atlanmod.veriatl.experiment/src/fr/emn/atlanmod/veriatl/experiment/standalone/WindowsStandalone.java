@@ -345,13 +345,13 @@ public class WindowsStandalone {
 		String proj = String.format("%s/%s", p, org);
 		ContextConstruction context = init(proj);
 		// TODO
-//		clean(context);
-//		gen(context);
-//		decomposeNew(context);
+		clean(context);
+		gen(context);
+		decomposeNew(context);
 		// TODO
-		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCCombine);
-		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCSep);
-
+//		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCCombine);
+//		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCSep);
+		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, "single");
 		
 
 	}
@@ -369,9 +369,9 @@ public class WindowsStandalone {
 		String proj = String.format("%s/%s", p, org);
 		ContextConstruction context = init(proj);
 		// TODO
-//		clean(context);
-//		gen(context);
-//		decomposeNew(context);
+		clean(context);
+		gen(context);
+		decomposeNew(context);
 		// TODO
 		//fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCCombine);
 		//fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCSep);
