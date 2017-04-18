@@ -376,7 +376,23 @@ public class WindowsStandalone {
 		//fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCCombine);
 		//fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCSep);
 		fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, "single");
-		
+	}
+	
+	
+	public static void testConsistency(String p) throws Exception {
+
+		System.out.println(String.format("=================== %s-test-consistency ===================", org));
+		// clean
+		// TODO
+//		String toDelete = String.format("%s/%s/%s/", p, org, "NoCached");
+//		FileUtils.deleteDirectory(new File(toDelete));
+
+		String proj = String.format("%s/%s", p, org);
+		ContextConstruction context = init(proj);
+		// TODO
+		clean(context);
+		gen(context);
+		decompose(context);
 
 	}
 }

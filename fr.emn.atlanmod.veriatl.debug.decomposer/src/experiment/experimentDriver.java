@@ -118,9 +118,12 @@ public class experimentDriver {
 //			}
 			
 			// Print single postcondition in its consice presentation.
+			
+			
 			String org = BoogiePrinter.prtingFastDriver(env, post, NodeHelper.findAllLeafs(tree), goalName);
 			URI output = outputPath.appendSegment(VCGenerator.SINGLE);
 			driver.generateBoogieFile(output, String.format("%s-%d", goalName, VCGenerator.postsTrace.get(goalName).size()), CompilerConstants.BOOGIE_EXT, org);	
+			
 			
 		}
 		

@@ -42,7 +42,7 @@ public class BoogiePrinter {
 
 	
 	
-		public static String prtingFastDriver(ExecEnv env, OclExpression post, ArrayList<Node> leafs, String goal)  {		
+	public static String prtingFastDriver(ExecEnv env, OclExpression post, ArrayList<Node> leafs, String goal)  {		
 		String res="";
 		String postString = printPost(post);
 		res += printDriverHeader();
