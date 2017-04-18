@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.emn.atlanmod.veriatl.experiment.UMLCopierMutant;
+package fr.emn.atlanmod.veriatl.experiment.UMLCopierScale;
 
 import fr.emn.atlanmod.veriatl.experiment.standalone.WindowsStandalone;
 
@@ -9,9 +9,9 @@ import fr.emn.atlanmod.veriatl.experiment.standalone.WindowsStandalone;
 
 /**
  * @author zcheng
- *
+ * ISSRE
  */
-public class UMLLinux {
+public class UMLWindows {
 	static String[] folders = new String[]{"Auxu", "Sub-goals"};
 	static String[] posts;
 	static String org = "ORG";
@@ -26,7 +26,7 @@ public class UMLLinux {
 	
 	public static void testCodeGen() throws Exception{
 		WindowsStandalone.createTask(folders, null, org, null, "UML2UMLs", "UML", "UMLs");
-		WindowsStandalone.doExperimentLinux(proj);
+		WindowsStandalone.doExperimentWindows(proj);
 
 	}
 	
