@@ -10,7 +10,7 @@ import org.eclipse.emf.common.util.URI;
 
 import experiment.VCGenerator;
 import fr.emn.atlanmod.veriatl.experiment.standalone.ContextConstruction;
-import fr.emn.atlanmod.veriatl.experiment.windows.execevo.DefaultCommandEvo;
+import fr.emn.atlanmod.veriatl.experiment.linux.execevo.DefaultCommandEvo;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.VerificationResult;
 import fr.emn.atlanmod.veriatl.util.URIs;
@@ -88,7 +88,7 @@ public final class IncrementalTasksEvo {
 			// System.out.println(file);
 			argClone.add(file);
 			VerificationResult r = DefaultCommandEvo.execute(argClone);
-			System.out.println(String.format("Mode: Normal-verify-post\tid:%s\ttime:%s", file, r.getTime()));
+			System.out.println(String.format("Mode: Normal-verify-post\tid:%s\ttime:%s\tRes:%s", file, r.getTime(), r.getResult()));
 			argClone.clear();
 		}
 
@@ -125,7 +125,7 @@ public final class IncrementalTasksEvo {
 			if(r.getTime() < min){min = r.getTime();}
 		}
 
-		System.out.println(String.format("Mode: Normal-verify-post\tid:%s\ttime:%s", folder, time));
+		System.out.println(String.format("Mode: Normal-verify-post\tid:%s\ttime:%s\tmax:%s\tmin:%s", folder, time, max, min));
 
 	}
 
