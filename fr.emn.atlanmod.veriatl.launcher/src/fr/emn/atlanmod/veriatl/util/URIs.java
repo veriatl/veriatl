@@ -13,6 +13,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
@@ -166,7 +167,7 @@ public final class URIs {
 				r.add(file.getName());
 			}	
 		}
-
+		Collections.sort(r);
 		return r;
 
 	}

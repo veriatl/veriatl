@@ -5,6 +5,7 @@ Bundle-SymbolicName: fr.emn.atlanmod.veriatl.debug.decomposer
 Bundle-Version: 1.0.0.qualifier
 Export-Package: contract,
  datastructure,
+ experiment,
  keywords,
  localize,
  metamodel,

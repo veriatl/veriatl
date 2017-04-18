@@ -34,13 +34,7 @@ tb.parameterSubstitution->size()>0 implies
 ); 
 
 
---@pre
-helper context UML!TestIdentityAction def: pre_result_is_boolean(): Boolean = --result_is_boolean
-  UML!TestIdentityAction.allInstances()->forAll(tia |  
-UML!Type.allInstances()->includes(tia.result.type) implies 
-UML!OutputPin.allInstances()->includes(tia.result) implies 
-    tia.result.type = Boolean
-); 
+
 
 --@pre
 helper context UML!DecisionNode def: pre_incoming_outgoing_edges(): Boolean = --incoming_outgoing_edges
@@ -57,13 +51,7 @@ p.end->size()>0 implies
     p.end->notEmpty() implies p.collaborationRole->notEmpty()
 ); 
 
---@pre
-helper context UML!ReadIsClassifiedObjectAction def: pre_boolean_result(): Boolean = --boolean_result
-  UML!ReadIsClassifiedObjectAction.allInstances()->forAll(ricoa |  
-UML!Type.allInstances()->includes(ricoa.result.type) implies 
-UML!OutputPin.allInstances()->includes(ricoa.result) implies 
-    ricoa.result.type = Boolean
-); 
+
 
 
 
