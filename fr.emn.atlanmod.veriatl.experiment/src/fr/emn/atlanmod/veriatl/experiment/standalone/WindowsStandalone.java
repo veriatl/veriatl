@@ -322,77 +322,9 @@ public class WindowsStandalone {
 	}
 	
 
-	public static void decomposeNew(ContextConstruction context) throws Exception{
-		experimentDriver.decompose(
-				context.basePath.appendSegment("Source").appendSegment(context.moduleName).appendFileExtension("atl"), 
-				context.basePath.appendSegment("Source").appendSegment(context.moduleName).appendFileExtension("emftvm"), 
-				context.moduleName, 
-				context.inMetamodel,
-				context.outMetamodel, 
-				context.contractPath,
-				context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME));
-	}
+
 	
-	public static void doExperimentLinux(String p) throws Exception {
 
-		System.out.println(String.format("=================== %s-code-gen ===================", org));
-		// clean
-		// TODO
-//		String toDelete = String.format("%s/%s/%s/", p, org, "NoCached");
-//		FileUtils.deleteDirectory(new File(toDelete));
-
-		// compute post result only
-		String proj = String.format("%s/%s", p, org);
-		ContextConstruction context = init(proj);
-		// TODO
-		clean(context);
-		gen(context);
-		decomposeNew(context);
-		// TODO
-//		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCCombine);
-//		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCSep);
-		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, "single");
-		
-
-	}
-
-
-	public static void doExperimentWindows(String p) throws Exception {
-
-		System.out.println(String.format("=================== %s-code-gen ===================", org));
-		// clean
-		// TODO
-//		String toDelete = String.format("%s/%s/%s/", p, org, "NoCached");
-//		FileUtils.deleteDirectory(new File(toDelete));
-
-		// compute post result only
-		String proj = String.format("%s/%s", p, org);
-		ContextConstruction context = init(proj);
-		// TODO
-		clean(context);
-		gen(context);
-		decomposeNew(context);
-		// TODO
-		//fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCCombine);
-		//fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCSep);
-		fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, "single");
-	}
 	
 	
-	public static void testConsistency(String p) throws Exception {
-
-		System.out.println(String.format("=================== %s-test-consistency ===================", org));
-		// clean
-		// TODO
-//		String toDelete = String.format("%s/%s/%s/", p, org, "NoCached");
-//		FileUtils.deleteDirectory(new File(toDelete));
-
-		String proj = String.format("%s/%s", p, org);
-		ContextConstruction context = init(proj);
-		// TODO
-		clean(context);
-		gen(context);
-		decompose(context);
-
-	}
 }
