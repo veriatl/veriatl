@@ -333,7 +333,7 @@ public class WindowsStandalone {
 				context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME));
 	}
 	
-	public static void doExperiment(String p) throws Exception {
+	public static void doExperimentLinux(String p) throws Exception {
 
 		System.out.println(String.format("=================== %s-code-gen ===================", org));
 		// clean
@@ -357,4 +357,26 @@ public class WindowsStandalone {
 	}
 
 
+	public static void doExperimentWindows(String p) throws Exception {
+
+		System.out.println(String.format("=================== %s-code-gen ===================", org));
+		// clean
+		// TODO
+//		String toDelete = String.format("%s/%s/%s/", p, org, "NoCached");
+//		FileUtils.deleteDirectory(new File(toDelete));
+
+		// compute post result only
+		String proj = String.format("%s/%s", p, org);
+		ContextConstruction context = init(proj);
+		// TODO
+		clean(context);
+		gen(context);
+		decomposeNew(context);
+		// TODO
+		//fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCCombine);
+		//fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCSep);
+
+		
+
+	}
 }

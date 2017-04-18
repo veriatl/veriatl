@@ -11,7 +11,7 @@ import fr.emn.atlanmod.veriatl.experiment.standalone.WindowsStandalone;
  * @author zcheng
  *
  */
-public class UML {
+public class UMLLinux {
 	static String[] folders = new String[]{"Auxu", "Sub-goals"};
 	static String[] posts;
 	static String org = "ORG";
@@ -26,7 +26,7 @@ public class UML {
 	
 	public static void testCodeGen() throws Exception{
 		WindowsStandalone.createTask(folders, null, org, null, "UML2UMLs", "UML", "UMLs");
-		WindowsStandalone.doExperiment(proj);
+		WindowsStandalone.doExperimentLinux(proj);
 
 	}
 	
