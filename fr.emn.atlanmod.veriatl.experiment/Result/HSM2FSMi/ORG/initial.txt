@@ -1,7 +1,0 @@
-=================== ORG-post-standard ===================
-Normal-verify-post:fsm_state_multi_lower:FALSE:1589
-Normal-verify-post:fsm_transition_multi_lower:FALSE:1859
-Normal-verify-post:fsm_transition_src_multi_lower:FALSE:1690
-Normal-verify-post:fsm_transition_trg_multi_lower:FALSE:1453
-Normal-verify-post:unique_fsm_sm_names:TRUE:1332
-Normal-verify-post:unique_fsm_state_names:FALSE:1388
