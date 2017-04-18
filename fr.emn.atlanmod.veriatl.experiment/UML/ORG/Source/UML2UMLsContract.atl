@@ -20,9 +20,7 @@ create OUT : UMLs from IN : UML;
 	  UML!AcceptEventAction.allInstances()->forAll(aea |  
 (aea.trigger->size()>0 or aea.trigger->size()=0) implies (
 (aea.output->size()>0 or aea.output->size()=0) implies (
-	    aea.oclIsTypeOf(UML!AcceptEventAction) and aea.trigger->forAll(t1_|
-	    UML!Event.allInstances()->includes(t1_.event) implies (
-	      t1_.event.oclIsKindOf(UML!ChangeEvent) or t1_.event.oclIsKindOf(UML!CallEvent))) implies aea.output->size() = 0
+	    aea.oclIsTypeOf(UML!AcceptEventAction) implies aea.output->size() = 0
 	    ))
 	); 
 	
@@ -443,9 +441,7 @@ UML!StructuralFeature.allInstances()->includes(sfa.structuralFeature) implies (
 	  UMLs!AcceptEventAction.allInstances()->forAll(aea |  
 (aea.trigger->size()>0 or aea.trigger->size()=0) implies (
 (aea.output->size()>0 or aea.output->size()=0) implies (
-	    aea.oclIsTypeOf(UMLs!AcceptEventAction) and aea.trigger->forAll(t1_|
-	    UMLs!Event.allInstances()->includes(t1_.event) implies (
-	      t1_.event.oclIsKindOf(UMLs!ChangeEvent) or t1_.event.oclIsKindOf(UMLs!CallEvent))) implies aea.output->size() = 0
+	    aea.oclIsTypeOf(UMLs!AcceptEventAction) implies aea.output->size() = 0
 	    ))
 	); 
 	
