@@ -29,7 +29,7 @@ public final class IncrementalTasksEvo {
 		args.add("/nologo");
 		args.add("/z3exe:" + z3);
 		args.add("/traceTimes");
-		args.add("/timeLimit:600");
+		args.add("/timeLimit:180");
 
 		return args;
 	}
