@@ -15,7 +15,7 @@ public class UMLWindows {
 	static String[] folders = new String[]{"Auxu", "Sub-goals"};
 	static String[] posts;
 	static String org = "ORG";
-	static String proj = "UMLTest";
+	static String proj = "UMLScale";
 	
     
 	public static void main(String[] args) throws Exception {		
