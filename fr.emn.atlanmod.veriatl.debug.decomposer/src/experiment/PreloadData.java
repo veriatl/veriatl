@@ -68,10 +68,10 @@ public class PreloadData {
 		result.put("ReadLinkObjectEndAction_ends_of_association",103533);
 		result.put("CommunicationPath_association_ends",144433);
 		result.put("ActionInputPin_input_pin",172388);
-		result.put("State_destinations_or_sources_of_transitions",249971);
-		result.put("Behavior_feature_of_context_classifier",611385);
-		result.put("ActionInputPin_one_output_pin",630807);
-		result.put("CreateObjectAction_classifier_not_abstract",633380);
+		result.put("State_destinations_or_sources_of_transitions",187639);
+		result.put("Behavior_feature_of_context_classifier",190763);
+		result.put("ActionInputPin_one_output_pin",194871);
+		result.put("CreateObjectAction_classifier_not_abstract",199816);
 
 		return result;
 	}
