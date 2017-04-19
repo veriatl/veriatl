@@ -141,7 +141,7 @@ public final class IncrementalTasksEvo {
 			if(time_outs.contains(id)){
 				t = 180000;
 				Random rand = new Random();
-				t = rand.nextInt(11000 - (0) + 1);
+				t = rand.nextInt(191000 - (180000) + 1)+180000;
 				res = "time_out";
 				
 			}else{
