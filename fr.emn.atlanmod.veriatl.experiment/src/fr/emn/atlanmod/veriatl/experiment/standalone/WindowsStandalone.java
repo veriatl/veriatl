@@ -142,7 +142,7 @@ public class WindowsStandalone {
 		// TODO
 //		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCCombine);
 //		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCSep);
-		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, "single");
+//		fr.emn.atlanmod.veriatl.experiment.linux.execevo.IncrementalTasksEvo.execBoogie(context, "single");
 		
 
 	}
@@ -165,7 +165,7 @@ public class WindowsStandalone {
 		decomposeNew(context);
 		// TODO
 		//fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCCombine);
-		fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCSep);
+		//fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, VCGenerator.INCSep);
 		//fr.emn.atlanmod.veriatl.experiment.windows.execevo.IncrementalTasksEvo.execBoogie(context, "single");
 	}
 	
