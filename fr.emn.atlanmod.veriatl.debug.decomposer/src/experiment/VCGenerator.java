@@ -16,17 +16,161 @@ import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 
 public class VCGenerator {
 
+	// meta-data for VC generation, used to indicate which folder to save generated VCs
 	public static final String SINGLE = "single";
 	public static final String PLUSONE = "plusone";
 	public static final String INCCombine = "incCombine";
 	public static final String INCSep = "incSep";
 	public static final String INC = "incremental";
+	public static final String HEURISTIC = "heuristic";
 
-	public static HashSet<String> done = new HashSet<String>();
+	
+	// a map that records the post and the string representation of its ocl expression
 	public static HashMap<String, String> postsStrings = new HashMap<String, String>();
+	// a map that records each post and what rules are involved for it (i.e. trace)
 	public static HashMap<String, HashSet<String>> postsTrace = new HashMap<String, HashSet<String>>();
+	// a map that records each post and its verification time (for prioritizing VC generation )
 	public static HashMap<String, Integer> postsTime = PreloadData.initPostTime();
+	// a list that records what posts should be considered
 	public static ArrayList<String> posts = new ArrayList<String>();
+	// a map that records each post and how many sub-goals it has
+	public static HashMap<String, Integer> postsSubs = new HashMap<String, Integer>();
+	
+	// a set that records what posts are already processed
+	public static HashSet<String> done = new HashSet<String>();
+	
+	
+	
+	/**
+	 * Build verification tasks: call smartScheduling by default arguments.
+	 * 
+	 * @argument max_trace_per_group default set to 10 (based on our experience of verifying MTs)
+	 * @argument max_subs_per_group default set to 200 (should be determined by the user)
+	 * */
+	public static void heuristicScheduling(URI outputDir){
+		heuristicScheduling(outputDir, 10, 200);
+	}
+	
+	
+	/**
+	 * Build verification tasks: giving a set of posts, heuristic scheduling tries to merge these posts into groups, without breaking predefined criteria.
+	 * The criteria are given by the parameters.
+	 * 
+	 * @param max_trace_per_group
+	 * @param max_subs_per_group
+	 * */
+	public static void heuristicScheduling(URI outputDir, int max_trace_per_group, int max_subs_per_group){
+		ArrayList<ArrayList<String>> groups = new ArrayList<ArrayList<String>>();
+		String conf = String.format("%s_%s", max_trace_per_group, max_subs_per_group);
+		
+		URI boogiePath = outputDir.appendSegment(HEURISTIC).appendSegment(conf);
+		
+		for (String post : posts)
+		{
+			ArrayList<ArrayList<String>> candidateGroups = new ArrayList<ArrayList<String>>();
+
+			// selecting candidate groups for a given post
+			for (ArrayList<String> group : groups)
+			{
+				// trail by adding post to group
+				ArrayList<String> groupWillBe = new ArrayList<String>(group);
+				groupWillBe.add(post);
+				int traceWillBe = traces(groupWillBe).size();
+				int subWillBe = subs(groupWillBe);
+
+				if (traceWillBe < max_trace_per_group && subWillBe < max_subs_per_group)
+				{
+					candidateGroups.add(group);
+				}
+			}
+
+			// add post to a new group if no candidate groups suite it.
+			if (candidateGroups.size() == 0)
+			{
+				ArrayList<String> group = new ArrayList<String>();
+				group.add(post);
+				groups.add(group);
+			}
+			// in case multiple groups suite a post, selecting the `most suitable` one
+			else
+			{
+				ArrayList<String> bestGroup = rank(candidateGroups, post);
+				bestGroup.add(post);
+			}
+
+		}
+		
+		// OUTPUT post-groups mapping for data analysis
+		String mapping ="";
+		for (ArrayList<String> group : groups)
+		{	
+			for (String post : group)
+			{
+				mapping += String.format("%s:%s\n", post, groups.indexOf(group));	
+			}
+		}
+		driver.generateBoogieFile(outputDir, conf, "txt", mapping);	
+		
+		// OUTPUT boogie files for groups
+		for (ArrayList<String> group : groups)
+		{	
+			String content = genContentSep(group);
+			String fileName = String.format("%03d-%d-%d", groups.indexOf(group), group.size(),traces(group).size());
+			driver.generateBoogieFile(boogiePath, fileName, CompilerConstants.BOOGIE_EXT, content);
+		}	
+		
+	}
+	
+	/**
+	 * return the traces for a group
+	 * */
+	private static HashSet<String> traces(ArrayList<String> group){
+		HashSet<String> traces = new HashSet<String>();
+		
+		for(String post: group){
+			traces.addAll(postsTrace.get(post));
+		}
+		
+		return traces;
+	}
+	
+	/**
+	 * return the overall number of sub-goals for a group
+	 * */
+	private static int subs(ArrayList<String> group){
+		int subs = 0;
+		
+		for(String post: group){
+			subs += postsSubs.get(post);
+		}
+		
+		return subs;
+	}
+	
+	/**
+	 * return a group (among {@param groups}) whose {@code traces} are effected the least
+	 * */
+	private static ArrayList<String> rank(ArrayList<ArrayList<String>> groups, String post){		
+		ArrayList<ArrayList<String>> candidates = new ArrayList<ArrayList<String>> (groups);
+		
+		// sort (ascending) groups by the effect of post on the traces of each group
+		Collections.sort(candidates, new Comparator<ArrayList<String>>(){
+		    public int compare(ArrayList<String> g1, ArrayList<String> g2){
+		    	ArrayList<String> g1WillBe = new ArrayList<String>(g1);
+		    	g1WillBe.add(post);
+				
+				ArrayList<String> g2WillBe = new ArrayList<String>(g2);
+				g2WillBe.add(post);
+		    	
+		    	return traces(g1).size() - traces(g2).size();
+		    }
+		});
+		
+
+		// return the best candidate
+		return candidates.get(0);
+	}
+	
 	
 	/**
 	 * Build verification tasks: incrementally *combine* with the next shortest verification time post.
@@ -83,348 +227,13 @@ public class VCGenerator {
 		}
 	}
 	
-	/**
-	 * 
-	 * */
-	public static void combinePlusOne(URI outputPath) {
-		for(String post : posts) {
-			HashSet<String> postTrace = postsTrace.get(post);
-			String postString = postsStrings.get(post);
-			
-			for(String anotherPost : posts.subList(posts.indexOf(post)+1, posts.size())) {
-				
-				String fileName = String.format("%s-%s", post, anotherPost);
-				URI output = outputPath.appendSegment(VCGenerator.PLUSONE);
-				
-				HashSet<String> anotherPostTrace = postsTrace.get(anotherPost);
-				String anotherPostString = postsStrings.get(anotherPost);
-				
-				HashSet<String> involvedRules = new HashSet<String>();
-				involvedRules.addAll(postTrace);
-				involvedRules.addAll(anotherPostTrace);
-				
-				String res="";
-				res += BoogiePrinter.printDriverHeader();
-				
-				for(String r : involvedRules){
-					res += String.format("call %s_matchAll();\n", r);
-				}
-				for(String r : involvedRules){
-					res += String.format("call %s_applyAll();\n", r);
-				}
-				
-				res += "\n";
-				
-				Set<String> intersection = new HashSet<String>(postTrace); // use the copy constructor
-				intersection.retainAll(anotherPostTrace);
-				
-				// print intersections
-				res += "//";
-				res += "//";
-				for(String s : intersection) {
-					res += String.format("%s,", s);
-				}
-				res += "\n";
-				
-				// print postconditions
-				res += postString;
-				res += "\n";
-				res += anotherPostString;
-				res += "\n";
-				
-				res += BoogiePrinter.printDriverFooter();
-				
-				
-				fileName = String.format("%s-%03d_%03d_%03d", fileName, postTrace.size(), anotherPostTrace.size(), intersection.size());
-				
-				driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, res);
-			}
-		}
-	}
-	
-	/**
-	 * 
-	 * */
-	public static void singleMutation(URI outputPath) {
-		ArrayList<String> subs = new ArrayList<String>(posts);
-		Collections.sort(subs, new Comparator<String>(){
-		    public int compare(String s1, String s2){
-		        return postsTime.get(s1) - postsTime.get(s2);
-		    }
-		});
-		
-		for (String post : subs) {
-			URI output = outputPath.appendSegment("Mutation");
-			ArrayList<String> todo = new ArrayList<String>();
-			todo.add(post);
-			String content = genMutation(todo);
-			String file = String.format("%03d.%s", subs.indexOf(post), post);
-			driver.generateBoogieFile(output, file, CompilerConstants.BOOGIE_EXT, content);
-		}
-		
-		for (String post : subs) {
-			URI output = outputPath.appendSegment("singleMutation");
-			ArrayList<String> todo = new ArrayList<String>();
-			todo.add(post);
-			String content = genMutationSingle(todo);
-			String file = String.format("%03d.%s", subs.indexOf(post), post);
-			driver.generateBoogieFile(output, file, CompilerConstants.BOOGIE_EXT, content);
-		}
 
-	}
-
-	/**
-	 * 
-	 * */
-	public static void couple(URI outputPath, int min, int max){
-		ArrayList<String> nRuleTrace = new ArrayList<String>();
-		
-		// find initial post with trace of size `n`
-		for(String post : posts) {
-			HashSet<String> postTrace = postsTrace.get(post);
-			if(postTrace.size() >= min && postTrace.size() < max) {
-				//if(!Arrays.asList(excludes).contains(post)){
-					nRuleTrace.add(post);
-				//}
-					
-			}
-			
-		}
-
-		// sort posts by verification time
-		ArrayList<String> subs = new ArrayList<String>(posts);
-		Collections.sort(subs, new Comparator<String>(){
-		    public int compare(String s1, String s2){
-		        return postsTime.get(s1) - postsTime.get(s2);
-		    }
-		});
-		
-		
-		for(String post : nRuleTrace) {
-			URI output = outputPath.appendSegment("couple");
-			HashSet<String> postTrace = postsTrace.get(post);
-			
-			for(String rest : subs){
-				HashSet<String> restTrace = postsTrace.get(rest);
-				if(!rest.equals(post) 
-						//&& !Arrays.asList(excludes).contains(rest)
-						&& !done.contains(String.format("%s-%s", post, rest))
-				) {
-					Set<String> intersection = new HashSet<String>(postTrace);
-					intersection.retainAll(restTrace);
-					
-					// determine trace relationships of two postconditions
-					String nature = "";
-					if(intersection.size() == 0){
-						nature = "disjoint";
-					}else {
-						nature = String.format("sharing$%s", intersection.size());
-					}
-					
-					
-					ArrayList<String> incCase = new ArrayList<String>();
-					incCase.add(post);
-					incCase.add(rest);
-					String content = genContent(incCase);
-					String fileName = String.format("%s-%03d-%s-%s", post, subs.indexOf(rest), rest, nature);
-					driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, content);
-					
-					done.add(String.format("%s-%s", post,rest));
-					done.add(String.format("%s-%s", rest, post));
-					
-				}
-				
-			}	
-			
-		}
-	}
 	
 	/**
 	 * 
 	 * */
-	public static void big_and_disjoint(URI outputPath, int min, int max){
-		ArrayList<String> nRuleTrace = new ArrayList<String>();
-		
-		// find initial post with trace of size `n`
-		for(String post : posts) {
-			HashSet<String> postTrace = postsTrace.get(post);
-			if(postTrace.size() >= min && postTrace.size() < max) {
-				if(!Arrays.asList(PreloadData.excludes).contains(post)){
-					nRuleTrace.add(post);
-				}
-					
-			}
-			
-		}
-		
-		HashMap<String, HashSet<String>> disjoint = new HashMap<String, HashSet<String>>();
-		
-		// initialize subsumes
-		for(String post : nRuleTrace) {
-			disjoint.put(post, new HashSet<String>());			
-		}
-		
-		// find disjoints
-		for(String post : nRuleTrace) {
-			HashSet<String> postTrace = postsTrace.get(post);
-			
-			for(String rest : posts){
-				HashSet<String> restTrace = postsTrace.get(rest);
-				Set<String> intersection = new HashSet<String>(restTrace); 
-				intersection.retainAll(postTrace);
-				
-				if(intersection.size() == 0 && !Arrays.asList(PreloadData.excludes).contains(rest)){
-					disjoint.get(post).add(rest);
-				}			
-			}
-	
-		}
-		
-		
-		for(String post : nRuleTrace) {
-			URI output = outputPath.appendSegment("big_disjoint_"+Integer.toString(min));
-			
-			
-			ArrayList<String> subs = new ArrayList<String>(disjoint.get(post));
-			Collections.sort(subs, new Comparator<String>(){
-			    public int compare(String s1, String s2){
-			        return postsTime.get(s1) - postsTime.get(s2);
-			    }
-
-			});
-			
-			for(String sub : subs){
-				if(!done.contains(String.format("%s-%s", post,sub))) {
-					ArrayList<String> incCase = new ArrayList<String>();
-					incCase.add(post);
-					incCase.add(sub);
-					String content = genContent(incCase);
-					String fileName = String.format("%s-%03d-%s", post, subs.indexOf(sub), sub);
-					driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, content);
-					
-					done.add(String.format("%s-%s", post,sub));
-					done.add(String.format("%s-%s", sub, post));
-				}
-				
-			}	
-			
-		}
-	}
-		
-	/**
-	 * find an initial post (Post_i) with trace size `n`, then find any other posts (Post_s1 .. Post_sx) whose trace that are subsumed by the initial post
-	 * Finally, incrementally build VCs = Post_i && Post_s1 && ... && Post_sx, where Post_s1 to Post_sx are ordered by their verification time.
-	 * 
-	 * Aim: 
-	 * 	- if subsumes, is it always worthwhile to combine posts; 
-	 *  - when we have to chop into two sets of post, because combined posts is too difficult to solve.
-	 * */
-	public static void subsumed(URI outputPath, int n ) {
-		
-		ArrayList<String> nRuleTrace = new ArrayList<String>();
-		
-		// find initial post with trace of size `n`
-		for(String post : posts) {
-			HashSet<String> postTrace = postsTrace.get(post);
-			if(postTrace.size() == n) {
-				nRuleTrace.add(post);
-			}
-			
-		}
-		
-		HashMap<String, HashSet<String>> subsumes = new HashMap<String, HashSet<String>>();
-		
-		// initialize subsumes
-		for(String post : nRuleTrace) {
-			subsumes.put(post, new HashSet<String>());			
-		}
-		
-		// find subsumes
-		for(String post : nRuleTrace) {
-			HashSet<String> postTrace = postsTrace.get(post);
-			
-			for(String rest : posts){
-				HashSet<String> restTrace = postsTrace.get(rest);
-				Set<String> intersection = new HashSet<String>(restTrace); 
-				intersection.retainAll(postTrace);
-				
-				if(intersection.size() == restTrace.size() && !post.equals(rest)){
-					subsumes.get(post).add(rest);
-				}			
-			}
-	
-		}
-		
-		
-		for(String post : nRuleTrace) {
-			URI output = outputPath.appendSegment("subsumes").appendSegment(n+"-"+post);
-			ArrayList<String> incCase = new ArrayList<String>();
-			incCase.add(post);
-			
-			ArrayList<String> subs = new ArrayList<String>(subsumes.get(post));
-			Collections.sort(subs, new Comparator<String>(){
-			    public int compare(String s1, String s2){
-			        return postsTime.get(s1) - postsTime.get(s2);
-			    }
-
-			});
-			
-			for(String sub : subs){
-				incCase.add(sub);
-				String content = genContent(incCase);
-				String fileName = String.format("%03d", incCase.size());
-				driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, content);
-			}	
-			
-		}
-	
-	}
-	
-	/**
-	 * 
-	 * */
-	public static void inc(URI outputPath, int n ) {
-		
-		ArrayList<String> nRuleTrace = new ArrayList<String>();
-		
-		for(String post : posts) {
-			HashSet<String> postTrace = postsTrace.get(post);
-			if(postTrace.size() <= n) {
-				nRuleTrace.add(post);
-			}
-			
-		}
-		
-		ArrayList<String> incCase = new ArrayList<String>();
-		URI output = outputPath.appendSegment(VCGenerator.INC);
-		
-		ArrayList<String> subs = new ArrayList<String>(nRuleTrace);
-		Collections.sort(subs, new Comparator<String>(){
-		    public int compare(String s1, String s2){
-		        return postsTime.get(s1) - postsTime.get(s2);
-		    }
-
-		});
-		
-		for(String post : subs) {
-			incCase.add(post);
-			String content = genContent(incCase);
-			String fileName = String.format("%03d", incCase.size());
-			driver.generateBoogieFile(output, fileName, CompilerConstants.BOOGIE_EXT, content);
-		}
-		
-	}
-	
-	/**
-	 * 
-	 * */
-	public static String genMutationSingle(ArrayList<String> incCase) {
-		HashSet<String> involvedRules = new HashSet<String>();
-		
-		for(String post : incCase) {
-			involvedRules.addAll(postsTrace.get(post));
-		}
-		
+	private static String genContentSep(ArrayList<String> groups) {
+		HashSet<String> involvedRules = traces(groups);	
 		
 		String res="";
 		res += BoogiePrinter.printDriverHeader();
@@ -437,70 +246,16 @@ public class VCGenerator {
 		}
 		
 		res += "\n";
-		
-
 		res += "\n";
-		
-
-		
-		// print postconditions
-		for(String post : incCase) {
-			//res += postsStrings.get(post).replace("assert ", "assert !(").replace(";", ");");
-			res += postsStrings.get(post).replaceFirst("==>", "<==>");
-			res += "\n";
-		}
+			
+		for(String post : groups){
+			res += String.format("assert %s;\n", postsStrings.get(post));
+		}		
 		
 		res += BoogiePrinter.printDriverFooter();
 		
 		return res;
 	}
-	
-	/**
-	 * 
-	 * */
-	public static String genMutation(ArrayList<String> incCase) {
-		HashSet<String> involvedRules = new HashSet<String>();
-		
-		for(String post : incCase) {
-			involvedRules.addAll(postsTrace.get(post));
-		}
-		
-		
-		String res="";
-		res += BoogiePrinter.printDriverHeader();
-		
-		for(String r : involvedRules){
-			res += String.format("call %s_matchAll();\n", r);
-		}
-		for(String r : involvedRules){
-			res += String.format("call %s_applyAll();\n", r);
-		}
-		
-		res += "\n";
-		
-
-		res += "\n";
-		
-		// print postconditions
-		for(String post : incCase) {
-			res += String.format("// %s : %s\n", post, postsTime.get(post));
-			res += postsStrings.get(post);
-			res += "\n";
-		}
-		
-		// print postconditions
-		for(String post : incCase) {
-			//res += postsStrings.get(post).replace("assert ", "assert !(").replace(";", ");");
-			res += postsStrings.get(post).replaceFirst("==>", "<==>");
-			res += "\n";
-		}
-		
-		res += BoogiePrinter.printDriverFooter();
-		
-		return res;
-	}
-	
-	
 	
 	/**
 	 * incrementally build verification tasks (combine each of them in a single verification task)

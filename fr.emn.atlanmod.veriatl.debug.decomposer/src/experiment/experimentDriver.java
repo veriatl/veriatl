@@ -127,8 +127,9 @@ public class experimentDriver {
 			
 		}
 		
-		VCGenerator.incrementalByTimeNoSlicingCombined(outputPath);
-		VCGenerator.incrementalByTimeNoSlicingSeparated(outputPath);
+		VCGenerator.heuristicScheduling(outputPath);
+		//VCGenerator.incrementalByTimeNoSlicingCombined(outputPath);
+		//VCGenerator.incrementalByTimeNoSlicingSeparated(outputPath);
 		
 		long end = System.currentTimeMillis();
 		System.out.println(end-start);

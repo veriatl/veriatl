@@ -68,6 +68,7 @@ public class BoogiePrinter {
 		// prepare meta-data for VCGeneration
 		VCGenerator.postsStrings.put(goal, postString);
 		VCGenerator.postsTrace.put(goal, involvedRules);
+		VCGenerator.postsSubs.put(goal, leafs.size());
 		VCGenerator.posts.add(goal);
 		
 		return res;

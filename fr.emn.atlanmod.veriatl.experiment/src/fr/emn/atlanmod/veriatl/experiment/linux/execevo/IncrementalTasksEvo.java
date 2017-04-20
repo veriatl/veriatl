@@ -73,10 +73,16 @@ public final class IncrementalTasksEvo {
 			for (String goal : URIs.allFolders(goals)) {
 				execBoogieSep(context, goals.appendSegment(goal));
 			}
-		} else if (mode.equals("single")){
+		} else if (mode.equals(VCGenerator.SINGLE)){
 			URI goal = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
-					.appendSegment("single");
+					.appendSegment(VCGenerator.SINGLE);
 			execBoogieCom(context, goal);
+		} else if (mode.equals(VCGenerator.HEURISTIC)){
+			URI goals = context.basePath.appendSegment(VeriATLLaunchConstants.SUBGOAL_FOLDER_NAME)
+					.appendSegment(VCGenerator.HEURISTIC);
+			for (String goal : URIs.allFolders(goals)) {
+				execBoogieSep(context, goals.appendSegment(goal));
+			}
 		}
 
 	}
