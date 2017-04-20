@@ -134,7 +134,6 @@ public class experimentDriver {
 		VCGenerator.heuristicScheduling(outputPath, 40, 120);
 		VCGenerator.heuristicScheduling(outputPath, 80, 240);
 		VCGenerator.heuristicScheduling(outputPath, 120, 480);
-		VCGenerator.heuristicScheduling(outputPath, 240, 960);
 		VCGenerator.heuristicScheduling(outputPath, 999, 999999);
 
 		//VCGenerator.incrementalByTimeNoSlicingCombined(outputPath);
