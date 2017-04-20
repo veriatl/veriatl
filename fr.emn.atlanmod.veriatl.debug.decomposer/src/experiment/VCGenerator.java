@@ -98,6 +98,7 @@ public class VCGenerator {
 				bestGroup.add(post);
 			}
 
+		
 		}
 		
 		// OUTPUT post-groups mapping for data analysis
@@ -106,7 +107,7 @@ public class VCGenerator {
 		{	
 			for (String post : group)
 			{
-				mapping += String.format("%s:%s\n", post, groups.indexOf(group));	
+				mapping += String.format("%s:%03d\n", post, groups.indexOf(group));	
 			}
 		}
 		driver.generateBoogieFile(outputDir, conf, "txt", mapping);	
@@ -114,9 +115,11 @@ public class VCGenerator {
 		// OUTPUT boogie files for groups
 		for (ArrayList<String> group : groups)
 		{	
-			String content = genContentSep(group);
-			String fileName = String.format("%03d-%d-%d", groups.indexOf(group), group.size(),traces(group).size());
-			driver.generateBoogieFile(boogiePath, fileName, CompilerConstants.BOOGIE_EXT, content);
+			if(group.size() != 1){
+				String content = genContentSep(group);
+				String fileName = String.format("%03d-%d", groups.indexOf(group), group.size());
+				driver.generateBoogieFile(boogiePath, fileName, CompilerConstants.BOOGIE_EXT, content);
+			}
 		}	
 		
 	}
