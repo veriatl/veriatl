@@ -65,6 +65,7 @@ public class VCGenerator {
 		
 		URI boogiePath = outputDir.appendSegment(HEURISTIC).appendSegment(conf);
 		
+		
 		for (String post : posts)
 		{
 			ArrayList<ArrayList<String>> candidateGroups = new ArrayList<ArrayList<String>>();
@@ -335,5 +336,39 @@ public class VCGenerator {
 		}
 		
 		return results;
+	}
+	
+	/**
+	 * 
+	 * */
+	public static void combinePlusOne(URI outputPath, int max_trace_per_group, int max_subs_per_group) {
+		for(String post : posts) {
+			
+			if(!post.equals("Extend_extension_points")){
+				continue;
+			}
+			
+			
+			for(String anotherPost : posts) {
+				
+				if(post.equals(anotherPost)){
+					continue;
+				}
+				
+				ArrayList<String> groupWillBe = new ArrayList<String>();
+				groupWillBe.add(post);
+				groupWillBe.add(anotherPost);
+				int traceWillBe = traces(groupWillBe).size();
+				int subWillBe = subs(groupWillBe);
+
+				if (traceWillBe < max_trace_per_group && subWillBe < max_subs_per_group)
+				{
+					String content = genContentSep(groupWillBe);
+					URI boogiePath = outputPath.appendSegment(HEURISTIC);
+					String fileName = String.format("%s-%s", post, anotherPost);
+					driver.generateBoogieFile(boogiePath, fileName, CompilerConstants.BOOGIE_EXT, content);
+				}
+			}
+		}
 	}
 }

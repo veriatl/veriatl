@@ -127,15 +127,16 @@ public class experimentDriver {
 			
 		}
 		
-		VCGenerator.heuristicScheduling(outputPath, 1, 1);
+//		VCGenerator.heuristicScheduling(outputPath, 1, 1);
 		VCGenerator.heuristicScheduling(outputPath, 5, 15);
-		VCGenerator.heuristicScheduling(outputPath, 10, 30);
-		VCGenerator.heuristicScheduling(outputPath, 20, 60);
-		VCGenerator.heuristicScheduling(outputPath, 40, 120);
-		VCGenerator.heuristicScheduling(outputPath, 80, 240);
-		VCGenerator.heuristicScheduling(outputPath, 120, 480);
-		VCGenerator.heuristicScheduling(outputPath, 999, 999999);
+//		VCGenerator.heuristicScheduling(outputPath, 10, 30);
+//		VCGenerator.heuristicScheduling(outputPath, 20, 60);
+//		VCGenerator.heuristicScheduling(outputPath, 40, 120);
+//		VCGenerator.heuristicScheduling(outputPath, 80, 240);
+//		VCGenerator.heuristicScheduling(outputPath, 120, 480);
+//		VCGenerator.heuristicScheduling(outputPath, 999, 999999);
 
+//		VCGenerator.combinePlusOne(outputPath,5,15);
 		//VCGenerator.incrementalByTimeNoSlicingCombined(outputPath);
 		//VCGenerator.incrementalByTimeNoSlicingSeparated(outputPath);
 		
