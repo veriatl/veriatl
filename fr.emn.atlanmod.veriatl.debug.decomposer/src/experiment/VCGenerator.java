@@ -68,6 +68,12 @@ public class VCGenerator {
 		URI boogiePath = outputDir.appendSegment(HEURISTIC).appendSegment(conf);
 		
 		
+		Collections.sort(posts, new Comparator<String>(){
+		    public int compare(String p1, String p2){
+		        return postsTrace.get(p1).size() - postsTrace.get(p2).size();
+		    }
+		});
+		
 		for (String post : posts)
 		{
 			ArrayList<ArrayList<String>> candidateGroups = new ArrayList<ArrayList<String>>();
