@@ -6,7 +6,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
@@ -338,37 +340,86 @@ public class VCGenerator {
 		return results;
 	}
 	
-	/**
-	 * 
-	 * */
-	public static void combinePlusOne(URI outputPath, int max_trace_per_group, int max_subs_per_group) {
-		for(String post : posts) {
-			
-			if(!post.equals("Extend_extension_points")){
-				continue;
-			}
-			
-			
-			for(String anotherPost : posts) {
-				
-				if(post.equals(anotherPost)){
-					continue;
-				}
-				
-				ArrayList<String> groupWillBe = new ArrayList<String>();
-				groupWillBe.add(post);
-				groupWillBe.add(anotherPost);
-				int traceWillBe = traces(groupWillBe).size();
-				int subWillBe = subs(groupWillBe);
-
-				if (traceWillBe < max_trace_per_group && subWillBe < max_subs_per_group)
-				{
-					String content = genContentSep(groupWillBe);
-					URI boogiePath = outputPath.appendSegment(HEURISTIC);
-					String fileName = String.format("%s-%s", post, anotherPost);
-					driver.generateBoogieFile(boogiePath, fileName, CompilerConstants.BOOGIE_EXT, content);
-				}
-			}
-		}
-	}
+//	/**
+//	 * randomly grouping the given postconditions {@code n} times.
+//	 * */
+//	public static void random(URI outputPath, int n) {
+//		
+//		ArrayList<ArrayList<ArrayList<String>>> set_groups = new ArrayList<ArrayList<ArrayList<String>>>();
+//		
+//		
+//		for(int i = 0; i < n; i++) {
+//			ArrayList<String> copy = new ArrayList<String>(posts);			
+//			Collections.shuffle(copy);
+//			int chunks = ThreadLocalRandom.current().nextInt(1, 51);
+//			ArrayList<ArrayList<String>> candidiate = partition(copy, chunks);
+//			add(set_groups, candidiate);
+//		}
+//		
+//		Collections.shuffle(set_groups);
+//		
+//		for(int i = 0; i < n && i < set_groups.size(); i++) {
+//			ArrayList<ArrayList<String>> groups = set_groups.get(i);
+//			
+//			String mapping ="";
+//			for (ArrayList<String> group : groups)
+//			{	
+//				for (String post : group)
+//				{
+//					mapping += String.format("%s:%03d\n", post, groups.indexOf(group));	
+//				}
+//			}
+//			driver.generateBoogieFile(outputPath, String.format("random_%s", i), "txt", mapping);	
+//			
+//			// OUTPUT boogie files for groups
+//			for (ArrayList<String> group : groups)
+//			{	
+//				if(group.size() != 1){
+//					URI boogiePath = outputPath.appendSegment(String.format("random_%s", i));
+//					String content = genContentSep(group);
+//					String fileName = String.format("%03d-%d", groups.indexOf(group), group.size());
+//					driver.generateBoogieFile(boogiePath, fileName, CompilerConstants.BOOGIE_EXT, content);
+//				}
+//			}	
+//			
+//		}
+//		
+//	}
+//	
+//	
+//	
+//	private static void add(ArrayList<ArrayList<ArrayList<String>>> set_groups, ArrayList<ArrayList<String>> candidate){
+//		
+//		boolean isContained = false;
+//		
+//		for(ArrayList<ArrayList<String>> groups : set_groups){
+//			if(subsetOf(candidate, groups)){
+//				isContained = true;
+//				break;
+//			}
+//		}
+//		
+//		if(!isContained){
+//			set_groups.add(candidate);
+//		}
+//		
+//	}
+//	
+//	/**
+//	 * test if every group in g1 is also in g2 
+//	 * */
+//	private static boolean subsetOf(ArrayList<ArrayList<String>> g1, ArrayList<ArrayList<String>> g2){
+//		boolean res = false;
+//		for(ArrayList<String> e1 : g1){
+//			for(ArrayList<String> e2 : g2){
+//				if(e1.containsAll(e2) && e2.containsAll(e1)){
+//					res = true;
+//					break;
+//				}
+//			}
+//		}
+//		
+//		return res;
+//	}
+	
 }
