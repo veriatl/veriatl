@@ -242,7 +242,8 @@ public class VCGenerator {
 
 	
 	/**
-	 * 
+	 * Generate VC for group of postconditions, by separate assertions
+	 * In Boogie, it is equivalent to genContentSep, since wp(assert E; assert F, Q) = wp(assert E /\ F;, Q)
 	 * */
 	private static String genContentSep(ArrayList<String> groups) {
 		HashSet<String> involvedRules = traces(groups);	
@@ -270,7 +271,8 @@ public class VCGenerator {
 	}
 	
 	/**
-	 * 
+	 * Generate VC for group of postconditions, by conjunction
+	 * In Boogie, it is equivalent to genContentSep, since wp(assert E; assert F, Q) = wp(assert E /\ F;, Q)
 	 * */
 	private static String genContentConj(ArrayList<String> group) {
 		HashSet<String> involvedRules = traces(group);	
