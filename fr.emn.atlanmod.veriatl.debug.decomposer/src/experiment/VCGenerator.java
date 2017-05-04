@@ -125,7 +125,7 @@ public class VCGenerator {
 		for (ArrayList<String> group : groups)
 		{	
 			if(group.size() != 1){
-				String content = genContentSep(group);
+				String content = genContentConj(group);
 				String fileName = String.format("%03d-%d", groups.indexOf(group), group.size());
 				driver.generateBoogieFile(boogiePath, fileName, CompilerConstants.BOOGIE_EXT, content);
 			}
@@ -263,6 +263,34 @@ public class VCGenerator {
 		for(String post : groups){
 			res += String.format("assert %s;\n", postsStrings.get(post));
 		}		
+		
+		res += BoogiePrinter.printDriverFooter();
+		
+		return res;
+	}
+	
+	/**
+	 * 
+	 * */
+	private static String genContentConj(ArrayList<String> group) {
+		HashSet<String> involvedRules = traces(group);	
+		
+		String res="";
+		res += BoogiePrinter.printDriverHeader();
+		
+		for(String r : involvedRules){
+			res += String.format("call %s_matchAll();\n", r);
+		}
+		for(String r : involvedRules){
+			res += String.format("call %s_applyAll();\n", r);
+		}
+		
+		res += "\n";
+		res += "\n";
+		
+		ArrayList<String> posts = group.stream().map(elem -> postsStrings.get(elem)).collect(Collectors.toCollection(ArrayList::new));
+		res += String.format("assert %s;\n", String.join(" \n&& ", posts));
+			
 		
 		res += BoogiePrinter.printDriverFooter();
 		
