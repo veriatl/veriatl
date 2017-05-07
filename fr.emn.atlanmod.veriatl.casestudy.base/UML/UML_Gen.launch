@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="fr.emn.atlanmod.veriatl.launcher">
-<stringAttribute key="ATL File Name" value="//fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UMLCopier.atl"/>
+<stringAttribute key="ATL File Name" value="//fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UML2UMLs.atl"/>
 <stringAttribute key="Affected Rule" value=""/>
 <stringAttribute key="CONTRACT PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UML2UMLsContract.atl"/>
 <mapAttribute key="Inout Model Options"/>
@@ -15,7 +15,7 @@
 <mapEntry key="UML" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UML.ecore"/>
 <mapEntry key="UMLs" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/UMLs.ecore"/>
 </mapAttribute>
-<stringAttribute key="Module Name" value="UMLCopier"/>
+<stringAttribute key="Module Name" value="UML2UMLs"/>
 <stringAttribute key="Module Path" value="/fr.emn.atlanmod.veriatl.casestudy.base/UML/Source/"/>
 <booleanAttribute key="No" value="true"/>
 <mapAttribute key="Output Model Options">
