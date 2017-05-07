@@ -3,7 +3,7 @@ Fine-Grained Incrementality for Deductive Verification of Model Transformations 
 
 Introduction
 ------
-In contract-based development of model transformations, continuous deductive verification helps the transformation developer in early bug detection. However, because of the execution performance of current verification systems, re-verifying from scratch after a change has been made would introduce impractical delays. We address this problem by proposing a fine-grained incremental verification approach and applying it to the ATL model-transformation language. Our approach is based on decomposing each contract into sub-goals, and caching the sub-goal verification results. At each change we exploit the semantics of relational model transformation to determine whether a cached verification result may be impacted. Consequently, less postconditions/sub-goals need to be re-verified. When a change forces the re-verification of a postcondition, we use the cached verification results of sub-goals to construct a simplified version of the postcondition to verify. We prove the soundness of our approach and show its effectiveness by continuous and extensive evaluations.
+In model-driven engineering, correct model transformation is essential for reliably producing the artifacts that drive software development. While the advancement of SMT solvers has enabled verifying the correctness of model transformations, scalability is one of the major issues that prevents its usage in industrial level. To improve this situation, we present an automatic approach for the ATL model transformation language. Specifically, we propose a transformation slicing approach to manage large scale model transformations by aligning each correctness criterion to the ATL rules it depends on, thereby reducing the verification complexity/time of individual criterion. Moreover, we manage large scale correctness criteria by proposing an algorithm to determine when the criteria should be separately or compositionally verified, thereby further improving proposed slicing approach. We provide an automated tool that implements this process. We evaluate its practical applicability on one case study, and identify its limitations.
 
 
 Video
@@ -14,26 +14,19 @@ Interest in VeriATL, but do not have time to install? Worry not! Quick demo of V
 
 Impacts
 ------
-Our tool is built on top of a state-of-the-art incremental verification tool *Boogie* for imperative languages [cite](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/krml245.pdf). Through evaluation, we show that:
-
-* Our tool speeds up re-verifications by at least 70\%. 
-* Because of using fine-grained verification (notably enabling program slicing and impact analysis), our tool is consistently faster than the state-of-the-art incremental verification tool by 16\% to 45\%.
-* Using fine-grained verification allows our tool to scale to verify large model transformations.
+TODO:
 
 
 Evaluation
 ------
-The source code of the 3 case studies are under **fr.emn.atlanmod.veriatl.experiment** project:
-* HSM2FSM
-* HSM2FSMi
-* UMLCopier (UML)
-   * The source code of UMLCopier is impractical to maintain on github, so we invite you to automatically generate it by yourself using the **fr.emn.atlanmod.veriatl.experiment.mutation.core** package in the **fr.emn.atlanmod.veriatl.experiment.mutation** project (no configuration needed). 
+The source code of the 1 case study are under **fr.emn.atlanmod.veriatl.experiment** project:
+* UMLScale (UML)
 
-Standalone Java applications are provided to automatically and incrementally verify each case study. They are under the following package respectively:
-* fr.emn.atlanmod.veriatl.experiment.HSM2FSM
-* fr.emn.atlanmod.veriatl.experiment.HSM2FSMi
-* fr.emn.atlanmod.veriatl.experiment.UMLCopier
 
+Standalone Java applications are provided to automatically and incrementally verify each case study. They are under the following package:
+* fr.emn.atlanmod.veriatl.experiment.UMLScale
+
+TODO:
 The result we obtained from this evaluation is under the **Result** of the **fr.emn.atlanmod.veriatl.experiment** project.
 
 
