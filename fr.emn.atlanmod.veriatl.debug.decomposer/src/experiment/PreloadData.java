@@ -1,6 +1,7 @@
 package experiment;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class PreloadData {
 	static String[] excludes = new String[] { 
@@ -73,6 +74,110 @@ public class PreloadData {
 		result.put("ActionInputPin_one_output_pin",194871);
 		result.put("CreateObjectAction_classifier_not_abstract",199816);
 
+		return result;
+	}
+	
+	
+	public static HashMap<String, HashSet<String>> refactor() {
+		HashMap<String, HashSet<String>> result = new HashMap<String, HashSet<String>>();
+	    
+		HashSet<String> UML2Singleton = new HashSet<String>();
+		UML2Singleton.add("CopyClass");
+		//UML2Singleton.add("CopyProperty");
+		//UML2Singleton.add("CopyOperation");
+		//UML2Singleton.add("CopyParameter");
+		//UML2Singleton.add("CopyOpaqueBehavior");
+		result.put("UML2Singleton", UML2Singleton);
+		
+		HashSet<String> UML2DataTypes = new HashSet<String>();
+		//UML2DataTypes.add("CopyProperty");
+		UML2DataTypes.add("CopyOpaqueExpression");
+		//UML2DataTypes.add("CopyParameter");
+		UML2DataTypes.add("CopyOperation");
+		result.put("UML2DataTypes", UML2DataTypes);
+		
+
+		HashSet<String> UML2MIDlet = new HashSet<String>();
+		UML2MIDlet.add("CopyClass");
+		//UML2MIDlet.add("CopyGeneralization");
+		//UML2MIDlet.add("CopyOperation");
+		UML2MIDlet.add("CopyOpaqueBehavior");
+		result.put("UML2MIDlet", UML2MIDlet);
+		
+		
+		HashSet<String> UML2Profiles = new HashSet<String>();
+		UML2Profiles.add("CopyModel");
+		result.put("UML2Profiles", UML2Profiles);
+		
+		HashSet<String> Java2UML = new HashSet<String>();
+		Java2UML.add("CopyClass");
+		Java2UML.add("CopyOperation");
+		//Java2UML.add("CopyParameter");
+		//Java2UML.add("CopyOpaqueBehavior");
+		result.put("Java2UML", Java2UML);
+		
+		HashSet<String> UML2AbstractFactory = new HashSet<String>();
+		UML2AbstractFactory.add("CopyClass");
+		UML2AbstractFactory.add("CopyInterface");
+		UML2AbstractFactory.add("CopyDependency");
+
+		//UML2AbstractFactory.add("CopyOperation");
+		//UML2AbstractFactory.add("CopyParameter");
+		//UML2AbstractFactory.add("CopyOpaqueBehavior");
+		result.put("UML2AbstractFactory", UML2AbstractFactory);
+		
+		HashSet<String> UML2Accessors = new HashSet<String>();
+		UML2Accessors.add("CopyPackage");
+		UML2Accessors.add("CopyClass");
+		//UML2Accessors.add("CopyProperty");
+		//UML2Accessors.add("CopyOperation");
+		//UML2Accessors.add("CopyParameter");
+		//UML2Accessors.add("CopyOpaqueBehavior");
+		//UML2Accessors.add("CopyLiteralInteger");
+		//UML2Accessors.add("CopyLiteralUnlimitedNatural");
+		//UML2Accessors.add("CopyDependency");
+		result.put("UML2Accessors", UML2Accessors);
+		
+		HashSet<String> UML2Applet = new HashSet<String>();
+		UML2Applet.add("CopyClass");
+		//UML2Applet.add("CopyGeneralization");
+		//UML2Applet.add("CopyOpaqueBehavior");
+		//UML2Applet.add("CopyOperation");
+		//UML2Applet.add("CopyParameter");
+		result.put("UML2Applet", UML2Applet);
+		
+		HashSet<String> UML2AsyncMethods = new HashSet<String>();
+		UML2AsyncMethods.add("CopyOpaqueBehavior");
+		result.put("UML2AsyncMethods", UML2AsyncMethods);
+		
+		HashSet<String> UML2JavaObserver = new HashSet<String>();
+		UML2JavaObserver.add("CopyClass");
+		//UML2JavaObserver.add("CopyGeneralization");
+		//UML2JavaObserver.add("CopyInterfaceRealization");
+		//UML2JavaObserver.add("CopyOperation");
+		//UML2JavaObserver.add("CopyParameter");
+		UML2JavaObserver.add("CopyOpaqueBehavior");
+		result.put("UML2JavaObserver", UML2JavaObserver);
+		
+		HashSet<String> UML2Observer = new HashSet<String>();
+		UML2Observer.add("CopyPackage");
+		UML2Observer.add("CopyClass");
+		//UML2Observer.add("CopyProperty");
+		//UML2Observer.add("CopyOperation");
+		//UML2Observer.add("CopyParameter");
+		UML2Observer.add("CopyOpaqueBehavior");
+		//UML2Observer.add("CopyLiteralInteger");
+		//UML2Observer.add("CopyLiteralUnlimitedNatural");
+		//UML2Observer.add("CopyInterfaceRealization");
+		result.put("UML2Observer", UML2Observer);
+		
+		HashSet<String> UML2SWTApplication = new HashSet<String>();
+		UML2SWTApplication.add("CopyClass");
+		//UML2SWTApplication.add("CopyGeneralization");
+		//UML2SWTApplication.add("CopyOperation");
+		//UML2SWTApplication.add("CopyParameter");
+		UML2SWTApplication.add("CopyOpaqueBehavior");
+		result.put("UML2SWTApplication", UML2SWTApplication);
 		return result;
 	}
 }

@@ -41,6 +41,40 @@ public class VCGenerator {
 	// a set that records what posts are already processed
 	public static HashSet<String> done = new HashSet<String>();
 	
+	// a map that stores refactored MTs
+	public static HashMap<String, HashSet<String>> refactors = PreloadData.refactor();
+	
+	
+	/**
+	 * An impact analysis of refactored MT to performance of evaluation
+	 * */
+	public static void impactAnalysis(){
+		
+		for(String mt : refactors.keySet()){
+			int impacts = 0;
+			HashSet<String> rulesImpacted = refactors.get(mt);
+			long sum = 0;
+			
+			for(String post : posts){
+				HashSet<String> trace = postsTrace.get(post);
+				
+				Set<String> intersection = new HashSet<String>(rulesImpacted);
+				intersection.retainAll(trace);
+				if(intersection.size() != 0){
+					impacts++;
+					
+					if(postsTime.get(post) < 180000){
+						sum += 180000 - postsTime.get(post);
+					}
+					
+				}
+			}
+			
+			System.out.println(String.format("%s impacted num:¡@%s	sum:%s", mt, impacts, sum));
+		}
+		
+		
+	}
 	
 	
 	/**
