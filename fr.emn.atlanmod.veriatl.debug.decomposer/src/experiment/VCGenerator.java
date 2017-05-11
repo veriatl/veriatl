@@ -49,7 +49,7 @@ public class VCGenerator {
 	 * An impact analysis of refactored MT to performance of evaluation
 	 * */
 	public static void impactAnalysis(){
-		
+		int total = 0;
 		for(String mt : refactors.keySet()){
 			int impacts = 0;
 			HashSet<String> rulesImpacted = refactors.get(mt);
@@ -60,7 +60,7 @@ public class VCGenerator {
 				
 				Set<String> intersection = new HashSet<String>(rulesImpacted);
 				intersection.retainAll(trace);
-				if(intersection.size() != 0){
+				if(intersection.size() != 0 || postsTime.get(post) > 180000){
 					impacts++;
 					
 					if(postsTime.get(post) < 180000){
@@ -69,10 +69,10 @@ public class VCGenerator {
 					
 				}
 			}
-			
-			System.out.println(String.format("%s impacted num:¡@%s	sum:%s", mt, impacts, sum));
+			total += impacts;
+			System.out.println(String.format("%s impacted num:%s	sum:%s", mt, impacts, sum));
 		}
-		
+		System.out.println(total / 12);
 		
 	}
 	
