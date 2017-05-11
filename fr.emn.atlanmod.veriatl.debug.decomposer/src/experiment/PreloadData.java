@@ -18,8 +18,6 @@ public class PreloadData {
 	};
 	
 	
-	
-	
 	public static HashMap<String, Integer> initPostTime() {
 		HashMap<String, Integer> result = new HashMap<String, Integer>();
 	       
@@ -73,6 +71,64 @@ public class PreloadData {
 		result.put("Behavior_feature_of_context_classifier",190763);
 		result.put("ActionInputPin_one_output_pin",194871);
 		result.put("CreateObjectAction_classifier_not_abstract",199816);
+
+		return result;
+	}
+
+	
+	public static HashMap<String, Integer> initPostTimeSep() {
+		HashMap<String, Integer> result = new HashMap<String, Integer>();
+	       
+		result.put("Parameter_stream_and_exception",180000);
+		result.put("ObjectFlow_is_multicast_or_is_multireceive",180000);
+		result.put("InformationItem_not_instantiable",180000);
+		result.put("AcceptCallAction_unmarshall",139891);
+		result.put("InitialNode_no_incoming_edges",180000);
+		result.put("ActivityParameterNode_no_edges",180000);
+		result.put("FinalState_no_regions",180000);
+		result.put("ForkNode_one_incoming_edge",180000);
+		result.put("ValuePin_no_incoming_edges",64055);
+		result.put("InitialNode_control_edges",180000);
+		result.put("MergeNode_one_outgoing_edge",180000);
+		result.put("JoinNode_one_outgoing_edge",180000);
+		result.put("FinalState_no_outgoing_transitions",180000);
+		result.put("AcceptEventAction_no_output_pins",180000);
+		result.put("State_submachine_or_regions",180000);
+		result.put("Extension_is_binary",180000);
+		result.put("ConditionalNode_no_input_pins",180000);
+		result.put("Reception_same_name_as_signal",180000);
+		result.put("Property_derived_union_is_read_only",180000);
+		result.put("FinalNode_no_outgoing_edges",180000);
+		result.put("Property_derived_union_is_derived",180000);
+		result.put("Property_subsetted_property_names",180000);
+		result.put("State_composite_states",180000);
+		result.put("State_submachine_states",180000);
+		result.put("InformationItem_has_no",180000);
+		result.put("Enumeration_immutable",180000);
+		result.put("Pin_not_unique",180000);
+		result.put("AcceptEventAction_no_input_pins",180000);
+		result.put("CallAction_synchronous_call",180000);
+		result.put("Pin_control_pins",180000);
+		result.put("DecisionNode_decision_input_flow_incoming",180000);
+		result.put("ActivityParameterNode_has_parameters",180000);
+		result.put("StringExpression_operands",180000);
+		result.put("Component_no_nested_classifiers",93588);
+		result.put("BehavioralFeature_abstract_no_method",180000);
+		result.put("Extend_extension_points",180000);
+		result.put("LinkAction_not_static",180000);
+		result.put("ExecutionSpecification_same_lifeline",180000);
+		result.put("CreateObjectAction_classifier_not_association_class",180000);
+		result.put("ClassifierTemplateParameter_has_constraining_classifier",180000);
+		result.put("Node_internal_structure",180000);
+		result.put("StructuralFeatureAction_not_static",180000);
+		result.put("InformationFlow_convey_classifiers",180000);
+		result.put("ReadLinkObjectEndAction_ends_of_association",180000);
+		result.put("CommunicationPath_association_ends",180000);
+		result.put("ActionInputPin_input_pin",180000);
+		result.put("State_destinations_or_sources_of_transitions",180000);
+		result.put("Behavior_feature_of_context_classifier",180000);
+		result.put("ActionInputPin_one_output_pin",180000);
+		result.put("CreateObjectAction_classifier_not_abstract",180000);
 
 		return result;
 	}

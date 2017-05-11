@@ -43,15 +43,19 @@ public class VCGenerator {
 	
 	// a map that stores refactored MTs
 	public static HashMap<String, HashSet<String>> refactors = PreloadData.refactor();
-	
+	// a map that records each post and its verification time (for impact Analysis that using SEP approach)
+	public static HashMap<String, Integer> postsTimeSep = PreloadData.initPostTimeSep();
 	
 	/**
 	 * An impact analysis of refactored MT to performance of evaluation
 	 * */
 	public static void impactAnalysis(){
 		int total = 0;
+		
 		for(String mt : refactors.keySet()){
-			int impacts = 0;
+			int timeout = 0;
+			int timeoutSep = 0;
+			int impacted = 0;
 			HashSet<String> rulesImpacted = refactors.get(mt);
 			long sum = 0;
 			
@@ -60,17 +64,29 @@ public class VCGenerator {
 				
 				Set<String> intersection = new HashSet<String>(rulesImpacted);
 				intersection.retainAll(trace);
-				if(intersection.size() != 0 || postsTime.get(post) > 180000){
-					impacts++;
+				
+				// timeout if intersected, or it used to be timeout, for SLICE appraoch
+				if(intersection.size() != 0 || postsTime.get(post) >= 180000){
+					timeout++;
 					
 					if(postsTime.get(post) < 180000){
 						sum += 180000 - postsTime.get(post);
 					}
 					
 				}
+				
+				// timeout if intersected, or it used to be timeout, for ORG appraoch
+				if(intersection.size() != 0 || postsTimeSep.get(post) >= 180000){
+					timeoutSep++;	
+				}
+				
+				if(intersection.size() != 0){
+					impacted++;				
+				}
+				
 			}
-			total += impacts;
-			System.out.println(String.format("%s impacted num:%s	sum:%s", mt, impacts, sum));
+			total += impacted;
+			System.out.println(String.format("%s:%s:%s:%s:%s", mt, timeout, timeoutSep, impacted, sum));
 		}
 		System.out.println(total / 12);
 		
