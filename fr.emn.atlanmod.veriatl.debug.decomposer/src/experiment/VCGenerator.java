@@ -52,10 +52,14 @@ public class VCGenerator {
 	public static void impactAnalysis(){
 		int total = 0;
 		
+		
 		for(String mt : refactors.keySet()){
 			int timeout = 0;
 			int timeoutSep = 0;
 			int impacted = 0;
+			int total_slice = 0;
+			int total_org = 0;
+			
 			HashSet<String> rulesImpacted = refactors.get(mt);
 			long sum = 0;
 			
@@ -84,9 +88,17 @@ public class VCGenerator {
 					impacted++;				
 				}
 				
+				if(intersection.size() != 0){
+					total_slice += 180000;
+					total_org += 180000;
+				}else{
+					
+				}
+				
 			}
 			total += impacted;
 			System.out.println(String.format("%s:%s:%s:%s:%s", mt, timeout, timeoutSep, impacted, sum));
+			//System.out.println(String.format("%s:%s:%s", mt, total_org, total_slice));
 		}
 		System.out.println(total / 12);
 		
