@@ -1,10 +1,9 @@
-Fine-Grained Incrementality for Deductive Verification of Model Transformations (Online)
+On Scalability of Deductive Verification for Rule-Based Model Transformations (Online)
 =======
 
 Introduction
 ------
-In model-driven engineering, correct model transformation is essential for reliably producing the artifacts that drive software development. While the advancement of SMT solvers has enabled verifying the correctness of model transformations, scalability is one of the major issues that prevents its usage in industrial level. To improve this situation, we present an automatic approach for the ATL model transformation language. Specifically, we propose a transformation slicing approach to manage large scale model transformations by aligning each correctness criterion to the ATL rules it depends on, thereby reducing the verification complexity/time of individual criterion. Moreover, we manage large scale correctness criteria by proposing an algorithm to determine when the criteria should be separately or compositionally verified, thereby further improving proposed slicing approach. We provide an automated tool that implements this process. We evaluate its practical applicability on one case study, and identify its limitations.
-
+In model-driven engineering, model transformation verification is essential for reliably producing software artifacts. While advancements in SMT solvers have enabled Hoare-style verification for non-trivial model transformations, scalability is one of the major issues that hamper the usage of these techniques in industry. In this paper we show that expressing the model transformation by a declarative rule-based language like ATL, allows for domain-specific deductive reasoning that can significantly improve scalability, w.r.t. to an equivalent solution in an imperative general-purpose language. In particular, we show how an automatic transformation slicing approach can be used to reduce the verification complexity/time of large scale model transformations, by aligning each correctness criterion to the ATL rules it depends on. Moreover, by domain knowledge deducted from the model transformation, we algorithmically identify the criteria that benefit from being composed in a single verification task. We provide an automated tool that implements this process. We evaluate its practical applicability on a case study, and identify its limitations.
 
 Video
 ------
@@ -14,7 +13,8 @@ Interest in VeriATL, but do not have time to install? Worry not! Quick demo of V
 
 Impacts
 ------
-TODO:
+* Our evaluation confirms that our slicing approach can efficiently verify postconditions when a MT is scaling. 
+* Moreover, our proposed algorithm can further contribute to the slicing approach to verify large-scale MTs.
 
 
 Evaluation
@@ -24,9 +24,9 @@ The source code of the 1 case study are under **fr.emn.atlanmod.veriatl.experime
 
 
 Standalone Java applications are provided to automatically and incrementally verify each case study. They are under the following package:
-* fr.emn.atlanmod.veriatl.experiment.UMLScale
+* fr.emn.atlanmod.veriatl.experiment.UMLCopierScale
 
-TODO:
+
 The result we obtained from this evaluation is under the **Result** of the **fr.emn.atlanmod.veriatl.experiment** project.
 
 
