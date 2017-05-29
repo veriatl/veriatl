@@ -119,25 +119,32 @@ class mm2boogie {
 
 	/*  
 	 * Core logic of print structural axiom declarations for Classifiers
-	 * 
+	 * - for multi-value references, if the container array is allocated, all the elements within it 
+	 *   are all allocated with the corresponding type as declared in the source metamodel
+	 * - for single-value reference, if it is allocated, then it is with the corresponding type as 
+	 *   declared in the source metamodel 
 	 * */
-	def static gen_constraints_class(EClass cl) '''
-		«val bv = "__"+cl.name.toLowerCase»
-		«val mmName = cl.EPackage.name»
+	def static gen_constraints_class(EClass eClass) '''
+		«val bv = "__"+eClass.name.toLowerCase»
+		«val mmName = eClass.EPackage.name»
 		(forall «bv» : ref ::
-		  («bv»!=null && read($h, «bv», alloc) && dtype(«bv») <: «mmName»$«cl.name» ==> 
-		    «IF cl.EStructuralFeatures.size == 0»true«ENDIF»
-		    «FOR sf : cl.EStructuralFeatures SEPARATOR "&&"»
-		    «IF sf.eClass.name == "EReference" && (sf as EReference).many»
-		    (read($h, «bv», «mmName»$«cl.name».«sf.name»)==null || (read($h, read($h, «bv», «mmName»$«cl.name».«sf.name»), alloc) && dtype(read($h, «bv», «mmName»$«cl.name».«sf.name»)) <: class._System.array &&
-		       (forall __i: int :: 0<=__i && __i<_System.array.Length(read($h, «bv», «mmName»$«cl.name».«sf.name»)) ==> 
-		         ($Unbox(read($h, read($h, «bv», «mmName»$«cl.name».«sf.name»), IndexField(__i))): ref !=null 
-		         && read($h, $Unbox(read($h, read($h, «bv», «mmName»$«cl.name».«sf.name»), IndexField(__i))): ref, alloc)
-		         && dtype($Unbox(read($h, read($h, «bv», «mmName»$«cl.name».«sf.name»), IndexField(__i))): ref)<:«mmName»$«(sf as EReference).EReferenceType.name») ) ) )
-		    «ELSEIF sf.eClass.name == "EReference" && !(sf as EReference).many»
-		    (read($h, «bv», «mmName»$«cl.name».«sf.name»)!=null && read($h, read($h, «bv», «mmName»$«cl.name».«sf.name») ,alloc) ==>
-		       dtype(read($h, «bv», «mmName»$«cl.name».«sf.name»)) <: «mmName»$«(sf as EReference).EReferenceType.name» ) 
-		    «ELSE» true «ENDIF»
+		  («bv»!=null && read($h, «bv», alloc) && dtype(«bv») <: «mmName»$«eClass.name» ==> 
+		    «IF eClass.EStructuralFeatures.size == 0»true«ENDIF»
+		    «FOR eStructuralFeatures : eClass.EStructuralFeatures SEPARATOR "&&"»
+		    «/* multi-value reference */»
+		    «IF eStructuralFeatures.eClass.name == "EReference" && (eStructuralFeatures as EReference).many»
+		    (read($h, «bv», «mmName»$«eClass.name».«eStructuralFeatures.name»)==null || (read($h, read($h, «bv», «mmName»$«eClass.name».«eStructuralFeatures.name»), alloc) && dtype(read($h, «bv», «mmName»$«eClass.name».«eStructuralFeatures.name»)) <: class._System.array &&
+		       (forall __i: int :: 0<=__i && __i<_System.array.Length(read($h, «bv», «mmName»$«eClass.name».«eStructuralFeatures.name»)) ==> 
+		         ($Unbox(read($h, read($h, «bv», «mmName»$«eClass.name».«eStructuralFeatures.name»), IndexField(__i))): ref !=null 
+		         && read($h, $Unbox(read($h, read($h, «bv», «mmName»$«eClass.name».«eStructuralFeatures.name»), IndexField(__i))): ref, alloc)
+		         && dtype($Unbox(read($h, read($h, «bv», «mmName»$«eClass.name».«eStructuralFeatures.name»), IndexField(__i))): ref)<:«mmName»$«(eStructuralFeatures as EReference).EReferenceType.name») ) ) )
+		    «/* single-value reference */»
+		    «ELSEIF eStructuralFeatures.eClass.name == "EReference" && !(eStructuralFeatures as EReference).many»
+		    (read($h, «bv», «mmName»$«eClass.name».«eStructuralFeatures.name»)!=null && read($h, read($h, «bv», «mmName»$«eClass.name».«eStructuralFeatures.name») ,alloc) ==>
+		       dtype(read($h, «bv», «mmName»$«eClass.name».«eStructuralFeatures.name»)) <: «mmName»$«(eStructuralFeatures as EReference).EReferenceType.name» ) 
+		    «ELSE» 
+		    true 
+		    «ENDIF»
 		    «ENDFOR»  
 		  )
 		)
