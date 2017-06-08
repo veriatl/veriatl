@@ -36,10 +36,11 @@ class surjective2boogie {
 	 * Entry point of generating Boogie axioms for transformation surjectivity.
 	 * 
 	 * TODO:
-	 * 	- this axiom is inconsistent, consider rewrite as postcondition of every rules:
+	 * - this axiom is inconsistent, consider rewrite as postcondition of every rules:
 	 * axiom (forall «atl.genFrameBVElem»: ref, «atl.genHeapInGuardFun»: HeapType :: 
 	 * 	(«atl.genFrameBVElem» == null || !read(«atl.genHeapInGuardFun», «atl.genFrameBVElem», alloc)) ==> 
 	 * 		«atl.getLinkFunction(i)»_inverse(«atl.genFrameBVElem») == Seq#Empty());   
+	 * - check whether new added filter works
 	 * */ 
 	def static dispatch genModule_surjective(Module module) '''
 		/********************************************************************
@@ -83,22 +84,16 @@ class surjective2boogie {
 			axiom «atl.getLinkFunction(i)»( Seq#Singleton(null) ) == null;
 		«ENDFOR»
 		
+		// every out pattern element corresponds to a set of input pattern element(s)
 		function surj_tar_model($s: HeapType, $t: HeapType): bool{		
-		«(0..module.elements.size-1).map(i | genModuleElement_surjective(module, module.elements.get(i))).join("&&")»
+			«FOR matchedRule : module.elements.filter(MatchedRule) SEPARATOR "&&"»
+				«genModuleElement_surjective(module, matchedRule)»
+			«ENDFOR»
 		}
 	'''
-	
-	
-	// dispatcher
-	def static dispatch genModuleElement_surjective(Module mod, ModuleElement element) '''
-	'''
-	
-	// rule
-	def static dispatch genModuleElement_surjective(Module mod, Rule r) '''
-	'''
-	
+
 	// matched rule «gen_surjective_core(out, rule)»
-	def static dispatch genModuleElement_surjective(Module mod, MatchedRule r) '''
+	def static genModuleElement_surjective(Module mod, MatchedRule r) '''
 	«var i = 0»
 	
 	«FOR out : r.outPattern.elements SEPARATOR "&&"»
