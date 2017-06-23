@@ -164,7 +164,7 @@ class driver {
 		surjective2boogie.isPrintedOutPatternElement = new HashSet<String>()
 		surjective2boogie.modDepth = 0
 		
-		contract2boogie.debugPost = ""
+
 		
 		TypeInference.lookup = new HashMap<String, myOclType>();
 		

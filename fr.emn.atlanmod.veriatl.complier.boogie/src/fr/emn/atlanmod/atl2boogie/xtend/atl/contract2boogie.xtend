@@ -11,7 +11,7 @@ import org.eclipse.m2m.atl.common.OCL.OclFeature
 import org.eclipse.m2m.atl.common.OCL.Operation
 
 class contract2boogie {
-	public static String debugPost = ""
+
 	// dispatcher
 	def static dispatch genHelpers(EObject o) ''' '''
 	
@@ -21,19 +21,31 @@ class contract2boogie {
 	  modifies $tarHeap, $linkHeap;
 	  free requires valid_src_model($srcHeap);
 	  «FOR e : mod.elements»«genPrecondition(e)»«ENDFOR»
+	«{clean; null}»
 	'''
 	
 	def static dispatch genPrecondition(ModuleElement h) '''	'''
 	
 	def static dispatch genPrecondition(Helper h) '''		
 	«if (h.commentsBefore.toString().contains("--@pre"))
-	{ "//" + (h.definition.feature as Operation).name + "\n  free requires "+ genOCLFeature(h.definition.feature)+";"}»
+	{ "//" + (h.definition.feature as Operation).name + "\n"  + 
+	  "free requires "+ genOCLFeature(h.definition.feature)+";"}»
 	'''
 	
 	def static dispatch genOCLFeature(OclFeature f) '''	'''
 	
 	def static dispatch genOCLFeature(Operation f) '''
-	«{TypeInference.clean();ocl2boogie.clean();debugPost = f.name;null}»
+	«{clean; null}»
 	«ocl2boogie.genOclExpression(f.body, atl.genSrcHeap)»
-	«{TypeInference.clean();ocl2boogie.clean();null}»'''
+	'''
+	
+	/**
+	 * 
+	 */
+	def static clean(){
+		TypeInference.clean();
+		ocl2boogie.clean();
+	}
+	
+	
 }
