@@ -1,4 +1,4 @@
-package fr.emn.atlanmod.veriatl.tests;
+package fr.emn.atlanmod.veriatl.tests.launcher;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
