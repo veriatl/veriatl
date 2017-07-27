@@ -5,6 +5,8 @@ Bundle-SymbolicName: fr.emn.atlanmod.veriatl.tests
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: fr.emn.atlanmod.veriatl.tests.launcher.Activator
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.junit,
+ org.eclipse.emf.common
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
