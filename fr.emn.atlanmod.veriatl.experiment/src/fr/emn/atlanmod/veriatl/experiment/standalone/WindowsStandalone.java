@@ -4,14 +4,11 @@
 package fr.emn.atlanmod.veriatl.experiment.standalone;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.emf.common.util.URI;
 
-import experiment.VCGenerator;
 import experiment.experimentDriver;
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;

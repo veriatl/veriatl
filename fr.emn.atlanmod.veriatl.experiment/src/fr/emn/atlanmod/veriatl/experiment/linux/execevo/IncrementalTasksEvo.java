@@ -3,17 +3,14 @@ package fr.emn.atlanmod.veriatl.experiment.linux.execevo;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 
 import experiment.VCGenerator;
 import fr.emn.atlanmod.veriatl.experiment.standalone.ContextConstruction;
-import fr.emn.atlanmod.veriatl.experiment.linux.execevo.DefaultCommandEvo;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.VerificationResult;
 import fr.emn.atlanmod.veriatl.util.URIs;
