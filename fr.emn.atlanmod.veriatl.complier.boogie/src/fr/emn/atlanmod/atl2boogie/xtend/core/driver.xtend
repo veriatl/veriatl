@@ -96,7 +96,6 @@ class driver {
 		atl.srcHeaps = new HashSet<String>;
 		atl.trgHeaps = new HashSet<String>;
 		
-		output_path = null;
 	}
 	
 	/**
@@ -197,9 +196,10 @@ class driver {
 	def static compileAll(URI atl, URI src, URI trg, URI contract, URI outputPath) {
 		doSetup(atl, src, trg, contract, outputPath)
 		
+		
+		compileATL
 		compileSourceMetamodel
 		compileTargetMetamodel
-		compileATL
 		compileContracts
 		compileConstants
 		
