@@ -55,7 +55,7 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 			// Tasks.forwardTransformation().apply(context);
 		} else if (context.mode() == Mode.GEN) {
 
-			driver.generate(context.module().appendFileExtension("atl"), context.inMetamodel(), context.outMetamodel(),
+			driver.compile(context.module().appendFileExtension("atl"), context.inMetamodel(), context.outMetamodel(),
 					context.contractPath(),
 					context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
 

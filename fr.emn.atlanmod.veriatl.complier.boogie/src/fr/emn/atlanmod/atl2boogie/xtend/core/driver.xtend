@@ -38,13 +38,11 @@ class driver {
 	public static var Resource atl_resource
 	public static var Resource contract_resource
 	
-	def static void main(String[] args) {
-		//generate(args.get(0), args.get(1), args.get(2), args.get(3), args.get(4))
-		println("finished")
-		//println(ocl2boogie.iteratorTyping)
-		print(fMapSrc)
-	}
+	public static var URI output_path
 
+	/** 
+	 * Setup EMF factories, so that corresponding resources can be load into memory.
+	 * */
 	def static doEMFSetup() {
 		// load metamodels	
 		EPackage.Registry.INSTANCE.put(ATLPackage.eNS_URI, ATLPackage.eINSTANCE)
@@ -56,116 +54,39 @@ class driver {
 		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl());
 	}
 	
-	def static doVeriATLSetup(URI atl, URI src, URI trg, URI contract) {
+	/**
+	 * Setup VeriATL resources.
+	 */
+	def static doVeriATLSetup(URI atl, URI src, URI trg, URI contract, URI output) {
 		val rs = new ResourceSetImpl
-		
 		val srcRes = rs.getResource(src, true)
 		val trgRes = rs.getResource(trg, true)
 		
+		// get filed-type map from source and target metamodels 
 		fMapSrc = emf.getsfInfo(srcRes)
 		fMapTrg = emf.getsfInfo(trgRes)
+		
+		// get EPackages for source and target metamodels
 		srcmm = emf.getEPackage(srcRes)
 		trgmm = emf.getEPackage(trgRes)
 		
+		// get abstract syntax tree of atl transformations and contract file.
 		atl_resource = rs.getResource(atl, true)
 		contract_resource = rs.getResource(contract, true)
+		
+		// setup output path
+		output_path = output
 	}
-	
-	
-	
 	
 	/**
-	 * 
-	 */
-	def static generate(URI atl, URI src, URI trg, URI contract, URI outputPath) {
-		doEMFSetup
-		doVeriATLSetup(atl, src, trg, contract)
-		doClean
-		
-		// gen matchers
-		var match = "";
-		
-		for (content : atl_resource.contents) {
-			match += matcher2boogie.genModule_matches(content)	
-		}
-		
-		generateBoogieFile(outputPath, CompilerConstants.MATCHER, CompilerConstants.BOOGIE_EXT, match)
-
-		// gen applyers
-		var apply = "";
-		
-		for (content : atl_resource.contents) {
-			apply += applyer2boogie.genModule_applys(content)	
-		}
-		
-		generateBoogieFile(outputPath, CompilerConstants.APPLIER, CompilerConstants.BOOGIE_EXT, apply)
-		
-
-		
-		// gen surjectivity function
-		var surject = "";
-		
-		for (content : atl_resource.contents) {
-			surject += surjective2boogie.genModule_surjective(content)	
-		}
-		
-		generateBoogieFile(outputPath, CompilerConstants.SURJECT, CompilerConstants.BOOGIE_EXT, surject)
-		
-		
-		// gen contracts
-		var pre = "";
-			
-		for (content : contract_resource.contents) {
-			pre += contract2boogie.genHelpers(content)	
-		}
-	
-		generateBoogieFile(outputPath, CompilerConstants.PRE, CompilerConstants.BOOGIE_EXT, pre)
-		
-		
-		// gen src mm
-		var srcBoogie = "";
-		srcBoogie += mm2boogie.gen_Metamodel(srcmm)	
-		generateBoogieFile(outputPath, srcmm.name, CompilerConstants.BOOGIE_EXT, srcBoogie)
-		
-
-		
-		
-		// gen trg mm
-		var trgBoogie = "";
-		trgBoogie += mm2boogie.gen_Metamodel(trgmm)	
-		generateBoogieFile(outputPath, trgmm.name, CompilerConstants.BOOGIE_EXT, trgBoogie)
-		
-
-		
-		// gen constants
-		var const = "";
-		for (s : constants) {
-			const += String.format("const unique _%s: String;\n", s)
-		}
-		
-		generateBoogieFile(outputPath, CompilerConstants.CONST, CompilerConstants.BOOGIE_EXT, const)
-		
-		
-	}
-	
-
-	
-
-	def static URI generateBoogieFile(URI outputPath, String fileName, String ext, String content){
-		val URI outputURI = outputPath.appendSegment(fileName).appendFileExtension(ext)
-		return URIs.write(outputURI, content)
-	}
-
-
-	// clean static variable of templates	
+	 * Tear down static variables of all code generators for previous compilation session.
+	 */	
 	def static void doClean(){
 		matcher2boogie.modDepth = 0
 		
 		surjective2boogie.isPrintedOutPatternElement = new HashSet<String>()
 		surjective2boogie.modDepth = 0
-		
 
-		
 		TypeInference.lookup = new HashMap<String, myOclType>();
 		
 		ocl2boogie.iteratorTyping = new HashMap<String, String>;
@@ -174,7 +95,128 @@ class driver {
 		
 		atl.srcHeaps = new HashSet<String>;
 		atl.trgHeaps = new HashSet<String>;
+		
+		output_path = null;
 	}
+	
+	/**
+	 * Set up VeriATL compiler.
+	 */	
+	def static void doSetup(URI atl, URI src, URI trg, URI contract, URI outputPath){
+		doEMFSetup
+		doVeriATLSetup(atl, src, trg, contract, outputPath)
+		doClean
+	}
+	
+	/**
+	 * Compile ATL transformation
+	 */
+	def static void compileATL(){
+		// gen matchers
+		var match = "";
+		
+		for (content : atl_resource.contents) {
+			match += matcher2boogie.genModule_matches(content)	
+		}
+		
+		generateBoogieFile(output_path, CompilerConstants.MATCHER, CompilerConstants.BOOGIE_EXT, match)
+
+		// gen applyers
+		var apply = "";
+		
+		for (content : atl_resource.contents) {
+			apply += applyer2boogie.genModule_applys(content)	
+		}
+		
+		generateBoogieFile(output_path, CompilerConstants.APPLIER, CompilerConstants.BOOGIE_EXT, apply)
+		
+		// gen surjectivity function
+		var surject = "";
+		
+		for (content : atl_resource.contents) {
+			surject += surjective2boogie.genModule_surjective(content)	
+		}
+		
+		generateBoogieFile(output_path, CompilerConstants.SURJECT, CompilerConstants.BOOGIE_EXT, surject)
+	}
+	
+	/**
+	 * Compile Source Metamodel.
+	 */
+	def static compileSourceMetamodel(){
+		var srcBoogie = "";
+		srcBoogie += mm2boogie.gen_Metamodel(srcmm)	
+		generateBoogieFile(output_path, srcmm.name, CompilerConstants.BOOGIE_EXT, srcBoogie)
+	}
+	
+	/**
+	 * Compile Target Metamodel.
+	 */
+	def static compileTargetMetamodel(){
+		var trgBoogie = "";
+		trgBoogie += mm2boogie.gen_Metamodel(trgmm)	
+		generateBoogieFile(output_path, trgmm.name, CompilerConstants.BOOGIE_EXT, trgBoogie)	
+	}
+	
+	
+	/**
+	 * Compile Contracts.
+	 */
+	def static compileContracts(){
+		var pre = "";
+			
+		for (content : contract_resource.contents) {
+			pre += contract2boogie.genHelpers(content)	
+		}
+	
+		generateBoogieFile(output_path, CompilerConstants.PRE, CompilerConstants.BOOGIE_EXT, pre)
+	}
+	
+	
+	/**
+	 * Compile Constants.
+	 * 
+	 * @see fr.emn.atlanmod.atl2boogie.xtend.atl.matcher2boogie.genModuleElement_match()
+	 * @see fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie.genOclExpression(String, CharSequence)
+	 * @see fr.emn.atlanmod.atl2boogie.xtend.emf.mm2boogie.gen_metamodel(EPackage)
+	 */
+	def static compileConstants(){
+		// gen constants
+		var const = "";
+		for (s : constants) {
+			const += String.format("const unique _%s: String;\n", s)
+		}
+		
+		generateBoogieFile(output_path, CompilerConstants.CONST, CompilerConstants.BOOGIE_EXT, const)
+	}
+	
+	
+	/**
+	 * Core compiler for VeriATL plugin.
+	 */
+	def static compile(URI atl, URI src, URI trg, URI contract, URI outputPath) {
+		doSetup(atl, src, trg, contract, outputPath)
+		
+		compileSourceMetamodel
+		compileTargetMetamodel
+		compileATL
+		compileContracts
+		compileConstants
+		
+	}
+	
+
+	
+	/**
+	 * Helper for printing content to the output path, with the given filename and extension.
+	 */
+	def static URI generateBoogieFile(URI outputPath, String fileName, String ext, String content){
+		val URI outputURI = outputPath.appendSegment(fileName).appendFileExtension(ext)
+		return URIs.write(outputURI, content)
+	}
+
+
+
 	
 	
 

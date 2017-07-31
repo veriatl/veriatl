@@ -34,7 +34,11 @@ public class HSM2FSMTest {
 		src_metamodel_uri = URI.createURI(String.format("./%s/Source/%s", proj_under_test, source_metamodel_file_name));
 		trg_metamodel_uri = URI.createURI(String.format("./%s/Source/%s", proj_under_test, target_metamodel_file_name)); 
 		contract_uri = URI.createURI(String.format("./%s/Source/%s", proj_under_test, contract_file_name));
-		transformation_uri = URI.createURI(String.format("./%s/Source/%s", proj_under_test, transformation_file_name));
-		
+		transformation_uri = URI.createURI(String.format("./%s/Source/%s", proj_under_test, transformation_file_name));		
 	}
+	
+	
+	
+	
+	
 }

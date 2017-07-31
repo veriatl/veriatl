@@ -57,7 +57,7 @@ public class ocldecomposerDriver {
 
 		// initialization
 		driver.doEMFSetup();
-		driver.doVeriATLSetup(atl, src, trg, contract);
+		driver.doVeriATLSetup(atl, src, trg, contract, outputPath);
 		ExecEnv env = Trace.moduleLoader(emftvm.trimFileExtension().trimSegments(1), moduleName, src, trg, driver.srcmm.getName(), driver.trgmm.getName());
 		Map<String, ArrayList<String>> trace = Trace.getTrace(driver.trgmm, env);
 		List<OclExpression> postconditions = ContractLoader.init(driver.contract_resource);
