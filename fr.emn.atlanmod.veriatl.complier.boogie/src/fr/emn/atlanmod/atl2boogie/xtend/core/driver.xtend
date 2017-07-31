@@ -194,7 +194,7 @@ class driver {
 	/**
 	 * Core compiler for VeriATL plugin.
 	 */
-	def static compile(URI atl, URI src, URI trg, URI contract, URI outputPath) {
+	def static compileAll(URI atl, URI src, URI trg, URI contract, URI outputPath) {
 		doSetup(atl, src, trg, contract, outputPath)
 		
 		compileSourceMetamodel

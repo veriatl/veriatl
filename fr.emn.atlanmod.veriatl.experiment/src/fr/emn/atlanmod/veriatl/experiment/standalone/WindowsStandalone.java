@@ -55,7 +55,7 @@ public class WindowsStandalone {
 
 	
 	public static void gen(ContextConstruction context){
-		driver.compile(
+		driver.compileAll(
 				context.basePath.appendSegment("Source").appendSegment(context.moduleName).appendFileExtension("atl"), 
 				context.inMetamodel, context.outMetamodel,
 				context.contractPath,
