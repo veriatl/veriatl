@@ -12,20 +12,29 @@ import org.junit.Test;
 public class HSM2FSMTest {
 
 	private static String proj_under_test = "HSM2FSM";
+	private static String source_metamodel_file_name = "HSM.ecore";
+	private static String target_metamodel_file_name = "FSM.ecore";
+	private static String contract_file_name = "HSM2FSMContract.atl";
+	private static String transformation_file_name = "HSM2FSM.atl";
+	
+	
+	private static URI base_uri;
+	private static URI src_metamodel_uri;
+	private static URI trg_metamodel_uri;
+	private static URI contract_uri;
+	private static URI transformation_uri;
 	
 	/**
-	 * Test initialization:
+	 * Test initialization.
 	 * */
 	@Before
 	public static void setUp() {
-		// project name
-		
-		URI.createURI(uri);
-		
-		URI base = URI.createURI(proj_under_test);		
-		URI src = URI.createURI(String.format("./%s/Source/%s.ecore", proj_under_test, s));
-		URI trg = URI.createURI(String.format("./%s/Source/%s.ecore", proj_under_test, t)); 
-		URI contract = URI.createURI(String.format("./%s/Source/%sContract.atl", proj_under_test, moduleName));
+		// initialize URIs
+		base_uri = URI.createURI(String.format("./%s/", proj_under_test));		
+		src_metamodel_uri = URI.createURI(String.format("./%s/Source/%s", proj_under_test, source_metamodel_file_name));
+		trg_metamodel_uri = URI.createURI(String.format("./%s/Source/%s", proj_under_test, target_metamodel_file_name)); 
+		contract_uri = URI.createURI(String.format("./%s/Source/%s", proj_under_test, contract_file_name));
+		transformation_uri = URI.createURI(String.format("./%s/Source/%s", proj_under_test, transformation_file_name));
 		
 	}
 }
