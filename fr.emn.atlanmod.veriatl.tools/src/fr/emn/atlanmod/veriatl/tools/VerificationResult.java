@@ -2,6 +2,7 @@ package fr.emn.atlanmod.veriatl.tools;
 
 import datastructure.TriBoolean;
 
+// TODO considering change status to enum type
 public class VerificationResult {
 	String result;
 	long time;
@@ -37,5 +38,10 @@ public class VerificationResult {
 //			return TriBoolean.UNKNOWN;
 //		}
 		
+	}
+
+
+	public String status() {
+		return status;
 	}
 }
