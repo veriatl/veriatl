@@ -45,7 +45,7 @@ public class BoogieTask {
 	/**
 	 * Run Boogie Syntactic Check for the given generated file of a metamodel. 
 	 * */
-	public static VerificationResult syn_check_metamodel(String mm_path){
-		return BoogieTask.skeleton(mm_path);
+	public static VerificationResult syn_check_metamodel(String... args){
+		return BoogieTask.skeleton(args);
 	}
 }
