@@ -9,6 +9,7 @@ Require-Bundle: org.eclipse.ui,
  org.junit,
  org.eclipse.emf.common,
  fr.emn.atlanmod.veriatl.launcher,
- fr.emn.atlanmod.veriatl.complier.boogie
+ fr.emn.atlanmod.veriatl.complier.boogie,
+ fr.emn.atlanmod.veriatl.tools
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

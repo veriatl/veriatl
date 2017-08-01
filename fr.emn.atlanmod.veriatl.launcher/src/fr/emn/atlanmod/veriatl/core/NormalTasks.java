@@ -14,6 +14,7 @@ import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.Commands;
 import fr.emn.atlanmod.veriatl.tools.VerificationResult;
+import fr.emn.atlanmod.veriatl.util.Files;
 import fr.emn.atlanmod.veriatl.util.URIs;
 
 
@@ -60,11 +61,11 @@ public final class NormalTasks {
         
         // add prelude files
         String veriatlabs = veriATLPath.toAbsolutePath().toString()+"\\Prelude\\";
-        args.addAll(getFiles(veriatlabs));
+        args.addAll(Files.namesAbs(veriatlabs));
         
         // add auxu files
         String auxu = URIs.abs(context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
-        args.addAll(getFiles(auxu));
+        args.addAll(Files.namesAbs(auxu));
         
 		
 		// add PO
@@ -125,11 +126,11 @@ public final class NormalTasks {
         
         // add prelude files
         String veriatlabs = veriATLPath.toAbsolutePath().toString()+"\\Prelude\\";
-        args.addAll(getFiles(veriatlabs));
+        args.addAll(Files.namesAbs(veriatlabs));
         
         // add auxu files
         String auxu = URIs.abs(context.basePath().appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME));
-        args.addAll(getFiles(auxu));
+        args.addAll(Files.namesAbs(auxu));
         
         // retrieve sub-goals
         ArrayList<String> argsClone = new ArrayList<String>();
@@ -174,13 +175,6 @@ public final class NormalTasks {
     
     
     
-    private static ArrayList<String> getFiles(String folder){
-    	ArrayList<String> r = new ArrayList<String>();
-    	File f = new File(folder);
-    	for(final File file : f.listFiles()){
-    		r.add(file.getAbsolutePath());
-    	}
-    	return r;
-    }
+    
     
 }
