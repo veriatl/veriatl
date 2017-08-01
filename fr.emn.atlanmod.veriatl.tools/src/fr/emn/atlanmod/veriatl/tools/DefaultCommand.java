@@ -38,7 +38,13 @@ public class DefaultCommand implements Command {
     }
 
 
-
+    /**
+     * Execute Boogie with the given {@code args}.
+     * 
+     * @return VerificationResult, with status, boogie output, and execution time.
+     * 
+     * @see fr.emn.atlanmod.veriatl.tools.VerificationResult
+     * */
     @Override
     public VerificationResult execute(ArrayList<String>  args) {
         List<String> command = new ArrayList<>();
