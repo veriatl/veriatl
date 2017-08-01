@@ -8,7 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
+import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
+import fr.emn.atlanmod.veriatl.tests.util.BoogieTask;
+import fr.emn.atlanmod.veriatl.tests.util.Strings;
+import fr.emn.atlanmod.veriatl.tools.VerificationResult;
 
 
 /**
@@ -48,20 +52,10 @@ public class HSM2FSMTest {
 		
 	}
 	
-	/**
-	 * Test compileSourceMetamodel method does not throw exception while compiling source metamodel.
-	 * */
-	@Test
-	public void compileSourceMetamodel_compile_NoException(){
-		
-		driver.doSetup(transformation_uri, src_metamodel_uri, trg_metamodel_uri, contract_uri, output_uri);
-		driver.compileSourceMetamodel();
-		
-		assertTrue(1 == 1);
-	}
+
 	
 	/**
-	 * Test compileSourceMetamodel method does not throw exception while compiling source metamodel.
+	 * Test {@code compileSourceMetamodel} method generate syntactically correct source metamodel.
 	 * */
 	@Test
 	public void compileSourceMetamodel_compile_ResultAreSyntacticalCorrect(){
@@ -69,9 +63,21 @@ public class HSM2FSMTest {
 		driver.doSetup(transformation_uri, src_metamodel_uri, trg_metamodel_uri, contract_uri, output_uri);
 		driver.compileSourceMetamodel();
 		
-		// TODO: run Boogie against compilation result, see no error
+		// run Boogie against compilation 
+		URI src_mm_uri = base_uri
+        		.appendSegment(VeriATLLaunchConstants.BOOGIE_FOLDER_NAME)
+        		.appendSegment(Strings.filename(source_metamodel_file_name))
+        		.appendFileExtension(CompilerConstants.BOOGIE_EXT);
 		
-		assertTrue(1 == 1);
+		// check compilation result, assert no error occurs.
+		VerificationResult r = BoogieTask.syn_check_metamodel(src_mm_uri.toFileString());
+		String status = r.status();
+		
+		assertTrue(status.equals("OK"));
 	}
+	
+	
+	
+	
 	
 }
