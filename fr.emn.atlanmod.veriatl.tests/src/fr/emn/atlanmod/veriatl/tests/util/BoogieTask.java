@@ -21,11 +21,13 @@ public class BoogieTask {
      * 
      * <p> By default, a dry run of skeleton gives Prelude is syntactical correct or not.
      */
-	public static VerificationResult skeleton(String... args) {
+	public static VerificationResult run(String... args) {
 
 		ArrayList<String> boogie_args = new ArrayList<String>();
 		String z3abs = z3Path.resolve("z3") + ".exe";
 
+		System.out.println(z3abs);
+		
 		// add Boogie options
 		boogie_args.add("/nologo");
 		boogie_args.add("/z3exe:" + z3abs);
@@ -42,10 +44,5 @@ public class BoogieTask {
 
 	}
 	
-	/**
-	 * Run Boogie Syntactic Check for the given generated file of a metamodel. 
-	 * */
-	public static VerificationResult syn_check_metamodel(String... args){
-		return BoogieTask.skeleton(args);
-	}
+
 }
