@@ -46,7 +46,7 @@ class URIs {
 	
 	def public static void delete(URI target) throws RuntimeException{
 		
-		if(!Platform.isRunning()){
+		if(!Platform.isRunning() || target == null || target.toPlatformString(true) == null){
 			// do some standalone application del
 			return
 		}
