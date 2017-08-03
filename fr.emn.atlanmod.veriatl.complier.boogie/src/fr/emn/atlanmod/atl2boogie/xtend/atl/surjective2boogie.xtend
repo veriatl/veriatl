@@ -1,7 +1,9 @@
 package fr.emn.atlanmod.atl2boogie.xtend.atl
 
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl
+import java.text.SimpleDateFormat
 import java.util.ArrayList
+import java.util.Date
 import java.util.HashMap
 import java.util.HashSet
 import java.util.Set
@@ -10,10 +12,7 @@ import org.eclipse.m2m.atl.common.ATL.MatchedRule
 import org.eclipse.m2m.atl.common.ATL.Module
 import org.eclipse.m2m.atl.common.ATL.ModuleElement
 import org.eclipse.m2m.atl.common.ATL.OutPatternElement
-import org.eclipse.m2m.atl.common.ATL.Rule
 import org.eclipse.m2m.atl.common.OCL.OclModelElement
-import java.text.SimpleDateFormat
-import java.util.Date
 
 class surjective2boogie {
 	// Remembering whether out pattern elements are already generated.
