@@ -26,7 +26,6 @@ public class BoogieTask {
 		ArrayList<String> boogie_args = new ArrayList<String>();
 		String z3abs = z3Path.resolve("z3") + ".exe";
 
-		System.out.println(z3abs);
 		
 		// add Boogie options
 		boogie_args.add("/nologo");
