@@ -6,11 +6,14 @@ Introduction
 In contract-based development of model transformations, continuous deductive verification helps the transformation developer in early bug detection. However, because of the execution performance of current verification systems, re-verifying from scratch after a change has been made would introduce impractical delays. We address this problem by proposing a fine-grained incremental verification approach and applying it to the ATL model-transformation language. Our approach is based on decomposing each contract into sub-goals, and caching the sub-goal verification results. At each change we exploit the semantics of relational model transformation to determine whether a cached verification result may be impacted. Consequently, less postconditions/sub-goals need to be re-verified. When a change forces the re-verification of a postcondition, we use the cached verification results of sub-goals to construct a simplified version of the postcondition to verify. We prove the soundness of our approach and show its effectiveness by continuous and extensive evaluations.
 
 
-Video
+Video & Slides
 ------
-Interest in VeriATL, but do not have time to install? Worry not! Quick demo of VeriATL on youtube: 
+Interest in VeriATL, but do not have time to install? Worry not! Quick workthrough of VeriATL: 
 
-[Click to watch](https://youtu.be/zFqbcK4jd9I)
+[Youtube](https://youtu.be/zFqbcK4jd9I)
+[Slides](https://github.com/veriatl/VeriATL/blob/experiment/fr.emn.atlanmod.veriatl.resources/VeriATL_intro_slides.pdf)
+
+
 
 Impacts
 ------
