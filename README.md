@@ -10,9 +10,9 @@ Video & Slides
 ------
 Interest in VeriATL, but do not have time to install? Worry not! Quick workthrough of VeriATL: 
 
-[Youtube](https://youtu.be/zFqbcK4jd9I)
+* [Youtube](https://youtu.be/zFqbcK4jd9I)
 
-[Slides](https://github.com/veriatl/VeriATL/blob/experiment/fr.emn.atlanmod.veriatl.resources/VeriATL_intro_slides.pdf)
+* [Slides](https://github.com/veriatl/VeriATL/blob/experiment/fr.emn.atlanmod.veriatl.resources/VeriATL_intro_slides.pdf)
 
 
 
