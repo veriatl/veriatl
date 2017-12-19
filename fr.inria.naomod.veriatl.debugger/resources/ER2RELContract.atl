@@ -36,14 +36,14 @@ helper context ER!Entity def: exist_er_entity_iskey(): Boolean = -- Entity have 
 
 --POSTCONDITION REL
 
-helper context REL!RELSchema def: post_unique_rel_schema_names(): Boolean = --@post RELSchema names are unique 
+helper context REL!RELSchema def: unique_rel_schema_names(): Boolean = --@post RELSchema names are unique 
   REL!RELSchema.allInstances()->forAll(r1,r2| r1<>r2 implies r1.name<>r2.name); 
 
-helper context REL!RELSchema def: post_unique_rel_relation_names(): Boolean = --@post relation names are unique in RELSchema
+helper context REL!RELSchema def: unique_rel_relation_names(): Boolean = --@post relation names are unique in RELSchema
   REL!RELSchema.allInstances()->forAll(s | s.relations->forAll(r1,r2| r1<>r2 implies r1.name<>r2.name));
 
-helper context REL!Relation def: post_unique_rel_attribute_names(): Boolean = --@post attribute names unique in RELRelation
+helper context REL!Relation def: unique_rel_attribute_names(): Boolean = --@post attribute names unique in RELRelation
   REL!Relation.allInstances()->forAll(r | r.attrs->forAll(a1,a2 | a1.name=a2.name implies a1=a2));  
 
-helper context REL!Relation def: post_exist_rel_relation_iskey(): Boolean = --@post RELRelations have a key
+helper context REL!Relation def: exist_rel_relation_iskey(): Boolean = --@post RELRelations have a key
   REL!Relation.allInstances()->forAll(r | r.attrs->exists(a | a.isKey));
