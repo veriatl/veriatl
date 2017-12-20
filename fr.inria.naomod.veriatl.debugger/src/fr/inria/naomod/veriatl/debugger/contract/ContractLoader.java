@@ -12,9 +12,10 @@ import org.eclipse.m2m.atl.common.OCL.Operation;
 
 public class ContractLoader {
 
-	public static List<OclExpression> init(Resource m) throws Exception{
-
-		
+	/**
+	 * Find postconditions in a given resources.
+	 * */
+	public static List<OclExpression> findPostconditions(Resource m) throws Exception{
 		List<OclExpression> rtn  = m.getContents().stream()
 				               .filter(Module.class::isInstance)
 				               .map(Module.class::cast)

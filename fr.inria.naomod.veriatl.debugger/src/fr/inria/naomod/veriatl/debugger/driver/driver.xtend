@@ -25,9 +25,9 @@ class driver {
 		EPackage.Registry.INSTANCE.put(OCLPackage.eNS_URI, OCLPackage.eINSTANCE)
 
 		// register resource processors
-		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("xmi", new XMIResourceFactoryImpl);
-		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("atl", new AtlResourceFactoryImpl());
-		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl());
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("xmi", new XMIResourceFactoryImpl)
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("atl", new AtlResourceFactoryImpl())
+		Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl())
 	}
 	
 	/**
@@ -37,7 +37,10 @@ class driver {
 		val rs = new ResourceSetImpl
 
 		val contract_resource = rs.getResource(contract, true)
-		val posts = ContractLoader.init(contract_resource)
+		val posts = ContractLoader.findPostconditions(contract_resource)
+		
+		
+		
 		
 		System.out.println(posts.size())
 	}
