@@ -10,6 +10,7 @@ import org.eclipse.m2m.atl.common.ATL.ATLPackage
 import org.eclipse.m2m.atl.common.OCL.OCLPackage
 import org.eclipse.m2m.atl.emftvm.compiler.AtlResourceFactoryImpl
 import fr.inria.naomod.veriatl.debugger.contract.ContractLoader
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 class driver {
 	
@@ -40,7 +41,10 @@ class driver {
 		val posts = ContractLoader.findPostconditions(contract_resource)
 		
 		
-		
+		for(post : posts){
+			val temp = EcoreUtil.copy(post)
+			println(temp)
+		}
 		
 		System.out.println(posts.size())
 	}
