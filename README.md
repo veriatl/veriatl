@@ -1,30 +1,35 @@
-Fine-Grained Incrementality for Deductive Verification of Model Transformations (Online)
+A deductive approach for fault localization in ATL model transformations (Online)
 =======
 
 Introduction
 ------
-In contract-based development of model transformations, continuous deductive verification helps the transformation developer in early bug detection. However, because of the execution performance of current verification systems, re-verifying from scratch after a change has been made would introduce impractical delays. We address this problem by proposing a fine-grained incremental verification approach and applying it to the ATL model-transformation language. Our approach is based on decomposing each contract into sub-goals, and caching the sub-goal verification results. At each change we exploit the semantics of relational model transformation to determine whether a cached verification result may be impacted. Consequently, less postconditions/sub-goals need to be re-verified. When a change forces the re-verification of a postcondition, we use the cached verification results of sub-goals to construct a simplified version of the postcondition to verify. We prove the soundness of our approach and show its effectiveness by continuous and extensive evaluations.
+In model-driven engineering, correct model transformation is essential for reliably producing the artefacts that drive software development. While correctness of model transformation can be specified and checked via contracts, existing approaches do not help to find the precise location of faults that cause the verification failure. We present a fault localization approach, based on natural deduction, for the ATL model transformation language. We start by designing sound natural deduction rules for the ATL language. Then, we propose an automated proof strategy that applies the designed deduction rules on the input OCL postcondition to generate sub-goals: successfully proving the sub-goals implies the satisfaction of the input OCL postcondition. When a sub-goal is not verified, we present the user with sliced ATL model transformation and predicates deduced from the input postcondition as debugging clues. The goal is to alleviate the cognitive loading of debugging unverified sub-goals. We present here the artefects used in the evaluation for our fault localization approach.
 
 
 Video
 ------
-Interest in VeriATL, but do not have time to install? Worry not! Quick demo of VeriATL on youtube: 
+Interest in how it works, but do not have time to install? Worry not! Quick demo of our tool VeriATL on youtube: 
 
 [Click to watch](https://youtu.be/zFqbcK4jd9I)
 
 Impacts
 ------
-Our tool is built on top of a state-of-the-art incremental verification tool *Boogie* for imperative languages [cite](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/krml245.pdf). Through evaluation, we show that:
-
-* Our tool speeds up re-verifications by at least 70\%. 
-* Because of using fine-grained verification (notably enabling program slicing and impact analysis), our tool is consistently faster than the state-of-the-art incremental verification tool by 16\% to 45\%.
-* Using fine-grained verification allows our tool to scale to verify large model transformations.
-
+Our evaluation observes three items that would impact fault localization for ATL transformations:
+* The guilty construct(s) is presented in the slice. 
+* Deduced clues assist developers in various debugging tasks (e.g. generate counter-example). 
+* The number of sub-goals that need to be examined to pinpoint a fault are usually small.
 
 Evaluation
 ------
-* Please check out the *Experiment* Branch of this project for how to reproduce the evaluation.
-
+To help reproducing the evaluation result, the following artefacts are generated [(portal)]{}:
+* HSM2FSM / AF2 / AR / DB1 / DR1 / MB6 / MF6 / MT2. Each of these folders contains all the Boogie code to verify each postcondition and localize its fault for a given project. Within each folder, we have three kinds of artefacts:
+  * Auxu. The corresponding Boogie code of the case study.
+  * Sub-goals. The Boogie code of the sub-goals / original postcondition.
+  * Source. The source code for metamodels, model transformations, contracts and etc.
+  * The first two kinds of artefacts are generated in advance by using VeriATL. In case the user wants to try VeriATL themselves, the user can use the source code of this repository [(portal)]{} to load VeriATL plugin within Eclipse.
+* Prelude. The core Boogie libraries for the VeriATL verification system.
+* Exec. *Run this python script to reproduce the evaluation results.*
+* Result. the evaluation results of the orignal and mutated HSM2FSM case study in text format.
 
 Requirements
 ------
