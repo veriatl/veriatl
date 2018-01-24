@@ -1,0 +1,12 @@
+axiom classifierTable[_HSM, _StateMachine] == HSM$StateMachine;
+axiom classifierTable[_HSM, _Transition] == HSM$Transition;
+axiom classifierTable[_HSM, _AbstractState] == HSM$AbstractState;
+axiom classifierTable[_HSM, _InitialState] == HSM$InitialState;
+axiom classifierTable[_HSM, _RegularState] == HSM$RegularState;
+axiom classifierTable[_HSM, _CompositeState] == HSM$CompositeState;
+axiom classifierTable[_FSM, _StateMachine] == FSM$StateMachine;
+axiom classifierTable[_FSM, _Transition] == FSM$Transition;
+axiom classifierTable[_FSM, _AbstractState] == FSM$AbstractState;
+axiom classifierTable[_FSM, _InitialState] == FSM$InitialState;
+axiom classifierTable[_FSM, _RegularState] == FSM$RegularState;
+axiom classifierTable[_FSM, _CompositeState] == FSM$CompositeState;

@@ -1,0 +1,5 @@
+context HSM!Transition inv Pre1: 
+  HSM!Transition.allInstances()->forAll(t | not t.source.oclIsUndefined())
+--------------------------------------
+context FSM!Transition inv POST1: 
+  FSM!Transition.allInstances()->forAll(t | not t.source.oclIsUndefined())

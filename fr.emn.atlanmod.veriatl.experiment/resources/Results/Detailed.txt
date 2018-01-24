@@ -1,0 +1,170 @@
+NPP_EXEC: "Z3"
+NPP_SAVE: C:\Users\zcheng\Desktop\Final\Org.py
+CD: C:\Users\zcheng\Desktop\Final
+Current directory: C:\Users\zcheng\Desktop\Final
+python  "Org.py"
+Process started >>>
+[HSM2FSM/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]:[3]:verified:3052
+[HSM2FSM/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]:[3]:verified:3121
+[HSM2FSM/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]:[3]:verified:2960
+[HSM2FSM/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]:[3]:verified:3191
+[HSM2FSM/]:[/Sub-goals/unique_fsm_state_names/]:[original.bpl]:[3]:verified:3559
+[MT2/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]:[3]:verified:2963
+[MT2/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]:[3]:verified:3048
+[MT2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]:[3]:verified:2963
+[MT2/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]:[3]:unverified:2980
+	[MT2/]:[/Sub-goals/unique_fsm_sm_names/]:[case00.bpl]:[3]:verified:1535
+	[MT2/]:[/Sub-goals/unique_fsm_sm_names/]:[case01.bpl]:[3]:unverified:1657
+	[MT2/]:[/Sub-goals/unique_fsm_sm_names/]:[case02.bpl]:[3]:unverified:1635
+	[MT2/]:[/Sub-goals/unique_fsm_sm_names/]:[case03.bpl]:[3]:unverified:1587
+	6414
+[MT2/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]
+	Org:[2980];Total:[4];Unverified:[3];Avg:[1604];Max:[1657]
+[MT2/]:[/Sub-goals/unique_fsm_state_names/]:[original.bpl]:[3]:verified:3242
+[DB1/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]:[3]:verified:3055
+[DB1/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]:[3]:verified:3083
+[DB1/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]:[3]:verified:2975
+[DB1/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]:[3]:unverified:2914
+	[DB1/]:[/Sub-goals/unique_fsm_sm_names/]:[case00.bpl]:[3]:unverified:1557
+	1557
+[DB1/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]
+	Org:[2914];Total:[1];Unverified:[1];Avg:[1557];Max:[1557]
+[DB1/]:[/Sub-goals/unique_fsm_state_names/]:[original.bpl]:[3]:verified:3468
+[MB6/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]:[3]:verified:3089
+[MB6/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]:[3]:verified:3142
+[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]:[3]:unverified:3312
+	[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case00.bpl]:[3]:verified:2102
+	[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case01.bpl]:[3]:unverified:2486
+	[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case02.bpl]:[3]:verified:2558
+	[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case03.bpl]:[3]:verified:1556
+	[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case04.bpl]:[3]:verified:1550
+	[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case05.bpl]:[3]:verified:1566
+	[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case06.bpl]:[3]:verified:1613
+	[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case07.bpl]:[3]:verified:1572
+	[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case08.bpl]:[3]:verified:1591
+	[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case09.bpl]:[3]:verified:1631
+	[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case10.bpl]:[3]:verified:1693
+	[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case11.bpl]:[3]:verified:1588
+	21506
+[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]
+	Org:[3312];Total:[12];Unverified:[1];Avg:[1792];Max:[2558]
+[MB6/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]:[3]:verified:3150
+[MB6/]:[/Sub-goals/unique_fsm_state_names/]:[original.bpl]:[3]:verified:3540
+[AF2/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]:[3]:verified:3273
+[AF2/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]:[3]:verified:3426
+[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]:[3]:unverified:3467
+	[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case00.bpl]:[3]:unverified:2108
+	[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case01.bpl]:[3]:unverified:2603
+	[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case02.bpl]:[3]:verified:2542
+	[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case03.bpl]:[3]:verified:1556
+	[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case04.bpl]:[3]:verified:1562
+	[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case05.bpl]:[3]:verified:1557
+	[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case06.bpl]:[3]:verified:1593
+	[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case07.bpl]:[3]:verified:1613
+	[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case08.bpl]:[3]:verified:1591
+	[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case09.bpl]:[3]:verified:1578
+	[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case10.bpl]:[3]:verified:1584
+	[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case11.bpl]:[3]:verified:1577
+	21464
+[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]
+	Org:[3467];Total:[12];Unverified:[2];Avg:[1789];Max:[2603]
+[AF2/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]:[3]:verified:3347
+[AF2/]:[/Sub-goals/unique_fsm_state_names/]:[original.bpl]:[3]:verified:3687
+[MF6/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]:[3]:verified:3092
+[MF6/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]:[3]:unverified:3752
+	[MF6/]:[/Sub-goals/fsm_transition_multi_lower/]:[case00.bpl]:[3]:verified:2085
+	[MF6/]:[/Sub-goals/fsm_transition_multi_lower/]:[case01.bpl]:[3]:verified:2028
+	[MF6/]:[/Sub-goals/fsm_transition_multi_lower/]:[case02.bpl]:[3]:verified:1928
+	[MF6/]:[/Sub-goals/fsm_transition_multi_lower/]:[case03.bpl]:[3]:verified:1573
+	[MF6/]:[/Sub-goals/fsm_transition_multi_lower/]:[case04.bpl]:[3]:verified:1568
+	[MF6/]:[/Sub-goals/fsm_transition_multi_lower/]:[case05.bpl]:[3]:verified:1543
+	10725
+[MF6/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]
+	Org:[3752];Total:[6];Unverified:[0];Avg:[1788];Max:[2085]
+[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]:[3]:unverified:3740
+	[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case00.bpl]:[3]:verified:2081
+	[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case01.bpl]:[3]:unverified:2278
+	[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case02.bpl]:[3]:verified:2555
+	[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case03.bpl]:[3]:verified:1553
+	[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case04.bpl]:[3]:verified:1559
+	[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case05.bpl]:[3]:verified:1570
+	[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case06.bpl]:[3]:verified:1528
+	[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case07.bpl]:[3]:verified:1567
+	[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case08.bpl]:[3]:verified:1580
+	[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case09.bpl]:[3]:verified:1543
+	[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case10.bpl]:[3]:verified:1565
+	[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[case11.bpl]:[3]:verified:1566
+	20945
+[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]
+	Org:[3740];Total:[12];Unverified:[1];Avg:[1745];Max:[2555]
+[MF6/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]:[3]:verified:5316
+[MF6/]:[/Sub-goals/unique_fsm_state_names/]:[original.bpl]:[3]:verified:3576
+[DR1/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]:[3]:unverified:2114
+	[DR1/]:[/Sub-goals/fsm_state_multi_lower/]:[case00.bpl]:[3]:unverified:1553
+	[DR1/]:[/Sub-goals/fsm_state_multi_lower/]:[case01.bpl]:[3]:unverified:1558
+	[DR1/]:[/Sub-goals/fsm_state_multi_lower/]:[case02.bpl]:[3]:unverified:1578
+	[DR1/]:[/Sub-goals/fsm_state_multi_lower/]:[case03.bpl]:[3]:verified:1505
+	[DR1/]:[/Sub-goals/fsm_state_multi_lower/]:[case04.bpl]:[3]:verified:1521
+	[DR1/]:[/Sub-goals/fsm_state_multi_lower/]:[case05.bpl]:[3]:verified:1509
+	9224
+[DR1/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]
+	Org:[2114];Total:[6];Unverified:[3];Avg:[1537];Max:[1578]
+[DR1/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]:[3]:unverified:2229
+	[DR1/]:[/Sub-goals/fsm_transition_multi_lower/]:[case00.bpl]:[3]:verified:1516
+	[DR1/]:[/Sub-goals/fsm_transition_multi_lower/]:[case01.bpl]:[3]:verified:1545
+	[DR1/]:[/Sub-goals/fsm_transition_multi_lower/]:[case02.bpl]:[3]:verified:1523
+	[DR1/]:[/Sub-goals/fsm_transition_multi_lower/]:[case03.bpl]:[3]:unverified:1607
+	[DR1/]:[/Sub-goals/fsm_transition_multi_lower/]:[case04.bpl]:[3]:unverified:1828
+	[DR1/]:[/Sub-goals/fsm_transition_multi_lower/]:[case05.bpl]:[3]:unverified:1731
+	9750
+[DR1/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]
+	Org:[2229];Total:[6];Unverified:[3];Avg:[1625];Max:[1828]
+[DR1/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]:[3]:verified:2163
+[DR1/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]:[3]:verified:2145
+[DR1/]:[/Sub-goals/unique_fsm_state_names/]:[original.bpl]:[3]:verified:2419
+[AR/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]:[3]:unverified:3782
+	[AR/]:[/Sub-goals/fsm_state_multi_lower/]:[case00.bpl]:[3]:verified:1601
+	[AR/]:[/Sub-goals/fsm_state_multi_lower/]:[case01.bpl]:[3]:verified:1628
+	[AR/]:[/Sub-goals/fsm_state_multi_lower/]:[case02.bpl]:[3]:verified:1720
+	[AR/]:[/Sub-goals/fsm_state_multi_lower/]:[case03.bpl]:[3]:unverified:1660
+	[AR/]:[/Sub-goals/fsm_state_multi_lower/]:[case04.bpl]:[3]:verified:1546
+	[AR/]:[/Sub-goals/fsm_state_multi_lower/]:[case05.bpl]:[3]:verified:1553
+	[AR/]:[/Sub-goals/fsm_state_multi_lower/]:[case06.bpl]:[3]:verified:1549
+	[AR/]:[/Sub-goals/fsm_state_multi_lower/]:[case07.bpl]:[3]:verified:1576
+	12833
+[AR/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]
+	Org:[3782];Total:[8];Unverified:[1];Avg:[1604];Max:[1720]
+[AR/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]:[3]:verified:3832
+[AR/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]:[3]:verified:3681
+[AR/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]:[3]:verified:3967
+[AR/]:[/Sub-goals/unique_fsm_state_names/]:[original.bpl]:[3]:unverified:4041
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case00.bpl]:[3]:verified:1722
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case01.bpl]:[3]:verified:1612
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case02.bpl]:[3]:verified:1838
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case03.bpl]:[3]:unverified:1697
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case04.bpl]:[3]:verified:1857
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case05.bpl]:[3]:verified:1838
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case06.bpl]:[3]:verified:1720
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case07.bpl]:[3]:unverified:1755
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case08.bpl]:[3]:unverified:1738
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case09.bpl]:[3]:unverified:1697
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case10.bpl]:[3]:unverified:1800
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case11.bpl]:[3]:verified:1604
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case12.bpl]:[3]:verified:1647
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case13.bpl]:[3]:verified:1710
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case14.bpl]:[3]:verified:1868
+	[AR/]:[/Sub-goals/unique_fsm_state_names/]:[case15.bpl]:[3]:unverified:1740
+	27843
+[AR/]:[/Sub-goals/unique_fsm_state_names/]:[original.bpl]
+	Org:[4041];Total:[16];Unverified:[6];Avg:[1740];Max:[1868]
+[DP1/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]:[3]:verified:2940
+[DP1/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]:[3]:verified:3006
+[DP1/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]:[3]:verified:2871
+[DP1/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]:[3]:unverified:2839
+	[DP1/]:[/Sub-goals/unique_fsm_sm_names/]:[case00.bpl]:[3]:unverified:1538
+	1538
+[DP1/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]
+	Org:[2839];Total:[1];Unverified:[1];Avg:[1538];Max:[1538]
+[DP1/]:[/Sub-goals/unique_fsm_state_names/]:[original.bpl]:[3]:verified:3390
+<<< Process finished. (Exit code 0)
+================ READY ================

@@ -1,0 +1,32 @@
+NPP_EXEC: "Z3"
+NPP_SAVE: C:\Users\zcheng\Desktop\Final\Org.py
+CD: C:\Users\zcheng\Desktop\Final
+Current directory: C:\Users\zcheng\Desktop\Final
+python  "Org.py"
+Process started >>>
+[HSM2FSM/]:[/Sub-goals/fsm_transition_src_multi_lower/]:[original.bpl]
+	Org:[3322];Total:[12];Unverified:[1];Avg:[1801];Max:[2720]
+[MT2/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]
+	Org:[3116];Total:[4];Unverified:[3];Avg:[1616];Max:[1644]
+[DB1/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]
+	Org:[2934];Total:[1];Unverified:[1];Avg:[1546];Max:[1546]
+[MB6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]
+	Org:[3239];Total:[12];Unverified:[1];Avg:[1764];Max:[2550]
+[AF2/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]
+	Org:[3409];Total:[12];Unverified:[2];Avg:[1793];Max:[2552]
+[MF6/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]
+	Org:[3779];Total:[6];Unverified:[0];Avg:[1777];Max:[2093]
+[MF6/]:[/Sub-goals/fsm_transition_trg_multi_lower/]:[original.bpl]
+	Org:[3790];Total:[12];Unverified:[1];Avg:[1774];Max:[2549]
+[DR1/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]
+	Org:[2161];Total:[6];Unverified:[3];Avg:[1547];Max:[1589]
+[DR1/]:[/Sub-goals/fsm_transition_multi_lower/]:[original.bpl]
+	Org:[2230];Total:[6];Unverified:[3];Avg:[1642];Max:[1780]
+[AR/]:[/Sub-goals/fsm_state_multi_lower/]:[original.bpl]
+	Org:[3890];Total:[8];Unverified:[1];Avg:[1612];Max:[1812]
+[AR/]:[/Sub-goals/unique_fsm_state_names/]:[original.bpl]
+	Org:[4057];Total:[16];Unverified:[6];Avg:[1769];Max:[1920]
+[DP1/]:[/Sub-goals/unique_fsm_sm_names/]:[original.bpl]
+	Org:[2892];Total:[1];Unverified:[1];Avg:[1578];Max:[1578]
+<<< Process finished. (Exit code 0)
+================ READY ================
