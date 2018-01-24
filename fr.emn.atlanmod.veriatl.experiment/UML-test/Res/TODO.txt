@@ -1,4 +1,0 @@
-- Is the complexity of rule bindings a parameter? e.g. the size of the binding.
-
-
-
