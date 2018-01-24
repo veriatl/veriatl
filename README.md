@@ -26,7 +26,7 @@ To help reproducing the evaluation result, the following artefacts are generated
   * Auxu. The corresponding Boogie code of the case study.
   * Sub-goals. The Boogie code of the sub-goals / original postcondition.
   * Source. The source code for metamodels, model transformations, contracts and etc.
-  * The first two kinds of artefacts are generated in advance by using VeriATL. In case the user wants to try VeriATL themselves, the user can use the source code of this repository [(portal)](https://github.com/veriatl/VeriATL/tree/FaultLoc/fr.emn.atlanmod.veriatl.launcher) to load VeriATL plugin within Eclipse.
+  * The first two kinds of artefacts are generated in advance by using VeriATL. In case the users want to try VeriATL themselves, they can use the source code of this repository [(portal)](https://github.com/veriatl/VeriATL/tree/FaultLoc/fr.emn.atlanmod.veriatl.launcher) to execute VeriATL plugin within Eclipse.
 * Prelude. The core Boogie libraries for the VeriATL verification system.
 * Exec. *Run this python script to reproduce the evaluation results.*
 * Result. the evaluation results of the orignal and mutated HSM2FSM case study in text format.
