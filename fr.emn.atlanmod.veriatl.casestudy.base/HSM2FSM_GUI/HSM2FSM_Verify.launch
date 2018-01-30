@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="fr.emn.atlanmod.veriatl.launcher">
 <stringAttribute key="ATL File Name" value="//fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI/Source/HSM2FSM.atl"/>
-<stringAttribute key="Affected Rule" value="T2TB,T2TA"/>
+<stringAttribute key="Affected Rule" value="T2TB"/>
 <stringAttribute key="CONTRACT PATH" value="platform:/resource/fr.emn.atlanmod.veriatl.casestudy.base/HSM2FSM_GUI/Source/HSM2FSMContract.atl"/>
 <mapAttribute key="Inout Model Options"/>
 <mapAttribute key="Inout Models"/>
