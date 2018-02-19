@@ -1,0 +1,60 @@
+-- @atlcompiler emftvm
+-- @nsURI UML2=http://www.eclipse.org/uml2/3.0.0/UML
+-- $Id$
+-- Applies all necessary profiles.
+module UML2Profiles;
+
+create OUT : UML2 from IN : UML2, ACCESSORS : UML2;
+
+uses "lib::UML2";
+uses UML2Copy;
+
+-- ======================================================================
+-- model-specific helpers begin
+-- ======================================================================
+
+helper def : accessorsProfile : UML2!"uml::Profile" = 'Accessors'.profile().debug('accessorsProfile');
+
+-- ======================================================================
+-- model-specific helpers end
+-- ======================================================================
+	
+-- ======================================================================
+-- transformation rules begin
+-- ======================================================================
+
+rule Model {
+    from s : UML2!"uml::Model" in IN
+    to t : UML2!"uml::Model" (
+        __xmiID__ <- s.__xmiID__,
+		name <- s.name.debug('Model'),
+        visibility <- s.visibility,
+        viewpoint <- s.viewpoint,
+        eAnnotations <- s.eAnnotations,
+        ownedComment <- s.ownedComment,
+        clientDependency <- s.clientDependency,
+        nameExpression <- s.nameExpression,
+        elementImport <- s.elementImport,
+        packageImport <- s.packageImport,
+        ownedRule <- s.ownedRule,
+        templateParameter <- s.templateParameter,
+        templateBinding <- s.templateBinding,
+        ownedTemplateSignature <- s.ownedTemplateSignature,
+        packageMerge <- s.packageMerge,
+        packagedElement <- s.packagedElement,
+        profileApplication <- s.profileApplication)
+}
+
+rule ModelProfile extends Model {
+    from s : UML2!"uml::Model" in IN (
+    	not s.includesProfile(thisModule.accessorsProfile))
+    to t : UML2!"uml::Model" (
+		name <- s.name.debug('ModelProfile'))
+	do {
+		t.applyProfile(thisModule.accessorsProfile);
+	}
+}
+
+-- ======================================================================
+-- transformation rules end
+-- ======================================================================

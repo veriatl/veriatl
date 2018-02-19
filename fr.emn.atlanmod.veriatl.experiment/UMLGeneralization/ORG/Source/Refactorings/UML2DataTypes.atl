@@ -1,0 +1,234 @@
+-- @atlcompiler emftvm
+-- @nsURI UML2=http://www.eclipse.org/uml2/3.0.0/UML
+-- $Id$
+-- Transforms all UML2-specific data types to programming language types.
+module UML2DataTypes; --extends UML2Copy
+
+create OUT : UML2 from IN : UML2, IMPLTYPES : UML2;
+
+uses "lib::Strings";
+uses "lib::UML2";
+uses "lib::Mappings";
+uses UML2Copy;
+
+-- ======================================================================
+-- model-specific helpers begin
+-- ======================================================================
+
+helper def : language : String = 'language'.value();
+
+helper def : voidType : UML2!"uml::Type" = 'OclVoid'.implTypeName().type();
+helper def : anyType : UML2!"uml::Type" = 'OclAny'.implTypeName().type();
+helper def : integerType : UML2!"uml::Type" = 'Integer'.implTypeName().type();
+helper def : naturalType : UML2!"uml::Type" = 'Natural'.implTypeName().type();
+helper def : unlimitedNaturalType : UML2!"uml::Type" = 'UnlimitedNatural'.implTypeName().type();
+helper def : realType : UML2!"uml::Type" = 'Real'.implTypeName().type();
+helper def : booleanType : UML2!"uml::Type" = 'Boolean'.implTypeName().type();
+helper def : stringType : UML2!"uml::Type" = 'String'.implTypeName().type();
+helper def : exceptionType : UML2!"uml::Type" = 'Exception'.implTypeName().type();
+
+helper def : orderedSetType : UML2!"uml::Type" = 'OrderedSet'.implTypeName().type();
+helper def : sequenceType : UML2!"uml::Type" = 'Sequence'.implTypeName().type();
+helper def : setType : UML2!"uml::Type" = 'Set'.implTypeName().type();
+helper def : bagType : UML2!"uml::Type" = 'Bag'.implTypeName().type();
+helper def : orderedSetReturnType : UML2!"uml::Type" = 'OrderedSet'.implCollectionReturnTypeName().type();
+helper def : sequenceReturnType : UML2!"uml::Type" = 'Sequence'.implCollectionReturnTypeName().type();
+helper def : setReturnType : UML2!"uml::Type" = 'Set'.implCollectionReturnTypeName().type();
+helper def : bagReturnType : UML2!"uml::Type" = 'Bag'.implCollectionReturnTypeName().type();
+
+helper context UML2!"uml::PrimitiveType" def : implType : UML2!"uml::Type" =
+	if self.name = 'Integer' then thisModule.integerType else
+	if self.name = 'Natural' then thisModule.naturalType else
+	if self.name = 'UnlimitedNatural' then thisModule.unlimitedNaturalType else
+	if self.name = 'Real' then thisModule.realType else
+	if self.name = 'Boolean' then thisModule.booleanType else
+	if self.name = 'String' then thisModule.stringType else
+	if self.name = 'OclAny' then thisModule.anyType else
+	if self.name = 'Exception' then thisModule.exceptionType else
+	if self.name = 'OrderedSet' then thisModule.orderedSetType else
+	if self.name = 'Set' then thisModule.setType else
+	if self.name = 'Sequence' then thisModule.sequenceType else
+	if self.name = 'Bag' then thisModule.bagType else
+		thisModule.voidType
+	endif endif endif endif	endif endif endif endif endif endif endif endif;
+
+helper context UML2!"uml::Type" def : implType : UML2!"uml::Type" =
+	self;
+
+helper context UML2!"uml::TypedElement" def : implType : UML2!"uml::Type" =
+	self.type.implType;
+
+helper context UML2!"uml::Property" def : implType : UML2!"uml::Type" =
+	if self.isSingle then
+		self.type.implType
+	else
+		self.implCollectionType
+	endif;
+
+helper context UML2!"uml::Parameter" def : implType : UML2!"uml::Type" =
+	if self.isSingle then
+		self.type.implType
+	else if self.direction = #return then
+		self.implCollectionReturnType
+	else
+		self.implCollectionType
+	endif endif;
+
+helper context UML2!"uml::MultiplicityElement" def : implCollectionType : UML2!"uml::Type" =
+	if self.isOrdered then
+		if self.isUnique then
+			thisModule.orderedSetType
+		else
+			thisModule.sequenceType
+		endif
+	else
+		if self.isUnique then
+			thisModule.setType
+		else
+			thisModule.bagType
+		endif
+	endif;
+
+helper context UML2!"uml::MultiplicityElement" def : implCollectionReturnType : UML2!"uml::Type" =
+	if self.isOrdered then
+		if self.isUnique then
+			thisModule.orderedSetReturnType
+		else
+			thisModule.sequenceReturnType
+		endif
+	else
+		if self.isUnique then
+			thisModule.setReturnType
+		else
+			thisModule.bagReturnType
+		endif
+	endif;
+
+helper context UML2!"uml::TypedElement" def : defaultValueBody() : String =
+	self.implType.defaultValueBody();
+
+helper context UML2!"uml::Type" def : defaultValueBody() : String =
+	self.umlQualifiedName.defaultValueBody();
+
+-- ======================================================================
+-- model-specific helpers end
+-- ======================================================================
+	
+-- ======================================================================
+-- transformation rules begin
+-- ======================================================================
+
+rule Property {
+    from s : UML2!"uml::Property" in IN (
+		s.oclIsTypeOf(UML2!"uml::Property"))
+    to t : UML2!"uml::Property" (
+        __xmiID__ <- s.__xmiID__,
+        name <- s.name,
+        visibility <- s.visibility,
+        isLeaf <- s.isLeaf,
+        isStatic <- s.isStatic,
+        isOrdered <- s.isOrdered,
+        isUnique <- s.isUnique,
+        isReadOnly <- s.isReadOnly,
+        isDerived <- s.isDerived,
+        isDerivedUnion <- s.isDerivedUnion,
+        aggregation <- s.aggregation,
+        eAnnotations <- s.eAnnotations,
+        ownedComment <- s.ownedComment,
+        clientDependency <- s.clientDependency,
+        nameExpression <- s.nameExpression,
+        type <- s.implType.debug('Property'),
+        upperValue <- s.upperValue,
+        lowerValue <- s.lowerValue,
+        templateParameter <- s.templateParameter,
+        deployment <- s.deployment,
+        redefinedProperty <- s.redefinedProperty,
+        defaultValue <- if s.defaultValue.oclIsUndefined() then
+			thisModule.DefVal(s) else s.defaultValue endif,
+        subsettedProperty <- s.subsettedProperty,
+        association <- s.association,
+        qualifier <- s.qualifier)
+}
+
+lazy rule DefVal {
+	from s : UML2!"uml::Property"
+    to defVal : UML2!"uml::OpaqueExpression" (
+		language <- Sequence{thisModule.language},
+		body <- Sequence{s.defaultValueBody()})
+	do {
+		defVal;
+	}
+}
+
+rule Parameter {
+    from s : UML2!"uml::Parameter" in IN
+    to t : UML2!"uml::Parameter" (
+        __xmiID__ <- s.__xmiID__,
+        name <- s.name,
+        visibility <- s.visibility,
+        isOrdered <- s.isOrdered,
+        isUnique <- s.isUnique,
+        direction <- s.direction,
+        isException <- s.isException,
+        isStream <- s.isStream,
+        effect <- s.effect,
+        eAnnotations <- s.eAnnotations,
+        ownedComment <- s.ownedComment,
+        clientDependency <- s.clientDependency,
+        nameExpression <- s.nameExpression,
+        type <- s.implType,
+        templateParameter <- s.templateParameter,
+        end <- s.end,
+        upperValue <- s.upperValue,
+        lowerValue <- s.lowerValue,
+        parameterSet <- s.parameterSet,
+        defaultValue <- s.defaultValue)
+}
+
+rule Operation {
+    from s : UML2!"uml::Operation" in IN
+    to t : UML2!"uml::Operation" (
+        __xmiID__ <- s.__xmiID__,
+        name <- s.name,
+        visibility <- s.visibility,
+        isLeaf <- s.isLeaf,
+        isStatic <- s.isStatic,
+        isAbstract <- s.isAbstract,
+        concurrency <- s.concurrency,
+        isQuery <- s.isQuery,
+        eAnnotations <- s.eAnnotations,
+        ownedComment <- s.ownedComment,
+        clientDependency <- s.clientDependency,
+        nameExpression <- s.nameExpression,
+        elementImport <- s.elementImport,
+        packageImport <- s.packageImport,
+        ownedRule <- s.ownedRule,
+        ownedParameter <- s.ownedParameter
+			->union(if s.ownedParameter->exists(p|p.direction=#return) then
+				Sequence{} else Sequence{thisModule.VoidParameter()} endif),
+        method <- s.method,
+        raisedException <- s.raisedException,
+        ownedParameterSet <- s.ownedParameterSet,
+        templateParameter <- s.templateParameter,
+        templateBinding <- s.templateBinding,
+        ownedTemplateSignature <- s.ownedTemplateSignature,
+        precondition <- s.precondition,
+        postcondition <- s.postcondition,
+        redefinedOperation <- s.redefinedOperation,
+        bodyCondition <- s.bodyCondition)
+}
+
+rule VoidParameter() {
+    to retPar : UML2!"uml::Parameter" (
+	   	name <- 'return',
+		type <- thisModule.voidType,
+		effect <- #read,
+		direction <- #return)
+	do {
+		retPar;
+	}
+}
+
+-- ======================================================================
+-- transformation rules end
+-- ======================================================================

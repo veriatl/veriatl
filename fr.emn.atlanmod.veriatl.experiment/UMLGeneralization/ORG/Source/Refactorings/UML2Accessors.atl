@@ -1,0 +1,551 @@
+-- @atlcompiler emftvm
+-- @nsURI UML2=http://www.eclipse.org/uml2/3.0.0/UML
+-- $Id$
+-- Introduces accessor operations for all public properties
+--
+-- Known issues:
+-- * Current UML2 standard does not allow PackageableElements
+--   to set their package. Only Package can set its ownedMembers.
+--   This issue is solved using a large query inside the Package rule.
+-- * Current UML2 standard does not allow Behaviors
+--   to set their context/owner. Only BehavioredClassifier can
+--   set its ownedBehavior. This issue is solved using a large
+--   query inside the Class rule.
+--
+module UML2Accessors;
+
+create OUT : UML2 from IN : UML2, ACCESSORS : UML2, UML2TYPES : UML2;
+
+uses "lib::Strings";
+uses "lib::UML2";
+uses "lib::Mappings";
+uses UML2Copy;
+
+-- ======================================================================
+-- model-specific helpers begin
+-- ======================================================================
+
+helper def : accessor : UML2!"uml::Stereotype" = 'accessor'.stereotype();
+helper def : oclInteger : UML2!"uml::PrimitiveType" = 'Integer'.primitiveType();
+helper def : separator : String = 'separator'.value();
+helper def : language : String = 'language'.value();
+
+helper context UML2!"uml::Property" def : setter() : String =
+	if self.associatedProperty.oclIsUndefined() then
+		self.name.setterBody()
+	else
+		self.dualSetter()
+	endif;
+
+helper context UML2!"uml::Property" def : dualSetter() : String =
+	if self.associatedProperty.isSingle then
+		self.name.dualSetterBody(
+			self.associatedProperty.name.firstToUpper)
+	else
+		self.name.addRemoveSetterBody(
+			self.associatedProperty.name.firstToUpper)
+	endif;
+	
+helper context UML2!"uml::Property" def : adder() : String =
+	if self.associatedProperty.oclIsUndefined() then
+		self.name.adderBody(self.isUnique)
+	else
+		self.dualAdder()
+	endif;
+
+helper context UML2!"uml::Property" def : dualAdder() : String =
+	if self.associatedProperty.isSingle then
+		self.name.setterAdderBody(
+			self.associatedProperty.name.firstToUpper)
+	else
+		self.name.dualAdderBody(
+			self.associatedProperty.name.firstToUpper)
+	endif;
+	
+helper context UML2!"uml::Property" def : insert() : String =
+	if self.associatedProperty.oclIsUndefined() then
+		self.name.insertBody(self.isUnique)
+	else
+		self.dualInsert()
+	endif;
+
+helper context UML2!"uml::Property" def : dualInsert() : String =
+	if self.associatedProperty.isSingle then
+		self.name.setterInsertBody(
+			self.associatedProperty.name.firstToUpper)
+	else
+		self.name.dualInsertBody(
+			self.associatedProperty.name.firstToUpper)
+	endif;
+	
+helper context UML2!"uml::Property" def : remover() : String =
+	if self.associatedProperty.oclIsUndefined() then
+		self.name.removerBody()
+	else
+		self.dualRemover()
+	endif;
+
+helper context UML2!"uml::Property" def : dualRemover() : String =
+	if self.associatedProperty.isSingle then
+		self.name.setterRemoverBody(self.associatedProperty.name.firstToUpper)
+	else
+		self.name.dualRemoverBody(self.associatedProperty.name.firstToUpper)
+	endif;
+
+helper context UML2!"uml::Property" def : getter() : String =
+	if self.isSingle then self.name.getterBody()
+	else self.name.multiGetterBody() endif;
+
+helper context UML2!"uml::Property" def : getAt() : String =
+	self.name.getAtBody(self.type.qualifiedName(thisModule.separator));
+
+-- ======================================================================
+-- model-specific helpers end
+-- ======================================================================
+	
+-- ======================================================================
+-- transformation rules begin
+-- ======================================================================
+
+rule Package {
+    from s : UML2!"uml::Package" in IN (
+		s.oclIsTypeOf(UML2!"uml::Package"))
+	using { myProperties : Sequence(UML2!"uml::Property") = 
+		UML2!"uml::Property".allInstancesFrom('IN')
+				->select(p|p.getNearestPackage()=s)
+				->select(p|p.oclIsTypeOf(UML2!"uml::Property") and 
+					       (p.visibility=#public) and 
+						   p.isNavigable); }
+    to t : UML2!"uml::Package" (
+        __xmiID__ <- s.__xmiID__,
+        name <- s.name.debug('Package'),
+        visibility <- s.visibility,
+        eAnnotations <- s.eAnnotations,
+        ownedComment <- s.ownedComment,
+        clientDependency <- s.clientDependency,
+        nameExpression <- s.nameExpression,
+        elementImport <- s.elementImport,
+        packageImport <- s.packageImport,
+        ownedRule <- s.ownedRule,
+        templateParameter <- s.templateParameter,
+        templateBinding <- s.templateBinding,
+        ownedTemplateSignature <- s.ownedTemplateSignature,
+        packageMerge <- s.packageMerge,
+        packagedElement <- s.packagedElement
+			->union(myProperties->collect(p|
+				thisModule.resolveTemp(p, 'getDep')))
+			->union(myProperties->select(p|p.isSingle)->collect(p|
+				thisModule.resolveTemp(p, 'setDep')))
+			->union(myProperties->select(p|not p.isSingle)->collect(p|
+				thisModule.resolveTemp(p, 'addDep')))
+			->union(myProperties->select(p|not p.isSingle)->collect(p|
+				thisModule.resolveTemp(p, 'removeDep')))
+			->union(myProperties->select(p|not p.isSingle and p.isOrdered)->collect(p|
+				thisModule.resolveTemp(p, 'getAtDep')))
+			->union(myProperties->select(p|not p.isSingle and p.isOrdered)->collect(p|
+				thisModule.resolveTemp(p, 'indexOfDep')))
+			->union(myProperties->select(p|not p.isSingle and p.isOrdered)->collect(p|
+				thisModule.resolveTemp(p, 'insertDep'))),
+		profileApplication <- s.profileApplication)
+}
+
+rule Class {
+    from s : UML2!"uml::Class" in IN (
+		s.oclIsTypeOf(UML2!"uml::Class"))
+	using { myProperties : Sequence(UML2!"uml::Property") = 
+				s.attribute->select(p|
+					p.oclIsTypeOf(UML2!"uml::Property") and 
+					p.visibility=#public and 
+					p.isNavigable); }
+	to t : UML2!"uml::Class"  (
+        __xmiID__ <- s.__xmiID__,
+        name <- s.name,
+        visibility <- s.visibility,
+        isLeaf <- s.isLeaf,
+        isAbstract <- s.isAbstract,
+        isActive <- s.isActive,
+        eAnnotations <- s.eAnnotations,
+        ownedComment <- s.ownedComment,
+        clientDependency <- s.clientDependency,
+        nameExpression <- s.nameExpression,
+        elementImport <- s.elementImport,
+        packageImport <- s.packageImport,
+        ownedRule <- s.ownedRule,
+        templateParameter <- s.templateParameter,
+        templateBinding <- s.templateBinding,
+        ownedTemplateSignature <- s.ownedTemplateSignature,
+        generalization <- s.generalization,
+        powertypeExtent <- s.powertypeExtent,
+        redefinedClassifier <- s.redefinedClassifier,
+        substitution <- s.substitution,
+        representation <- s.representation,
+        collaborationUse <- s.collaborationUse,
+        ownedUseCase <- s.ownedUseCase,
+        useCase <- s.useCase,
+        ownedAttribute <- s.ownedAttribute,
+        ownedConnector <- s.ownedConnector,
+        ownedBehavior <- s.ownedBehavior
+			->union(myProperties->collect(p|
+				thisModule.resolveTemp(p, 'getBehavior')))
+			->union(myProperties->select(p|p.isSingle)->collect(p|
+				thisModule.resolveTemp(p, 'setBehavior')))
+			->union(myProperties->select(p|not p.isSingle)->collect(p|
+				thisModule.resolveTemp(p, 'addBehavior')))
+			->union(myProperties->select(p|not p.isSingle)->collect(p|
+				thisModule.resolveTemp(p, 'removeBehavior')))
+			->union(myProperties->select(p|not p.isSingle and p.isOrdered)->collect(p|
+				thisModule.resolveTemp(p, 'getAtBehavior')))
+			->union(myProperties->select(p|not p.isSingle and p.isOrdered)->collect(p|
+				thisModule.resolveTemp(p, 'indexOfBehavior')))
+			->union(myProperties->select(p|not p.isSingle and p.isOrdered)->collect(p|
+				thisModule.resolveTemp(p, 'insertBehavior'))),
+		classifierBehavior <- s.classifierBehavior,
+        interfaceRealization <- s.interfaceRealization,
+        ownedTrigger <- s.ownedTrigger,
+        nestedClassifier <- s.nestedClassifier,
+        ownedOperation <- s.ownedOperation,
+        ownedReception <- s.ownedReception)
+}
+
+rule Property {
+    from s : UML2!"uml::Property" in IN (
+		s.oclIsTypeOf(UML2!"uml::Property"))
+    to t : UML2!"uml::Property" (
+        __xmiID__ <- s.__xmiID__,
+        name <- s.name,
+        visibility <- s.visibility,
+        isLeaf <- s.isLeaf,
+        isStatic <- s.isStatic,
+        isOrdered <- s.isOrdered,
+        isUnique <- s.isUnique,
+        isReadOnly <- s.isReadOnly,
+        isDerived <- s.isDerived,
+        isDerivedUnion <- s.isDerivedUnion,
+        aggregation <- s.aggregation,
+        eAnnotations <- s.eAnnotations,
+        ownedComment <- s.ownedComment,
+        clientDependency <- s.clientDependency,
+        nameExpression <- s.nameExpression,
+        type <- s.type,
+        upperValue <- s.upperValue,
+        lowerValue <- s.lowerValue,
+        templateParameter <- s.templateParameter,
+        deployment <- s.deployment,
+        redefinedProperty <- s.redefinedProperty,
+        subsettedProperty <- s.subsettedProperty,
+        association <- s.association,
+        defaultValue <- s.defaultValue,
+        qualifier <- s.qualifier)
+}
+
+abstract rule PublicProperty extends Property {
+	from s : UML2!"uml::Property" in IN (
+		s.visibility = #public and 
+		s.isNavigable)
+	using {
+		getterName : String = 'get' + s.accessorBaseNameS; }
+    to t : UML2!"uml::Property" (
+        name <- s.name.debug('PublicProperty'),
+		visibility <- #private),
+	-- Get --
+		getOp : UML2!"uml::Operation" (
+	   	name <- getterName,
+		class <- s.class,
+		visibility <- s.visibility,
+		isStatic <- s.isStatic,
+		isAbstract <- false,
+		ownedParameter <- Sequence{getPar},
+		concurrency <- #sequential),
+	   getPar : UML2!"uml::Parameter" (
+	   	name <- 'return',
+		lowerValue <- getParLow,
+        upperValue <- getParUp,
+		type <- s.type,
+		effect <- #read,
+		direction <- #return),
+	   getParLow : UML2!"uml::LiteralInteger" (
+	   	value <- s.lower),
+	   getParUp : UML2!"uml::LiteralUnlimitedNatural" (
+	   	value <- s.upper),
+	   getBehavior : UML2!"uml::OpaqueBehavior" (
+	   	specification <- getOp,
+		name <- getterName + 'Behavior',
+		ownedParameter <- Sequence{getBPar},
+		language <- Sequence{thisModule.language},
+		body <- Sequence{s.getter()}),
+	   getBPar : UML2!"uml::Parameter" (
+	   	name <- 'return',
+		lowerValue <- getBParLow,
+        upperValue <- getBParUp,
+		type <- s.type,
+		effect <- #read,
+		direction <- #return),
+	   getBParLow : UML2!"uml::LiteralInteger" (
+	   	value <- s.lower),
+	   getBParUp : UML2!"uml::LiteralUnlimitedNatural" (
+	   	value <- s.upper),
+	   getDep : UML2!"uml::Dependency" (
+	   	name <- 'accessor ' + getterName + '()',
+		client <- Sequence{getOp},
+		supplier <- Sequence{s})
+	do {
+		getDep.applyStereotype(thisModule.accessor);
+		getDep.setValue(thisModule.accessor, 'kind', 'get');
+	}
+}
+
+rule PublicPropertySingle extends PublicProperty {
+	from s : UML2!"uml::Property" in IN (
+		s.isSingle)
+	using {
+		setterName : String = 'set' + s.accessorBaseNameS; }
+    to t : UML2!"uml::Property" (
+        name <- s.name.debug('PublicPropertySingle')),
+	-- Set --
+	   setOp : UML2!"uml::Operation" (
+	   	name <- setterName,
+		class <- s.class,
+		visibility <- s.visibility,
+		isStatic <- s.isStatic,
+		isAbstract <- false,
+		ownedParameter <- Sequence{setPar},
+		concurrency <- #sequential),
+	   setPar : UML2!"uml::Parameter" (
+	   	name <- s.name,
+		type <- s.type,
+		effect <- #update,
+		direction <- #"in"),
+	   setBehavior : UML2!"uml::OpaqueBehavior" (
+	   	specification <- setOp,
+	   	ownedParameter <- Sequence{setBPar},
+		name <- setterName + 'Behavior',
+		language <- Sequence{thisModule.language},
+		body <- Sequence{s.setter()}),
+	   setBPar : UML2!"uml::Parameter" (
+	   	name <- s.name,
+		type <- s.type,
+		effect <- #update,
+		direction <- #"in"),
+	   setDep : UML2!"uml::Dependency" (
+	   	name <- 'accessor ' + setterName + '()',
+		client <- Sequence{setOp},
+		supplier <- Sequence{s})
+	do {
+		setDep.applyStereotype(thisModule.accessor);
+		setDep.setValue(thisModule.accessor, 'kind', 'set');
+	}
+}
+
+rule PublicPropertyCollection extends PublicProperty {
+	from s : UML2!"uml::Property" in IN (
+		not s.isSingle)
+	using {
+		adderName : String = 'add' + s.accessorBaseName;
+		removerName : String = 'remove' + s.accessorBaseName; }
+    to t : UML2!"uml::Property" (
+        name <- s.name.debug('PublicPropertyCollection')),
+	-- Add --
+	   addOp : UML2!"uml::Operation" (
+	   	name <- adderName,
+		class <- s.class,
+		visibility <- s.visibility,
+		isStatic <- s.isStatic,
+		isAbstract <- false,
+		ownedParameter <- Sequence{addPar},
+		concurrency <- #sequential),
+	   addPar : UML2!"uml::Parameter" (
+	   	name <- s.name,
+		type <- s.type,
+		effect <- #update,
+		direction <- #"in"),
+	   addBehavior : UML2!"uml::OpaqueBehavior" (
+	   	specification <- addOp,
+		name <- adderName + 'Behavior',
+		ownedParameter <- Sequence{addBPar},
+		language <- Sequence{thisModule.language},
+		body <- Sequence{s.adder()}),
+	   addBPar : UML2!"uml::Parameter" (
+	   	name <- s.name,
+		type <- s.type,
+		effect <- #update,
+		direction <- #"in"),
+	   addDep : UML2!"uml::Dependency" (
+	   	name <- 'accessor ' + adderName + '()',
+		client <- Sequence{addOp},
+		supplier <- Sequence{s}),
+	-- Remove --
+	   removeOp : UML2!"uml::Operation" (
+	   	name <- removerName,
+		class <- s.class,
+		visibility <- s.visibility,
+		isStatic <- s.isStatic,
+		isAbstract <- false,
+		ownedParameter <- Sequence{removePar},
+		concurrency <- #sequential),
+	   removePar : UML2!"uml::Parameter" (
+	   	name <- s.name,
+		type <- s.type,
+		effect <- #update,
+		direction <- #"in"),
+	   removeBehavior : UML2!"uml::OpaqueBehavior" (
+	   	specification <- removeOp,
+		name <- removerName + 'Behavior',
+		ownedParameter <- Sequence{removeBPar},
+		language <- Sequence{thisModule.language},
+		body <- Sequence{s.remover()}),
+	   removeBPar : UML2!"uml::Parameter" (
+	   	name <- s.name,
+		type <- s.type,
+		effect <- #update,
+		direction <- #"in"),
+	   removeDep : UML2!"uml::Dependency" (
+	   	name <- 'accessor ' + removerName + '()',
+		client <- Sequence{removeOp},
+		supplier <- Sequence{s})
+	do {
+		addDep.applyStereotype(thisModule.accessor);
+		addDep.setValue(thisModule.accessor, 'kind', 'add');
+		removeDep.applyStereotype(thisModule.accessor);
+		removeDep.setValue(thisModule.accessor, 'kind', 'remove');
+	}
+}
+
+rule PublicPropertySequence extends PublicPropertyCollection {
+	from s : UML2!"uml::Property" in IN (
+		s.isOrdered)
+	using {
+		getAtName : String = 'get' + s.accessorBaseName + 'At';
+		getIndexOfName : String = 'getIndexOf' + s.accessorBaseName;
+		insertName : String = 'insert' + s.accessorBaseName; }
+    to t : UML2!"uml::Property" (
+        name <- s.name.debug('PublicPropertySequence')),
+	-- GetAt --
+	   getAtOp : UML2!"uml::Operation" (
+	   	name <- getAtName,
+		class <- s.class,
+		visibility <- s.visibility,
+		isStatic <- s.isStatic,
+		isAbstract <- false,
+		ownedParameter <- Sequence{getAtPar1, getAtPar2},
+		concurrency <- #sequential),
+	   getAtPar1 : UML2!"uml::Parameter" (
+	   	name <- 'index',
+		type <- thisModule.oclInteger,
+		effect <- #read,
+		direction <- #"in"),
+	   getAtPar2 : UML2!"uml::Parameter" (
+	   	name <- 'return',
+		type <- s.type,
+		effect <- #read,
+		direction <- #"return"),
+	   getAtBehavior : UML2!"uml::OpaqueBehavior" (
+	   	specification <- getAtOp,
+		name <- getAtName + 'Behavior',
+		ownedParameter <- Sequence{getAtBPar1, getAtBPar2},
+		language <- Sequence{thisModule.language},
+		body <- Sequence{s.getAt()}),
+	   getAtBPar1 : UML2!"uml::Parameter" (
+	   	name <- 'index',
+		type <- thisModule.oclInteger,
+		effect <- #read,
+		direction <- #"in"),
+	   getAtBPar2 : UML2!"uml::Parameter" (
+	   	name <- 'return',
+		type <- s.type,
+		effect <- #read,
+		direction <- #"return"),
+	   getAtDep : UML2!"uml::Dependency" (
+	   	name <- 'accessor ' + getAtName + '()',
+		client <- Sequence{getAtOp},
+		supplier <- Sequence{s}),
+	-- IndexOf --
+	   indexOfOp : UML2!"uml::Operation" (
+	   	name <- getIndexOfName,
+		class <- s.class,
+		visibility <- s.visibility,
+		isStatic <- s.isStatic,
+		isAbstract <- false,
+		ownedParameter <- Sequence{indexOfPar1, indexOfPar2},
+		concurrency <- #sequential),
+	   indexOfPar1 : UML2!"uml::Parameter" (
+	   	name <- s.name,
+		type <- s.type,
+		effect <- #read,
+		direction <- #"in"),
+	   indexOfPar2 : UML2!"uml::Parameter" (
+	   	name <- 'return',
+		type <- thisModule.oclInteger,
+		effect <- #read,
+		direction <- #"return"),
+	   indexOfBehavior : UML2!"uml::OpaqueBehavior" (
+	   	specification <- indexOfOp,
+		name <- getIndexOfName + 'Behavior',
+		ownedParameter <- Sequence{indexOfBPar1, indexOfBPar2},
+		language <- Sequence{thisModule.language},
+		body <- Sequence{s.name.indexOfBody()}),
+	   indexOfBPar1 : UML2!"uml::Parameter" (
+	   	name <- s.name,
+		type <- s.type,
+		effect <- #read,
+		direction <- #"in"),
+	   indexOfBPar2 : UML2!"uml::Parameter" (
+	   	name <- 'return',
+		type <- thisModule.oclInteger,
+		effect <- #read,
+		direction <- #"return"),
+	   indexOfDep : UML2!"uml::Dependency" (
+	   	name <- 'accessor ' + getIndexOfName + '()',
+		client <- Sequence{indexOfOp},
+		supplier <- Sequence{s}),
+	-- Insert --
+	   insertOp : UML2!"uml::Operation" (
+	   	name <- insertName,
+		class <- s.class,
+		visibility <- s.visibility,
+		isStatic <- s.isStatic,
+		isAbstract <- false,
+		ownedParameter <- Sequence{insertPar1, insertPar2},
+		concurrency <- #sequential),
+	   insertPar1 : UML2!"uml::Parameter" (
+	   	name <- s.name,
+		type <- s.type,
+		effect <- #update,
+		direction <- #"in"),
+	   insertPar2 : UML2!"uml::Parameter" (
+	   	name <- 'index',
+		type <- thisModule.oclInteger,
+		effect <- #read,
+		direction <- #"in"),
+	   insertBehavior : UML2!"uml::OpaqueBehavior" (
+	   	specification <- insertOp,
+		name <- insertName + 'Behavior',
+		ownedParameter <- Sequence{insertBPar1, insertBPar2},
+		language <- Sequence{thisModule.language},
+		body <- Sequence{s.insert()}),
+	   insertBPar1 : UML2!"uml::Parameter" (
+	   	name <- s.name,
+		type <- s.type,
+		effect <- #update,
+		direction <- #"in"),
+	   insertBPar2 : UML2!"uml::Parameter" (
+	   	name <- 'index',
+		type <- thisModule.oclInteger,
+		effect <- #read,
+		direction <- #"in"),
+	   insertDep : UML2!"uml::Dependency" (
+	   	name <- 'accessor ' + insertName + '()',
+		client <- Sequence{insertOp},
+		supplier <- Sequence{s})
+	do {
+		getAtDep.applyStereotype(thisModule.accessor);
+		getAtDep.setValue(thisModule.accessor, 'kind', 'getAt');
+		indexOfDep.applyStereotype(thisModule.accessor);
+		indexOfDep.setValue(thisModule.accessor, 'kind', 'indexOf');
+		insertDep.applyStereotype(thisModule.accessor);
+		insertDep.setValue(thisModule.accessor, 'kind', 'insert');
+	}
+}
+
+-- ======================================================================
+-- transformation rules end
+-- ======================================================================
