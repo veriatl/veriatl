@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: VeriATL Fault Localization Analyzer
 Bundle-SymbolicName: fr.emn.atlanmod.veriatl.debug.decomposer
 Bundle-Version: 1.0.0.qualifier
-Export-Package: fr.emn.atlanmod.veriatl.debug.contract,
+Export-Package: fr.emn.atlanmod.veriatl.debug.decomposer.contract,
  fr.emn.atlanmod.veriatl.debug.decomposer.datastructure,
  fr.emn.atlanmod.veriatl.debug.decomposer.keywords,
  fr.emn.atlanmod.veriatl.debug.decomposer.localize,

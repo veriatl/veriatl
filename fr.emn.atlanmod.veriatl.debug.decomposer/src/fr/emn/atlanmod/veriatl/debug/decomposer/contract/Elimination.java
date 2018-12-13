@@ -1,4 +1,4 @@
-package fr.emn.atlanmod.veriatl.debug.contract;
+package fr.emn.atlanmod.veriatl.debug.decomposer.contract;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
