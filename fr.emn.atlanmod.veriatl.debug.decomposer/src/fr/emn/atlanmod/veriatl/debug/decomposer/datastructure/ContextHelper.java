@@ -1,4 +1,4 @@
-package datastructure;
+package fr.emn.atlanmod.veriatl.debug.decomposer.datastructure;
 
 import java.util.LinkedHashMap;
 

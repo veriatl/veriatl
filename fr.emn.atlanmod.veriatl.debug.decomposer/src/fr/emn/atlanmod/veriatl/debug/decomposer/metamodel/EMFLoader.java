@@ -1,4 +1,4 @@
-package metamodel;
+package fr.emn.atlanmod.veriatl.debug.decomposer.metamodel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.m2m.atl.emftvm.EmftvmFactory;
 import org.eclipse.m2m.atl.emftvm.Metamodel;
 
-import keywords.Keyword;
+import fr.emn.atlanmod.veriatl.debug.decomposer.keywords.Keyword;
 
 public class EMFLoader {
 

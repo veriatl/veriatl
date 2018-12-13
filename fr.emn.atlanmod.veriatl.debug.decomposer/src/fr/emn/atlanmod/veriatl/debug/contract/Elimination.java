@@ -1,4 +1,4 @@
-package contract;
+package fr.emn.atlanmod.veriatl.debug.contract;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -23,17 +23,17 @@ import org.eclipse.m2m.atl.common.OCL.StringExp;
 import org.eclipse.m2m.atl.common.OCL.VariableExp;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 
-import datastructure.ContextEntry;
-import datastructure.ContextHelper;
-import datastructure.ContextNature;
-import datastructure.Node;
-import datastructure.ProveOption;
-import datastructure.Tactic;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.myOclType;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.TypeInference;
-import metamodel.EMFCopier;
-import metamodel.EMFLoader;
-import ocl.OclHelper;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.ContextEntry;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.ContextHelper;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.ContextNature;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.Node;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.ProveOption;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.Tactic;
+import fr.emn.atlanmod.veriatl.debug.decomposer.metamodel.EMFCopier;
+import fr.emn.atlanmod.veriatl.debug.decomposer.metamodel.EMFLoader;
+import fr.emn.atlanmod.veriatl.debug.decomposer.ocl.OclHelper;
 
 
 public class Elimination {

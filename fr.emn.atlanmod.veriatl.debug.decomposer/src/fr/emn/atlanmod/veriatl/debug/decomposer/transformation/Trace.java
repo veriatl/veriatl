@@ -1,4 +1,4 @@
-package transformation;
+package fr.emn.atlanmod.veriatl.debug.decomposer.transformation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ import org.eclipse.m2m.atl.emftvm.Rule;
 import org.eclipse.m2m.atl.emftvm.impl.resource.EMFTVMResourceFactoryImpl;
 import org.eclipse.m2m.atl.emftvm.util.DefaultModuleResolver;
 
-import metamodel.EMFLoader;
+import fr.emn.atlanmod.veriatl.debug.decomposer.metamodel.EMFLoader;
 
 public class Trace {
 

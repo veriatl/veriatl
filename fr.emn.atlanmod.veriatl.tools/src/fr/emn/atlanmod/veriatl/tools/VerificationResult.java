@@ -1,6 +1,6 @@
 package fr.emn.atlanmod.veriatl.tools;
 
-import datastructure.TriBoolean;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.TriBoolean;
 
 public class VerificationResult {
 	String result;

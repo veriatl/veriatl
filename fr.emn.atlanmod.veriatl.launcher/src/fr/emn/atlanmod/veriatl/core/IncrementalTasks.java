@@ -9,11 +9,11 @@ import java.util.HashSet;
 
 import org.eclipse.emf.common.util.URI;
 
-import datastructure.Node;
-import datastructure.NodeHelper;
-import datastructure.TriBoolean;
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.Node;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.NodeHelper;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.TriBoolean;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 import fr.emn.atlanmod.veriatl.tools.Commands;
 import fr.emn.atlanmod.veriatl.tools.VerificationResult;
@@ -165,7 +165,7 @@ public final class IncrementalTasks {
 			
 			// serialize curTree
 			URI output = context.basePath();
-			localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);
+			fr.emn.atlanmod.veriatl.debug.decomposer.localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);
 			
 		}
     }
@@ -355,7 +355,7 @@ public final class IncrementalTasks {
         
         // save to currentCache
         URI output = context.basePath();
-		localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);	
+		fr.emn.atlanmod.veriatl.debug.decomposer.localize.ocldecomposerDriver.writeTree(output, postName, currentCache, curTree);	
         
         
 		// print proof tree

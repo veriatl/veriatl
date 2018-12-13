@@ -1,10 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Tools
+Bundle-Name: VeriATL External Tool Driver
 Bundle-SymbolicName: fr.emn.atlanmod.veriatl.tools
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.osgi,
  org.eclipse.core.runtime;bundle-version="3.11.1"
 Export-Package: fr.emn.atlanmod.veriatl.tools
-Import-Package: datastructure
+Import-Package: fr.emn.atlanmod.veriatl.debug.decomposer.datastructure
+Bundle-Vendor: AtlanMod

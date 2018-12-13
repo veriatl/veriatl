@@ -23,8 +23,8 @@ import fr.emn.atlanmod.veriatl.core.Context;
 import fr.emn.atlanmod.veriatl.core.IncrementalTasks;
 import fr.emn.atlanmod.veriatl.core.Mode;
 import fr.emn.atlanmod.veriatl.core.NormalTasks;
+import fr.emn.atlanmod.veriatl.debug.decomposer.localize.ocldecomposerDriver;
 import fr.emn.atlanmod.veriatl.util.Metamodels;
-import localize.ocldecomposerDriver;
 
 /**
  * @author zcheng

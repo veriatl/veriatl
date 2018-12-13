@@ -20,7 +20,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 
-import datastructure.Node;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.Node;
 
 /**
  * Utility methods for working with {@link URI}s.

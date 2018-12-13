@@ -1,4 +1,4 @@
-package contract;
+package fr.emn.atlanmod.veriatl.debug.contract;
 
 import java.util.ArrayList;
 import java.util.List;

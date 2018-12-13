@@ -1,4 +1,4 @@
-package keywords;
+package fr.emn.atlanmod.veriatl.debug.decomposer.keywords;
 
 public class Keyword {
 

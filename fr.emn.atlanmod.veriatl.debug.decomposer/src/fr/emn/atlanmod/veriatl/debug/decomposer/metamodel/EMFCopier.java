@@ -1,4 +1,4 @@
-package metamodel;
+package fr.emn.atlanmod.veriatl.debug.decomposer.metamodel;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;

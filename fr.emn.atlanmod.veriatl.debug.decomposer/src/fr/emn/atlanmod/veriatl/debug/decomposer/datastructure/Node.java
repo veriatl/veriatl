@@ -1,4 +1,4 @@
-package datastructure;
+package fr.emn.atlanmod.veriatl.debug.decomposer.datastructure;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,9 +12,8 @@ import org.eclipse.m2m.atl.emftvm.ExecEnv;
 
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
-import keywords.Keyword;
-
-import transformation.Trace;
+import fr.emn.atlanmod.veriatl.debug.decomposer.keywords.Keyword;
+import fr.emn.atlanmod.veriatl.debug.decomposer.transformation.Trace;
 
 
 

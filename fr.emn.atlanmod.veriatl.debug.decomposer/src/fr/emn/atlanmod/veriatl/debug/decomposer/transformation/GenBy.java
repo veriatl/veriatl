@@ -1,4 +1,4 @@
-package transformation;
+package fr.emn.atlanmod.veriatl.debug.decomposer.transformation;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;

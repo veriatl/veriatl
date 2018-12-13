@@ -1,4 +1,4 @@
-package ocl;
+package fr.emn.atlanmod.veriatl.debug.decomposer.ocl;
 
 import java.util.Set;
 

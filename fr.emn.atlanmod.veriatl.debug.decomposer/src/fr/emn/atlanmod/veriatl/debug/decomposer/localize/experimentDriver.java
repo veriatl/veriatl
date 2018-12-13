@@ -1,4 +1,4 @@
-package localize;
+package fr.emn.atlanmod.veriatl.debug.decomposer.localize;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,20 +25,20 @@ import org.eclipse.m2m.atl.common.ATL.MatchedRule;
 import org.eclipse.m2m.atl.common.OCL.OclExpression;
 import org.eclipse.m2m.atl.emftvm.ExecEnv;
 
-import contract.ContractLoader;
-import contract.Elimination;
-import contract.Introduction;
-import datastructure.ContextEntry;
-import datastructure.Node;
-import datastructure.NodeHelper;
-import datastructure.ProveOption;
 import fr.emn.atlanmod.atl2boogie.xtend.core.driver;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.URIs;
 import fr.emn.atlanmod.atl2boogie.xtend.lib.atl;
 import fr.emn.atlanmod.atl2boogie.xtend.ocl.ocl2boogie;
 import fr.emn.atlanmod.atl2boogie.xtend.util.CompilerConstants;
-import transformation.Trace;
-import transformation.TransformationLoader;
+import fr.emn.atlanmod.veriatl.debug.contract.ContractLoader;
+import fr.emn.atlanmod.veriatl.debug.contract.Elimination;
+import fr.emn.atlanmod.veriatl.debug.contract.Introduction;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.ContextEntry;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.Node;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.NodeHelper;
+import fr.emn.atlanmod.veriatl.debug.decomposer.datastructure.ProveOption;
+import fr.emn.atlanmod.veriatl.debug.decomposer.transformation.Trace;
+import fr.emn.atlanmod.veriatl.debug.decomposer.transformation.TransformationLoader;
 
 public class experimentDriver {
 	
