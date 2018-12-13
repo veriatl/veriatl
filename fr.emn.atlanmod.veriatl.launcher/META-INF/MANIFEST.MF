@@ -16,3 +16,6 @@ Bundle-ActivationPolicy: lazy
 Export-Package: fr.emn.atlanmod.veriatl.core,
  fr.emn.atlanmod.veriatl.launcher,
  fr.emn.atlanmod.veriatl.util
+Import-Package: fr.emn.atlanmod.veriatl.core,
+ fr.emn.atlanmod.veriatl.launcher,
+ fr.emn.atlanmod.veriatl.util
