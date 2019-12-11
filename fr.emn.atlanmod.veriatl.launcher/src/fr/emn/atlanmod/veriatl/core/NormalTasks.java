@@ -168,8 +168,8 @@ public final class NormalTasks {
     
         
 		// print proof tree
-		URI gvName = NodeHelper.printTreeBasic(context.basePath(), postName, curTree);
-		GraphVizTasks.execDot(gvName);
+		//URI gvName = NodeHelper.printTreeBasic(context.basePath(), postName, curTree);
+		//GraphVizTasks.execDot(gvName);
            
     }
     
