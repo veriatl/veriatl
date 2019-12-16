@@ -87,15 +87,19 @@ public class VeriATLLauncher implements ILaunchConfigurationDelegate {
 			System.out.println("Code Generation Finished.");
 			System.out.println("=== === === === === === ===");
 		} else  {
-			String aRule = "T2TB";
-			boolean incMode = true;
+			String aRule = context.rule();
+			boolean incMode = context.inc();
 			
 			
 			if (context.mode() == Mode.VERIFY) {
 				if(!incMode) {
 					NormalTasks.execBoogie(context);
 				}else {
-					IncrementalTasks.execBoogie(context, aRule);
+					if(!aRule.equals("")) {
+						IncrementalTasks.execBoogie(context, aRule);
+					}else {
+						System.out.println("No rules being modified since last verification.");
+					}	
 				}
 				System.out.println("Verification Finished.");
 				System.out.println("=== === === === === === ===");

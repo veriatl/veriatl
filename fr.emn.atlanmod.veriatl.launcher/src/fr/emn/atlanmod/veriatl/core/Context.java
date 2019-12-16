@@ -23,8 +23,8 @@ public class Context {
     private final URI outModel;
 
     private final Mode mode;
-
-
+    private final boolean incremental;
+    private final String changedRule;
 
     private final URI contractPath;
     private final URI basePath;
@@ -41,7 +41,7 @@ public class Context {
     /**
      * Constructs a new {@code Context} with the given parameters.
      */
-    public Context(URI pluginUri, String moduleName, URI src, URI trg, URI inModel, URI outModel, Mode mode, 
+    public Context(URI pluginUri, String moduleName, URI src, URI trg, URI inModel, URI outModel, Mode mode, boolean inc, String cRule,
     		URI contract, URI base, String post, IProgressMonitor monitor) {
         this.pluginUri = pluginUri;
         this.moduleName = moduleName;
@@ -53,18 +53,15 @@ public class Context {
         this.outModel = outModel;
 
         this.mode = mode;
-
+        
         this.monitor = monitor;
         
         this.contractPath = contract;
         this.basePath = base;
         this.postName = post;
         
-        
-        
-       
-        
-
+        this.incremental = inc;
+        this.changedRule = cRule;
         initialized = false;
     }
 
@@ -100,12 +97,18 @@ public class Context {
             	m = Mode.DEBUG;
             }
 
+            boolean inc = false;
+            if(configuration.getAttribute(IncMode.ENABLE.getName(), true)){
+            	inc = true;
+            }
+            
+            String cRule = configuration.getAttribute(VeriATLLaunchConstants.CHANGED_RULE, "");
             URI contract = URI.createURI(configuration.getAttribute(VeriATLLaunchConstants.CONTRACT_PATH, ""));
             URI base = URI.createURI(configuration.getAttribute(VeriATLLaunchConstants.PROJ_PATH, ""));
             String post = configuration.getAttribute(VeriATLLaunchConstants.POST_NAME, "");
             
             
-            return new Context(pluginUri, moduleName, src, trg, inModel, outModel, m, contract, base, post, monitor);
+            return new Context(pluginUri, moduleName, src, trg, inModel, outModel, m, inc, cRule, contract, base, post, monitor);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -154,16 +157,33 @@ public class Context {
     }
 
     /**
-     * Returns the direction of the transformation.
+     * Returns the VeriATL execution mode
      *
-     * @return the direction
+     * @return mode
      */
     public Mode mode() {
         return mode;
     }
 
 
-
+    /**
+     * Returns whether incremental is enabled
+     *
+     * @return boolean
+     */
+    public boolean inc() {
+        return incremental;
+    }
+    
+    /**
+     * Returns which rule has been changed since last verification. specified in the configuration.
+     *
+     * @return changedRule
+     */
+    public String rule() {
+        return changedRule;
+    }
+    
     /**
      * Returns the metamodel of the source model.
      *

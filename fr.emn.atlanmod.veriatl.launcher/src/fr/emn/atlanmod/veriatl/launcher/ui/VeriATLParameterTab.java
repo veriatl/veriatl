@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import fr.emn.atlanmod.veriatl.core.IncMode;
 import fr.emn.atlanmod.veriatl.core.Mode;
 import fr.emn.atlanmod.veriatl.launcher.VeriATLLaunchConstants;
 
@@ -32,6 +33,10 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
     private Button gen;
     private Button verify;
     private Button debug;
+    
+	private Button inc_enable;
+    private Button inc_disable;
+    private Text changedRule;
     
     private Text location;
     private Text post;
@@ -44,6 +49,7 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
     private Group modeGroup;
     private Group contractGroup;
     private Group metamodelGroup;
+    private Group incrementalGroup;
     
     @Override
     public void createControl(Composite parent) {
@@ -65,6 +71,11 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
         modeGroup.setLayout(new GridLayout(4, false));
         modeGroup.setText("Verification Mode");
 
+        incrementalGroup = new Group(rootContainer, SWT.NULL);
+        incrementalGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        incrementalGroup.setLayout(new GridLayout(8, false));
+        incrementalGroup.setText("Incremental Verification Options");
+        
         metamodelGroup = new Group(rootContainer, SWT.NULL);
         metamodelGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         metamodelGroup.setLayout(new GridLayout(10, false));
@@ -74,11 +85,13 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
         contractGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         contractGroup.setLayout(new GridLayout(8, false));
         contractGroup.setText("Contract");
-        
+            
         buildBasicGroup();
         buildModeGroup();
+        buildIncrementalControls();
         buildMetamodels();
         buildContractControls();
+        
         
         setControl(scrollContainer);
     }
@@ -159,6 +172,35 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
 		
 	}
 
+	/**
+	 * Add 2 buttons for modes in {@code incrementalGroup}} 
+	 */
+	private void buildIncrementalControls() {
+		inc_enable = new Button(incrementalGroup, SWT.RADIO);
+		inc_enable.setText(IncMode.ENABLE.getName());
+		inc_enable.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                updateLaunchConfigurationDialog();
+            }
+        });
+        
+        inc_disable = new Button(incrementalGroup, SWT.RADIO);
+        inc_disable.setText(IncMode.DISABLE.getName());
+        inc_disable.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                updateLaunchConfigurationDialog();
+            }
+        });
+		
+	
+        final Label changedRuleLabel = new Label(incrementalGroup, SWT.LEFT);
+        changedRuleLabel.setText("Changed Rule Name:"); //$NON-NLS-1$
+
+		changedRule = new Text(incrementalGroup, SWT.BORDER);
+		changedRule.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1));
+	}
 	
 	private void buildMetamodels() {
 
@@ -273,6 +315,10 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
         configuration.setAttribute(Mode.GEN.getName(), false);
         configuration.setAttribute(Mode.VERIFY.getName(), false);
         configuration.setAttribute(Mode.DEBUG.getName(), false);
+        
+        configuration.setAttribute(IncMode.ENABLE.getName(), false);
+        configuration.setAttribute(IncMode.DISABLE.getName(), true);
+        
     }
 
     @Override
@@ -282,6 +328,10 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
             gen.setSelection(configuration.getAttribute(Mode.GEN.getName(), true));
             verify.setSelection(configuration.getAttribute(Mode.VERIFY.getName(), false));
             debug.setSelection(configuration.getAttribute(Mode.DEBUG.getName(), false));
+            
+            inc_enable.setSelection(configuration.getAttribute(IncMode.ENABLE.getName(), false));
+            inc_disable.setSelection(configuration.getAttribute(IncMode.DISABLE.getName(), true));
+            changedRule.setText(configuration.getAttribute(VeriATLLaunchConstants.CHANGED_RULE, VeriATLLaunchConstants.STRING_DEFAULT));
             
             proj.setText(configuration.getAttribute(VeriATLLaunchConstants.PROJ_PATH, VeriATLLaunchConstants.STRING_DEFAULT));
             location.setText(configuration.getAttribute(VeriATLLaunchConstants.CONTRACT_PATH, VeriATLLaunchConstants.STRING_DEFAULT));
@@ -302,6 +352,10 @@ public class VeriATLParameterTab extends AbstractLaunchConfigurationTab {
         configuration.setAttribute(Mode.GEN.getName(), gen.getSelection());
         configuration.setAttribute(Mode.VERIFY.getName(), verify.getSelection());
         configuration.setAttribute(Mode.DEBUG.getName(), debug.getSelection());
+        
+        configuration.setAttribute(IncMode.ENABLE.getName(), inc_enable.getSelection());
+        configuration.setAttribute(IncMode.DISABLE.getName(), inc_disable.getSelection());
+        configuration.setAttribute(VeriATLLaunchConstants.CHANGED_RULE, changedRule.getText());
         
         configuration.setAttribute(VeriATLLaunchConstants.PROJ_PATH, proj.getText());
         configuration.setAttribute(VeriATLLaunchConstants.CONTRACT_PATH, location.getText());
