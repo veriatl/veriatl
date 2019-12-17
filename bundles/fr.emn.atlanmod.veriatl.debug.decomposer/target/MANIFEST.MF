@@ -8,7 +8,7 @@ Export-Package: fr.emn.atlanmod.veriatl.debug.decomposer.contract,fr.e
  n.atlanmod.veriatl.debug.decomposer.ocl,fr.emn.atlanmod.veriatl.debug
  .decomposer.transformation
 Bundle-Name: VeriATL Fault Localization Analyzer
-Bundle-Version: 1.0.0.201912171445
+Bundle-Version: 1.0.0.201912171453
 Require-Bundle: org.eclipse.m2m.atl.common;bundle-version="3.7.0",org.
  eclipse.m2m.atl.emftvm;bundle-version="3.7.0",org.eclipse.m2m.atl.eng
  ine;bundle-version="3.7.0",fr.emn.atlanmod.veriatl.compiler.boogie;bu

@@ -3,7 +3,7 @@ Bundle-SymbolicName: fr.emn.atlanmod.veriatl.launcher;singleton:=true
 Export-Package: fr.emn.atlanmod.veriatl.core,fr.emn.atlanmod.veriatl.l
  auncher,fr.emn.atlanmod.veriatl.util
 Bundle-Name: VeriATL Launcher
-Bundle-Version: 1.0.0.201912171445
+Bundle-Version: 1.0.0.201912171453
 Require-Bundle: org.eclipse.m2m.atl.emftvm.launcher,org.eclipse.m2m.at
  l.adt.ui,org.eclipse.m2m.atl.common,fr.emn.atlanmod.veriatl.compiler.
  boogie;bundle-version="1.0.0",fr.emn.atlanmod.veriatl.debug.decompose

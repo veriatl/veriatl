@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-SymbolicName: fr.emn.atlanmod.veriatl.tools
 Export-Package: fr.emn.atlanmod.veriatl.tools
 Bundle-Name: VeriATL External Tool Driver
-Bundle-Version: 1.0.0.201912171445
+Bundle-Version: 1.0.0.201912171453
 Require-Bundle: org.eclipse.osgi,org.eclipse.core.runtime;bundle-versi
  on="3.11.1"
 Bundle-ManifestVersion: 2

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<units size='5'>
+<units size='4'>
   <unit id='a.jre.javase' version='10.0.0' singleton='false'>
     <provides size='252'>
       <provided namespace='org.eclipse.equinox.p2.iu' name='a.jre.javase' version='10.0.0'/>
@@ -510,18 +510,5 @@
         </instruction>
       </instructions>
     </touchpointData>
-  </unit>
-  <unit id='201912171445.veriatl' version='1.0.0.2--cCy1g67735K575G5AAC'>
-    <properties size='2'>
-      <property name='org.eclipse.equinox.p2.name' value='veriatl'/>
-      <property name='org.eclipse.equinox.p2.type.category' value='true'/>
-    </properties>
-    <provides size='1'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='201912171445.veriatl' version='1.0.0.2--cCy1g67735K575G5AAC'/>
-    </provides>
-    <requires size='1'>
-      <required namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.feature.feature.group' range='[1.0.0.201912171445,1.0.0.201912171445]'/>
-    </requires>
-    <touchpoint id='null' version='0.0.0'/>
   </unit>
 </units>

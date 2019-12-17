@@ -82,69 +82,69 @@ class driver {
 		doVeriATLSetup(atl, src, trg, contract)
 		doClean
 		
-		// gen matchers
-		var match = "";
-		
-		for (content : atl_resource.contents) {
-			match += matcher2boogie.genModule_matches(content)	
-		}
-		
-		generateBoogieFile(outputPath, CompilerConstants.MATCHER, CompilerConstants.BOOGIE_EXT, match)
-
-		// gen applyers
-		var apply = "";
-		
-		for (content : atl_resource.contents) {
-			apply += applyer2boogie.genModule_applys(content)	
-		}
-		
-		generateBoogieFile(outputPath, CompilerConstants.APPLIER, CompilerConstants.BOOGIE_EXT, apply)
-		
-
-		
-		// gen surjectivity function
-		var surject = "";
-		
-		for (content : atl_resource.contents) {
-			surject += surjective2boogie.genModule_surjective(content)	
-		}
-		
-		generateBoogieFile(outputPath, CompilerConstants.SURJECT, CompilerConstants.BOOGIE_EXT, surject)
-		
-		
-		// gen contracts
-		var pre = "";
-			
-		for (content : contract_resource.contents) {
-			pre += contract2boogie.genHelpers(content)	
-		}
-	
-		generateBoogieFile(outputPath, CompilerConstants.PRE, CompilerConstants.BOOGIE_EXT, pre)
-		
-		
-		// gen src mm
-		var srcBoogie = "";
-		srcBoogie += mm2boogie.gen_Metamodel(srcmm)	
-		generateBoogieFile(outputPath, srcmm.name, CompilerConstants.BOOGIE_EXT, srcBoogie)
-		
-
-		
-		
-		// gen trg mm
-		var trgBoogie = "";
-		trgBoogie += mm2boogie.gen_Metamodel(trgmm)	
-		generateBoogieFile(outputPath, trgmm.name, CompilerConstants.BOOGIE_EXT, trgBoogie)
-		
-
-		
-		// gen constants
-		var const = "";
-		for (s : constants) {
-			const += String.format("const unique _%s: String;\n", s)
-		}
-		
-		generateBoogieFile(outputPath, CompilerConstants.CONST, CompilerConstants.BOOGIE_EXT, const)
-		
+//		// gen matchers
+//		var match = "";
+//		
+//		for (content : atl_resource.contents) {
+//			match += matcher2boogie.genModule_matches(content)	
+//		}
+//		
+//		generateBoogieFile(outputPath, CompilerConstants.MATCHER, CompilerConstants.BOOGIE_EXT, match)
+//
+//		// gen applyers
+//		var apply = "";
+//		
+//		for (content : atl_resource.contents) {
+//			apply += applyer2boogie.genModule_applys(content)	
+//		}
+//		
+//		generateBoogieFile(outputPath, CompilerConstants.APPLIER, CompilerConstants.BOOGIE_EXT, apply)
+//		
+//
+//		
+//		// gen surjectivity function
+//		var surject = "";
+//		
+//		for (content : atl_resource.contents) {
+//			surject += surjective2boogie.genModule_surjective(content)	
+//		}
+//		
+//		generateBoogieFile(outputPath, CompilerConstants.SURJECT, CompilerConstants.BOOGIE_EXT, surject)
+//		
+//		
+//		// gen contracts
+//		var pre = "";
+//			
+//		for (content : contract_resource.contents) {
+//			pre += contract2boogie.genHelpers(content)	
+//		}
+//	
+//		generateBoogieFile(outputPath, CompilerConstants.PRE, CompilerConstants.BOOGIE_EXT, pre)
+//		
+//		
+//		// gen src mm
+//		var srcBoogie = "";
+//		srcBoogie += mm2boogie.gen_Metamodel(srcmm)	
+//		generateBoogieFile(outputPath, srcmm.name, CompilerConstants.BOOGIE_EXT, srcBoogie)
+//		
+//
+//		
+//		
+//		// gen trg mm
+//		var trgBoogie = "";
+//		trgBoogie += mm2boogie.gen_Metamodel(trgmm)	
+//		generateBoogieFile(outputPath, trgmm.name, CompilerConstants.BOOGIE_EXT, trgBoogie)
+//		
+//
+//		
+//		// gen constants
+//		var const = "";
+//		for (s : constants) {
+//			const += String.format("const unique _%s: String;\n", s)
+//		}
+//		
+//		generateBoogieFile(outputPath, CompilerConstants.CONST, CompilerConstants.BOOGIE_EXT, const)
+//		
 		
 	}
 	

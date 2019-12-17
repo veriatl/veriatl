@@ -1,0 +1,4 @@
+/target/*
+/buildNumber.properties
+/category.xml
+/site.xml

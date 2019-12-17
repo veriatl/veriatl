@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <units size='2'>
-  <unit id='fr.emn.atlanmod.veriatl.feature.feature.group' version='1.0.0.201912171445' singleton='false'>
-    <update id='fr.emn.atlanmod.veriatl.feature.feature.group' range='[0.0.0,1.0.0.201912171445)' severity='0'/>
+  <unit id='fr.emn.atlanmod.veriatl.feature.feature.group' version='1.0.0.201912171453' singleton='false'>
+    <update id='fr.emn.atlanmod.veriatl.feature.feature.group' range='[0.0.0,1.0.0.201912171453)' severity='0'/>
     <properties size='7'>
       <property name='org.eclipse.equinox.p2.name' value='VeriATL Feature'/>
       <property name='org.eclipse.equinox.p2.description' value='Static Verfication Plugin for ATL Programs'/>
@@ -12,14 +12,14 @@
       <property name='maven-version' value='1.0.0-SNAPSHOT'/>
     </properties>
     <provides size='1'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.feature.feature.group' version='1.0.0.201912171445'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.feature.feature.group' version='1.0.0.201912171453'/>
     </provides>
     <requires size='5'>
-      <required namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.compiler.boogie' range='[1.0.0.201912171445,1.0.0.201912171445]'/>
-      <required namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.debug.decomposer' range='[1.0.0.201912171445,1.0.0.201912171445]'/>
-      <required namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.launcher' range='[1.0.0.201912171445,1.0.0.201912171445]'/>
-      <required namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.tools' range='[1.0.0.201912171445,1.0.0.201912171445]'/>
-      <required namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.feature.feature.jar' range='[1.0.0.201912171445,1.0.0.201912171445]'>
+      <required namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.compiler.boogie' range='[1.0.0.201912171453,1.0.0.201912171453]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.debug.decomposer' range='[1.0.0.201912171453,1.0.0.201912171453]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.launcher' range='[1.0.0.201912171453,1.0.0.201912171453]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.tools' range='[1.0.0.201912171453,1.0.0.201912171453]'/>
+      <required namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.feature.feature.jar' range='[1.0.0.201912171453,1.0.0.201912171453]'>
         <filter>
           (org.eclipse.update.install.features=true)
         </filter>
@@ -35,7 +35,7 @@
       Copyright (c) 2019 AtlanMod/NaoMod, INRIA, IMT Atlantique&#xA;This program and the accompanying materials are made available&#xA;under the terms of the Eclipse Public License 2.0 which is available&#xA;at https://www.eclipse.org/legal/epl-2.0/&#xA;This Source Code may also be made available under the following&#xA;Secondary Licenses when the conditions for such availability&#xA;set forth &#xA;in the Eclipse Public License, v. 2.0 are satisfied: GNU General&#xA;Public License,&#xA;version 3 which is available at https://www.gnu.org/licenses/gpl-3.0.txt&#xA;Contributors: AtlanMod/NaoMod, INRIA, IMT Atlantique
     </copyright>
   </unit>
-  <unit id='fr.emn.atlanmod.veriatl.feature.feature.jar' version='1.0.0.201912171445'>
+  <unit id='fr.emn.atlanmod.veriatl.feature.feature.jar' version='1.0.0.201912171453'>
     <properties size='6'>
       <property name='org.eclipse.equinox.p2.name' value='VeriATL Feature'/>
       <property name='org.eclipse.equinox.p2.description' value='Static Verfication Plugin for ATL Programs'/>
@@ -45,15 +45,15 @@
       <property name='maven-version' value='1.0.0-SNAPSHOT'/>
     </properties>
     <provides size='3'>
-      <provided namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.feature.feature.jar' version='1.0.0.201912171445'/>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.feature.feature.jar' version='1.0.0.201912171453'/>
       <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
-      <provided namespace='org.eclipse.update.feature' name='fr.emn.atlanmod.veriatl.feature' version='1.0.0.201912171445'/>
+      <provided namespace='org.eclipse.update.feature' name='fr.emn.atlanmod.veriatl.feature' version='1.0.0.201912171453'/>
     </provides>
     <filter>
       (org.eclipse.update.install.features=true)
     </filter>
     <artifacts size='1'>
-      <artifact classifier='org.eclipse.update.feature' id='fr.emn.atlanmod.veriatl.feature' version='1.0.0.201912171445'/>
+      <artifact classifier='org.eclipse.update.feature' id='fr.emn.atlanmod.veriatl.feature' version='1.0.0.201912171453'/>
     </artifacts>
     <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
     <touchpointData size='1'>

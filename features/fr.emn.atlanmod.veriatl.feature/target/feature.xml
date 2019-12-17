@@ -2,7 +2,7 @@
 <feature
       id="fr.emn.atlanmod.veriatl.feature"
       label="VeriATL Feature"
-      version="1.0.0.201912171445"
+      version="1.0.0.201912171453"
       provider-name="AtlanMod">
 
    <description>
@@ -307,28 +307,28 @@ version(s), and exceptions or additional permissions here}.&amp;amp;amp;amp;quot
          id="fr.emn.atlanmod.veriatl.compiler.boogie"
          download-size="2"
          install-size="1"
-         version="1.0.0.201912171445"
+         version="1.0.0.201912171453"
          unpack="false"/>
 
    <plugin
          id="fr.emn.atlanmod.veriatl.debug.decomposer"
          download-size="65"
          install-size="143"
-         version="1.0.0.201912171445"
+         version="1.0.0.201912171453"
          unpack="false"/>
 
    <plugin
          id="fr.emn.atlanmod.veriatl.launcher"
          download-size="44"
          install-size="84"
-         version="1.0.0.201912171445"
+         version="1.0.0.201912171453"
          unpack="false"/>
 
    <plugin
          id="fr.emn.atlanmod.veriatl.tools"
          download-size="10416"
          install-size="24757"
-         version="1.0.0.201912171445"
+         version="1.0.0.201912171453"
          unpack="false"/>
 
 </feature>
