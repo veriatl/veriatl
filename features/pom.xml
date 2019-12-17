@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>fr.emn.atlanmod.veriatl</groupId>
+    <artifactId>fr.emn.atlanmod.veriatl.features</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>fr.emn.atlanmod.veriatl</groupId>
+        <artifactId>fr.emn.atlanmod.veriatl.root</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <modules>
+        <module>fr.emn.atlanmod.veriatl.feature</module>
+    </modules>
+</project>

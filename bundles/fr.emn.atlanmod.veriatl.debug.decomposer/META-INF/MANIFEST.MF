@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: VeriATL Fault Localization Analyzer
+Bundle-SymbolicName: fr.emn.atlanmod.veriatl.debug.decomposer;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: fr.emn.atlanmod.veriatl.debug.decomposer.contract,
+ fr.emn.atlanmod.veriatl.debug.decomposer.datastructure,
+ fr.emn.atlanmod.veriatl.debug.decomposer.keywords,
+ fr.emn.atlanmod.veriatl.debug.decomposer.localize,
+ fr.emn.atlanmod.veriatl.debug.decomposer.metamodel,
+ fr.emn.atlanmod.veriatl.debug.decomposer.ocl,
+ fr.emn.atlanmod.veriatl.debug.decomposer.transformation
+Require-Bundle: org.eclipse.m2m.atl.common;bundle-version="3.7.0",
+ org.eclipse.m2m.atl.emftvm;bundle-version="3.7.0",
+ org.eclipse.m2m.atl.engine;bundle-version="3.7.0",
+ fr.emn.atlanmod.veriatl.compiler.boogie;bundle-version="1.0.0"
+Bundle-Vendor: AtlanMod
+

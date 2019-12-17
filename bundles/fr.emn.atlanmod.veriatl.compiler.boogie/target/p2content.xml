@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='1'>
+  <unit id='fr.emn.atlanmod.veriatl.compiler.boogie' version='1.0.0.201912171445' generation='2'>
+    <update id='fr.emn.atlanmod.veriatl.compiler.boogie' range='[0.0.0,1.0.0.201912171445)' severity='0'/>
+    <properties size='5'>
+      <property name='org.eclipse.equinox.p2.name' value='atl 2 Boogie compiler'/>
+      <property name='org.eclipse.equinox.p2.provider' value='AtlanMod'/>
+      <property name='maven-groupId' value='fr.emn.atlanmod.veriatl'/>
+      <property name='maven-artifactId' value='fr.emn.atlanmod.veriatl.compiler.boogie'/>
+      <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+    </properties>
+    <provides size='10'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='fr.emn.atlanmod.veriatl.compiler.boogie' version='1.0.0.201912171445'/>
+      <provided namespace='osgi.bundle' name='fr.emn.atlanmod.veriatl.compiler.boogie' version='1.0.0.201912171445'/>
+      <provided namespace='java.package' name='fr.emn.atlanmod.atl2boogie.xtend.core' version='0.0.0'/>
+      <provided namespace='java.package' name='fr.emn.atlanmod.atl2boogie.xtend.atl' version='0.0.0'/>
+      <provided namespace='java.package' name='fr.emn.atlanmod.atl2boogie.xtend.emf' version='0.0.0'/>
+      <provided namespace='java.package' name='fr.emn.atlanmod.atl2boogie.xtend.ocl' version='0.0.0'/>
+      <provided namespace='java.package' name='fr.emn.atlanmod.atl2boogie.xtend.lib' version='0.0.0'/>
+      <provided namespace='java.package' name='fr.emn.atlanmod.atl2boogie.xtend.util' version='0.0.0'/>
+      <provided namespace='osgi.identity' name='fr.emn.atlanmod.veriatl.compiler.boogie' version='1.0.0.201912171445'>
+        <properties size='1'>
+          <property name='type' value='osgi.bundle'/>
+        </properties>
+      </provided>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+    </provides>
+    <requires size='5'>
+      <required namespace='osgi.bundle' name='org.eclipse.m2m.atl.emftvm.compiler' range='4.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.m2m.atl.common' range='4.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.xtend.lib' range='2.20.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.core.resources' range='0.0.0'/>
+      <requiredProperties namespace='osgi.ee' match='(&amp;(osgi.ee=JavaSE)(version=1.8))'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='fr.emn.atlanmod.veriatl.compiler.boogie' version='1.0.0.201912171445'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: fr.emn.atlanmod.veriatl.compiler.boogie;singleton:=true&#xA;Bundle-Version: 1.0.0.201912171445&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>

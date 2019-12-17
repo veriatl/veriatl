@@ -1,0 +1,13 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>fr.emn.atlanmod.veriatl</groupId>
+        <artifactId>fr.emn.atlanmod.veriatl.releng</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>fr.emn.atlanmod.veriatl.update</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>eclipse-repository</packaging>
+</project>

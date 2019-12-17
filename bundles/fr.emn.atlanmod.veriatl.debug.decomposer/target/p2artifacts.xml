@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='1'>
+  <artifact classifier='osgi.bundle' id='fr.emn.atlanmod.veriatl.debug.decomposer' version='1.0.0.201912171445'>
+    <properties size='5'>
+      <property name='artifact.size' value='67535'/>
+      <property name='download.size' value='67535'/>
+      <property name='maven-groupId' value='fr.emn.atlanmod.veriatl'/>
+      <property name='maven-artifactId' value='fr.emn.atlanmod.veriatl.debug.decomposer'/>
+      <property name='maven-version' value='1.0.0-SNAPSHOT'/>
+    </properties>
+  </artifact>
+</artifacts>
