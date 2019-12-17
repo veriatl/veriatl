@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?artifactRepository version='1.1.0'?>
 <artifacts size='1'>
-  <artifact classifier='org.eclipse.update.feature' id='fr.emn.atlanmod.veriatl.feature' version='1.0.0.201912171453'>
+  <artifact classifier='org.eclipse.update.feature' id='fr.emn.atlanmod.veriatl.feature' version='1.0.0.201912171457'>
     <properties size='6'>
-      <property name='artifact.size' value='6131'/>
-      <property name='download.size' value='6131'/>
+      <property name='artifact.size' value='6130'/>
+      <property name='download.size' value='6130'/>
       <property name='maven-groupId' value='fr.emn.atlanmod.veriatl'/>
       <property name='maven-artifactId' value='fr.emn.atlanmod.veriatl.feature'/>
       <property name='maven-version' value='1.0.0-SNAPSHOT'/>
